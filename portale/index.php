@@ -16,7 +16,7 @@
     <input type="text" id="token" name="an_token" placeholder="Token"/>
     <button onclick="controlloLogin();">Controllo login</button>
     <hr>
-    <button onclick="salvaAmbulatorio();">
+    <button onclick="salvaAmbulatorio();">TEST AMBULATORIO</button>
     <pre id="resultCall"></pre>
 
 
