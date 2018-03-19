@@ -4,6 +4,28 @@ trait login {
 
   private $loginToken;
 
+  public $username;
+  public $password;
+
+
+
+  private function getUsername(){
+    if(empty($this->username)){
+      $this->username=$this->post('username');
+    }
+    return $this->username;
+  }
+
+
+
+  private function getPassword(){
+    if(empty($this->password)){
+      $this->password=$this->post('password');
+    }
+    return $this->password;
+  }
+
+
   private function loginLog($mess){
     $this->setJsonMess("login",$mess);
   }
@@ -32,11 +54,15 @@ trait login {
       $res = $this->query($que);
       $this->setJsonMess('sessionMess','aggiornamento Sessione');
     } else {
+      $username=$this->getUsername();
+      $password=$this->getPassword();
+
       $this->loginLog("nuova sessione, registro");
       $que = "INSERT INTO XDM_WEBSERVICE_SESSION (USERNAME, PASSWORD, ARXSESSION, SCADENZA)
       VALUES ('$userName', '$password', '$loginResult->SessionId', TO_DATE('$expirationTime', 'YYYY-MM-DD HH24:MI:SS')) ";
       $this->query($que);
       $this->setJsonMess('sessionMess','registrazione Sessione');
+
     }
     $this->loginToken=true;
 

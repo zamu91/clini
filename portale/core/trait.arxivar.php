@@ -38,8 +38,8 @@ trait arxivar{
   public function loginArxivar(){
     $baseUrl=$this->baseUrl;
     $ARX_Login = new ARX_Login\ARX_Login($baseUrl."ARX_Login.asmx?WSDL");
-    $userName = $this->post("username");
-    $password = $this->post("password");
+    $userName = $this->getUsername();
+    $password = $this->getPassword();
     $softwareName = "PHP Gestione cliniche";
     $this->loginResult = $ARX_Login->Login($userName, $password, $softwareName);
     $this->arxLog(' WCF chiamate');
