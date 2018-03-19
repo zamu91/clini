@@ -89,12 +89,8 @@ trait sql{
       $val.=" :$colonna";
     }
 
-
-    $sql.=$col.") VALUE (".$val.")";
-
-    echo $sql." sql inserito";
+    $sql.=$col.") VALUES (".$val.")";
     $this->logQuery($sql);
-
     $compiled = oci_parse($con, $sql);
 
     foreach ($data as $col => $value) {

@@ -1,4 +1,3 @@
-var token="";
 
 function login(){
     $("#resultCall").html("");
@@ -11,13 +10,15 @@ function login(){
         datatype:'json',
         data: { azione: "loginPatrocinatore", username: user, password: pass},
     }).done(function(data, textStatus){
-        token=data.token;
+      localStorage.setItem("tok",data.token);
+
         $("#resultCall").html(data);
     });
 }
 
 
 function getToken(){
+  token=localStorage.getItem("tok");
   return token;
 }
 
