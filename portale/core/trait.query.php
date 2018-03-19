@@ -77,34 +77,34 @@ trait sql{
     if(empty($data)){
       $data=$this->dataPrepare;
     }
-    $sql=" INSERT INTO $tabName ( ";
-      $val="";
-      $col="";
-      foreach ($data as $col => $value) {
+    $sql=" insert INTO $tabName ( ";
+    $val="";
+    $col="";
+    foreach ($data as $colonna => $value) {
       if(!empty($col)){
-      $col.=",";
-      $val=",";
+        $col.=",";
+        $val=",";
       }
-      $col.="$col";
-      $val.=" :$col";
-      }
-
-
-      $sql.=$col.") VALUE (".$val.")";
-
-      echo $sql." sql inserito";
-      $this->logQuery($sql);
-
-      $compiled = oci_parse($con, $sql);
-
-      foreach ($data as $col => $value) {
-        oci_bind_by_name($compiled, ':'.$col, $value);
-      }
-      oci_execute($compiled);
+      $col.="$colonna";
+      $val.=" :$colonna";
     }
 
+
+    $sql.=$col.") VALUE (".$val.")";
+
+    echo $sql." sql inserito";
+    $this->logQuery($sql);
+
+    $compiled = oci_parse($con, $sql);
+
+    foreach ($data as $col => $value) {
+      oci_bind_by_name($compiled, ':'.$col, $value);
+    }
+    oci_execute($compiled);
   }
 
+}
 
 
-  ?>
+
+?>
