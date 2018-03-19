@@ -91,7 +91,10 @@ trait sql{
 
 
       $sql.=$col.") VALUE (".$val.")";
+
+
       $this->logQuery($sql);
+
       $compiled = oci_parse($con, $sql);
 
       foreach ($data as $col => $value) {
