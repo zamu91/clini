@@ -1,12 +1,13 @@
 <?php
 
 /**
- *
- */
+*
+*/
 trait clinica
 {
   public function salvaClinica(){
     $data=$this->post('data');
+    $data['IDAMBULATORIO']='sequence.nexvalue';
     $this->insertPrepare('XDM_AMBULATORIO',$data);
     $this->setJsonMess("mess","Dati inseriti");
     $this->setJsonMess("ok",true);
@@ -26,4 +27,4 @@ trait clinica
 
 
 
- ?>
+?>
