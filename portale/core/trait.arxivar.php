@@ -49,7 +49,7 @@ trait arxivar{
       return true;
     }else{
       $this->arxLog(' Login fallito ');
-      $this->arLog($this->loginResult->ArxLogOnErrorTypeString);
+      $this->arxLog($this->loginResult->ArxLogOnErrorTypeString);
       $this->logError=$this->loginResult->ArxLogOnErrorTypeString;
       return false;
     }
