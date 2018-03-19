@@ -1,6 +1,10 @@
 <?php
+
+echo "start inc lib ";
 $dir=__DIR__."/";
 include_once $dir."trait.arxivar.php";
+echo "esempio ".$dir."trait.arxivar.php";
+
 include_once $dir."trait.login.php";
 include_once $dir."trait.contratto.php";
 include_once $dir."trait.clinica.php";
@@ -8,6 +12,7 @@ include_once $dir."trait.query.php";
 include_once $dir."trait.prenotazione.php";
 
 
+echo "fine inch ";
 
 class chiamate{
   use login,contratto,clinica,prenotazione,arxiva,sql;
