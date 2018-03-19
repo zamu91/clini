@@ -18,7 +18,7 @@ function controlloLogin(){
     var token = $("#token").val();
 
     jqXHR = $.ajax({
-        url: "core/login.php",
+        url: "core/class.chiamate.php",
         type: 'POST',
         data: { azione: "controlloARXLogin", token: token},
     }).done(function(jqXHR, textStatus){
