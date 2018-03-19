@@ -6,7 +6,7 @@ function login(){
     jqXHR = $.ajax({
         url: "core/login.php",
         type: 'POST',
-        data: { azione: "CustomARXLogin", username: user, password: pass},
+        data: { azione: "loginPatrocinatore", username: user, password: pass},
     }).done(function(jqXHR, textStatus){
         $("#resultCall").html(jqXHR);
     });
