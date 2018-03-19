@@ -28,6 +28,9 @@ trait arxivar{
 
 
   private function arxLog($mess){
+    if(!$this->isDebug()){
+      return 0;
+    }
     $this->setJsonMess("Arx_mess",$mess);
   }
 
@@ -42,9 +45,10 @@ trait arxivar{
     $this->arxLog(' WCF chiamate');
     if( $this->loginResult->LoggedIn ){
       $this->arxLog(' Login eseguito con successo');
-      $this->sessionid = $loginResult->SessionId;
+      $this->sessionid = $this->loginResult->SessionId;
       $this->isLogin=true;
-      $ARX_Login->LogOut($sessionid); //rilascio la sessione per nuovi login
+      $ARX_Login->LogOut($this->sessionid); //rilascio la sessione per nuovi login
+      $this->arxLog(' Logout e registrazione');
       $this->registerSessionLogin();
       return true;
     }else{

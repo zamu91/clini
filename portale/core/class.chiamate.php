@@ -12,18 +12,22 @@ include_once $dir."trait.query.php";
 include_once $dir."trait.prenotazione.php";
 
 
-echo "fine inch ";
-
 class chiamate{
   use login,contratto,clinica,prenotazione,arxivar,sql;
   private $conn; //connessione oracle
   private $jsonMess;
-  private $debug;
+  private $debug=false;
+
+  public function isDebug(){
+    return $this->debug();
+
+  }
 
   public function debug(){
     $this->debug=true;
-
   }
+
+
 
   public function dSep(){
     return DIRECTORY_SEPARATOR;
