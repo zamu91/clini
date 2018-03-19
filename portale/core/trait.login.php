@@ -56,10 +56,9 @@ trait login {
     } else {
       $username=$this->getUsername();
       $password=$this->getPassword();
-
       $this->loginLog("nuova sessione, registro");
       $que = "INSERT INTO XDM_WEBSERVICE_SESSION (USERNAME, PASSWORD, ARXSESSION, SCADENZA)
-      VALUES ('$userName', '$password', '$loginResult->SessionId', TO_DATE('$expirationTime', 'YYYY-MM-DD HH24:MI:SS')) ";
+      VALUES ('$username', '$password', '$loginResult->SessionId', TO_DATE('$expirationTime', 'YYYY-MM-DD HH24:MI:SS')) ";
       $this->query($que);
       $this->setJsonMess('sessionMess','registrazione Sessione');
 
