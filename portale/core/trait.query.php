@@ -4,11 +4,22 @@ trait sql{
   private $dataPrepare=[];
   private $lastError;
   private $resActive;
+
+
+  private function logQuery($mess){
+    if($this->isDebug()){
+      $this->setJsonMess("query",$mess);
+    }
+
+  }
+
+
   //inclusione e creazione oggetto DB
   public function connetti(){
     $sep=$this->dSep();
     include_once __DIR__.$sep.'..'.$sep."config".$sep."conOCI.php";
     $this->conn=new conOCI();
+    $this->setJsonMess("Connesso a OCI");
   }
 
 
@@ -25,8 +36,10 @@ trait sql{
 
   public function query( $que ){
     if(empty($this->conn)){
+      $this->logQuery("Connessione vuota, da istanziare");
       $this->connetti();
     }
+    
     $stid = oci_parse($this->conn, $que);
     if( $stid != false ){
       if (!oci_execute($stid)) {
