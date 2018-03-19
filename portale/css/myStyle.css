@@ -1,0 +1,185 @@
+
+body{
+    font-family: Roboto Condensed, sans-serif !important;
+}
+
+.content h1,  .content h2,  .content h3,  .content h4,  .content h5,  .content h6, h1, h2, h3, h4, h5, h6, .title{
+    color:#009FE3;
+    font-family: oswald, sans-serif;
+}
+
+.fa-search{
+    color:#009FE3;
+}
+
+.content a, .breadcrumb a{
+    color: #009FE3;
+}
+
+.content a:hover, .breadcrumb a:hover{
+    color: #333;
+}
+
+/*
+.content p{
+font-family: Arial, sans-serif;
+}
+*/
+
+#logo{
+    max-width: 340px;
+}
+
+#logo-level{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#main-menu{
+
+    background-color: #009FE3;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: Oswald, sans-serif;
+}
+
+#main-menu .level-item a{
+    text-transform: uppercase;
+    color: white;
+    font-size: 18px;
+    margin-right: 15px !important;
+}
+
+#phone-email p {
+    font-size: 16px;
+    font-family: Oswald, sans-serif;
+    color: #009FE3;
+}
+
+#phone-email p a {
+    color: #009FE3;
+}
+
+#phone-email span{
+    font-size: 32px;
+    color: #009FE3;
+    font-weight: 500;
+}
+
+#statement{
+    text-transform: uppercase;
+    color: #fff;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    font-family: Oswald, sans-serif;
+    font-weight: 500;
+    background-color: #009FE3;
+}
+
+.search-title {
+    margin-bottom: 5px !important;
+}
+
+#statement .fa, a .fa{
+    margin-right: 10px;
+}
+
+a .fa{
+    margin-right: 5px;
+}
+
+#page-content{
+    padding-top: 10px;
+}
+
+#medicina-legale{
+    text-transform: uppercase;
+    font-family: Oswald, sans-serif;
+    font-weight: 500;
+    text-align: center;
+    padding-bottom: 15px !important;
+}
+
+#page-title{
+    text-transform: uppercase;
+    font-weight: 500;
+    text-align: center;
+}
+
+#single-title{
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+#prenotazioni {
+    background-image: url("http://www.euromedicalservice.com/wp-content/themes/EuromedicalWP/img/prenotazioni.png");
+    background-repeat: no-repeat;
+}
+
+#prenotazioni .content{
+    width: 50%;
+    text-align: center;
+    float:right;
+}
+
+#news h1{
+    color:#009FE3;
+    font-family: oswald, sans-serif;
+}
+
+#euromedical_foot{
+    background-color: #009FE3;
+}
+
+.custom-date{
+    display: block;
+    width:64px;
+    height:64px;
+    background-color: #009FE3;
+    padding-top: 11px;
+    -webkit-box-shadow: inset 0px -32px 0px 0px rgba(0,0,0,0.15);
+    -moz-box-shadow: inset 0px -32px 0px 0px rgba(0,0,0,0.15);
+    box-shadow: inset 0px -32px 0px 0px rgba(0,0,0,0.15);
+}
+
+.custom-date p{
+    font-family: oswald, sans-serif;
+    line-height: 130% !important;
+    margin-top: -5px;
+}
+
+.alignleft{
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+.alignright{
+    float: right;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.footer a {
+    color: #333
+}
+
+@media only screen and (max-width : 1216px) {
+    #prenotazioni {
+        background-image: none;
+        background-repeat: no-repeat;
+    }
+
+    #prenotazioni .content{
+        width: 100%;
+        text-align: left;
+        float:none;
+    }
+}
+
+@media only screen and (max-width :800px) {
+    #main-menu .level-item a{
+        margin-right: 0px !important;
+
+    }
+}
