@@ -13,7 +13,8 @@ class conOCI{
   }
 
   public function __construct(){
-    return $this->conn = $this->connettiOracle();
+     $this->conn = $this->connettiOracle();
+     return $this->conn;
   }
 
   public function connettiOracle($user = 'archdb', $pass = 'ARCHIVIO', $host = '//localhost:1521/xe'){
