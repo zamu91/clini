@@ -4,14 +4,13 @@ function login(){
     var pass = $("#password").val();
 
     jqXHR = $.ajax({
-        url: "core/login.php",
+        url: "core/class.chiamate.php",
         type: 'POST',
         data: { azione: "loginPatrocinatore", username: user, password: pass},
     }).done(function(jqXHR, textStatus){
         $("#resultCall").html(jqXHR);
     });
 }
-
 
 
 function controlloLogin(){

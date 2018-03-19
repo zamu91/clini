@@ -27,6 +27,10 @@ trait arxivar{
   }
 
 
+  private function arxLog($mess){
+    $this->setJsonMess("Arx_mess",$mess);
+  }
+
 
   public function loginArxivar(){
     $baseUrl=$this->baseUrl;
@@ -36,7 +40,7 @@ trait arxivar{
 
     $softwareName = "PHP Gestione cliniche";
     $this->loginResult = $ARX_Login->Login($userName, $password, $softwareName);
-
+    $this->arxLog(' WCF chiamate');
     if( $this->loginResult->LoggedIn ){
       $this->sessionid = $loginResult->SessionId;
       $this->isLogin=true;
