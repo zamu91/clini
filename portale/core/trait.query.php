@@ -88,17 +88,14 @@ trait sql{
       $col.="$colonna";
       $val.=" :$colonna";
     }
-
     $sql.=$col.") VALUES (".$val.")";
     $this->logQuery($sql);
     $compiled = oci_parse($con, $sql);
-
     foreach ($data as $col => $value) {
       oci_bind_by_name($compiled, ':'.$col, $value);
     }
     oci_execute($compiled);
   }
-
 }
 
 
