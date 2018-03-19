@@ -92,7 +92,7 @@ trait sql{
 
       $sql.=$col.") VALUE (".$val.")";
 
-
+      echo $sql." sql inserito";
       $this->logQuery($sql);
 
       $compiled = oci_parse($con, $sql);
