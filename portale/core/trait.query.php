@@ -78,6 +78,8 @@ trait sql{
       $data=$this->dataPrepare;
     }
     $sql=" INSERT INTO $tabName ( ";
+
+      $val="";
       $col="";
       foreach ($data as $col => $value) {
       if(!empty($col)){
@@ -87,6 +89,8 @@ trait sql{
       $col.="$col";
       $val.=" :$col";
       }
+
+
       $sql.=$col.") VALUE (".$val.")";
 
       $compiled = oci_parse($con, $sql);
