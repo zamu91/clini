@@ -46,7 +46,7 @@ class chiamate{
 
   public function setJsonMess($var,$mess,$dupli=1){
     if(($dupli=='1')&&(!empty($this->jsonMess[$var]) ) ) {
-      $this->jsonMess[$var].=$mess;
+      $this->jsonMess[$var].=" ".$mess;
     }else{
       $this->jsonMess[$var]=$mess;
     }

@@ -4,6 +4,10 @@ trait login {
 
   private $loginToken;
 
+  private function loginLog($mess){
+      $this->setJsonMess("login",$mess);
+  }
+
   private function checkExistSession(){
     $userName = $this->post("username");
     $password = $this->post("password");
@@ -16,15 +20,18 @@ trait login {
   }
 
   public function registerSessionLogin(){
+    $this->loginLog("Check login oracle");
     $loginResult=$this->getLoginResult();
     $app = $loginResult->ExpiratedTime;
     $expirationTime = substr($app, 0, 10).' '.substr($app, 11, 8);
     $row=$this->checkExistSession();
     if( !empty($row["USERNAME"]) ){
+      $this->loginLog("sessione trovata, aggiorno");
       $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = '$loginResult->SessionId',
       SCADENZA = TO_DATE('$expirationTime', 'YYYY-MM-DD HH24:MI:SS') ";
       $this->setJsonMess('sessionMess','aggiornamento Sessione');
     } else {
+      $this->loginLog("nuova sessione, registro");
       $que = "INSERT INTO XDM_WEBSERVICE_SESSION (USERNAME, PASSWORD, ARXSESSION, SCADENZA)
       VALUES ('$userName', '$password', '$loginResult->SessionId', TO_DATE('$expirationTime', 'YYYY-MM-DD HH24:MI:SS')) ";
       $this->setJsonMess('sessionMess','registrazione Sessione');
