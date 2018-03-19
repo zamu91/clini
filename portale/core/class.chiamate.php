@@ -15,7 +15,7 @@ include_once $dir."trait.prenotazione.php";
 echo "fine inch ";
 
 class chiamate{
-  use login,contratto,clinica,prenotazione,arxiva,sql;
+  use login,contratto,clinica,prenotazione,arxivar,sql;
   private $conn; //connessione oracle
   private $jsonMess;
   private $debug;
@@ -62,6 +62,8 @@ class chiamate{
     }
   }
 
+
+  
   public function launcher(){
     $azione=$this->post('azione');
     switch($azione){
