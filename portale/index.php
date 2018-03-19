@@ -15,8 +15,6 @@
     <input type="text" id="token" name="an_token" placeholder="Token"/>
     <button onclick="controlloLogin();">Controllo login</button>
     <hr>
-    
-
     <pre id="resultCall"></pre>
 </body>
 </html>
