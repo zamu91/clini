@@ -1,9 +1,15 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 echo "start inc lib ";
 $dir=__DIR__."/";
-include_once $dir."trait.arxivar.php";
+
 echo "esempio ".$dir."trait.arxivar.php";
+die;
+include_once $dir."trait.arxivar.php";
 
 include_once $dir."trait.login.php";
 include_once $dir."trait.contratto.php";
@@ -22,9 +28,7 @@ class chiamate{
 
   public function debug(){
     $this->debug=true;
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+
   }
 
   public function __construct(){
