@@ -17,6 +17,11 @@ function login(){
 }
 
 
+function getToken(){
+  return token;
+}
+
+
 function controlloLogin(){
     $("#resultCall").html("");
     var token = $("#token").val();

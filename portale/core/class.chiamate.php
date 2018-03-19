@@ -75,6 +75,11 @@ class chiamate{
       $this->loginArxivar();
       break;
 
+      case 'salvaClinica':
+      $this->salvaClinica();
+      break;
+
+
     } //end swtich
     $this->halt();
 

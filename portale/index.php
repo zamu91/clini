@@ -5,6 +5,7 @@
     <link type="text/css" href="css/myStyle.css" />
     <script type="text/javascript" src="js/jquery_3.3.1.js"></script>
     <script type="text/javascript" src="js/login.js"></script>
+    <script type="text/javascript" src="js/azioni.js"></script>
 </head>
 <body>
     <h1>CIAO!</h1>
@@ -15,6 +16,10 @@
     <input type="text" id="token" name="an_token" placeholder="Token"/>
     <button onclick="controlloLogin();">Controllo login</button>
     <hr>
+    <button onclick="salvaAmbulatorio();">
     <pre id="resultCall"></pre>
+
+
 </body>
+
 </html>
