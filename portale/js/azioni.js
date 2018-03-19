@@ -5,7 +5,7 @@ function ajaxDefault(data,done){
         url: "core/class.chiamate.php",
         type: 'POST',
         datatype:'json',
-        data;
+        data
     }).done(function(data, textStatus){
         alert(data);
         console.log(data);
