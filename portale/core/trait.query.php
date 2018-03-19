@@ -78,7 +78,6 @@ trait sql{
       $data=$this->dataPrepare;
     }
     $sql=" INSERT INTO $tabName ( ";
-
       $val="";
       $col="";
       foreach ($data as $col => $value) {
@@ -92,7 +91,7 @@ trait sql{
 
 
       $sql.=$col.") VALUE (".$val.")";
-
+      $this->logQuery($sql);
       $compiled = oci_parse($con, $sql);
 
       foreach ($data as $col => $value) {

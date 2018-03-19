@@ -17,8 +17,8 @@ function ajaxDefault(data,done){
 function salvaAmbulatorio(){
   alert('start salva');
   data={};
-  add=[];
-  add['nome']="test prova";
+  add={};
+  add.nome="test prova";
   data.data=add;
   data.azione="salvaClinica";
   ajaxDefault(data);
