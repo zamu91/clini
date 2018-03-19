@@ -19,7 +19,7 @@ trait sql{
     $sep=$this->dSep();
     include_once __DIR__.$sep.'..'.$sep."config".$sep."conOCI.php";
     $this->conn=new conOCI();
-    $this->setJsonMess("Connesso a OCI");
+    $this->setJsonMess("query","Connesso a OCI");
   }
 
 
@@ -39,7 +39,8 @@ trait sql{
       $this->logQuery("Connessione vuota, da istanziare");
       $this->connetti();
     }
-    
+
+
     $stid = oci_parse($this->conn, $que);
     if( $stid != false ){
       if (!oci_execute($stid)) {
