@@ -31,7 +31,7 @@ class chiamate{
 
   public function __construct(){
     $this->debug();
-    $path=$_SERVER["DOCUMENT_ROOW"].$this->dSep()."Arxivar".$this->dSep();
+    $path=$_SERVER["DOCUMENT_ROOT"].$this->dSep()."Arxivar".$this->dSep();
     require($path."ARX_Login.php");
     require($path."ARX_Dati.php");
     require($path."ARX_Search.php");
@@ -63,7 +63,7 @@ class chiamate{
   }
 
 
-  
+
   public function launcher(){
     $azione=$this->post('azione');
     switch($azione){
