@@ -20,7 +20,8 @@ trait sql{
     echo __DIR__.$sep.'..'.$sep."config".$sep."conOCI.php";
 
     include_once __DIR__.$sep.'..'.$sep."config".$sep."conOCI.php";
-    $this->conn=new conOCI();
+    $oc=new conOCI();
+    $this->conn=$oc->connettiOracle();
     $this->setJsonMess("query","Connesso a OCI");
   }
 
