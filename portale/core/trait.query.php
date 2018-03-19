@@ -17,6 +17,8 @@ trait sql{
   //inclusione e creazione oggetto DB
   public function connetti(){
     $sep=$this->dSep();
+    echo __DIR__.$sep.'..'.$sep."config".$sep."conOCI.php";
+
     include_once __DIR__.$sep.'..'.$sep."config".$sep."conOCI.php";
     $this->conn=new conOCI();
     $this->setJsonMess("query","Connesso a OCI");
