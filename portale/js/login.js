@@ -1,3 +1,5 @@
+var token="";
+
 function login(){
     $("#resultCall").html("");
     var user = $("#username").val();
@@ -6,9 +8,11 @@ function login(){
     jqXHR = $.ajax({
         url: "core/class.chiamate.php",
         type: 'POST',
+        datatype:'json',
         data: { azione: "loginPatrocinatore", username: user, password: pass},
-    }).done(function(jqXHR, textStatus){
-        $("#resultCall").html(jqXHR);
+    }).done(function(data, textStatus){
+        token=data.token;
+        $("#resultCall").html(data);
     });
 }
 

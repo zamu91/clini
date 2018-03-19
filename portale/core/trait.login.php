@@ -27,7 +27,7 @@ trait login {
 
 
   private function loginLog($mess){
-    $this->setJsonMess("login",$mess);
+    $this->setJsonMess("loginMess",$mess);
   }
 
   private function checkExistSession(){
@@ -47,9 +47,13 @@ trait login {
     $app = $loginResult->ExpiratedTime;
     $expirationTime = substr($app, 0, 10).' '.substr($app, 11, 8);
     $row=$this->checkExistSession();
+
+    $session=$loginResult->SessionId;
+
+
     if( !empty($row["USERNAME"]) ){
       $this->loginLog("sessione trovata, aggiorno");
-      $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = '$loginResult->SessionId',
+      $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = '$session',
       SCADENZA = TO_DATE('$expirationTime', 'YYYY-MM-DD HH24:MI:SS') ";
       $res = $this->query($que);
       $this->setJsonMess('sessionMess','aggiornamento Sessione');
@@ -58,13 +62,14 @@ trait login {
       $password=$this->getPassword();
       $this->loginLog("nuova sessione, registro");
       $que = "INSERT INTO XDM_WEBSERVICE_SESSION (USERNAME, PASSWORD, ARXSESSION, SCADENZA)
-      VALUES ('$username', '$password', '$loginResult->SessionId', TO_DATE('$expirationTime', 'YYYY-MM-DD HH24:MI:SS')) ";
+      VALUES ('$username', '$password', '$session', TO_DATE('$expirationTime', 'YYYY-MM-DD HH24:MI:SS')) ";
       $this->query($que);
       $this->setJsonMess('sessionMess','registrazione Sessione');
 
     }
+    $this->setJsonMess("token",$session);
+    $this->setJsonMess("login",true);
     $this->loginToken=true;
-
   }
 
   public function controlloARXLogin(){
