@@ -10,7 +10,15 @@ trait sql{
     if($this->isDebug()){
       $this->setJsonMess("query",$mess);
     }
+  }
 
+
+  private function getConn(){
+    if(empty($this->conn)){
+      $this->logQuery("Connessione vuota, da istanziare");
+      $this->connetti();
+    }
+    return $this->conn;
   }
 
   //inclusione e creazione oggetto DB
@@ -35,10 +43,7 @@ trait sql{
 
 
   public function query( $que ){
-    if(empty($this->conn)){
-      $this->logQuery("Connessione vuota, da istanziare");
-      $this->connetti();
-    }
+    $conn=$this->getConn();
 
 
     $stid = oci_parse($this->conn, $que);
