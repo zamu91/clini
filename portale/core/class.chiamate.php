@@ -5,7 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 echo "start inc lib ";
-$dir=__DIR__."/";
+$dir=__DIR__.DIRECTORY_SEPARATOR;
 
 echo "esempio ".$dir."trait.arxivar.php";
 die;
@@ -31,12 +31,17 @@ class chiamate{
 
   }
 
+  public function dSep(){
+    return DIRECTORY_SEPARATOR;
+  }
+
   public function __construct(){
     $this->debug();
-    require($_SERVER["DOCUMENT_ROOT"]."/Arxivar/ARX_Login.php");
-    require($_SERVER["DOCUMENT_ROOT"]."/Arxivar/ARX_Dati.php");
-    require($_SERVER["DOCUMENT_ROOT"]."/Arxivar/ARX_Search.php");
-    require($_SERVER["DOCUMENT_ROOT"]."/Arxivar/ARX_Documenti.php");
+    $path=$_SERVER["DOCUMENT_ROOW"].$this->dSep()."Arxivar".$this->dSep();
+    require($path."ARX_Login.php");
+    require($path."ARX_Dati.php");
+    require($path."ARX_Search.php");
+    require($path."ARX_Documenti.php");
   }
 
 
