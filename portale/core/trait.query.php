@@ -103,7 +103,13 @@ trait sql{
   }
 
   public function queryBind($id,$val){
-    oci_bind_by_name($this->stmtPrepare, ":$id", $val, -1);
+    $stmt=$this->stmtPrepare;
+    if(empty($stmt)){
+      echo "errroe bind dataset vuoto";
+      return false;
+
+    }
+    oci_bind_by_name($this->stmtPrepare, ":$id", $val);
   }
 
   public function executeQuery(){
