@@ -43,13 +43,15 @@ trait login {
     $this->queryBind("user",$username);
     $this->executeQuery();
     $row=$this->fetch();
+    print_r($row);
+    die;
     $this->idArxivar=$row['UTENTE'];
   }
 
 
   private function checkExistSession(){
-    $userName = $this->post("username");
-    $password = $this->post("password");
+    $userName = $this->getUsername();
+    $password = $this->getPassword();
 
     $que = "SELECT  ARXSESSION,
     TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
@@ -72,10 +74,7 @@ trait login {
     $app = $loginResult->ExpiratedTime;
     $expirationTime = substr($app, 0, 10).' '.substr($app, 11, 8);
     $row=$this->checkExistSession();
-
     $session=$loginResult->SessionId;
-
-
     if( !empty($row["USERNAME"]) ){
       $this->loginLog("sessione trovata, aggiorno");
       $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = '$session',
