@@ -55,17 +55,10 @@ trait login {
     FROM XDM_WEBSERVICE_SESSION
     WHERE USERNAME = :us AND PASSWORD = :pass ";
 
-
     $this->queryPrepare($que);
     $this->queryBind("us", $userName);
-
-    echo "ok<br>";
     $this->queryBind("pass", $password);
-    echo "ok<br>";
-    echo "ok<br>";
-
     $this->executeQuery();
-    echo "ok<br>";
 
     $row=$this->fetch();
     $this->setIdArxivar();
@@ -81,16 +74,12 @@ trait login {
     $session=$loginResult->SessionId;
     if( !empty($row["USERNAME"]) ){
       $this->loginLog("sessione trovata, aggiorno");
-      echo "aggiorno que";
-      $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = :session,
-      SCADENZA = TO_DATE(:expiration, 'YYYY-MM-DD HH24:MI:SS') ";
-      echo "prepare";
+
+      $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = :sess,
+      SCADENZA = TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS') ";
       $this->queryPrepare($que);
-      echo "bind1";
-      $this->queryBind('session',$session);
-      echo "bind2";
-      $this->queryBind('expiration',$expirationTime);
-      echo "dsdas";
+      $this->queryBind('sess',$session);
+      $this->queryBind('expi',$expirationTime);
       $this->executePrepare();
 
       $this->commit();
@@ -121,8 +110,8 @@ trait login {
 
     $this->queryPrepare("SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
     FROM XDM_WEBSERVICE_SESSION
-    WHERE ARXSESSION = :token AND SYSDATE <= SCADENZA");
-    $this->queryBind("token",$token);
+    WHERE ARXSESSION = :tok AND SYSDATE <= SCADENZA");
+    $this->queryBind("tok",$token);
     $this->executePrepare();
     //$this->query($que);
     $this->commit();
