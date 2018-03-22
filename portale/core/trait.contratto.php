@@ -3,7 +3,12 @@
 trait contratto{
 
   public function insContratto(){
-    $this->post("");
+    $data=$this->post("data");
+    $data['idPatrocinatore']=$this->getIdArxivar();
+
+    $this->insPrepare('ambulatorio_contratto',$data);
+
+    
 
 
 

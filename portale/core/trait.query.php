@@ -2,7 +2,7 @@
 
 trait sql{
   private $dataPrepare=[];
-  private $lastError;
+  private $dbError;
   private $resActive;
 
 
@@ -48,9 +48,9 @@ trait sql{
 
     $stid = oci_parse($this->conn, $que);
     if( $stid != false ){
-      if (!oci_execute($stid)) {
+      if (!oci_execute($stid,OCI_NO_AUTO_COMMIT)) {
         $e = oci_error($stid);
-        $this->lastError=$e;
+        $this->setDbError($e);
         $this->resActive='';
         return false;
       }else  {
@@ -60,28 +60,47 @@ trait sql{
     } else {
       $e = oci_error($stid);
       $this->resActive='';
-      $this->lastError=$e;
+      $this->setDbError($e);
       return false;
     }
   }
 
-public function queryPrepare($query){
-  $conn=$this->getConn();
-  $stmt = oci_parse($conn, $query);
-  $this->stmtPrepare=$stmt;
+  public function queryPrepare($query){
+    $conn=$this->getConn();
+    $stmt = oci_parse($conn, $query);
+    $this->stmtPrepare=$stmt;
+  }
 
+  private function setDbError($error){
+    $this->dbErro=$error;
+  }
 
+  public function getDbError(){
+    return $this->dbError;
+  }
 
-}
+  public function commit(){
+    $conn=$this->getConn();
+    if(!oci_commit($conn)) {
+      $e = oci_error($conn);
+      $error=$e['message'];
+      $this->logQuery($error);
+      $this->setDbError($error);
+      return false;
+    }else{
+      return false;
+    }
 
-public function queryBind($id,$val){
+  }
+
+  public function queryBind($id,$val){
     oci_bind_by_name($this->stmtPrepare, ":$id", $val, -1);
-}
+  }
 
-public function executePrepare(){
-      oci_execute($this->smtPrepare, OCI_DEFAULT);
-      $this->resActive=$this->smtPrepare;
-}
+  public function executePrepare(){
+    oci_execute($this->smtPrepare, OCI_NO_AUTO_COMMIT);
+    $this->resActive=$this->smtPrepare;
+  }
 
 
   public function adValPreare($col,$val){
