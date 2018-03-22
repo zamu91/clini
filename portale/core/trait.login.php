@@ -103,7 +103,7 @@ trait login {
 
     $this->queryPrepare("SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
     FROM XDM_WEBSERVICE_SESSION
-    WHERE ARXSESSION = ':token' AND SYSDATE <= SCADENZA");
+    WHERE ARXSESSION = :token AND SYSDATE <= SCADENZA");
     $this->queryBind("token",$token);
     $this->executePrepare();
     //$this->query($que);
