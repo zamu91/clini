@@ -50,7 +50,7 @@ trait sql{
     if( $stid != false ){
       if (!oci_execute($stid,OCI_NO_AUTO_COMMIT)) {
         $e = oci_error($stid);
-        $this->setDbError($e);
+        $this->setDbError($e." -- ".$que);
         $this->resActive='';
         return false;
       }else  {
