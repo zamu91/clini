@@ -39,7 +39,7 @@ trait login {
 
   private function setIdArxivar(){
     $username=$this->getUsername();
-    $this->queryPrepare(" SELECT dm_utente.UTENTE from dm_utente where description= :us ");
+    $this->queryPrepare(" SELECT dm_utenti.UTENTE from dm_utenti where description= :us ");
     $this->queryBind("us",$username);
     $this->executeQuery();
     $row=$this->fetch();
