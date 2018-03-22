@@ -118,6 +118,7 @@ trait sql{
 
   public function executePrepare(){
     oci_execute($this->stmtPrepare, OCI_NO_AUTO_COMMIT);
+
     $this->resActive=$this->stmtPrepare;
 
 

@@ -60,7 +60,11 @@ trait login {
     $this->queryPrepare($que);
     $this->queryBind("vito", $userName);
     //$this->queryBind("credenz", $password);
+    $this->debugHtml("Prima execute");
+
     $this->executeQuery();
+    $this->debugHtml("Dopo execute");
+
 
     $row=$this->fetch();
     $this->setIdArxivar();
