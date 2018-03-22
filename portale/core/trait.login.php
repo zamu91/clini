@@ -37,10 +37,9 @@ trait login {
     $this->setJsonMess("loginMess",$mess);
   }
 
-
   private function setIdArxivar(){
     $username=$this->getUsername();
-    $this->prepareQuery(" SELECT UTENTE from dm_utente where description= ':user' ");
+    $this->queryPrepare(" SELECT UTENTE from dm_utente where description= ':user' ");
     $this->queryBind("user",$username);
     $this->executeQuery();
     $row=$this->fetch();
