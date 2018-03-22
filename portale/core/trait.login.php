@@ -52,7 +52,9 @@ trait login {
     $password = $this->getPassword();
       $que = "SELECT *
     FROM XDM_WEBSERVICE_SESSION ses
-    WHERE ses.USERNAME = :ut AND ses.PASSWORD = :credenz ";
+    where ARXSESSION= :ut
+    ";
+    // WHERE ses.USERNAME = :ut AND ses.PASSWORD = :credenz ";
     $this->debugHtml($userName);
     $this->debugHtml($password);
     $this->queryPrepare($que);
