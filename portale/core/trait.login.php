@@ -76,6 +76,7 @@ trait login {
       echo "aggiorno que";
       $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = :session,
       SCADENZA = TO_DATE(:expiration, 'YYYY-MM-DD HH24:MI:SS') ";
+      echo "prepare";
       $this->queryPrepare($que);
       echo "bind1";
       $this->queryBind('session',$session);
@@ -85,6 +86,7 @@ trait login {
       $this->executePrepare();
 
       $this->commit();
+      die;
       $this->setJsonMess('sessionMess','aggiornamento Sessione');
     } else {
       $username=$this->getUsername();
