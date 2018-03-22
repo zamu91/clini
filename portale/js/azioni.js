@@ -58,12 +58,12 @@ function getValGiorni(nome){
 
 function getGiorniContratto(){
   giorni={};
-  giorni.lun=getValGiorni('lun');
-  giorni.mar=getValGiorni('mar');
-  giorni.mer=getValGiorni('mer');
-  giorni.gio=getValGiorni('gio');
-  giorni.ven=getValGiorni('ven');
-  giorni.sab=getValGiorni('sab');
+  giorni.Monday=getValGiorni('lun');
+  giorni.Tuesday=getValGiorni('mar');
+  giorni.Wednesday=getValGiorni('mer');
+  giorni.Thursday=getValGiorni('gio');
+  giorni.Friday=getValGiorni('ven');
+  giorni.Saturday=getValGiorni('sab');
   return giorni;
 
 }
