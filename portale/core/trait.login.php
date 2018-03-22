@@ -54,7 +54,7 @@ trait login {
   private function checkExistSession(){
     $userName = $this->getUsername();
     $password = $this->getPassword();
-
+    echo "ecccomi";
     $que = "SELECT  ARXSESSION,
     TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
     FROM XDM_WEBSERVICE_SESSION
@@ -65,6 +65,9 @@ trait login {
     $this->queryBind("password", $password);
     $this->executeQuery();
     $row=$this->fetch();
+    echo "dopo prepare";
+    print_r($row);
+    die;
 
     $this->setIdArxivar();
     return $row;
