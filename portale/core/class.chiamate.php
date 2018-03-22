@@ -19,7 +19,7 @@ class chiamate{
   private $debug=false;
 
   public function isDebug(){
-    return $this->debug();
+    return $this->debug;
 
   }
 
@@ -31,6 +31,15 @@ class chiamate{
 
   public function dSep(){
     return DIRECTORY_SEPARATOR;
+  }
+
+  private function debugHtml($mess){
+
+      if(!$this->isDebug()){
+        return false;
+      }
+      echo "<p>$mess</p>";
+
   }
 
   public function __construct(){

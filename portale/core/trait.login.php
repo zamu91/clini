@@ -37,10 +37,9 @@ trait login {
     $this->setJsonMess("loginMess",$mess);
   }
 
-
   private function setIdArxivar(){
     $username=$this->getUsername();
-    $this->prepareQuery(" SELECT UTENTE from dm_utente where description= ':user' ");
+    $this->queryPrepare(" SELECT UTENTE from dm_utente where description= :user ");
     $this->queryBind("user",$username);
     $this->executeQuery();
     $row=$this->fetch();
@@ -49,18 +48,18 @@ trait login {
 
 
   private function checkExistSession(){
-    $userName = $this->post("username");
-    $password = $this->post("password");
-
-    // TODO: AGGIUNGERE id arxivar
-    $que = "SELECT  ARXSESSION,
+    $userName = $this->getUsername();
+    $password = $this->getPassword();
+    $que = "SELECT  ARXSESSION,USERNAME,
     TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
     FROM XDM_WEBSERVICE_SESSION
-    WHERE USERNAME = ':userName' AND PASSWORD = ':password' ";
-    // $res = $this->query($que);
-    $this->prepareQuery($que);
-    $this->queryBind("userName", $userName);
-    $this->queryBind("password", $password);
+    WHERE USERNAME = :us AND PASSWORD = :pass ";
+
+    $this->queryPrepare($que);
+    $this->queryBind("us", $userName);
+    $this->queryBind("pass", $password);
+    $this->executeQuery();
+
     $row=$this->fetch();
     $this->setIdArxivar();
     return $row;
@@ -70,19 +69,28 @@ trait login {
     $this->loginLog("Check login oracle");
     $loginResult=$this->getLoginResult();
     $app = $loginResult->ExpiratedTime;
+    $this->debugHtml("Start register login");
     $expirationTime = substr($app, 0, 10).' '.substr($app, 11, 8);
+    $this->debugHtml("Check register login");
     $row=$this->checkExistSession();
-
+    $this->debugHtml("after check");
     $session=$loginResult->SessionId;
-
-
     if( !empty($row["USERNAME"]) ){
       $this->loginLog("sessione trovata, aggiorno");
-      $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = '$session',
-      SCADENZA = TO_DATE('$expirationTime', 'YYYY-MM-DD HH24:MI:SS') ";
-      $res = $this->query($que);
-      $this->setJsonMess('sessionMess','aggiornamento Sessione');
+      $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = :sess,
+      SCADENZA = TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS') ";
+      $this->debugHtml("Preparo la query");
+
+      $this->queryPrepare($que);
+      $this->queryBind('sess',$session);
+      $this->debugHtml("bind");
+      $this->queryBind('expi',$expirationTime);
+      $this->debugHtml("expi");
+
+      $this->executePrepare();
+      $this->debugHtml("after check");
       $this->commit();
+      $this->setJsonMess('sessionMess','aggiornamento Sessione');
     } else {
       $username=$this->getUsername();
       $password=$this->getPassword();
@@ -108,8 +116,8 @@ trait login {
 
     $this->queryPrepare("SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
     FROM XDM_WEBSERVICE_SESSION
-    WHERE ARXSESSION = ':token' AND SYSDATE <= SCADENZA");
-    $this->queryBind("token",$token);
+    WHERE ARXSESSION = :tok AND SYSDATE <= SCADENZA");
+    $this->queryBind("tok",$token);
     $this->executePrepare();
     //$this->query($que);
     $this->commit();

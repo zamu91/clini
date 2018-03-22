@@ -4,6 +4,9 @@ trait sql{
   private $dataPrepare=[];
   private $dbError;
   private $resActive;
+  private $bufQuery;
+  private $stmtPrepare;
+
 
 
   private function logQuery($mess){
@@ -67,6 +70,7 @@ trait sql{
 
   public function queryPrepare($query){
     $conn=$this->getConn();
+    $this->bufQuery=$query;
     $stmt = oci_parse($conn, $query);
     $this->stmtPrepare=$stmt;
   }
@@ -102,9 +106,15 @@ trait sql{
     oci_bind_by_name($this->stmtPrepare, ":$id", $val, -1);
   }
 
+  public function executeQuery(){
+    $this->executePrepare();
+  }
+
   public function executePrepare(){
-    oci_execute($this->smtPrepare, OCI_NO_AUTO_COMMIT);
-    $this->resActive=$this->smtPrepare;
+    oci_execute($this->stmtPrepare, OCI_NO_AUTO_COMMIT);
+    $this->resActive=$this->stmtPrepare;
+
+
   }
 
 
