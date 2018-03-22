@@ -74,6 +74,7 @@ trait login {
       SCADENZA = TO_DATE('$expirationTime', 'YYYY-MM-DD HH24:MI:SS') ";
       $res = $this->query($que);
       $this->setJsonMess('sessionMess','aggiornamento Sessione');
+      $this->commit();
     } else {
       $username=$this->getUsername();
       $password=$this->getPassword();
@@ -81,11 +82,13 @@ trait login {
       $que = "INSERT INTO XDM_WEBSERVICE_SESSION (USERNAME, PASSWORD, ARXSESSION, SCADENZA)
       VALUES ('$username', '$password', '$session', TO_DATE('$expirationTime', 'YYYY-MM-DD HH24:MI:SS')) ";
       $this->query($que);
+      $this->commit();
       $this->setJsonMess('sessionMess','registrazione Sessione');
 
     }
     $this->setJsonMess("token",$session);
     $this->setJsonMess("login",true);
+
     $this->loginToken=true;
   }
 
@@ -100,6 +103,7 @@ trait login {
     $this->queryBind("token",$token);
     $this->executePrepare();
     //$this->query($que);
+    $this->commit();
 
 
     $row =$this->fetch();

@@ -7,10 +7,9 @@ trait contratto{
     $data['idPatrocinatore']=$this->getIdArxivar();
 
     $this->insPrepare('ambulatorio_contratto',$data);
-
     
 
-
+    $this->commit();
 
   }
 

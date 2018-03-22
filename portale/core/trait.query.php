@@ -90,6 +90,11 @@ trait sql{
     }else{
       return false;
     }
+  }
+
+  public function rollback(){
+    $conn=$this->getConn();
+    oci_rollback($conn);
 
   }
 
