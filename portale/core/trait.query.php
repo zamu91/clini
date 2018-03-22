@@ -109,7 +109,7 @@ trait sql{
       return false;
 
     }
-    oci_bind_by_name($this->stmtPrepare, ":$id", $val);
+    oci_bind_by_name($this->stmtPrepare, ":$id", $val,-1,SQLT_CHR);
   }
 
   public function executeQuery(){
