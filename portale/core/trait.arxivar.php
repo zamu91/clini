@@ -215,6 +215,132 @@ trait arxivar{
             }
         }
 
+        public function scriviDatiProfilo(){
+
+          // classi necessarie
+          $ARX_Login = new ARX_Login\ARX_Login($baseUrl."ARX_Login.asmx?WSDL");
+          $ARX_Dati = new ARX_Dati\ARX_Dati($baseUrl."ARX_Dati.asmx?WSDL");
+
+          $loginResult = $ARX_Login->Login($userName, $password, $softwareName);
+
+          if ($loginResult->ArxLogOnErrorType != Arx_Login\ArxLogOnErrorType::None)
+              die("Logon Failed: ".$loginResult->ArxLogOnErrorType);
+
+          $sessionid = $loginResult->SessionId;
+
+          try
+          {
+              // funzione per recuperare tutte le maschere
+              //echo "dati di maschera<br />";
+              $masks = $ARX_Dati->Dm_MaskGetData($sessionid);
+
+              // funzione per utilizzare una maschera con uno specifico ID
+              //echo "utilizzo la maschera specifica<br />";
+              $profileMv = $ARX_Dati->Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId($sessionid, $maskid);
+
+              // DM profile default
+              //var_dump($profileMv->DmProfileDefault);
+
+              // DmMaskDetails contiene l'elenco dei campi previsti nella maschera
+              //echo "elenco campi della maschera specifica<br />";
+              $details = $profileMv->DmMaskDetails->Dm_MaskDetail;
+
+              //echo "dati DmProfileDEfault<br />";
+              $profile = $profileMv->DmProfileDefault->Dm_Profile_Insert_Base;
+              // @var $profile \ARX_Dati\Dm_Profile_Insert_Base //
+              echo "<pre>";
+              var_dump($profile);
+              echo "</pre><hr/>";
+              die;
+
+
+              foreach ($details as $field) {
+
+                  switch ($field->FIELD_KIND) {
+                      case ARX_Dati\Dm_MaskDetail_FieldKind::From:
+                          // mittente
+                          echo "mittente<br />";
+                          break;
+                      case ARX_Dati\Dm_MaskDetail_FieldKind::To:
+                          // destinatario
+                          echo "destinatario<br />";
+                          break;
+                      case ARX_Dati\Dm_MaskDetail_FieldKind::Oggetto:
+                          // Oggetto
+                          $profile->DocName = $_POST['oggetto'];
+
+                          break;
+                      case ARX_Dati\Dm_MaskDetail_FieldKind::Aggiuntivo:
+                          // Aggiuntivo
+
+                          // compilo i campi aggiuntivi
+                          foreach ($profile->Aggiuntivi->Aggiuntivo_Base as $agg) {
+                              if(array_key_exists($agg->Nome,$_POST)){
+                                $agg->Valore=$_POST[$agg->Nome];
+                              }
+                          }
+
+                          break;
+                      case ARX_Dati\Dm_MaskDetail_FieldKind::DataDoc:
+                          // DataDoc - FORMATO - YYYY-MM-DD
+                          // TODO controllo formato data
+                          $profile->DataDoc = $_POST['DataDoc'];;
+
+                          break;
+                      /*case ARX_Dati\Dm_MaskDetail_FieldKind::File:
+                          echo "File<br />";
+                          // campo aggiuntivo, identifiato da $field->FIELD_ID
+                          break;*/
+                      // ....
+                  }
+
+                  //var_dump($field->Get_Property_Value_By_Name($field->FIELD_ID));
+              }
+              /*echo "<pre>";
+              var_dump($profile->Aggiuntivi->Aggiuntivo_Base);
+              echo "</pre>";*/
+
+
+
+
+              // devo convertire Dm_Profile_Insert_Base in Dm_Profile_Insert_For_Mask
+              $profileForMask = new \ARX_Dati\Dm_Profile_Insert_For_Mask();
+
+              /*echo "m_Profile_Insert_For_Mask<br />";
+              echo "<pre>";
+              var_dump($profileForMask);
+              echo "</pre>";*/
+
+              $props = get_object_vars($profile);
+              foreach ($props as $key => $value) {
+                  $profileForMask->$key = $value;
+              }
+
+              $profileForMask->DmMaskId = $profileMv->DmMask->ID;
+              $profileForMask->Reason = \ARX_Dati\Dm_Mask_Type::Archiviazione;
+              $profileForMask->DataFile = date("c");
+
+              // eseguo l'archiviazione
+              $result = $ARX_Dati->Dm_Profile_Insert_For_Mask($sessionid, $profileForMask);
+
+              // verifico il risultato
+              if ($result->EXCEPTION == \ARX_Dati\Security_Exception::Nothing) {
+                  echo "Importazione completata con system ID: ".$result->PROFILE->DOCNUMBER."<hr/>";
+              } else {
+                  echo "Errore in fase di importazione: ".$result->EXCEPTION."; ".$result->MESSAGE."<hr/>";
+              }
+
+
+          } catch (Exception $e) {
+              echo 'Caught exception: ',  $e->getMessage(), "\n";
+          }
+
+
+          // esecuzione logout
+          $ARX_Login->LogOut($sessionid);
+
+        }
+
         public function getLoginResult(){
             if(empty($this->loginResult)){
                 return false;
@@ -247,6 +373,9 @@ trait arxivar{
             }
         }
 
+        private function loginArxivarServizio(){
+
+        }
 
         public function loginArxivar(){
             $baseUrl=$this->baseUrl;
