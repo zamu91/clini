@@ -49,6 +49,9 @@ trait login {
   }
 
 
+  
+
+
   private function checkExistSession(){
     $userName = $this->post("username");
     $password = $this->post("password");
