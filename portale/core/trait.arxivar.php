@@ -59,8 +59,10 @@ trait arxivar{
     }
   }
 
+  public function impersonateLogin(){
+
+  }
+
 }
-
-
-
+// end class
 ?>
