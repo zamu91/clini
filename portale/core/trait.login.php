@@ -39,8 +39,8 @@ trait login {
 
   private function setIdArxivar(){
     $username=$this->getUsername();
-    $this->queryPrepare(" SELECT UTENTE from dm_utente where description= :user ");
-    $this->queryBind("user",$username);
+    $this->queryPrepare(" SELECT dm_utente.UTENTE from dm_utente where description= :us ");
+    $this->queryBind("us",$username);
     $this->executeQuery();
     $row=$this->fetch();
     $this->idArxivar=$row['UTENTE'];
@@ -50,21 +50,15 @@ trait login {
   private function checkExistSession(){
     $userName = $this->getUsername();
     $password = $this->getPassword();
-      $que = "SELECT *
-    FROM XDM_WEBSERVICE_SESSION
-    where ARXSESSION= :vito
-    ";
-    // WHERE ses.USERNAME = :ut AND ses.PASSWORD = :credenz ";
+      $que = "SELECT  ARXSESSION,ses.USERNAME, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
+    FROM XDM_WEBSERVICE_SESSION ses
+    WHERE ses.USERNAME = :ut AND ses.PASSWORD = :credenz ";
     $this->debugHtml($userName);
     $this->debugHtml($password);
     $this->queryPrepare($que);
-    $this->queryBind("vito", $userName);
-    //$this->queryBind("credenz", $password);
-    $this->debugHtml("Prima execute");
-
+    $this->queryBind("ut", $userName);
+    $this->queryBind("credenz", $password);
     $this->executeQuery();
-    $this->debugHtml("Dopo execute");
-
 
     $row=$this->fetch();
     $this->setIdArxivar();
