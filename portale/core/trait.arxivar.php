@@ -31,7 +31,7 @@ trait arxivar{
     if(!$this->isDebug()){
       return 0;
     }
-    $this->setJsonMess("Arx_mess",$mess);
+    $this->setJsonMess("Arx_log",$mess);
   }
 
 
