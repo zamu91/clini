@@ -50,10 +50,10 @@ trait login {
   private function checkExistSession(){
     $userName = $this->getUsername();
     $password = $this->getPassword();
-    $que = "SELECT  ARXSESSION,ses.USERNAME,
+      $que = "SELECT  ARXSESSION,`USERNAME`,
     TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
     FROM XDM_WEBSERVICE_SESSION ses
-    WHERE ses.USERNAME=:utente AND ses.PASSWORD=:credenz ";
+    WHERE `USERNAME`= :utente AND `PASSWORD` = :credenz ";
     $this->debugHtml($userName);
     $this->debugHtml($password);
     $this->queryPrepare($que);
