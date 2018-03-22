@@ -38,8 +38,14 @@ trait login {
   }
 
 
-  private function setIdArxivar($id){
-    $this->idArxivar=$id;
+  private function setIdArxivar(){
+    $username=$this->getUsername();
+    $this->prepareQuery(" SELECT UTENTE from dm_utente where description= :user ");
+    $this->queryBind("user",$username);
+    $this->executeQuery();
+    $row=$this->fetch();
+    $this->idArxivar=$row['UTENTE'];
+
   }
 
 
@@ -54,7 +60,8 @@ trait login {
     WHERE USERNAME = '$userName' AND PASSWORD = '$password' ";
     $res = $this->query($que);
     $row=$this->fetch();
-    $this->setIdArxivar($row['idArxivar']);
+    //    $this->setIdArxivar($row['idArxivar']);
+    $this->setIdArxivar();
     return $row;
   }
 
@@ -97,7 +104,7 @@ trait login {
     $que = "SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
     FROM XDM_WEBSERVICE_SESSION
     WHERE ARXSESSION = '$token' AND SYSDATE <= SCADENZA";
-    
+
     $this->queryPrepare("SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
     FROM XDM_WEBSERVICE_SESSION
     WHERE ARXSESSION = ':token' AND SYSDATE <= SCADENZA");
