@@ -51,7 +51,7 @@ trait login {
     $userName = $this->getUsername();
     $password = $this->getPassword();
       $que = "SELECT *
-    FROM XDM_WEBSERVICE_SESSION ses
+    FROM XDM_WEBSERVICE_SESSION
     where ARXSESSION= :ut
     ";
     // WHERE ses.USERNAME = :ut AND ses.PASSWORD = :credenz ";
@@ -59,7 +59,7 @@ trait login {
     $this->debugHtml($password);
     $this->queryPrepare($que);
     $this->queryBind("ut", $userName);
-    $this->queryBind("credenz", $password);
+    //$this->queryBind("credenz", $password);
     $this->executeQuery();
 
     $row=$this->fetch();
