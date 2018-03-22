@@ -7,7 +7,14 @@ trait login {
   public $username;
   public $password;
 
+  private $idArxivar;
 
+  private function getIdArxivar(){
+    if(empty($this->idArxivar)){
+      return false;
+    }
+    return $this->idArxivar;
+  }
 
   private function getUsername(){
     if(empty($this->username)){
@@ -30,14 +37,24 @@ trait login {
     $this->setJsonMess("loginMess",$mess);
   }
 
+
+  private function setIdArxivar($id){
+    $this->idArxivar=$id;
+  }
+
+
   private function checkExistSession(){
     $userName = $this->post("username");
     $password = $this->post("password");
-    $que = "SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
+
+    // TODO: AGGIUNGERE id arxivar
+    $que = "SELECT  ARXSESSION,
+    TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
     FROM XDM_WEBSERVICE_SESSION
     WHERE USERNAME = '$userName' AND PASSWORD = '$password' ";
     $res = $this->query($que);
     $row=$this->fetch();
+    $this->setIdArxivar($row['idArxivar']);
     return $row;
   }
 

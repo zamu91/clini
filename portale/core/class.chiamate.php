@@ -79,6 +79,10 @@ class chiamate{
       $this->salvaClinica();
       break;
 
+      case 'insContratto':
+      $this->insContratto();
+      break;
+
 
     } //end swtich
     $this->halt();

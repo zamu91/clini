@@ -2,6 +2,13 @@
 
 trait contratto{
 
+  public function insContratto(){
+    $this->post("");
+
+
+
+  }
+
   public function generaContratto(){
 
 

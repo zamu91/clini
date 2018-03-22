@@ -65,7 +65,23 @@ trait sql{
     }
   }
 
+public function queryPrepare($query){
+  $conn=$this->getConn();
+  $stmt = oci_parse($conn, $query);
+  $this->stmtPrepare=$stmt;
 
+
+
+}
+
+public function bind($id,$val){
+    oci_bind_by_name($this->stmtPrepare, ":$id", $val, -1);
+}
+
+public function executePrepare(){
+      oci_execute($this->smtPrepare, OCI_DEFAULT);
+      $this->resActive=$this->smtPrepare;
+}
 
 
   public function adValPreare($col,$val){
