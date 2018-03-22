@@ -53,14 +53,14 @@ trait login {
     $que = "SELECT  ARXSESSION,USERNAME,
     TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
     FROM XDM_WEBSERVICE_SESSION
-    WHERE USERNAME = :userName AND PASSWORD = :password ";
+    WHERE USERNAME = :USERNAME AND PASSWORD = :PASSWORD ";
 
 
     echo "ok<br>";
     echo "stsat";
     $this->queryPrepare($que);
-    $this->queryBind("userName", $userName);
-    $this->queryBind("password", $password);
+    $this->queryBind("USERNAME", $userName);
+    $this->queryBind("PASSWORD", $password);
     $this->executeQuery();
     $row=$this->fetch();
     $this->setIdArxivar();
