@@ -40,11 +40,10 @@ trait login {
 
   private function setIdArxivar(){
     $username=$this->getUsername();
-    $this->prepareQuery(" SELECT UTENTE from dm_utente where description= :user ");
+    $this->prepareQuery(" SELECT UTENTE from dm_utente where description= ':user' ");
     $this->queryBind("user",$username);
     $this->executeQuery();
     $row=$this->fetch();
-
     $this->idArxivar=$row['UTENTE'];
   }
 
@@ -53,13 +52,16 @@ trait login {
     $userName = $this->post("username");
     $password = $this->post("password");
 
+    // TODO: AGGIUNGERE id arxivar
     $que = "SELECT  ARXSESSION,
     TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
     FROM XDM_WEBSERVICE_SESSION
-    WHERE USERNAME = '$userName' AND PASSWORD = '$password' ";
-    $res = $this->query($que);
+    WHERE USERNAME = ':userName' AND PASSWORD = ':password' ";
+    // $res = $this->query($que);
+    $this->prepareQuery($que);
+    $this->queryBind("userName", $userName);
+    $this->queryBind("password", $password);
     $row=$this->fetch();
-    //    $this->setIdArxivar($row['idArxivar']);
     $this->setIdArxivar();
     return $row;
   }
