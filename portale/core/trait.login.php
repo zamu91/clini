@@ -51,16 +51,17 @@ trait login {
     $userName = $this->post("username");
     $password = $this->post("password");
 
-    // TODO: AGGIUNGERE id arxivar
     $que = "SELECT  ARXSESSION,
     TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
     FROM XDM_WEBSERVICE_SESSION
     WHERE USERNAME = ':userName' AND PASSWORD = ':password' ";
     // $res = $this->query($que);
-    $this->prepareQuery($que);
+    $this->queryPrepare($que);
     $this->queryBind("userName", $userName);
     $this->queryBind("password", $password);
+    $this->executeQuery();
     $row=$this->fetch();
+
     $this->setIdArxivar();
     return $row;
   }
