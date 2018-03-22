@@ -1,6 +1,5 @@
 <?php
 
-
 trait arxivar{
 
   public $baseUrl = "http://localhost:81/";
