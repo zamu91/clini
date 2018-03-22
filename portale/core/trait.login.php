@@ -44,12 +44,15 @@ trait login {
     $this->queryBind("user",$username);
     $this->executeQuery();
     $row=$this->fetch();
-    
+
     $this->idArxivar=$row['UTENTE'];
   }
 
 
-  
+
+
+
+
 
 
   private function checkExistSession(){
