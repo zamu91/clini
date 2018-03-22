@@ -103,7 +103,7 @@ trait sql{
   }
 
   public function executeQuery(){
-    $this->executeQuery();
+    $this->executePrepare();
   }
 
   public function executePrepare(){
