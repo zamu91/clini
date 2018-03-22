@@ -33,6 +33,15 @@ class chiamate{
     return DIRECTORY_SEPARATOR;
   }
 
+  private function debugHtml($mess){
+
+      if(!$this->isDebug()){
+        return false;
+      }
+      echo "<p>$mess</p>";
+
+  }
+
   public function __construct(){
     $this->debug();
     $path=$_SERVER["DOCUMENT_ROOT"].$this->dSep()."Arxivar".$this->dSep();

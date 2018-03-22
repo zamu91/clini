@@ -69,21 +69,27 @@ trait login {
     $this->loginLog("Check login oracle");
     $loginResult=$this->getLoginResult();
     $app = $loginResult->ExpiratedTime;
+    $this->debugHtml("Start register login");
     $expirationTime = substr($app, 0, 10).' '.substr($app, 11, 8);
+    $this->debugHtml("Check register login");
     $row=$this->checkExistSession();
+    $this->debugHtml("after check");
     $session=$loginResult->SessionId;
     if( !empty($row["USERNAME"]) ){
       $this->loginLog("sessione trovata, aggiorno");
-
       $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = :sess,
       SCADENZA = TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS') ";
+      $this->debugHtml("Preparo la query");
+
       $this->queryPrepare($que);
       $this->queryBind('sess',$session);
+      $this->debugHtml("bind");
       $this->queryBind('expi',$expirationTime);
-      $this->executePrepare();
+      $this->debugHtml("expi");
 
+      $this->executePrepare();
+      $this->debugHtml("after check");
       $this->commit();
-      die;
       $this->setJsonMess('sessionMess','aggiornamento Sessione');
     } else {
       $username=$this->getUsername();
