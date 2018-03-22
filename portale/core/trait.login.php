@@ -61,9 +61,12 @@ trait login {
 
     echo "ok<br>";
     $this->queryBind("pass", $password);
+    echo "ok<br>";
+    echo "ok<br>";
 
-    echo "stsat";
     $this->executeQuery();
+    echo "ok<br>";
+
     $row=$this->fetch();
     $this->setIdArxivar();
     return $row;
