@@ -19,7 +19,7 @@ class chiamate{
   private $debug=false;
 
   public function isDebug(){
-    return $this->debug();
+    return $this->debug;
 
   }
 
