@@ -74,7 +74,7 @@ public function queryPrepare($query){
 
 }
 
-public function bind($id,$val){
+public function queryBind($id,$val){
     oci_bind_by_name($this->stmtPrepare, ":$id", $val, -1);
 }
 

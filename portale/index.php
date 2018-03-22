@@ -34,7 +34,7 @@
 
     <div class="inputDiv">
       <label for="dataInzio">Data inizio</label>
-      <input class="dataProc" type="edit" id="dataInzio">
+      <input class="dataProc" type="edit" id="dataInizio">
     </div>
 
     <div class="inputDiv">
@@ -87,11 +87,6 @@
       <div class="giornoDiv">
         <label for="sab">Sabato</label>
         <input type="checkbox" id="sab">
-      </div>
-
-      <div class="giornoDiv">
-        <label for="lun">Lunedì</label>
-        <input type="checkbox" id="lun">
       </div>
 
 
