@@ -37,6 +37,7 @@ trait contratto{
   }
 
   public function insContratto(){
+    //TODO: Controllo se i dati inseriti non sono in conflitto con altre prenotazioni
     $data=$this->post("data");
     $data['idPatrocinatore']=$this->getIdArxivar();
     if($data['durata']<10){
