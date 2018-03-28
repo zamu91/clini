@@ -12,7 +12,12 @@ function login(){
   }).done(function(data, textStatus){
     localStorage.setItem("tok",data.token);
     $("#resultCall").html(data);
-    // if()
+    
+    if(data.login){
+      navigaDashboard();
+    } else {
+      alert("Errore login");
+    }
   });
 }
 

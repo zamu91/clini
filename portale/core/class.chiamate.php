@@ -10,14 +10,17 @@ include_once $dir."trait.contratto.php";
 include_once $dir."trait.clinica.php";
 include_once $dir."trait.query.php";
 include_once $dir."trait.prenotazione.php";
+include_once $dir."trait.navigazione.php";
 
 
 
 class chiamate{
-  use login,contratto,clinica,prenotazione,arxivar,sql;
+  use login,contratto,clinica,prenotazione,arxivar,sql, navigazione;
   private $conn; //connessione oracle
   private $jsonMess;
   private $debug=false;
+  private $arxEnvPath;
+  private $envPath;
 
   public function isDebug(){
     return $this->debug;
@@ -46,6 +49,8 @@ class chiamate{
   public function __construct(){
     $this->debug();
     $path=$_SERVER["DOCUMENT_ROOT"].$this->dSep()."Arxivar".$this->dSep();
+    $this->envPath = $_SERVER["DOCUMENT_ROOT"].$this->dSep()."clini".$this->dSep()."portale".$this->dSep();
+    $this->arxEnvPath = $path;
     require($path."ARX_Login.php");
     require($path."ARX_Dati.php");
     require($path."ARX_Search.php");
@@ -91,6 +96,10 @@ class chiamate{
 
       case 'insContratto':
       $this->insContratto();
+      break;
+
+      case 'naviga':
+      $this->naviga();
       break;
 
 
