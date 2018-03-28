@@ -36,9 +36,18 @@ trait contratto{
     $this->setIdContratto($row['id']);
   }
 
+  private function checkConflict(){
+    return true;
+    //TODO: da sistemare, controllo sul db se ci sono casi di sovraposizione
+
+  }
+
   public function insContratto(){
     //TODO: Controllo se i dati inseriti non sono in conflitto con altre prenotazioni
+    $this->checkConflict();
+
     $data=$this->post("data");
+
     $data['idPatrocinatore']=$this->getIdArxivar();
     if($data['durata']<10){
       $this->error("Durata inferiore del previsto, controllare");
