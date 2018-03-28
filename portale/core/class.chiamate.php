@@ -12,6 +12,7 @@ include_once $dir."trait.query.php";
 include_once $dir."trait.prenotazione.php";
 
 
+
 class chiamate{
   use login,contratto,clinica,prenotazione,arxivar,sql;
   private $conn; //connessione oracle
