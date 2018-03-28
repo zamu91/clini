@@ -22,30 +22,6 @@ class chiamate{
   private $arxEnvPath;
   private $envPath;
 
-  public function isDebug(){
-    return $this->debug;
-
-  }
-
-  public function debug(){
-    $this->debug=true;
-  }
-
-
-
-  public function dSep(){
-    return DIRECTORY_SEPARATOR;
-  }
-
-  private function debugHtml($mess){
-
-      if(!$this->isDebug()){
-        return false;
-      }
-      echo "<p>$mess</p>";
-
-  }
-
   public function __construct(){
     $this->debug();
     $path=$_SERVER["DOCUMENT_ROOT"].$this->dSep()."Arxivar".$this->dSep();
@@ -58,9 +34,32 @@ class chiamate{
   }
 
 
+  public function debug(){
+    $this->debug=true;
+  }
+
+  public function dSep(){
+    return DIRECTORY_SEPARATOR;
+  }
+
+  private function debugHtml($mess){
+    if(!$this->isDebug()){
+      return false;
+    }
+    echo "<p>$mess</p>";
+  }
+
+  public function getEnvPath(){
+    return $this->envPath;
+  }
+
   public function halt(){
     echo json_encode($this->jsonMess);
     die;
+  }
+
+  public function isDebug(){
+    return $this->debug;
   }
 
   public function setJsonMess($var,$mess,$dupli=1){
@@ -69,8 +68,8 @@ class chiamate{
     }else{
       $this->jsonMess[$var]=$mess;
     }
+    // $this->jsonMess["ciao"] = "balalalalla";
   }
-
 
   public function post($nome){
     if(empty($_POST[$nome])){
@@ -80,6 +79,9 @@ class chiamate{
       return $_POST[$nome];
     }
   }
+
+
+
 
 
 
@@ -102,26 +104,22 @@ class chiamate{
       $this->naviga();
       break;
 
+      case 'listaProfili':
+      $this->listaProfili();
+      break;
 
+      case 'dettaglioProfilo':
+      $this->dettaglioProfilo();
+      break;
     } //end swtich
     $this->halt();
 
   }
 
-
-
-
-
 }
-
 
 
 $chiamate=new chiamate();
 $chiamate->launcher();
-
-
-
-
-
 
 ?>

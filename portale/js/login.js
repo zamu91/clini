@@ -7,9 +7,13 @@ function login(){
   jqXHR = $.ajax({
     url: "core/class.chiamate.php",
     type: 'POST',
-    datatype:'json',
+    dataType:'json',
     data: { azione: "loginPatrocinatore", username: user, password: pass},
   }).done(function(data, textStatus){
+    console.log(data);
+    console.log("token: ");
+    console.log(data.token);
+    console.log(data.ciao);
     localStorage.setItem("tok",data.token);
     $("#resultCall").html(data);
     console.log(data.login);

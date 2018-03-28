@@ -13,8 +13,8 @@ trait arxivar{
   private $logError;
 
   public function getFieldFromMaschera(){
-    $this->loginArxivar();
-    $ARX_Dati  = new ARX_Dati\ARX_Dati($baseUrl."ARX_Dati.asmx?WSDL");
+    $this->loginArxivarServizio();
+    $ARX_Dati  = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
     $sessionid = $this->loginResult->SessionId;
     try {
       // funzione per recuperare tutte le maschere
@@ -201,11 +201,104 @@ trait arxivar{
     }
   }
 
+  public function dettaglioProfilo(){
+    $docnumber = $this->post("docnumber");
+    if( !empty($docnumber) ){
+      // TODO: parte del dettaglio
+    } else {
+      // parte dell'inserimento
+      $this->getFieldFromMaschera();
+    }
+  }
+
+  public function listaProfili(){
+    $this->loginArxivarServizio();
+    $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
+    $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
+    $ARX_Documenti = new ARX_Documenti\ARX_Documenti($this->baseUrl."ARX_Documenti.asmx?WSDL");
+    // $ARX_Workflow = new ARX_Workflow\ARX_Workflow($this->baseUrl."ARX_Workflow.asmx?WSDL");
+    $sessionid = $this->loginResult->SessionId;
+
+    /* TODO: Parametrizzo il campo da cercare (proprietario del profilo) in modo da agevolare la ricerca successivamente */
+    /* TODO: Sarà necessario inserire la ricerca dell'utente e dell'AOO partendo dal login. */
+    $comboUtente = "1\\3aMestre"; // aoo\utente
+
+    // esecuzione ricerca
+    // GEST.POS classe della ricerca.
+    $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
+    //  select per quali campi
+    $select = $ARX_Search->Dm_Profile_Select_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
+
+    // esempio di ricerca per campo standard "NUMERO"
+    /*
+    $search->Numero->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+    $search->Numero->Valore = "123456";
+    */
+    // esempio di ricerca per campo aggiuntivo
+
+    foreach ($search->Aggiuntivi->Field_Abstract as $agg) {
+    	/* @var $agg \ARX_Search\Field_String */
+        if ($agg->Nome == "COMBO19_1") {
+    		$agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+    		$agg->Valore = $comboUtente;
+    	}
+
+    	// per ricercare per id esterno (alias per SDK) si può verificare $agg->ExternalId
+    }
+
+    $select->DOCNUMBER->Selected = true;
+    $select->DOCNAME->Selected = true;
+    $select->STATO->Selected = true;
+    $result = $ARX_Search->Dm_Profile_GetData($sessionid, $select, $search);
+    $ds = simplexml_load_string($result);
+    $this->arxDebug($ds);
+    foreach ($ds->Ricerca as $row) {
+        echo $row->DOCNUMBER." - ".$row->DOCNAME."<hr/>";
+    }
+
+    $docnumber = $ds->Ricerca[0]->DOCNUMBER;
+    $this->arxDebug($docnumber);
+
+    //// estrazione profilo
+    //$profile = $ARX_Dati->Dm_Profile_GetData_By_DocNumber($sessionid, $docnumber);
+    //var_dump($profile);
+    //
+    //// estrazione campo aggiuntivo
+    //$valore = "";
+    //foreach ($profile->Aggiuntivi->Aggiuntivo_Base as $agg) {
+    //    /* @var $agg \ARX_Dati\Aggiuntivo_String */
+    //    if ($agg->Nome == "TESTO1_1") $valore = $agg->Valore;
+    //}
+    //echo "TESTO1_1: ".$valore;
+    //
+    //// estrazione documento
+    //$file = $ARX_Documenti->Dm_Profile_GetDocument($sessionid, $docnumber);
+    //file_put_contents("/tmp/".$file->FileName, $file->File);
+
+    // cerco il task attivo per questo documento
+    $search = $ARX_Search->Dm_TaskWork_Search_GetNewInstance($sessionid);
+    $search->Dm_Profile->DOCNUMBER->Operatore = \ARX_Search\Dm_Base_Search_Operatore_Numerico::Uguale;
+    $search->Dm_Profile->DOCNUMBER->Valore = $docnumber;
+    $search->STATO->Operatore = \ARX_Search\Dm_Base_Search_Operatore_Numerico::Uguale;
+    $search->STATO->Valore = 1;
+    $search->TIPOTASK->Operatore = \ARX_Search\Dm_Base_Search_Operatore_Numerico::Uguale;
+    $search->TIPOTASK->Valore = 1;
+    $search->NOMETASK->Operatore = \ARX_Search\Dm_Base_Search_Operatore_Numerico::Uguale;
+    $search->NOMETASK->Valore = "99 - Inserimento Documentazione";
+    $select = $ARX_Search->Dm_TaskWork_Select_GetNewInstance($sessionid);
+    $select->ID->Selected = TRUE;
+    $result = $ARX_Search->Dm_TaskWork_GetData($sessionid, $select, $search);
+    $ds = simplexml_load_string($result);
+    var_dump($ds);
+
+    $this->logoutArxivar();
+  }
+
   public function scriviDatiProfilo(){
 
     // classi necessarie
-    $ARX_Login = new ARX_Login\ARX_Login($baseUrl."ARX_Login.asmx?WSDL");
-    $ARX_Dati = new ARX_Dati\ARX_Dati($baseUrl."ARX_Dati.asmx?WSDL");
+    $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
+    $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
 
     $loginResult = $ARX_Login->Login($userName, $password, $softwareName);
 
@@ -350,26 +443,30 @@ trait arxivar{
     $this->setJsonMess("arx_log",$mess);
   }
 
-  private function arxDebug($something){
+  private function arxDebug($something, $stop = false){
     if( $this->isDebug()){
       echo "<pre>";
       var_dump($something);
       echo "</pre>";
+
+      if($stop){
+        $this->logoutArxivar();
+        die();
+      }
     }
   }
 
   private function loginArxivarServizio(){
-    $ARX_Login = new ARX_Login\ARX_Login($baseUrl."ARX_Login.asmx?WSDL");
-    $loginResult = $ARX_Login->Login($this->adminUser, $this->adminPass, $this->softwareName);
-    if ($loginResult->ArxLogOnErrorType != Arx_Login\ArxLogOnErrorType::None){
-      $this->arxLog("Logon Failed: ".$loginResult->ArxLogOnErrorType);
+    $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
+    $this->loginResult = $ARX_Login->Login($this->adminUser, $this->adminPass, $this->softwareName);
+    if ($this->loginResult->ArxLogOnErrorType != Arx_Login\ArxLogOnErrorType::None){
+      $this->arxLog("Logon Failed: ".$this->loginResult->ArxLogOnErrorType);
       die();
     }
   }
 
   public function loginArxivar(){
-    $baseUrl=$this->baseUrl;
-    $ARX_Login = new ARX_Login\ARX_Login($baseUrl."ARX_Login.asmx?WSDL");
+    $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
     $userName = $this->getUsername();
     $password = $this->getPassword();
     $this->loginResult = $ARX_Login->Login($userName, $password, $this->softwareName);
@@ -392,6 +489,7 @@ trait arxivar{
 
   private function logoutArxivar(){
     // esecuzione logout
+    $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
     $ARX_Login->LogOut($this->loginResult->SessionId);
   }
 
