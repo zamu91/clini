@@ -53,8 +53,8 @@ trait login {
       $que = "SELECT  ARXSESSION,ses.USERNAME, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
     FROM XDM_WEBSERVICE_SESSION ses
     WHERE ses.USERNAME = :ut AND ses.PASSWORD = :credenz ";
-    $this->debugHtml($userName);
-    $this->debugHtml($password);
+    // $this->debugHtml($userName);
+    // $this->debugHtml($password);
     $this->queryPrepare($que);
     $this->queryBind("ut", $userName);
     $this->queryBind("credenz", $password);
@@ -69,26 +69,26 @@ trait login {
     $this->loginLog("Check login oracle");
     $loginResult=$this->getLoginResult();
     $app = $loginResult->ExpiratedTime;
-    $this->debugHtml("Start register login");
+    // $this->debugHtml("Start register login");
     $expirationTime = substr($app, 0, 10).' '.substr($app, 11, 8);
-    $this->debugHtml("Check register login");
+    // $this->debugHtml("Check register login");
     $row=$this->checkExistSession();
-    $this->debugHtml("after check");
+    // $this->debugHtml("after check");
     $session=$loginResult->SessionId;
     if( !empty($row["USERNAME"]) ){
       $this->loginLog("sessione trovata, aggiorno");
       $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = :sess,
       SCADENZA = TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS') ";
-      $this->debugHtml("Preparo la query");
+      // $this->debugHtml("Preparo la query");
 
       $this->queryPrepare($que);
       $this->queryBind('sess',$session);
-      $this->debugHtml("bind");
+      // $this->debugHtml("bind");
       $this->queryBind('expi',$expirationTime);
-      $this->debugHtml("expi");
+      // $this->debugHtml("expi");
 
       $this->executePrepare();
-      $this->debugHtml("after check");
+      // $this->debugHtml("after check");
       $this->commit();
       $this->setJsonMess('sessionMess','aggiornamento Sessione');
     } else {
