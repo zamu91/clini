@@ -70,6 +70,7 @@ trait arxivar{
     }
 
     public function printFieldFromMaschera($details, $lista_campi_specifici){
+      // funzione generica per il caricamento delle maschere Arxivar
         ?>
         <form action="scrivi_dati.php" method="post">
             <fieldset>
