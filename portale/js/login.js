@@ -12,7 +12,7 @@ function login(){
   }).done(function(data, textStatus){
     localStorage.setItem("tok",data.token);
     $("#resultCall").html(data);
-    
+    console.log(data.login);
     if(data.login){
       navigaDashboard();
     } else {
