@@ -1,17 +1,41 @@
+function apriProfilo(){
+  // Apre la pagina della maschera con la possibilità di inserire o modificare il profilo e quindi della pratica.
+}
 
-function doAjax(data,done){
-  data.token=getToken();
+function caricaListaProfili(){
+  var jd = { azione: "listaProfili" };
+  doAjax(jd, function(data){
+    $("#containerListaProfili").html(data);
+  });
+}
+
+function doAjax(jd, doneFunc, failFunc){
+  jd.token=getToken();
   jqXHR = $.ajax({
     url: "core/class.chiamate.php",
     type: 'POST',
     datatype:'json',
-    data
-  }).done(function(data, textStatus){
-    alert(data);
-    console.log(data);
+    data: jd
+  }).done(function(data, textStatus, jqXHR){
+    if( isFunction(doneFunc) ) {
+      doneFunc(data);
+    }else{
+      alert(data);
+      console.log(data);
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    if( isFunction(failFunc) ) {
+      failFunc(jqXHR, textStatus, errorThrown);
+    }else{
+      alert(jqXHR);
+      console.log(jqXHR);
+    }
   });
 }
 
+function isFunction(functionToCheck) {
+ return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+}
 
 
 function salvaAmbulatorio(){

@@ -11,8 +11,8 @@ function login(){
     data: { azione: "loginPatrocinatore", username: user, password: pass},
   }).done(function(data, textStatus){
     localStorage.setItem("tok",data.token);
-
     $("#resultCall").html(data);
+    // if()
   });
 }
 
