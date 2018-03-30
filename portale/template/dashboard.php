@@ -1,4 +1,3 @@
+<button onclick="apriProfilo();">Nuovo profilo</button>
 
-  <button onclick="apriProfilo();">Nuovo profilo</button>
-
-  <div id="containerListaProfili" class="listaProfili"></div>
+<div id="containerListaProfili" class="listaProfili"></div>

@@ -10,18 +10,15 @@ function apriProfilo(){
 }
 
 function caricaListaProfili(){
-  var jd = { azione: "listaProfili" };
+  var jd = { azione: "listaPrcontainerMascheraProfilazioneofili" };
   doAjax(jd, function(data){
     $("#containerListaProfili").html(data);
   });
 }
 
 function caricaProfilo(docnumber){
-  var jd = { azione: "dettaglioProfilo", docnumber: docnumber  };
-  // doAjax(jd, function(data){
-  //   $("#containerMascheraProfilazione").html(data);
-  // });
-  doLoad("containerMascheraProfilazione", jd);
+  var jd = { azione: "dettaglioProfilo", docnumber: docnumber };
+  doLoad("#containerMascheraProfilazione", jd);
 }
 
 function doAjax(jd, doneFunc, failFunc){
@@ -36,7 +33,6 @@ function doAjax(jd, doneFunc, failFunc){
       doneFunc(data);
     }else{
       alert(data);
-      console.log(data);
     }
   }).fail(function(jqXHR, textStatus, errorThrown){
     if( isFunction(failFunc) ) {
@@ -56,10 +52,11 @@ function doLoad(target, jd, doneFunc, failFunc){
     datatype:'html',
     data: jd
   }).done(function(data, textStatus, jqXHR){
+    console.log(data);
     if( isFunction(doneFunc) ) {
       doneFunc(data);
     }else{
-      $(target).html(data);
+      $(""+target).html(data);
     }
   }).fail(function(jqXHR, textStatus, errorThrown){
     if( isFunction(failFunc) ) {
@@ -72,7 +69,7 @@ function doLoad(target, jd, doneFunc, failFunc){
 }
 
 function isFunction(functionToCheck) {
- return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+  return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
 }
 
 function navigaDashboard(){
@@ -96,7 +93,6 @@ function salvaAmbulatorio(){
 
 
 function salvaContratto(){
-
   j={};
   data={};
   data.durata=$('#durata').val();
@@ -111,11 +107,16 @@ function salvaContratto(){
   doAjax(j,function(mess){
     alert('Contratto salvata con successo');
   });
-
-
 }
 
-
+function scriviDatiProfilo(){
+  var jd = $("#formMaschera").serialize();
+  jd += "&azione=scriviDatiProfilo";
+  console.log(jd);
+  doAjax(jd, function(mess){
+    $("#requestResult").html(mess);
+  });
+}
 
 function getValGiorni(nome){
   if ($('#'+nome).is(':checked')) {

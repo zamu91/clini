@@ -71,19 +71,14 @@ class chiamate{
     // $this->jsonMess["ciao"] = "balalalalla";
   }
 
-  public function post($nome){
+  public function post($nome, $verbose = true){
     if(empty($_POST[$nome])){
-      $this->setJsonMess('warn',"$nome non trovato");
+      if($verbose){$this->setJsonMess('warn',"$nome non trovato");}
       return false;
     }else{
       return $_POST[$nome];
     }
   }
-
-
-
-
-
 
   public function launcher(){
     $azione=$this->post('azione');
@@ -91,6 +86,14 @@ class chiamate{
       case 'loginPatrocinatore':
       $this->loginArxivar();
       break;
+
+      case 'loginSessionActive':
+        $this->controlloARXLogin();
+        break;
+
+      case "controlloTokenARXLogin":
+        $this->controlloTokenARXLogin();
+        break;
 
       case 'salvaClinica':
       $this->salvaClinica();
@@ -111,6 +114,10 @@ class chiamate{
       case 'dettaglioProfilo':
       $this->dettaglioProfilo();
       break;
+
+      case "scriviDatiProfilo":
+        $this->scriviDatiProfilo();
+        break;
     } //end swtich
     $this->halt();
 

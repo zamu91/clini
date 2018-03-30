@@ -92,6 +92,8 @@
       </div>
     </div> <!-- ins contratto -->
   </div> <!-- container -->
+  <script type="text/jscript">
+    skipLoginIfTokenIsValid();
+  </script>
 </body>
-
 </html>

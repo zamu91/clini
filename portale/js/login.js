@@ -31,6 +31,19 @@ function getToken(){
   return token;
 }
 
+function skipLoginIfTokenIsValid(){
+  var token = $("#token").val();
+
+  jqXHR = $.ajax({
+    url: "core/class.chiamate.php",
+    type: 'POST',
+    data: { azione: "controlloTokenARXLogin", token: token},
+  }).done(function(jqXHR, textStatus){
+    if(jqXHR.res && jqXHR.validToken){
+      navigaDashboard();
+    }
+  });
+}
 
 function controlloLogin(){
   $("#resultCall").html("");

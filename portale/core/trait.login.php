@@ -133,6 +133,28 @@ trait login {
     }
   }
 
+  public function controlloTokenARXLogin(){
+    $token = $this->post("token");
+    $this->queryPrepare("SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
+    FROM XDM_WEBSERVICE_SESSION
+    WHERE ARXSESSION = :tok AND SYSDATE <= SCADENZA");
+    $this->queryBind("tok", $token);
+    $this->executePrepare();
+    $this->commit();
+
+
+    $row =$this->fetch();
+    if(!empty($row['username'])){
+      $this->loginToken=true;
+      $this->setJsonMess("res", true);
+      $this->setJsonMess("validToken", true);
+    }else{
+      $this->loginToken=false;
+      $this->setJsonMess("res", true);
+      $this->setJsonMess("validToken", false);
+    }
+  }
+
   public function isLogin(){
     return $this->isLoginToken;
   }

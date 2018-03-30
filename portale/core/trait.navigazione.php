@@ -11,11 +11,20 @@ trait navigazione {
       case 'dashboard':
         echo $this->navigaDashboard();
         break;
+
+      case 'profilo':
+        echo $this->navigaProfilo();
+        break;
     }
   }
 
   public function navigaDashboard(){
     $path = $this->getEnvPath().$this->dSep()."template{$this->dSep()}dashboard.php";
+    return file_get_contents ( $path );
+  }
+
+  public function navigaProfilo(){
+    $path = $this->getEnvPath().$this->dSep()."template{$this->dSep()}dettaglioProfilo.php";
     return file_get_contents ( $path );
   }
 

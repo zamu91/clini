@@ -13,28 +13,42 @@ trait arxivar{
   private $logError;
 
   public function getFieldFromMaschera(){
+    ob_start();
     $this->loginArxivarServizio();
     $ARX_Dati  = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
     $sessionid = $this->loginResult->SessionId;
-    try {
+    try
+    {
       // funzione per recuperare tutte le maschere
       //echo "dati di maschera<br />";
       $masks = $ARX_Dati->Dm_MaskGetData($sessionid);
-      $this->debug($mask);
+      // $this->arxDebug($masks);
 
       // funzione per utilizzare una maschera con uno specifico ID
+      //echo "utilizzo la maschera specifica<br />";
       $profileMv = $ARX_Dati->Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId($sessionid, $this->maskid);
+      // echo "<pre>";
+      // var_dump($profileMv);
+      // echo "</pre><hr/>";
       $mask_data = $ARX_Dati->Dm_MaskDetail_GetData_By_DmMaskId($sessionid, $this->maskid);
+      // echo "<pre>";
+      // var_dump($mask_data);
+      // echo "</pre><hr/>";
+
 
       // DM profile default
       //var_dump($profileMv->DmProfileDefault);
 
       // DmMaskDetails contiene l'elenco dei campi previsti nella maschera
+      //echo "elenco campi della maschera specifica<br />";
       $details = $profileMv->DmMaskDetails->Dm_MaskDetail;
 
       //echo "dati DmProfileDEfault<br />";
       $profile = $profileMv->DmProfileDefault->Dm_Profile_Insert_Base;
       // @var $profile \ARX_Dati\Dm_Profile_Insert_Base //
+      //echo "<pre>";
+      //var_dump($details);
+      //echo "</pre>";
 
       // ******* DOCUMENT TYPE ********
       $docType=$profile->DocumentType;
@@ -47,8 +61,173 @@ trait arxivar{
 
       // array con i tipi di documento
       $id_td=array($docType,$Tipo2,$Tipo3);
+
       $lista_campi_specifici= $ARX_Dati->Dm_CampiSpecifici_GetData($sessionid,$Aoo,$id_td,false,"");
-      $this->printFieldFromMaschera($details, $lista_campi_specifici);
+
+      //echo "<pre>";
+      //var_dump($lista_campi_specifici);
+      //var_dump($profile);
+      //echo "</pre>";
+
+      ?>
+      <form id="formMaschera" action="#" onsubmit="function(){ return false; }" method="post">
+        <fieldset>
+          <legend>Maschera</legend>
+          <?php
+          foreach ($details as $field) {
+
+            switch ($field->FIELD_KIND) {
+              case ARX_Dati\Dm_MaskDetail_FieldKind::From:
+              // mittente
+              echo "mittente<br />";
+              break;
+              case ARX_Dati\Dm_MaskDetail_FieldKind::To:
+              // destinatario
+              echo "destinatario<br />";
+              break;
+              case ARX_Dati\Dm_MaskDetail_FieldKind::Oggetto:
+              // Oggetto
+              ?>
+              <label for="oggetto">Oggetto</label>
+              <input type="text" name="oggetto" id="oggetto" value=""><br>
+              <?php
+              break;
+              case ARX_Dati\Dm_MaskDetail_FieldKind::Aggiuntivo:
+
+              // Aggiuntivo
+              // campo aggiuntivo, identifiato da $field->FIELD_ID
+              $aggiuntivo = $ARX_Dati->Dm_CampiSpecifici_GetValues($sessionid,$field->FIELD_ID,$profile,null);//, combovalue, null);
+              //$dati_aggiuntivi=$ARX_Dati->Dm_CampiSpecifici_GetData($sessionid,$field->FIELD_ID,$profile,null);//, combovalue, null);
+
+              // mi prendo la label associata al campo
+              $label='';
+              $alias='';
+              $required=false;
+
+              // mi prendo gli attributi associati ai campi
+              foreach($lista_campi_specifici->Dm_CampiSpecifici as $campo_spec){
+                if($campo_spec->NOMECAMPO==$aggiuntivo->NomeCampo){
+                  if($aggiuntivo->Classe=='Textbox'){
+                    $n_char=$campo_spec->CARATTERI;
+                    $row_count=$campo_spec->SHOWROWCOUNT;
+                  }
+                  $label=$campo_spec->ETICHETTA;
+                  $alias=$campo_spec->SDKALIASNAME;
+                  $required=$campo_spec->OBBLIGATORIO;
+                }
+              }
+
+              ?>
+              <label for="<?php echo $aggiuntivo->NomeCampo; ?>"><?php echo $label; ?><?php if($required) echo "*";?></label>
+              <?php
+              // controllo la tipologia di campo aggiuntivo
+              $tipo=$aggiuntivo->Classe;
+              // ****** TEXTBOX *****
+              if($tipo=='Textbox'){
+
+                // controllare alias per vedere se è un campo time
+                if(strpos($alias,'(HH:MM)')>0){
+                  // campo time
+                  ?>
+                  <input type="text" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="time" id="<?php echo $aggiuntivo->NomeCampo; ?>" value="" maxlength="5" <?php if($required) echo "required";?>><br />
+                  <?php
+                }
+                elseif($row_count>1){
+                  // textarea
+                  ?>
+                  <textarea name="<?php echo $aggiuntivo->NomeCampo; ?>" id="<?php echo $aggiuntivo->NomeCampo; ?>" maxlength="<?php echo $n_char; ?>" <?php if($required) echo "required";?>></textarea>
+                  <br /><?php
+                }
+                else{
+                  ?>
+                  <input type="text" name="<?php echo $aggiuntivo->NomeCampo; ?>" id="<?php echo $aggiuntivo->NomeCampo; ?>" maxlength="<?php echo $n_char; ?>" value="" <?php if($required) echo "required";?>><br />
+                  <?php
+                }
+              }
+              // ****** COMBOBOX *****
+              elseif($tipo=='Combobox'){
+                // devo processare la lista delle scelte che viene ritornata in xml
+                // creo un nuovo oggetto Dom Document
+                $xmlDoc = new DOMDocument();
+                // mi salvo in temp la porzione di xml che è presente nella propietà arxDataSource dell'oggetto campo aggiuntivo
+                $temp=$aggiuntivo->arxDataSource;
+                $xml=simplexml_load_string($temp) or die("Error: Cannot create object");
+                // $this->arxDebug($xml);
+                // $this->arxDebug($xml->TABLE[0]->ELEMENTO);
+
+                // $pos_start=stripos($temp,'<ricerca>');
+                // $pos_end=stripos($aggiuntivo->arxDataSource,'</newdataset>');
+                // // estraggo la porzione di codice che mi interessa
+                // $lista_xml=substr($aggiuntivo->arxDataSource,$pos_start,$pos_end);
+                // // ci aggiungo dei tag che faranno da wrapper per la lista
+                // $lista_xml='<lista>'.trim($lista_xml).'</lista>';
+                // // disabilito la gestione degli errori altrimenti avrei dei warning in quanto i tag <ricerca></ricerca> non sono standard HTML
+                // libxml_use_internal_errors(true);
+                // // tiro su la porzione di html
+                // $xmlDoc->LoadHTML($lista_xml);
+                // $xmlDoc->loadXML($aggiuntivo->arxDataSource);
+                // $myXmlCollection= new XMLListCollection($aggiuntivo->arxDataSource);
+                // riabilito la gestione degli errori
+                // echo "<pre>";
+                // var_dump($myXmlCollection);
+                // echo "</pre>";
+
+                // libxml_use_internal_errors(false);
+
+                // prendo tutti gli elementi con tag 'ricerca'
+                // $rows = $xmlDoc->getElementsByTagName('ricerca');
+                if( $aggiuntivo->NomeCampo != "COMBO19_1"){
+                  ?>
+                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($required) echo "required";?>>
+                    <?php
+                    // ciclo sui tag ricerca per creare i valori option del campo select html
+                    foreach ($xml as $row) { ?>
+                      <option value="<?php echo $row->ELEMENTO; ?>"><?php echo $row->ELEMENTO; ?></option>
+                    <?php } ?>
+                  </select><br />
+                  <?php
+                } else {
+                  ?>
+                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($required) echo "required";?>>
+                    <?php
+                    // ciclo sui tag ricerca per creare i valori option del campo select html
+                    foreach ($xml as $row) { ?>
+                      <option value="<?php echo $row->UTENTE; ?>"><?php echo $row->NOMINATIVO; ?></option>
+                    <?php } ?>
+                  </select><br />
+                  <?php
+                }
+              }
+              // ****** CHECKBOX *****
+              elseif($tipo=='Checkbox'){
+                ?>
+                <input type="checkbox" id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($required) echo "required";?> /><br />
+                <?php
+              }
+              break;
+              case ARX_Dati\Dm_MaskDetail_FieldKind::DataDoc:
+              // DatfieldsetaDoc
+              ?>
+              <label for="DataDoc">DataDoc</label>
+              <input type="date" name="DataDoc" id="DataDoc" value="" placeholder="YYYY-MM-DD"><br>
+              <?php
+              break;
+              /*case ARX_Dati\Dm_MaskDetail_FieldKind::File:
+              echo "File<br />";
+              // campo aggiuntivo, identifiato da $field->FIELD_ID
+              break;*/
+              // ....
+            }
+
+            //var_dump($field->Get_Property_Value_By_Name($field->FIELD_ID));
+          }
+          ?>
+          <input type="button" onclick="scriviDatiProfilo();" value="carica" />
+          <input type="reset" value="reset" />
+        </fieldset>
+      </form>
+      <div id="requestResult"></div>
+      <?php
 
     } catch (Exception $e) {
       echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -56,158 +235,16 @@ trait arxivar{
 
 
     $this->logoutArxivar();
-  }
-
-  public function printFieldFromMaschera($details, $lista_campi_specifici){
-    // funzione generica per il caricamento delle maschere Arxivar
-    ?>
-    <form action="scrivi_dati.php" method="post">
-      <fieldset>
-        <legend>Maschera</legend>
-        <?php
-        foreach ($details as $field) {
-          $this->convertFieldFromMaschera($field, $lista_campi_specifici);
-        }
-        ?>
-        <input type="submit" value="carica" />
-        <input type="reset" value="reset" />
-      </fieldset>
-    </form>
-    <?php
-  }
-
-  private function convertFieldFromMaschera($field, $lista_campi_specifici){
-    switch ($field->FIELD_KIND) {
-      case ARX_Dati\Dm_MaskDetail_FieldKind::From:
-      // mittente
-      echo "mittente<br />";
-      break;
-
-      case ARX_Dati\Dm_MaskDetail_FieldKind::To:
-      // destinatario
-      echo "destinatario<br />";
-      break;
-
-      case ARX_Dati\Dm_MaskDetail_FieldKind::Oggetto:
-      // Oggetto
-      ?>
-      <label for="oggetto">Oggetto</label>
-      <input type="text" name="oggetto" id="oggetto" value=""><br>
-      <?php
-      break;
-
-      case ARX_Dati\Dm_MaskDetail_FieldKind::Aggiuntivo:
-
-      // Aggiuntivo
-      // campo aggiuntivo, identifiato da $field->FIELD_ID
-      $aggiuntivo = $ARX_Dati->Dm_CampiSpecifici_GetValues($sessionid,$field->FIELD_ID,$profile,null);//, combovalue, null);
-      //$dati_aggiuntivi=$ARX_Dati->Dm_CampiSpecifici_GetData($sessionid,$field->FIELD_ID,$profile,null);//, combovalue, null);
-
-      // mi prendo la label associata al campo
-      $label='';
-      $alias='';
-      $required=false;
-
-      // mi prendo gli attributi associati ai campi
-      foreach($lista_campi_specifici->Dm_CampiSpecifici as $campo_spec){
-        if($campo_spec->NOMECAMPO==$aggiuntivo->NomeCampo){
-          if($aggiuntivo->Classe=='Textbox'){
-            $n_char=$campo_spec->CARATTERI;
-            $row_count=$campo_spec->SHOWROWCOUNT;
-          }
-          $label=$campo_spec->ETICHETTA;
-          $alias=$campo_spec->SDKALIASNAME;
-          $required=$campo_spec->OBBLIGATORIO;
-        }
-      }
-
-      ?>
-      <label for="<?php echo $aggiuntivo->NomeCampo; ?>"><?php echo $label; ?><?php if($required) echo "*";?></label>
-      <?php
-      // controllo la tipologia di campo aggiuntivo
-      $tipo=$aggiuntivo->Classe;
-      // ****** TEXTBOX *****
-      switch ($tipo) {
-        case "Textbox":
-        // controllare alias per vedere se è un campo time
-        if(strpos($alias,'(HH:MM)')>0){ ?>
-          <input type="text" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="time" id="<?php echo $aggiuntivo->NomeCampo; ?>" value="" maxlength="5" <?php if($required) echo "required";?>><br />
-        <?php } elseif($row_count>1){ ?>
-          <textarea name="<?php echo $aggiuntivo->NomeCampo; ?>" id="<?php echo $aggiuntivo->NomeCampo; ?>" maxlength="<?php echo $n_char; ?>" <?php if($required) echo "required";?>></textarea>
-          <br />
-        <?php } else{ ?>
-          <input type="text" name="<?php echo $aggiuntivo->NomeCampo; ?>" id="<?php echo $aggiuntivo->NomeCampo; ?>" maxlength="<?php echo $n_char; ?>" value="" <?php if($required) echo "required";?>><br />
-        <?php }
-        break;
-
-        case "Combobox":
-        // devo processare la lista delle scelte che viene ritornata in xml
-        // creo un nuovo oggetto Dom Document
-        $xmlDoc = new DOMDocument();
-        // mi salvo in temp la porzione di xml che è presente nella propietà arxDataSource dell'oggetto campo aggiuntivo
-        $temp="".$aggiuntivo->arxDataSource;
-        $xml=simplexml_load_string($temp) or die("Error: Cannot create object");
-        // debug($xml);
-        debug($xml->TABLE[0]->ELEMENTO);
-
-        $pos_start=stripos($temp,'<ricerca>');
-        $pos_end=stripos($aggiuntivo->arxDataSource,'</newdataset>');
-        // estraggo la porzione di codice che mi interessa
-        $lista_xml=substr($aggiuntivo->arxDataSource,$pos_start,$pos_end);
-        // ci aggiungo dei tag che faranno da wrapper per la lista
-        $lista_xml='<lista>'.trim($lista_xml).'</lista>';
-        // disabilito la gestione degli errori altrimenti avrei dei warning in quanto i tag <ricerca></ricerca> non sono standard HTML
-        libxml_use_internal_errors(true);
-        // tiro su la porzione di html
-        $xmlDoc->LoadHTML($lista_xml);
-        $xmlDoc->loadXML($aggiuntivo->arxDataSource);
-        // $myXmlCollection= new XMLListCollection($aggiuntivo->arxDataSource);
-        // riabilito la gestione degli errori
-        // echo "<pre>";
-        // var_dump($myXmlCollection);
-        // echo "</pre>";
-
-        libxml_use_internal_errors(false);
-
-        // prendo tutti gli elementi con tag 'ricerca'
-        $rows = $xmlDoc->getElementsByTagName('ricerca');
-        ?>
-        <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($required) echo "required";?>>
-          <?php
-          // ciclo sui tag ricerca per creare i valori option del campo select html
-          foreach ($rows as $row) {
-            ?>
-            <option value="<?php echo $row->nodeValue; ?>"><?php echo $row->nodeValue; ?></option>
-            <?php
-          }
-          ?>
-        </select><br />
-        <?php
-        break;
-
-        case "Checkbox":
-        ?>
-        <input type="checkbox" id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($required) echo "required";?> /><br />
-        <?php
-        break;
-      }
-      break;
-      case ARX_Dati\Dm_MaskDetail_FieldKind::DataDoc:
-      ?>
-      <label for="DataDoc">DataDoc</label>
-      <input type="date" name="DataDoc" id="DataDoc" value="" placeholder="YYYY-MM-DD"><br>
-      <?php
-      break;
-    }
+    return ob_get_clean();
   }
 
   public function dettaglioProfilo(){
-    $docnumber = $this->post("docnumber");
+    $docnumber = $this->post("docnumber", false);
     if( !empty($docnumber) ){
       // TODO: parte del dettaglio
     } else {
       // parte dell'inserimento
-      $this->getFieldFromMaschera();
+      echo $this->getFieldFromMaschera();
     }
   }
 
@@ -237,13 +274,13 @@ trait arxivar{
     // esempio di ricerca per campo aggiuntivo
 
     foreach ($search->Aggiuntivi->Field_Abstract as $agg) {
-    	/* @var $agg \ARX_Search\Field_String */
-        if ($agg->Nome == "COMBO19_1") {
-    		$agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
-    		$agg->Valore = $comboUtente;
-    	}
+      /* @var $agg \ARX_Search\Field_String */
+      if ($agg->Nome == "COMBO19_1") {
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+        $agg->Valore = $comboUtente;
+      }
 
-    	// per ricercare per id esterno (alias per SDK) si può verificare $agg->ExternalId
+      // per ricercare per id esterno (alias per SDK) si può verificare $agg->ExternalId
     }
 
     $select->DOCNUMBER->Selected = true;
@@ -253,7 +290,7 @@ trait arxivar{
     $ds = simplexml_load_string($result);
     $this->arxDebug($ds);
     foreach ($ds->Ricerca as $row) {
-        echo $row->DOCNUMBER." - ".$row->DOCNAME."<hr/>";
+      echo $row->DOCNUMBER." - ".$row->DOCNAME."<hr/>";
     }
 
     $docnumber = $ds->Ricerca[0]->DOCNUMBER;
@@ -296,26 +333,21 @@ trait arxivar{
 
   public function scriviDatiProfilo(){
 
-    // classi necessarie
-    $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
+    $this->loginArxivarServizio();
     $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
 
-    $loginResult = $ARX_Login->Login($userName, $password, $softwareName);
 
-    if ($loginResult->ArxLogOnErrorType != Arx_Login\ArxLogOnErrorType::None)
-    die("Logon Failed: ".$loginResult->ArxLogOnErrorType);
-
-    $sessionid = $loginResult->SessionId;
+    $sessionid = $this->loginResult->SessionId;
 
     try
     {
       // funzione per recuperare tutte le maschere
       //echo "dati di maschera<br />";
-      $masks = $ARX_Dati->Dm_MaskGetData($sessionid);
+      // $masks = $ARX_Dati->Dm_MaskGetData($sessionid);
 
       // funzione per utilizzare una maschera con uno specifico ID
       //echo "utilizzo la maschera specifica<br />";
-      $profileMv = $ARX_Dati->Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId($sessionid, $maskid);
+      $profileMv = $ARX_Dati->Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId($sessionid, $this->maskid);
 
       // DM profile default
       //var_dump($profileMv->DmProfileDefault);
@@ -327,10 +359,10 @@ trait arxivar{
       //echo "dati DmProfileDEfault<br />";
       $profile = $profileMv->DmProfileDefault->Dm_Profile_Insert_Base;
       // @var $profile \ARX_Dati\Dm_Profile_Insert_Base //
-      echo "<pre>";
-      var_dump($profile);
-      echo "</pre><hr/>";
-      die;
+      // echo "<pre>";
+      // var_dump($profile);
+      // echo "</pre><hr/>";
+      // die;
 
 
       foreach ($details as $field) {
@@ -360,10 +392,11 @@ trait arxivar{
           }
 
           break;
+
           case ARX_Dati\Dm_MaskDetail_FieldKind::DataDoc:
           // DataDoc - FORMATO - YYYY-MM-DD
           // TODO controllo formato data
-          $profile->DataDoc = $_POST['DataDoc'];;
+          $profile->DataDoc = $_POST['DataDoc'];
 
           break;
           /*case ARX_Dati\Dm_MaskDetail_FieldKind::File:
