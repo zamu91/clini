@@ -288,7 +288,8 @@ trait arxivar{
     $select->STATO->Selected = true;
     $result = $ARX_Search->Dm_Profile_GetData($sessionid, $select, $search);
     $ds = simplexml_load_string($result);
-    $this->arxDebug($ds);
+    // $this->arxDebug($ds);
+
     foreach ($ds->Ricerca as $row) {
       echo $row->DOCNUMBER." - ".$row->DOCNAME."<hr/>";
     }

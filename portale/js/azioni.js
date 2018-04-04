@@ -76,7 +76,7 @@ function navigaDashboard(){
   var jd = { azione: "naviga", page: "dashboard" };
   doAjax(jd, function(data){
     $("#container").html(data);
-    caricaListaProfili();
+    // caricaListaProfili();
   });
 }
 
