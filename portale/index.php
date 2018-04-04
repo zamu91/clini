@@ -13,6 +13,8 @@
     <input type="text" id="username" name="an_username" placeholder="Username"/>
     <input type="text" id="password" name="an_password" placeholder="Password" />
     <button onclick="login();">Login</button>
+
+    <button onclick="loginTest();">Login test</button>
     <hr>
     <input type="text" id="token" name="an_token" placeholder="Token"/>
     <button onclick="controlloLogin();">Controllo login</button>

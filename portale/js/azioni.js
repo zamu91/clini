@@ -10,7 +10,7 @@ function apriProfilo(){
 }
 
 function caricaListaProfili(){
-  var jd = { azione: "listaPrcontainerMascheraProfilazioneofili" };
+  var jd = { azione: "listaProfili" };
   doAjax(jd, function(data){
     $("#containerListaProfili").html(data);
   });
