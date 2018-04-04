@@ -87,10 +87,6 @@ class chiamate{
       $this->loginArxivar();
       break;
 
-      case 'loginTestPatrocinatore':
-      $this->loginTestArxivar();
-      break;
-
       case 'loginSessionActive':
         $this->controlloARXLogin();
         break;

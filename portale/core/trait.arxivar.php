@@ -534,36 +534,6 @@ trait arxivar{
     }
   }
 
-  public function loginTestArxivar(){
-    $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
-    $userName = $this->getUsername();
-    $password = $this->getPassword();
-    $this->loginResult = $ARX_Login->Login($userName, $password, $this->softwareName);
-    $this->arxLog('WCF chiamate');
-    if( $this->loginResult->LoggedIn ){
-      $this->arxLog('Login eseguito con successo');
-      $this->sessionid = $this->loginResult->SessionId;
-      $this->isLogin=true;
-      $ARX_Login->LogOut($this->sessionid); //rilascio la sessione per nuovi login
-      $this->arxLog('Logout e registrazione');
-      echo 'Siamo prima del getinfo';
-      var_dump($this->sessionid);
-      $userC = $ARX_Login->GetInfoUserConnected($this->sessionid);
-      var_dump($userC);
-      die;
-      $userB = $userC->ToUserBase();
-      var_dump($userB);
-
-
-      return true;
-    }else{
-      $this->arxLog(' Login fallito ');
-      $this->arxLog($this->loginResult->ArxLogOnErrorTypeString);
-      $this->logError=$this->loginResult->ArxLogOnErrorTypeString;
-      return false;
-    }
-  }
-
   private function logoutArxivar(){
     // esecuzione logout
     $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");

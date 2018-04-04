@@ -25,33 +25,6 @@ function login(){
   });
 }
 
-function loginTest(){
-  $("#resultCall").html("");
-  var user = $("#username").val();
-  var pass = $("#password").val();
-
-  jqXHR = $.ajax({
-    url: "core/class.chiamate.php",
-    type: 'POST',
-    dataType:'json',
-    data: { azione: "loginTestPatrocinatore", username: user, password: pass},
-  }).done(function(data, textStatus){
-    console.log(data);
-    console.log("token: ");
-    console.log(data.token);
-    console.log(data.ciao);
-    localStorage.setItem("tok",data.token);
-    $("#resultCall").html(data);
-    console.log(data.login);
-    if(data.login){
-      navigaDashboard();
-    } else {
-      alert("Errore login");
-    }
-  });
-}
-
-
 function getToken(){
   token=localStorage.getItem("tok");
   return token;
