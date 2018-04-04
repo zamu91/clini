@@ -12,6 +12,27 @@ trait arxivar{
 
   private $logError;
 
+  public function getFieldListMascheraRicherca(){
+    ob_start();
+    $this->loginArxivarServizio();
+    $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
+    $sessionid = $this->loginResult->SessionId;
+
+    $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
+    // $this->arxDebug($search);
+
+    // TODO: Differenziazione delle tipologie di campo
+    foreach ($search->Aggiuntivi->Field_Abstract as $agg) { ?>
+      <div class="fieldBox">
+        <label><?php echo $agg->Label; ?></label><br>
+        <input type="text" data-name="<?php echo $agg->Nome ?>" />
+      </div>
+    <?php }
+
+    $this->logoutArxivar();
+    return ob_get_clean();
+  }
+
   public function getFieldFromMaschera(){
     ob_start();
     $this->loginArxivarServizio();
@@ -170,7 +191,7 @@ trait arxivar{
                 // riabilito la gestione degli errori
                 // echo "<pre>";
                 // var_dump($myXmlCollection);
-                // echo "</pre>";
+                // $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");echo "</pre>";
 
                 // libxml_use_internal_errors(false);
 
@@ -265,7 +286,7 @@ trait arxivar{
     $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
     //  select per quali campi
     $select = $ARX_Search->Dm_Profile_Select_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
-
+    $this->arxDebug($select);
     // esempio di ricerca per campo standard "NUMERO"
     /*
     $search->Numero->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
@@ -327,7 +348,7 @@ trait arxivar{
     $select->ID->Selected = TRUE;
     $result = $ARX_Search->Dm_TaskWork_GetData($sessionid, $select, $search);
     $ds = simplexml_load_string($result);
-    var_dump($ds);
+    $this->arxDebug($ds);
 
     $this->logoutArxivar();
   }
