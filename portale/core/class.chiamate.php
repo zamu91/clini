@@ -54,7 +54,9 @@ class chiamate{
   }
 
   public function halt(){
-    echo json_encode($this->jsonMess);
+    if( !empty($this->jsonMess) ){
+      echo json_encode($this->jsonMess);
+    }
     die;
   }
 
@@ -117,6 +119,10 @@ class chiamate{
 
       case "scriviDatiProfilo":
         $this->scriviDatiProfilo();
+        break;
+
+      case "listaDocumenti":
+        $this->listaDocumenti();
         break;
     } //end swtich
     $this->halt();

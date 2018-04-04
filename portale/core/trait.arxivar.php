@@ -22,12 +22,14 @@ trait arxivar{
     // $this->arxDebug($search);
 
     // TODO: Differenziazione delle tipologie di campo
-    foreach ($search->Aggiuntivi->Field_Abstract as $agg) { ?>
+    foreach ($search->Aggiuntivi->Field_Abstract as $agg) {
+      if( $agg->Nome != 'COMBO19_1') {?>
       <div class="fieldBox">
         <label><?php echo $agg->Label; ?></label><br>
         <input type="text" data-name="<?php echo $agg->Nome ?>" />
       </div>
     <?php }
+    }
 
     $this->logoutArxivar();
     return ob_get_clean();
@@ -243,8 +245,8 @@ trait arxivar{
             //var_dump($field->Get_Property_Value_By_Name($field->FIELD_ID));
           }
           ?>
-          <input type="button" onclick="scriviDatiProfilo();" value="carica" />
-          <input type="reset" value="reset" />
+          <!-- <input type="button" onclick="scriviDatiProfilo();" value="carica" />
+          <input type="reset" value="reset" /> -->
         </fieldset>
       </form>
       <div id="requestResult"></div>
@@ -274,7 +276,6 @@ trait arxivar{
     $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
     $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
     $ARX_Documenti = new ARX_Documenti\ARX_Documenti($this->baseUrl."ARX_Documenti.asmx?WSDL");
-    // $ARX_Workflow = new ARX_Workflow\ARX_Workflow($this->baseUrl."ARX_Workflow.asmx?WSDL");
     $sessionid = $this->loginResult->SessionId;
 
     /* TODO: Parametrizzo il campo da cercare (proprietario del profilo) in modo da agevolare la ricerca successivamente */
@@ -286,7 +287,7 @@ trait arxivar{
     $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
     //  select per quali campi
     $select = $ARX_Search->Dm_Profile_Select_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
-    $this->arxDebug($select);
+    // $this->arxDebug($select->Aggiuntivi);
     // esempio di ricerca per campo standard "NUMERO"
     /*
     $search->Numero->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
@@ -306,17 +307,40 @@ trait arxivar{
 
     $select->DOCNUMBER->Selected = true;
     $select->DOCNAME->Selected = true;
+    $select->DATADOC->Selected = true;
+    $select->Aggiuntivi->Selected = true;
     $select->STATO->Selected = true;
     $result = $ARX_Search->Dm_Profile_GetData($sessionid, $select, $search);
     $ds = simplexml_load_string($result);
     // $this->arxDebug($ds);
 
-    foreach ($ds->Ricerca as $row) {
-      echo $row->DOCNUMBER." - ".$row->DOCNAME."<hr/>";
-    }
+    ?>
+      <table class="fullWidthTable clickable">
+        <thead>
+          <tr>
+            <th>DOCNUMBER</th>
+            <th>STATO</th>
+            <th>DATA DOCUMENTO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          foreach ($ds->Ricerca as $row) { ?>
+            <tr data-task="<?php echo $row->DOCNUMBER; ?>" onclick="dettagliTaskProfilo(this);">
+              <td><?php echo $row->DOCNUMBER; ?></td>
+              <td><?php echo $row->STATO; ?></td>
+              <td><?php echo $row->DATADOC; ?></td>
+            </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    <?php
+
+
+    // $this->arxDebug($ds->Ricerca[0]);
 
     $docnumber = $ds->Ricerca[0]->DOCNUMBER;
-    $this->arxDebug($docnumber);
+    // $this->arxDebug($docnumber);
 
     //// estrazione profilo
     //$profile = $ARX_Dati->Dm_Profile_GetData_By_DocNumber($sessionid, $docnumber);
@@ -326,13 +350,13 @@ trait arxivar{
     //$valore = "";
     //foreach ($profile->Aggiuntivi->Aggiuntivo_Base as $agg) {
     //    /* @var $agg \ARX_Dati\Aggiuntivo_String */
-    //    if ($agg->Nome == "TESTO1_1") $valore = $agg->Valore;
+    //    if ($agg->Nome == "TESTOutilizzare il codice seguente (dove xmlData è il risultato1_1") $valore = $agg->Valore;
     //}
     //echo "TESTO1_1: ".$valore;
     //
     //// estrazione documento
-    //$file = $ARX_Documenti->Dm_Profile_GetDocument($sessionid, $docnumber);
-    //file_put_contents("/tmp/".$file->FileName, $file->File);
+    // $file = $ARX_Documenti->Dm_Profile_GetDocument($sessionid, $docnumber);
+    // file_put_contents("/tm#f5f5f5p/".$file->FileName, $file->File);
 
     // cerco il task attivo per questo documento
     $search = $ARX_Search->Dm_TaskWork_Search_GetNewInstance($sessionid);
@@ -348,31 +372,53 @@ trait arxivar{
     $select->ID->Selected = TRUE;
     $result = $ARX_Search->Dm_TaskWork_GetData($sessionid, $select, $search);
     $ds = simplexml_load_string($result);
-    $this->arxDebug($ds);
+    // $this->arxDebug($ds);
 
     $this->logoutArxivar();
+  }
+
+  public function listaDocumenti(){
+    ?>
+      <table class="fullWidthTable">
+        <thead>
+          <tr>
+            <th>Documento</th>
+            <th>Campo 1</th>
+            <th>Campo 2</th>
+            <th>Campo 3</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Primo.txt</td>
+            <td>200 kb</td>
+            <td>inserito oggi</td>
+            <td><button>Visualizza</button></td>
+          </tr>
+          <tr>
+            <td>secondo.txt</td>
+            <td>253 kb</td>
+            <td>inserito oggi</td>
+            <td><button>Visualizza</button></td>
+          </tr>
+        </tbody>
+      </table>
+    <?php
+    $this->halt();
   }
 
   public function scriviDatiProfilo(){
 
     $this->loginArxivarServizio();
     $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
-
-
     $sessionid = $this->loginResult->SessionId;
 
-    try
-    {
-      // funzione per recuperare tutte le maschere
-      //echo "dati di maschera<br />";
+    try {
       // $masks = $ARX_Dati->Dm_MaskGetData($sessionid);
 
       // funzione per utilizzare una maschera con uno specifico ID
       //echo "utilizzo la maschera specifica<br />";
       $profileMv = $ARX_Dati->Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId($sessionid, $this->maskid);
-
-      // DM profile default
-      //var_dump($profileMv->DmProfileDefault);
 
       // DmMaskDetails contiene l'elenco dei campi previsti nella maschera
       //echo "elenco campi della maschera specifica<br />";
@@ -381,10 +427,6 @@ trait arxivar{
       //echo "dati DmProfileDEfault<br />";
       $profile = $profileMv->DmProfileDefault->Dm_Profile_Insert_Base;
       // @var $profile \ARX_Dati\Dm_Profile_Insert_Base //
-      // echo "<pre>";
-      // var_dump($profile);
-      // echo "</pre><hr/>";
-      // die;
 
 
       foreach ($details as $field) {

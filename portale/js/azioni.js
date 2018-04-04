@@ -1,4 +1,4 @@
-function apriProfilo(){
+function apriProfiloOld(){
   // Apre la pagina della maschera con la possibilità di inserire o modificare il profilo e quindi della pratica.
   // TODO: Parametrizzo il profilo da aprire, nel caso stiamo usando un profilo esistente docnumber deve essere valorizzato, altrimenti predispongo la maschera per l'inserimento.
   var docnumber = "";
@@ -9,6 +9,20 @@ function apriProfilo(){
   });
 }
 
+function apriProfilo(sender){
+  // Apre la pagina della maschera con la possibilità di inserire o modificare il profilo e quindi della pratica.
+  // TODO: Parametrizzo il profilo da aprire, nel caso stiamo usando un profilo esistente docnumber deve essere valorizzato, altrimenti predispongo la maschera per l'inserimento.
+  var docnumber = "";
+  var jd = { azione: "dettaglioProfilo", docnumber: docnumber };
+  doLoad("#modal-body", jd, function(){
+    $("#modal-title").html( $(sender).html() );
+    $("#modal-action").modal("toggle");
+    $("#modal-salva").on("click", function(){
+      scriviDatiProfilo();
+    });
+  });
+}
+
 function caricaListaProfili(){
   var jd = { azione: "listaProfili" };
   doAjax(jd, function(data){
@@ -16,9 +30,30 @@ function caricaListaProfili(){
   });
 }
 
+function caricaProfiloOld(docnumber){
+  var jd = { azione: "dettaglioProfilo", docnumber: docnumber };
+  doLoad("#containerMascheraProfilazione", jd);
+}
+
 function caricaProfilo(docnumber){
   var jd = { azione: "dettaglioProfilo", docnumber: docnumber };
   doLoad("#containerMascheraProfilazione", jd);
+}
+
+function dettagliTaskProfilo(target){
+  //  containerComandi
+  $(target).parent("tbody").children("tr.selected").removeClass("selected");
+  $(target).addClass("selected");
+
+  var docnumber = $(target).data("task");
+
+  $("#containerComandi").show();
+  $("#containerComandi").attr("data-task", docnumber);
+  $("#containerDocumenti").show();
+  $("#containerDocumenti").attr("data-task", docnumber);
+
+  var jd = { azione: "listaDocumenti", docnumber: docnumber };
+  doLoad("#containerDocumenti", jd);
 }
 
 function doAjax(jd, doneFunc, failFunc){
@@ -52,11 +87,10 @@ function doLoad(target, jd, doneFunc, failFunc){
     datatype:'html',
     data: jd
   }).done(function(data, textStatus, jqXHR){
-    console.log(data);
+    // console.log(data);
+    $(""+target).html(data);
     if( isFunction(doneFunc) ) {
       doneFunc(data);
-    }else{
-      $(""+target).html(data);
     }
   }).fail(function(jqXHR, textStatus, errorThrown){
     if( isFunction(failFunc) ) {

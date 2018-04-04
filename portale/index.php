@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link type="text/css" href="css/bulma.css" />
-  <link type="text/css" href="css/myStyle.css" />
+  <!-- c -->
+  <link rel="stylesheet" type="text/css" href="css/bulma.css" />
+  <link rel="stylesheet" type="text/css" href="css/myStyle.css" />
+  <link rel="stylesheet" type="text/css" href="css/custom.css" />
+  <link rel="stylesheet" type="text/css" href="vendor/bootstrap-4.0.0-dist/css/bootstrap.min.css" />
+  <!-- javascript -->
   <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="vendor/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/login.js"></script>
   <script type="text/javascript" src="js/azioni.js"></script>
 </head>
 <body>
   <div id="container">
-    <h1>CIAO!</h1>
+    <h1>Login</h1>
     <input type="text" id="username" name="an_username" placeholder="Username"/>
     <input type="text" id="password" name="an_password" placeholder="Password" />
     <button onclick="login();">Login</button>
-
-    <button onclick="loginTest();">Login test</button>
     <hr>
     <input type="text" id="token" name="an_token" placeholder="Token"/>
     <button onclick="controlloLogin();">Controllo login</button>
@@ -22,7 +25,7 @@
     <pre id="resultCall"></pre>
 
     <div id="insClinica">
-      <div class="inputDiv">
+      <div class="inputDiv"><div class="clearSpace"></div>
         <label for="nomeAmbulatorio">Nome Ambulatorio</label>
         <input type="edit" id="nomeAmbulatorio">
       </div>

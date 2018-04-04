@@ -23,24 +23,53 @@ trait navigazione {
     // return file_get_contents ( $path );
     ob_start();
     ?>
-      <button onclick="apriProfilo();">Nuovo profilo</button>
-      <button onclick="reutrn false;">Work in progress</button>
-      <button onclick="reutrn false;">Work in progress</button>
-      <button onclick="reutrn false;">Work in progress</button>
+      <button onclick="apriProfilo(this);">Responsabilità civile auto</button>
+      <button onclick="apriProfilo(this);">Responsabilità civile terzi</button>
+      <button onclick="apriProfilo(this);">Polizza privata infortuni</button>
+      <button onclick="apriProfilo(this);">Consulenza tecnica di parte</button>
+
+      <div class="clearSpace"></div>
 
       <div id="containerFiltri">
         <div id="containerFieldList">
           <?php echo $this->getFieldListMascheraRicherca(); ?>
-        </div>
-        <div id="containerFiltri">
-          <button onclick="caricaListaProfili();">Ricerca</button>
+
+          <button class="floatRight buttonSearch" onclick="caricaListaProfili();">Ricerca</button>
         </div>
       </div>
 
+      <div class="clearSpace"></div>
+
       <div id="containerListaProfili" class="listaProfili"></div>
 
-      <div id="containerComandi"></div>
-      <div id="containerDocumenti"></div>
+      <div class="clearSpace"></div>
+
+      <div id="containerComandi" class="hidden dashSection" data-task="">
+        <button>Modifica</button>
+      </div>
+      <div id="containerDocumenti" class="hidden dashSection" data-task=""></div>
+
+      <div id="modal-action" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 id="modal-title" class="modal-title">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div id="modal-body" class="modal-body">
+              <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+              <button id="modal-salva" type="button" class="btn btn-primary">Salva</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearSpace"></div>
     <?php
   }
 

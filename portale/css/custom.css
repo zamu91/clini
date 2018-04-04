@@ -1,0 +1,72 @@
+.hidden{
+  display: none;
+}
+
+div#containerFiltri{
+  width: 100%;
+}
+
+div.fieldBox{
+  position: relative;
+  float: left;
+  margin-left: 5px;
+}
+
+div.fieldBox:first-child{
+  margin-left: 0px;
+}
+
+button.floatRight{
+  position: relative;
+  float: right;
+}
+
+button.buttonSearch{
+  margin-top: 20px;
+}
+
+div.clearSpace{
+  clear: both;
+  margin-bottom: 20px;
+}
+
+div.clear{
+  clear: both;
+}
+
+table.fullWidthTable{
+  width: 100%;
+}
+
+div.dashSection{
+  position: relative;
+  float: left;
+  margin: 2px;
+  padding: 2px;
+  border: 1px solid #dbdbdb;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+div#containerComandi{
+  width: 15%;
+}
+div#containerDocumenti{
+  width: 84%;
+}
+
+table thead tr th,
+table tbody tr td{
+  border: 1px solid black;
+}
+
+
+table.clickable tbody tr{
+  cursor: pointer;
+}
+
+
+table tbody tr:hover td,
+table tbody tr.selected td{
+  background-color: #f5f5f5;
+}
