@@ -7,6 +7,7 @@ trait arxivar{
   public $adminPass = "123";
   public $maskid = "ec6009ba90064374a09956b7b7a61328";
   public $softwareName = "PHP Gestione cliniche";
+  public $softwareNameSecret ="035518E483DE4436";
   private $loginResult;
   private $isLoginArxivar;
 
@@ -24,12 +25,56 @@ trait arxivar{
     // TODO: Differenziazione delle tipologie di campo
     foreach ($search->Aggiuntivi->Field_Abstract as $agg) {
       if( $agg->Nome != 'COMBO19_1') {?>
-      <div class="fieldBox">
-        <label><?php echo $agg->Label; ?></label><br>
-        <input type="text" data-name="<?php echo $agg->Nome ?>" />
-      </div>
-    <?php }
+        <div class="fieldBox">
+          <label><?php echo $agg->Label; ?></label><br>
+          <input type="text" data-name="<?php echo $agg->Nome ?>" />
+        </div>
+      <?php }
     }
+
+    $this->logoutArxivar();
+    return ob_get_clean();
+  }
+
+  public function getFieldFromMascheraUpload(){
+    ob_start();
+
+    $this->loginArxivarServizio();
+    $sessionid = $this->loginResult->SessionId;
+
+    $ARX_Dati  = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
+    $profileMv = $ARX_Dati->Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId($sessionid, $this->maskid);
+    $profile = $profileMv->DmProfileDefault->Dm_Profile_Insert_Base;
+
+    /*
+    * COMBO15_297 -- Tipo valutazione
+    * TESTO10_297 -- Cognome
+    * TESTO13_297 -- Nome
+    */
+
+    $tipo_valutazione = $ARX_Dati->Dm_CampiSpecifici_GetValues($sessionid, "COMBO15_297",$profile,null);
+    // $this->arxDebug($tipo_valutazione);
+    $cognome = $ARX_Dati->Dm_CampiSpecifici_GetValues($sessionid, "TESTO10_297",$profile,null);
+    // $this->arxDebug($cognome);
+    $nome = $ARX_Dati->Dm_CampiSpecifici_GetValues($sessionid, "TESTO13_297",$profile,null);
+    // $this->arxDebug($nome);
+
+    ?>
+      <span class="btn btn-success fileinput-button">
+          <i class="glyphicon glyphicon-plus"></i>
+          <span>Seleziona i file...</span>
+          <!-- The file input field used as target for the file upload widget -->
+          <input id="fileupload" type="file" name="files[]" multiple>
+      </span>
+      <br>
+      <br>
+      <!-- The global progress bar -->
+      <div id="progress" class="progress">
+          <div class="progress-bar progress-bar-success"></div>
+      </div>
+      <!-- The container for the uploaded files -->
+      <div id="files" class="files"></div>
+    <?php
 
     $this->logoutArxivar();
     return ob_get_clean();
@@ -265,6 +310,7 @@ trait arxivar{
     $docnumber = $this->post("docnumber", false);
     if( !empty($docnumber) ){
       // TODO: parte del dettaglio
+      echo $this->getFieldFromMascheraUpload();
     } else {
       // parte dell'inserimento
       echo $this->getFieldFromMaschera();
@@ -315,25 +361,25 @@ trait arxivar{
     // $this->arxDebug($ds);
 
     ?>
-      <table class="fullWidthTable clickable">
-        <thead>
-          <tr>
-            <th>DOCNUMBER</th>
-            <th>STATO</th>
-            <th>DATA DOCUMENTO</th>
+    <table class="fullWidthTable clickable">
+      <thead>
+        <tr>
+          <th>DOCNUMBER</th>
+          <th>STATO</th>
+          <th>DATA DOCUMENTO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        foreach ($ds->Ricerca as $row) { ?>
+          <tr data-task="<?php echo $row->DOCNUMBER; ?>" onclick="dettagliTaskProfilo(this);">
+            <td><?php echo $row->DOCNUMBER; ?></td>
+            <td><?php echo $row->STATO; ?></td>
+            <td><?php echo $row->DATADOC; ?></td>
           </tr>
-        </thead>
-        <tbody>
-          <?php
-          foreach ($ds->Ricerca as $row) { ?>
-            <tr data-task="<?php echo $row->DOCNUMBER; ?>" onclick="dettagliTaskProfilo(this);">
-              <td><?php echo $row->DOCNUMBER; ?></td>
-              <td><?php echo $row->STATO; ?></td>
-              <td><?php echo $row->DATADOC; ?></td>
-            </tr>
-          <?php } ?>
-        </tbody>
-      </table>
+        <?php } ?>
+      </tbody>
+    </table>
     <?php
 
 
@@ -379,30 +425,30 @@ trait arxivar{
 
   public function listaDocumenti(){
     ?>
-      <table class="fullWidthTable">
-        <thead>
-          <tr>
-            <th>Documento</th>
-            <th>Campo 1</th>
-            <th>Campo 2</th>
-            <th>Campo 3</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Primo.txt</td>
-            <td>200 kb</td>
-            <td>inserito oggi</td>
-            <td><button>Visualizza</button></td>
-          </tr>
-          <tr>
-            <td>secondo.txt</td>
-            <td>253 kb</td>
-            <td>inserito oggi</td>
-            <td><button>Visualizza</button></td>
-          </tr>
-        </tbody>
-      </table>
+    <table class="fullWidthTable">
+      <thead>
+        <tr>
+          <th>Documento</th>
+          <th>Campo 1</th>
+          <th>Campo 2</th>
+          <th>Campo 3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Primo.txt</td>
+          <td>200 kb</td>
+          <td>inserito oggi</td>
+          <td><button>Visualizza</button></td>
+        </tr>
+        <tr>
+          <td>secondo.txt</td>
+          <td>253 kb</td>
+          <td>inserito oggi</td>
+          <td><button>Visualizza</button></td>
+        </tr>
+      </tbody>
+    </table>
     <?php
     $this->halt();
   }
@@ -562,6 +608,26 @@ trait arxivar{
     }
   }
 
+
+  public function loginArxivarNext(){
+    /* ARXivarNext */
+    $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
+    // esecuzione login
+    $logonRequest = new \ARX_Login\ArxLogonRequest();
+    $logonRequest->Username = $this->getUsername();
+    $logonRequest->Password = $this->getPassword();
+    // specificare qui Client ID e Client Secret configurati nel portale Authentication
+    $logonRequest->ClientId = $this->softwareName;
+    $logonRequest->ClientSecret = $this->softwareNameSecret;
+    $logonRequest->EnablePushEvents = FALSE;
+    $this->loginResult = $ARX_Login->Login($logonRequest);
+    if ($this->loginResult->ArxLogOnErrorType != Arx_Login\ArxLogOnErrorType::None){
+      $this->arxLog("Logon Failed: ".$this->loginResult->ArxLogOnErrorType);
+      die();
+    }
+  }
+
+
   public function loginArxivar(){
     $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
     $userName = $this->getUsername();
@@ -585,7 +651,7 @@ trait arxivar{
       // // die;
 
 
-      $ARX_Login->LogOut($this->sessionid); //rilascio la sessione per nuovi login
+      $this->logoutArxivar(); //rilascio la sessione per nuovi login
       $this->arxLog('Logout e registrazione');
       $this->registerSessionLogin();
       return true;

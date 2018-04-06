@@ -9,17 +9,41 @@ function apriProfiloOld(){
   });
 }
 
-function apriProfilo(sender){
+function apriProfilo(sender, newdoc){
   // Apre la pagina della maschera con la possibilità di inserire o modificare il profilo e quindi della pratica.
   // TODO: Parametrizzo il profilo da aprire, nel caso stiamo usando un profilo esistente docnumber deve essere valorizzato, altrimenti predispongo la maschera per l'inserimento.
-  var docnumber = "";
+  var docnumber = ( typeof newdoc != 'undefined' && !newdoc) ? getDocunumberDashboard() : "";
   var jd = { azione: "dettaglioProfilo", docnumber: docnumber };
   doLoad("#modal-body", jd, function(){
     $("#modal-title").html( $(sender).html() );
     $("#modal-action").modal("toggle");
     $("#modal-salva").on("click", function(){
-      scriviDatiProfilo();
+      if(docnumber != ""){
+        scriviDocumentiProfilo();
+      } else {
+        scriviDatiProfilo();
+      }
     });
+
+    'use strict';
+    // Change this to the location of your server-side upload handler:
+    var url = "core/jquery-file-upload-9.21.0/index.php";
+    $('#fileupload').fileupload({
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo('#files');
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+    }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
   });
 }
 
@@ -102,6 +126,12 @@ function doLoad(target, jd, doneFunc, failFunc){
   });
 }
 
+function getDocunumberDashboard(){
+  var task = $("#containerComandi").data("task");
+  task = ( typeof task != 'undefined' ) ? task : "";
+  return task;
+}
+
 function isFunction(functionToCheck) {
   return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
 }
@@ -144,6 +174,15 @@ function salvaContratto(){
 }
 
 function scriviDatiProfilo(){
+  var jd = $("#formMaschera").serialize();
+  jd += "&azione=scriviDatiProfilo";
+  console.log(jd);
+  doAjax(jd, function(mess){
+    $("#requestResult").html(mess);
+  });
+}
+
+function scriviDocumentiProfilo(){
   var jd = $("#formMaschera").serialize();
   jd += "&azione=scriviDatiProfilo";
   console.log(jd);
