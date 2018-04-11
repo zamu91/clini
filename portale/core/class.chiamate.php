@@ -117,8 +117,16 @@ class chiamate{
       $this->dettaglioProfilo();
       break;
 
+      case "getTaskworkFromDocnumber":
+      $this->getTaskworkFromDocnumber();
+      break;
+
       case "scriviDatiProfilo":
         $this->scriviDatiProfilo();
+        break;
+
+      case "scriviDocumentiProfilo":
+        $this->scriviDocumentiProfilo();
         break;
 
       case "listaDocumenti":

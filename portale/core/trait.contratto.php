@@ -92,7 +92,8 @@ trait contratto{
   }
 
   private function setIdPrenotazione(){
-    $this->query(" SELECT TOP 1 idPrenotazione as id from ambulatorio_contratto_prenotazione order by idPrenotazione desc");
+    // $this->query(" SELECT TOP 1 idPrenotazione as id from ambulatorio_contratto_prenotazione order by idPrenotazione desc");
+    $this->query("select id from (SELECT idPrenotazione as id from ambulatorio_contratto_prenotazione order by idPrenotazione desc) where rownum=1");
     $row=$this->fetch();
     $id=$row['id'];
     if(empty($id)){

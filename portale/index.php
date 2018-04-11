@@ -39,7 +39,9 @@
     <div id="insContratto">
       <div class="inputDiv">
         <label for="idAmbulatorio">Ambulatorio</label>
-        <select class="dataProc" id="idAmbulatorio"></select>
+        <select class="dataProc" id="idAmbulatorio">
+          <option value="4">test</option>
+        </select>
       </div>
 
       <div class="inputDiv">
@@ -98,6 +100,9 @@
           <label for="sab">Sabato</label>
           <input type="checkbox" id="sab">
         </div>
+
+        <button onclick="">salva contratto</button>
+
       </div>
     </div> <!-- ins contratto -->
   </div> <!-- container -->

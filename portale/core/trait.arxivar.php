@@ -385,7 +385,7 @@ trait arxivar{
 
     // $this->arxDebug($ds->Ricerca[0]);
 
-    $docnumber = $ds->Ricerca[0]->DOCNUMBER;
+
     // $this->arxDebug($docnumber);
 
     //// estrazione profilo
@@ -404,6 +404,17 @@ trait arxivar{
     // $file = $ARX_Documenti->Dm_Profile_GetDocument($sessionid, $docnumber);
     // file_put_contents("/tm#f5f5f5p/".$file->FileName, $file->File);
 
+
+
+    $this->logoutArxivar();
+  }
+
+  public function getTaskworkFromDocnumber(){
+    $this->loginArxivarServizio();
+
+    $sessionid = $this->loginResult->SessionId;
+    $docnumber = $this->post("docnumber", false);
+    $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
     // cerco il task attivo per questo documento
     $search = $ARX_Search->Dm_TaskWork_Search_GetNewInstance($sessionid);
     $search->Dm_Profile->DOCNUMBER->Operatore = \ARX_Search\Dm_Base_Search_Operatore_Numerico::Uguale;
@@ -419,11 +430,17 @@ trait arxivar{
     $result = $ARX_Search->Dm_TaskWork_GetData($sessionid, $select, $search);
     $ds = simplexml_load_string($result);
     // $this->arxDebug($ds);
-
+    $taskwork = (string)$ds->Ricerca->ID;
     $this->logoutArxivar();
+    $this->setJsonMess("res", true);
+    $this->setJsonMess("taskwork", $taskwork);
+    $this->halt();
   }
 
   public function listaDocumenti(){
+    // estrazione documento
+    // $file = $ARX_Documenti->Dm_Profile_GetDocument($sessionid, $docnumber);
+    // file_put_contents("docs/".$file->FileName, $file->File);
     ?>
     <table class="fullWidthTable">
       <thead>
@@ -560,6 +577,50 @@ trait arxivar{
 
     $this->logoutArxivar();
 
+  }
+
+  public function scriviDocumentiProfilo(){
+
+    $this->loginArxivarServizio();
+    $ARX_Dati = new ARX_Dati\ARX_Dati($baseUrl."ARX_Dati.asmx?WSDL");
+
+    $sessionid = $this->loginResult->SessionId;
+    $idTaskWork = $this->post("taskwork", false);
+    $files = $this->post("taskwork", false);
+    $basepath = dirname($_SERVER['DOCUMENT_ROOT']).'/arx_portale/clini/portale/uploads/';
+
+    // cerco l'operazione di inserimento documento per questo task
+    $dmTaskDocs = $ARX_Workflow->Dm_TaskDoc_GetData_By_DmTaskworkId($sessionid, $idTaskWork);
+    $dmTaskDoc = $dmTaskDocs->Dm_TaskDoc;
+    /* @var $dmTaskDoc \ARX_Workflow\Dm_TaskDoc */
+    $idTaskDoc = $dmTaskDoc->ID;
+
+    // si può anche controllare se l'operazione è già stata eseguita con la variabile $dmTaskDoc->OP_ESEGUITA
+
+    // preparo il profilo per l'operazione
+    $profileInsertMv = $ARX_Workflow->Dm_Profile_Insert_MV_Get_New_Instance_By_DmTaskDocId($sessionid, $idTaskWork, $idTaskDoc, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale);
+    $profileBase = $profileInsertMv->DmProfileDefault->Dm_Profile_Insert_Base;
+
+    // qui va valorizzato il profilo da inserire...
+    $profileBase->InOut = ARX_Workflow\DmProfileInOut::Interno;
+    $profileBase->Stato = "VALIDO";
+    $profileBase->Aoo = "1";
+    $profileBase->ProtocolloInterno = "123456";
+
+    // $filepath = "c:\\Apache24\\INSTALL.txt";
+    $arxFile = new ARX_Dati\Arx_File();
+    foreach ($files as $key => $value) {
+      $profileBase->DocName = basename($value);
+      $filepath = $basepath.$this->sDir().$profileBase->DocName;
+
+      $arxFile->CreationDate = date("c", filectime($filepath));
+      $arxFile->FileName = basename($filepath);
+      $arxFile->File = file_get_contents($filepath);
+      $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale, $arxFile);
+      var_dump($dmProfileResult);
+    }
+
+    $this->logoutArxivar();
   }
 
   public function getLoginResult(){

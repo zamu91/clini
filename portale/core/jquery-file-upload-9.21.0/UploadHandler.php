@@ -41,11 +41,14 @@ class UploadHandler
     protected $image_objects = array();
 
     public function __construct($options = null, $initialize = true, $error_messages = null) {
+      // echo dirname($this->get_server_var('DOCUMENT_ROOT')).'/uploads/';
+      // echo $this->get_full_url().'/uploads/';
+      // die;
         $this->response = array();
         $this->options = array(
             'script_url' => $this->get_full_url().'/'.$this->basename($this->get_server_var('SCRIPT_NAME')),
-            'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/uploads/',
-            'upload_url' => $this->get_full_url().'/uploads/',
+            'upload_dir' => dirname($this->get_server_var('DOCUMENT_ROOT')).'/arx_portale/clini/portale/uploads/',
+            'upload_url' => dirname($this->get_server_var('SERVER_NAME')).'/arx_portale/clini/portale/uploads/',
             'input_stream' => 'php://input',
             'user_dirs' => false,
             'mkdir_mode' => 0755,

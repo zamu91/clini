@@ -33,7 +33,11 @@ function apriProfilo(sender, newdoc){
         dataType: 'json',
         done: function (e, data) {
             $.each(data.result.files, function (index, file) {
-                $('<p/>').text(file.name).appendTo('#files');
+              if( typeof file.error != 'undefined' && file.error != "" ) {
+                alert("Errore nel caricamento di fle."+ file.name+' --> '+file.error );
+              } else {
+                $('<p class="uploadedFile" data-info="'+file.url+'"/>').text(file.name).appendTo('#files');
+              }
             });
         },
         progressall: function (e, data) {
@@ -42,6 +46,9 @@ function apriProfilo(sender, newdoc){
                 'width',
                 progress + '%'
             );
+        },
+        fail: function(jqXHR, errorThrown, textStatus){
+          alert("Errore nella procedura di caricamento dei file.");
         }
     }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
   });
@@ -66,18 +73,35 @@ function caricaProfilo(docnumber){
 
 function dettagliTaskProfilo(target){
   //  containerComandi
+  $("#containerComandi").attr("data-task", "");
+  $("#containerComandi").attr("data-work", "");
+  $("#containerDocumenti").attr("data-task", "");
+  $("#containerDocumenti").attr("data-work", "");
+
   $(target).parent("tbody").children("tr.selected").removeClass("selected");
   $(target).addClass("selected");
 
   var docnumber = $(target).data("task");
 
-  $("#containerComandi").show();
-  $("#containerComandi").attr("data-task", docnumber);
-  $("#containerDocumenti").show();
-  $("#containerDocumenti").attr("data-task", docnumber);
+  var jd = { azione: "getTaskworkFromDocnumber", docnumber: docnumber};
+  doAjax(jd, function(data){
+    if( data.res ){
+      $("#containerComandi").attr("data-task", docnumber);
+      $("#containerComandi").attr("data-work", data.taskwork);
+      $("#containerDocumenti").attr("data-task", docnumber);
+      $("#containerDocumenti").attr("data-work", data.taskwork);
 
-  var jd = { azione: "listaDocumenti", docnumber: docnumber };
-  doLoad("#containerDocumenti", jd);
+      $("#containerComandi").show();
+      $("#containerDocumenti").show();
+
+      var jd = { azione: "listaDocumenti", docnumber: docnumber };
+      doLoad("#containerDocumenti", jd);
+    } else {
+      alert("Errore recupero taskwork");
+    }
+  });
+
+
 }
 
 function doAjax(jd, doneFunc, failFunc){
@@ -147,7 +171,7 @@ function navigaDashboard(){
 function salvaAmbulatorio(){
   data={};
   add={};
-  add.nome=$('#nomeAmbulatorio').val();
+  add.NOME=$('#nomeAmbulatorio').val();
   data.data=add;
   data.azione="salvaClinica";
   doAjax(data,function(mess){
@@ -183,9 +207,16 @@ function scriviDatiProfilo(){
 }
 
 function scriviDocumentiProfilo(){
-  var jd = $("#formMaschera").serialize();
-  jd += "&azione=scriviDatiProfilo";
+  var jd = {};
+  jd.azione = "scriviDocumentiProfilo";
+  jd.taskwork = $("#containerComandi").data("work");
+  var file = [];
+  $("#files").children(".uploadedFile").each(function(){
+    file.push($(this).data("info"));
+  });
+  jd.files = file;
   console.log(jd);
+  // return false;
   doAjax(jd, function(mess){
     $("#requestResult").html(mess);
   });
