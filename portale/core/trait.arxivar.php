@@ -587,7 +587,7 @@ trait arxivar{
 
     $sessionid = $this->loginResult->SessionId;
     $idTaskWork = $this->post("taskwork", false);
-    $files = $this->post("taskwork", false);
+    $files = $this->post("files", false);
     $basepath = dirname($_SERVER['DOCUMENT_ROOT']).'/arx_portale/clini/portale/uploads/';
 
     // cerco l'operazione di inserimento documento per questo task
@@ -610,9 +610,11 @@ trait arxivar{
 
     // $filepath = "c:\\Apache24\\INSTALL.txt";
     $arxFile = new ARX_Dati\Arx_File();
+
+    $this->arxDebug($files);
     foreach ($files as $key => $value) {
       $profileBase->DocName = basename($value);
-      $filepath = $basepath.$this->sDir().$profileBase->DocName;
+      $filepath = $basepath.$profileBase->DocName;
 
       $arxFile->CreationDate = date("c", filectime($filepath));
       $arxFile->FileName = basename($filepath);

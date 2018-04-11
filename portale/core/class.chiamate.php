@@ -34,7 +34,6 @@ class chiamate{
     require($path."ARX_Workflow.php");
   }
 
-
   public function debug(){
     $this->debug=true;
   }
