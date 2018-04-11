@@ -31,6 +31,7 @@ class chiamate{
     require($path."ARX_Dati.php");
     require($path."ARX_Search.php");
     require($path."ARX_Documenti.php");
+    require($path."ARX_Workflow.php");
   }
 
 
