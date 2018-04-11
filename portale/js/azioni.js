@@ -44,7 +44,8 @@ function apriProfilo(sender, newdoc){
             var progress = parseInt(data.loaded / data.total * 100, 10);
             $('#progress .progress-bar').css(
                 'width',
-                progress + '%'
+            function doAjax(jd, doneFunc, failFunc){
+    progress + '%'
             );
         },
         fail: function(jqXHR, errorThrown, textStatus){
@@ -56,9 +57,10 @@ function apriProfilo(sender, newdoc){
 
 function caricaListaProfili(){
   var jd = { azione: "listaProfili" };
-  doAjax(jd, function(data){
-    $("#containerListaProfili").html(data);
-  });
+  // doAjax(jd, function(data){
+  //   $("#containerListaProfili").html(data);
+  // });
+  doLoad("#containerListaProfili", jd);
 }
 
 function caricaProfiloOld(docnumber){
@@ -79,12 +81,14 @@ function dettagliTaskProfilo(target){
   $("#containerDocumenti").attr("data-work", "");
 
   $(target).parent("tbody").children("tr.selected").removeClass("selected");
-  $(target).addClass("selected");
+  $(target).function doAjax(jd, doneFunc, failFunc){
+addClass("selected");
 
   var docnumber = $(target).data("task");
 
   var jd = { azione: "getTaskworkFromDocnumber", docnumber: docnumber};
   doAjax(jd, function(data){
+    console.log(data);
     if( data.res ){
       $("#containerComandi").attr("data-task", docnumber);
       $("#containerComandi").attr("data-work", data.taskwork);
@@ -162,10 +166,11 @@ function isFunction(functionToCheck) {
 
 function navigaDashboard(){
   var jd = { azione: "naviga", page: "dashboard" };
-  doAjax(jd, function(data){
-    $("#container").html(data);
-    // caricaListaProfili();
-  });
+  doLoad("#container", jd);
+  // doAjax(jd, function(data){
+  //   $("#container").html(data);
+  //   // caricaListaProfili();
+  // });
 }
 
 function salvaAmbulatorio(){
