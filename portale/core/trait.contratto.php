@@ -29,16 +29,25 @@ trait contratto{
     return $this->idContrattoWork;
   }
 
-  private function getLastIdContratto(){
-    $str=" SELECT TOP 1 idContratto as id from ambulatorio_contratto  order by idContratto desc ";
-    $this->query($str);
-    $row=$this->fetch();
-    $this->setIdContratto($row['id']);
-  }
+
 
   private function checkConflict(){
     return true;
     //TODO: da sistemare, controllo sul db se ci sono casi di sovraposizione
+
+  }
+
+  private function getNextIdContratto(){
+    $this->query("SELECT max(IDCONTRATTO) as ID from XDM_AMBULATORIO_CONTRATTO ");
+    $row=$this->fetch();
+    $id=$row['ID'];
+    if(empty($id)){
+      $id=1;
+    }else{
+      $id++;
+    }
+
+    return $id;
 
   }
 
@@ -47,19 +56,19 @@ trait contratto{
     $this->checkConflict();
 
     $data=$this->post("data");
-
-    $data['idPatrocinatore']=$this->getIdArxivar();
-    if($data['durata']<10){
+    if($data['TEMPO']<10){
       $this->error("Durata inferiore del previsto, controllare");
     }
     $this->logCont("inserimento contratto");
-    $this->insPrepare('ambulatorio_contratto',$data);
-    $this->getLastIdContratto();
+    $data['IDCONTRATTO']=$this->getNextIdContratto();
+    $this->insertPrepare('XDM_AMBULATORIO_CONTRATTO',$data);
     $this->logCont("Iniz variabile e start inserimento spazio");
-    $this->varWork=$data;
-    $this->occupaSpazioPrenotazione();
-    $this->commit();
 
+    $this->varWork=$data;
+
+    //$this->occupaSpazioPrenotazione();
+    $this->commit();
+    $this->halt();
   }
 
   private function getVCont($var){
