@@ -44,8 +44,7 @@ function apriProfilo(sender, newdoc){
             var progress = parseInt(data.loaded / data.total * 100, 10);
             $('#progress .progress-bar').css(
                 'width',
-            function doAjax(jd, doneFunc, failFunc){
-    progress + '%'
+                progress + '%'
             );
         },
         fail: function(jqXHR, errorThrown, textStatus){
@@ -54,6 +53,7 @@ function apriProfilo(sender, newdoc){
     }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
   });
 }
+
 
 function caricaListaProfili(){
   var jd = { azione: "listaProfili" };
@@ -136,7 +136,7 @@ function doLoad(target, jd, doneFunc, failFunc){
   jqXHR = $.ajax({
     url: "core/class.chiamate.php",
     type: 'POST',
-    datatype:'html',
+    dataType:'html',
     data: jd
   }).done(function(data, textStatus, jqXHR){
     // console.log(data);
