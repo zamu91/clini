@@ -136,7 +136,7 @@ function doLoad(target, jd, doneFunc, failFunc){
   jqXHR = $.ajax({
     url: "core/class.chiamate.php",
     type: 'POST',
-    datatype:'html',
+    dataType:'html',
     data: jd
   }).done(function(data, textStatus, jqXHR){
     // console.log(data);
