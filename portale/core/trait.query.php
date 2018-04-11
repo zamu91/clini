@@ -153,6 +153,7 @@ trait sql{
     }
     oci_execute($compiled);
   }
+  
 }
 
 
