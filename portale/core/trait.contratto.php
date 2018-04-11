@@ -51,6 +51,8 @@ trait contratto{
 
   }
 
+
+
   public function insContratto(){
     //TODO: Controllo se i dati inseriti non sono in conflitto con altre prenotazioni
     $this->checkConflict();
@@ -61,6 +63,8 @@ trait contratto{
     }
     $this->logCont("inserimento contratto");
     $data['IDCONTRATTO']=$this->getNextIdContratto();
+    $data['DATAINIZIOCONTRATTO']=$this->formOcDate($data['DATAINIZIOCONTRATTO']);
+    $data['DATAFINECONTRATTO']=$this->formOcDate($data['DATAFINECONTRATTO']);
     $this->insertPrepare('XDM_AMBULATORIO_CONTRATTO',$data);
     $this->logCont("Iniz variabile e start inserimento spazio");
 
