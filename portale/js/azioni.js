@@ -233,12 +233,13 @@ function getGiorniContratto(){
 function salvaContratto(){
   j={};
   data={};
-  data.durata=$('#durata').val();
-  data.idAmbulatorio=$('#durata').val();
-  data.dataInizio=$('#dataInizio').val();
-  data.dataFine=$('#dataFine').val();
-  data.oraInizio=$('#oraInizio').val();
-  data.oraFine=$('#oraFine').val();
+  data.TEMPO=$('#durata').val();
+  data.IDAMBULATORIO=$('#idAmbulatorio').val();
+  data.DATAINIZIO=$('#dataInizio').val();
+  data.DATAFINE=$('#dataFine').val();
+  data.ORAINIZIO=$('#oraInizio').val();
+  data.ORAFINE=$('#oraFine').val();
+  data.VERSO='1';
   j.data=data;
   j.giorni=getGiorniContratto();
   j.azione='insContratto';
