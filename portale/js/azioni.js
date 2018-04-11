@@ -81,8 +81,7 @@ function dettagliTaskProfilo(target){
   $("#containerDocumenti").attr("data-work", "");
 
   $(target).parent("tbody").children("tr.selected").removeClass("selected");
-  $(target).function doAjax(jd, doneFunc, failFunc){
-addClass("selected");
+  $(target).addClass("selected");
 
   var docnumber = $(target).data("task");
 
