@@ -44,8 +44,7 @@ function apriProfilo(sender, newdoc){
             var progress = parseInt(data.loaded / data.total * 100, 10);
             $('#progress .progress-bar').css(
                 'width',
-            function doAjax(jd, doneFunc, failFunc){
-    progress + '%'
+                progress + '%'
             );
         },
         fail: function(jqXHR, errorThrown, textStatus){
