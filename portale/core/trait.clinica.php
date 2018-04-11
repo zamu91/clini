@@ -7,9 +7,9 @@ trait clinica
 {
 
   private function getNexIdAmbulatorio(){
-    $this->query("SELECT max(IDAMBULATORIO) as id from XDM_AMBULATORIO  ");
+    $this->query("SELECT max(IDAMBULATORIO) as ID from XDM_AMBULATORIO  ");
     $row=$row=$this->fetch();
-    $id=$row['id'];
+    $id=$row['ID'];
     if(empty($id)){
       $id=1;
     }else{
