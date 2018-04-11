@@ -34,6 +34,13 @@ class chiamate{
     require($path."ARX_Workflow.php");
   }
 
+
+  public function formOcDate($date){
+    $str="TO_DATE('$date', 'DD/MM/YYYY')";
+    return $str;
+
+  }
+
   public function debug(){
     $this->debug=true;
   }
