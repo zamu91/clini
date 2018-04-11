@@ -234,8 +234,8 @@ function salvaContratto(){
   data={};
   data.TEMPO=$('#durata').val();
   data.IDAMBULATORIO=$('#idAmbulatorio').val();
-  data.DATAINIZIO=$('#dataInizio').val();
-  data.DATAFINE=$('#dataFine').val();
+  data.DATAINIZIOCONTRATTO=$('#dataInizio').val();
+  data.DATAFINECONTRATTO=$('#dataFine').val();
   data.ORAINIZIO=$('#oraInizio').val();
   data.ORAFINE=$('#oraFine').val();
   data.VERSO='1';
