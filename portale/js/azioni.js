@@ -54,6 +54,7 @@ function apriProfilo(sender, newdoc){
   });
 }
 
+
 function caricaListaProfili(){
   var jd = { azione: "listaProfili" };
   // doAjax(jd, function(data){
