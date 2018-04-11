@@ -180,23 +180,6 @@ function salvaAmbulatorio(){
 }
 
 
-function salvaContratto(){
-  j={};
-  data={};
-  data.durata=$('#durata').val();
-  data.idAmbulatorio=$('#durata').val();
-  data.dataInizio=$('#dataInizio').val();
-  data.dataFine=$('#dataFine').val();
-  data.oraInizio=$('#oraInizio').val();
-  data.oraFine=$('#oraFine').val();
-  j.data=data;
-  j.giorni=getGiorniContratto();
-  j.azione='insContratto';
-  doAjax(j,function(mess){
-    alert('Contratto salvata con successo');
-  });
-}
-
 function scriviDatiProfilo(){
   var jd = $("#formMaschera").serialize();
   jd += "&azione=scriviDatiProfilo";
@@ -239,5 +222,22 @@ function getGiorniContratto(){
   giorni.Friday=getValGiorni('ven');
   giorni.Saturday=getValGiorni('sab');
   return giorni;
+}
 
+
+function salvaContratto(){
+  j={};
+  data={};
+  data.durata=$('#durata').val();
+  data.idAmbulatorio=$('#durata').val();
+  data.dataInizio=$('#dataInizio').val();
+  data.dataFine=$('#dataFine').val();
+  data.oraInizio=$('#oraInizio').val();
+  data.oraFine=$('#oraFine').val();
+  j.data=data;
+  j.giorni=getGiorniContratto();
+  j.azione='insContratto';
+  doAjax(j,function(mess){
+    alert('Contratto salvata con successo');
+  });
 }

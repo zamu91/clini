@@ -101,7 +101,7 @@
           <input type="checkbox" id="sab">
         </div>
 
-        <button onclick="">salva contratto</button>
+        <button onclick="salvaContratto">salva contratto</button>
 
       </div>
     </div> <!-- ins contratto -->
