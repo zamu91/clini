@@ -166,10 +166,11 @@ function isFunction(functionToCheck) {
 
 function navigaDashboard(){
   var jd = { azione: "naviga", page: "dashboard" };
-  doAjax(jd, function(data){
-    $("#container").html(data);
-    // caricaListaProfili();
-  });
+  doLoad("#container", jd);
+  // doAjax(jd, function(data){
+  //   $("#container").html(data);
+  //   // caricaListaProfili();
+  // });
 }
 
 function salvaAmbulatorio(){
