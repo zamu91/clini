@@ -109,7 +109,7 @@ function doAjax(jd, doneFunc, failFunc){
   jqXHR = $.ajax({
     url: "core/class.chiamate.php",
     type: 'POST',
-    datatype:'json',
+    dataType:'json',
     data: jd
   }).done(function(data, textStatus, jqXHR){
     if( isFunction(doneFunc) ) {
