@@ -140,7 +140,7 @@ trait sql{
     foreach ($data as $colonna => $value) {
       if(!empty($col)){
         $col.=",";
-        $val=",";
+        $val.=",";
       }
       $col.="$colonna";
       $val.=" :$colonna";
@@ -149,10 +149,11 @@ trait sql{
     $this->logQuery($sql);
     $compiled = oci_parse($con, $sql);
     foreach ($data as $col => $value) {
-      oci_bind_by_name($compiled, ':'.$col, $value);
+      oci_bind_by_name($compiled, ':'.$col, $data[$col]);
     }
     oci_execute($compiled);
   }
+  
 }
 
 

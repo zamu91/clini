@@ -30,16 +30,10 @@ trait clinica
 
   public function aggiornaStato(){
 
-
   }
 
 
-
 }
-
-
-
-
 
 
 ?>
