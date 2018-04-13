@@ -74,7 +74,7 @@ trait prenotazione{
       JOIN XDM_PRENOTAZIONE ON XDM_PRENOTAZIONE.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
       AND XDM_PRENOTAZIONE.STATO=0
       WHERE XDM_AMBULATORIO.IDAMBULATORIO=:id  ";
-      
+
 
       $this->queryPrepare($que);
       $this->queryBind("id", $id);
@@ -84,7 +84,7 @@ trait prenotazione{
 
     private function procCercaClinica(){
       $i=0;
-      while($this->fetch()){
+      while($row=$this->fetch()){
         $i++;
 
         ?>
