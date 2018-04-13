@@ -66,7 +66,7 @@ trait prenotazione{
 
 
     public function getDataPerClinica(){
-      $id=$this->post('idAmbulatorio');
+      $id=$this->post('clinica');
       $que = "SELECT  XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME
       FROM XDM_AMBULATORIO
         INNER JOIN XDM_AMBULATORIO_CONTRATTO
@@ -75,7 +75,7 @@ trait prenotazione{
       ON XDM_PRENOTAZIONE.IDAMBULATORIO=XDM_AMBULATORIO.IDAMBULATORIO AND XDM_PRENOTAZIONE.STATO=0
       WHERE XDM_AMBULATORIO.IDAMBULATORIO=:id ";
 
-      echo $query;
+      echo $que;
 
 
       $this->queryPrepare($que);
