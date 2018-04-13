@@ -31,34 +31,47 @@ trait prenotazione{
     $this->queryPrepare($que);
     $this->queryBind("data", $data);
     $this->executeQuery();
-    $this->procCercaClinica();
+    $this->procCercaData();
   }
 
-
-  public function getDataPerClinica(){
-    $id=$this->post('idAmbulatorio');
-    $que = "SELECT  IDAMBULATORIO
-    FROM XDM_AMBULATORIO AS AMB INNER JOIN XDM_AMBULATORIO_CONTRATTO_OCCUPATO AS OCCU
-    ON AMB.IDAMBULATORIO=OCCU.IDAMBULATORIO AND OCCUPATO=0
-    WHERE IDAMBULATORIO=:id ";
-    $this->queryPrepare($que);
-    $this->queryBind("id", $id);
-    $this->executeQuery();
-    $this->procCercaClinica();
-  }
-
-  private function procCercaClinica(){
+  private function procCercaData(){
     $i=0;
-    $res=[];
     while($row=$this->fetch()){
-      $res[$i]=$row;
+      ?>
+      <div class="containerClinca">
+        <h2><?php echo $row['NOME'];?></h2>
+        <button onclick="prenota"><?php echo $row['IDAMBULATORIO'] ?></button
+        </div>
+        <?php
+      }
+
     }
-    $this->setJsonMess("ambulatorio",$res);
-    $this->halt();
-
-  }
-
-}
 
 
-?>
+    public function getDataPerClinica(){
+      $id=$this->post('idAmbulatorio');
+      $que = "SELECT  IDAMBULATORIO,NOME
+      FROM XDM_AMBULATORIO AS AMB INNER JOIN XDM_AMBULATORIO_CONTRATTO_OCCUPATO AS OCCU
+      ON AMB.IDAMBULATORIO=OCCU.IDAMBULATORIO AND OCCUPATO=0
+      WHERE IDAMBULATORIO=:id ";
+      $this->queryPrepare($que);
+      $this->queryBind("id", $id);
+      $this->executeQuery();
+      $this->procCercaClinica();
+    }
+
+    private function procCercaClinica(){
+      $row=$this->fetch();
+      ?>
+      <div class="containerClinca">
+        <h2><?php echo $row['NOME'];?></h2>
+        <button onclick="prenota"><?php echo $row['IDAMBULATORIO'] ?></button
+        </div>
+        <?php  
+      }
+
+
+    }//end trait
+
+
+    ?>
