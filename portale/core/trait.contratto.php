@@ -100,7 +100,6 @@ trait contratto{
 
   //inserisco i giorni in oracle come log per capire i giorni della prenotazione
   private function insGiorniDb(){
-    return 0; //TODO: da creare la tabella
     $giorni=$this->giorni;
     $i=1;
     $idContratto=$this->getIdContratto();
@@ -172,7 +171,7 @@ trait contratto{
       $str="INSERT INTO XDM_PRENOTAZIONE
       (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO,DATA)VALUES
       (:id,:idContratto,:oraInizio,:oraFine,:tempo,$dataIns)  ";
-
+      echo $str;
       $this->queryPrepare($str);
       $this->queryBind("id",$this->getIdNext("IDPRENOTAZIONE","XDM_PRENOTAZIONE"));
       $this->queryBind("idContratto",$data['IDCONTRATTO']);
