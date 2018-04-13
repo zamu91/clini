@@ -4,8 +4,22 @@ trait prenotazione{
 
 
   public function salvaPrenotazione(){
+    $this->startTransaction();
+    $data=$this->post('data');
+    $data['IDPRENOTAZIONE']=$this->getNextId('IDPRENOTAZIONE','XDM_AMBULATORIO_PRENOTAZIONE');
+    $this->insertPrepare('XDM_AMBULATORIO_PRENOTAZIONE',$data);
+    $idOccupato=$data['IDOCCUPATO'];
+    $this->segnaOccupato($idOccupato);
+    $this->commit();
+    $this->setJsonMess("ok",true);
+    $this->halt();
 
+  }
 
+  private function segnaOccupato($idOccupato){
+    $this->queryPrepare("UPDATE XDM_AMBULATORIO_CONTRATTO_OCCUPATO SET STATO=1 WHERE IDOCCUPATO=:id ");
+    $this->queryBind("id",$idOccupato);
+    $this->executeQuery();
   }
 
   public function getClinicaPerData(){
@@ -30,7 +44,7 @@ trait prenotazione{
     WHERE DATA=:data ";
     $this->queryPrepare($que);
     $this->queryBind("data", $data);
-    $this->executeQuery();    
+    $this->executeQuery();
     $this->procCercaClinica();
   }
 
