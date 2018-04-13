@@ -102,6 +102,7 @@ trait contratto{
   private function insGiorniDb(){
     $giorni=$this->giorni;
     $i=1;
+    echo "inserisco";
     $idContratto=$this->getIdContratto();
     foreach ($giorni as $giorno => $attivo) {
       if($attivo=='1'){
