@@ -36,13 +36,18 @@ trait prenotazione{
 
   private function procCercaData(){
     $i=0;
+
     while($row=$this->fetch()){
+      $i++;
       ?>
       <div class="containerClinca">
         <h2><?php echo $row['NOME'];?></h2>
         <button onclick="prenota"><?php echo $row['IDAMBULATORIO'] ?></button
         </div>
         <?php
+      }
+      if($i==0){
+        ?>Nessuna Data valida per la clinica selezionata<?php
       }
 
     }
@@ -62,12 +67,18 @@ trait prenotazione{
 
     private function procCercaClinica(){
       $row=$this->fetch();
+      if(!$row){
+        ?>
+        <h2>Nessuna Clinica disponibile per la data cercata</h2>
+        <?php
+        return 0;
+      }
       ?>
       <div class="containerClinca">
         <h2><?php echo $row['NOME'];?></h2>
         <button onclick="prenota"><?php echo $row['IDAMBULATORIO'] ?></button
         </div>
-        <?php  
+        <?php
       }
 
 
