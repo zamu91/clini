@@ -47,15 +47,14 @@ trait contratto{
       $this->error("Durata inferiore del previsto, controllare");
     }
     $this->logCont("inserimento contratto");
-    $data['IDCONTRATTO']=$this->getIdNext("IDCONTRATTO","XDM_AMBULATORIO_CONTRATTO");
+    $idContrattoNew=$this->getIdNext("IDCONTRATTO","XDM_AMBULATORIO_CONTRATTO");
+    $data['IDCONTRATTO']=$idContrattoNew;
     $data['DATAINIZIOCONTRATTO']=$this->formOcDate($data['DATAINIZIOCONTRATTO']);
     $data['DATAFINECONTRATTO']=$this->formOcDate($data['DATAFINECONTRATTO']);
     $this->insertPrepare('XDM_AMBULATORIO_CONTRATTO',$data);
     $this->logCont("Iniz variabile e start inserimento spazio");
-
-    $this->varWork=$data;
-
-    //$this->occupaSpazioPrenotazione();
+    $this->setIdContratto($idContrattoNew);
+    $this->occupaSpazioPrenotazione();
     $this->commit();
     $this->halt();
   }
@@ -79,99 +78,115 @@ trait contratto{
     }
   }
 
-  //setup giorni della settimana
-  private function inizVar(){
-    $giorni=$this->post('giorni');
-    $giorni['Sunday']=0;
-    $this->giorni=$giorni;
-    $this->setTime();
-    $this->setDate();
-    $this->setIdPrenotazione();
-  }
+  //inserisco i giorni in oracle come log per capire i giorni della prenotazione
+  private function insGiorniDb(){
+    $giorni=$this->giorni;
+    $id=1;
+    foreach ($giorni as $giorno => $attivo) {
+      if($attivo=='1'){
+        $this->queryPrepare("INSERT INTO XDM_AMBULATORIO_CONTRATTO_GIORNO
+          (IDCONTRATTO,GIORNO,NGIORNO)
+          VALUES(:idcont,:giorno,:nGiorno) ");
+          $this->queryBind('idcont',$idContratto);
+          $this->queryBind('giorno',$giorno);
+          $this->queryBind('nGiorno',$i);
+          $this->execute();
+        }
+        $i++;
 
-  private function setIdPrenotazione(){
-    // $this->query(" SELECT TOP 1 idPrenotazione as id from ambulatorio_contratto_prenotazione order by idPrenotazione desc");
-    $this->query("select id from (SELECT idPrenotazione as id from ambulatorio_contratto_prenotazione order by idPrenotazione desc) where rownum=1");
-    $row=$this->fetch();
-    $id=$row['id'];
-    if(empty($id)){
-      $id=0;
+      }
+
     }
-    $this->idPrenotazione=$id;
-  }
 
-
-  private function getIncPrenotazione(){
-    $this->idPrenotazione++;
-    return $this->idPrenotazione;
-  }
-
-  public function setTime(){
-    $oraInizio=$this->getVCont("oraInizio");
-    $oraFine=$this->getVCont("oraFine");
-    $oraInizio=strtotime($oraInizio);
-    $oraFine=strtotime($oraFine);
-    $this->oraInizio=$oraInizio;
-    $this->oraFine=$oraFine;
-  }
-
-  public function setDate(){
-    $dataInizio=$this->getValC("dataInizio");
-    $dataFine=$this->getValC("dataFine");
-    $dataInzio=strtotime($dataInizio);
-    $dataFine=strtotime($dataFine);
-    $this->dataInizio=$dataInizio;
-    $this->dataFine=$dataFine;
-  }
-
-
-  //scrivo il blocco sul db
-  private function occupaSpazioSingolo($data,$newOra){
-    $durata=$this->getValC("durata");
-    $data['data']=$data;
-    $data['inizio']=$newOra;
-    $data['durata']=$durata;
-    $data['idPrenotazione']=$this->getIncPrenotazione();
-    $data['idAmbulatorio']=$this->getValC("idAmbulatorio");
-    $data['idContratto']=$this->getIdContratto();
-    $this->insertPrepare("AMBULARIO_CONTRATTO_PRENOTAZIONE",$data);
-  }
-
-
-  private function procDataContratto($data){
-    $giorno = date('D', strtotime($data));
-    if(!$this->ifDayWork($giorno)){
-      return false; //giorno da saltare
+    //setup giorni della settimana
+    private function inizVar(){
+      $this->varWork=$this->post('data');
+      $giorni=$this->post('giorni');
+      $giorni['Sunday']=0;
+      $this->giorni=$giorni;
+      $this->insGiorniDb();
+      $this->setTime();
+      $this->setDate();
+      $this->setIdPrenotazione();
     }
-    //procedo con il calcolo dei blocchi temporali
-    $oraInizio=$this->oraInizio;
-    $oraFine=$this->oraFine;
-    $newOra=$oraInizio;
-    $durata=$this->getValC("durata");
-    while($newOra<=$oraFine){
-      $this->occupaSpazioSingolo($data,$newOra,$durata);
-      $newData=strtotime('+'.$durata.' minutes',$newOra);
+
+    private function setIdPrenotazione(){
+      $id=$this->getNexId();
+      $this->idPrenotazione=$id;
     }
-  }
 
 
-  public function occupaSpazioPrenotazione(){
-    $this->inizVar();
-    $dataInizio=$this->dataInizio;
-    $dataFine=$this->dataFine;
-    $newData=strtotime($dataInizio);
-    $i=0;
-    while($newData<=$dataFine){ //ciclo i giorni da data inizio e data fine
-      $i++;
-      $this->procDataContratto($newData);
-      $newData=strtotime('+ '.$i.' days',strtotime($dataInizio));
+    private function getIncPrenotazione(){
+      $this->idPrenotazione++;
+      return $this->idPrenotazione;
     }
-    $this->logCont("Fine esecuzione occupa");
-  }
+
+    public function setTime(){
+      $oraInizio=$this->getVCont("oraInizio");
+      $oraFine=$this->getVCont("oraFine");
+      $oraInizio=strtotime($oraInizio);
+      $oraFine=strtotime($oraFine);
+      $this->oraInizio=$oraInizio;
+      $this->oraFine=$oraFine;
+    }
+
+    public function setDate(){
+      $dataInizio=$this->getValC("dataInizio");
+      $dataFine=$this->getValC("dataFine");
+      $dataInzio=strtotime($dataInizio);
+      $dataFine=strtotime($dataFine);
+      $this->dataInizio=$dataInizio;
+      $this->dataFine=$dataFine;
+    }
 
 
-}//end classe
+    //scrivo il blocco sul db
+    private function occupaSpazioSingolo($data,$newOra){
+      $durata=$this->getValC("durata");
+      $data['data']=$data;
+      $data['inizio']=$newOra;
+      $data['durata']=$durata;
+      $data['idPrenotazione']=$this->getIncPrenotazione();
+      $data['idAmbulatorio']=$this->getValC("idAmbulatorio");
+      $data['idContratto']=$this->getIdContratto();
+      $this->insertPrepare("AMBULARIO_CONTRATTO_PRENOTAZIONE",$data);
+    }
+
+    // inserisco la data
+    private function procDataContratto($data){
+      $giorno = date('D', strtotime($data));
+      if(!$this->ifDayWork($giorno)){
+        return false; //giorno da saltare
+      }
+      //procedo con il calcolo dei blocchi temporali
+      $oraInizio=$this->oraInizio;
+      $oraFine=$this->oraFine;
+      $newOra=$oraInizio;
+      $durata=$this->getValC("durata");
+      while($newOra<=$oraFine){
+        $this->occupaSpazioSingolo($data,$newOra,$durata);
+        $newData=strtotime('+'.$durata.' minutes',$newOra);
+      }
+    }
+
+
+    public function occupaSpazioPrenotazione(){
+      $this->inizVar();
+      $dataInizio=$this->dataInizio;
+      $dataFine=$this->dataFine;
+      $newData=strtotime($dataInizio);
+      $i=0;
+      while($newData<=$dataFine){ //ciclo i giorni da data inizio e data fine
+        $i++;
+        $this->procDataContratto($newData);
+        $newData=strtotime('+ '.$ad.' days',strtotime($dataInizio));
+      }
+      $this->logCont("Fine esecuzione occupa");
+    }
+
+
+  }//end classe
 
 
 
-?>
+  ?>

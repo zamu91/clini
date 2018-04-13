@@ -24,7 +24,6 @@ trait prenotazione{
 
   public function getClinicaPerData(){
     $data=$this->post('data');
-
     $que = "SELECT  IDAMBULATORIO
     FROM XDM_AMBULATORIO AS AMB INNER JOIN XDM_AMBULATORIO_CONTRATTO_OCCUPATO AS OCCU
     ON AMB.IDAMBULATORIO=OCCU.IDAMBULATORIO AND OCCUPATO=0
@@ -49,7 +48,6 @@ trait prenotazione{
   }
 
   private function procCercaClinica(){
-
     $i=0;
     $res=[];
     while($row=$this->fetch()){
