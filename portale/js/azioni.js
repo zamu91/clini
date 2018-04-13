@@ -259,7 +259,7 @@ function cercaPerClinica(){
   j={};
   j.clinica=$('#clinicaCerca').val();
   j.azione='getDataPerClinica';
-  doLoad('#resultClinica',j);
+  doLoad('.resultClinica',j);
 }
 
 

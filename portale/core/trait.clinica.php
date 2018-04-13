@@ -31,6 +31,11 @@ trait clinica
   public function salvaClinica(){
     $data=$this->post('data');
     $data['IDAMBULATORIO']=$this->getNexIdAmbulatorio();
+<<<<<<< current
+=======
+    print_r($data);
+    die;
+>>>>>>> before discard
     $this->insertPrepare('XDM_AMBULATORIO',$data);
     $this->commit();
     $this->setJsonMess("mess","Dati inseriti");
