@@ -164,8 +164,6 @@ class chiamate{
       $this->getDataPerClinica();
       break;
 
-
-
       case "scriviDocumentiProfilo":
       $this->scriviDocumentiProfilo();
       break;

@@ -327,7 +327,9 @@ trait arxivar{
     /* TODO: Parametrizzo il campo da cercare (proprietario del profilo) in modo da agevolare la ricerca successivamente */
     /* TODO: Sarà necessario inserire la ricerca dell'utente e dell'AOO partendo dal login. */
     $ses = $this->checkExistSessionFromToken();
-    $comboUtente = "1\\3aMestre"; // aoo\utente
+    $comboUtente = "{$ses["AOO"]}\\{$ses["USERNAME"]}";
+    $this->arxDebug($comboUtente);
+    // $comboUtente = "1\\3aMestre"; // aoo\utente
 
     // esecuzione ricerca
     // GEST.POS classe della ricerca.
