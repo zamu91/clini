@@ -88,6 +88,8 @@ trait contratto{
 
   //controllo se il giorni è da contare nel contratto o no
   private function ifDayWork($day){
+    echo $day;
+    print_r($giorni);
     $giorni=$this->giorni;
     if($giorni[$day]=='1'){
       return true;
@@ -148,8 +150,8 @@ trait contratto{
     }
 
     public function setDate(){
-      $dataInizio=$this->getVCont("dataInizio");
-      $dataFine=$this->getVCont("dataFine");
+      $dataInizio=$this->getVCont("DATAINIZIO");
+      $dataFine=$this->getVCont("DATAFINE");
       $dataInzio=strtotime($dataInizio);
       $dataFine=strtotime($dataFine);
       $this->dataInizio=$dataInizio;
@@ -159,14 +161,13 @@ trait contratto{
 
     //scrivo il blocco sul db
     private function occupaSpazioSingolo($data,$newOra){
-      $durata=$this->getValC("TEMPO");
+      $durata=$this->getVCont("TEMPO");
       $dataIns=$this->formOcDate(':data');
 
       $data['ORAINIZIO']=$newOra;
       $data['ORAFINE']=$newOra;
       $data['TEMPO']=$durata;
       $data['IDPRENOTAZIONE']=$this->getIncPrenotazione();
-      //$data['IDAMBULATORIO']=$this->getValC("idAmbulatorio");
       $data['IDCONTRATTO']=$this->getIdContratto();
 
       $str="INSERT INTO XDM_PRENOTAZIONE
