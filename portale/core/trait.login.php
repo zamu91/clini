@@ -65,6 +65,21 @@ trait login {
     return $row;
   }
 
+  private function checkExistSessionFromToken(){
+    $token = $this->post("token", false);
+    $que = "SELECT ARXSESSION, ses.USERNAME, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA, AOO, GRUPPO
+    FROM XDM_WEBSERVICE_SESSION ses
+    WHERE ses.ARXSESSION = :tok ";
+
+    $this->queryPrepare($que);
+    $this->queryBind("tok", $token);
+    $this->executeQuery();
+
+    $row = $this->fetch();
+    $this->setIdArxivar();
+    return $row;
+  }
+
   public function registerSessionLogin($aoo, $gruppo){
     $this->loginLog("Check login oracle");
     $loginResult=$this->getLoginResult();
@@ -89,15 +104,24 @@ trait login {
       $username=$this->getUsername();
       $password=$this->getPassword();
       $this->loginLog("nuova sessione, registro");
-      $que = "INSERT INTO XDM_WEBSERVICE_SESSION (USERNAME, PASSWORD, ARXSESSION, SCADENZA)
-      VALUES ('$username', '$password', '$session', TO_DATE('$expirationTime', 'YYYY-MM-DD HH24:MI:SS')) ";
-      $this->query($que);
+      $que = "INSERT INTO XDM_WEBSERVICE_SESSION (USERNAME, PASSWORD, ARXSESSION, SCADENZA, AOO, GRUPPO)
+      VALUES (:us, :pa, :sess, TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), :aoo, :gru) ";
+
+      $this->queryPrepare($que);
+      $this->queryBind("us", $username);
+      $this->queryBind("pa", $password);
+      $this->queryBind("sess", $session);
+      $this->queryBind("expi", $expirationTime);
+      $this->queryBind("aoo", $aoo);
+      $this->queryBind("gru", $gruppo);
+      $this->executePrepare();
+
       $this->commit();
       $this->setJsonMess('sessionMess','registrazione Sessione');
 
     }
     $this->setJsonMess("token",$session);
-    $this->setJsonMess("login", false);
+    $this->setJsonMess("login", true);
 
     $this->loginToken=true;
   }
