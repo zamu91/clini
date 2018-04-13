@@ -173,8 +173,6 @@ trait contratto{
       $this->queryBind("tempo",$this->getVCont('TEMPO'));
       $this->queryBind("data",date('Y-m-d',$data) );
       $this->executePrepare();
-
-
     }
 
     // inserisco la data
