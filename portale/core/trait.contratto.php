@@ -179,12 +179,9 @@ trait contratto{
     // inserisco la data
     private function procDataContratto($data){
       $giorno = date('w', $data);
-      echo "......>$giorno cercato ";
-      return 0;
       if(!$this->ifDayWork($giorno)){
         return false; //giorno da saltare
       }
-
       echo "start inizio";
 
       //procedo con il calcolo dei blocchi temporali
@@ -214,7 +211,6 @@ trait contratto{
 
       while($newData<=$dataFine){ //ciclo i giorni da data inizio e data fine
         $i++;
-        echo "processo data $i ---> ". date('Y-m-d',$newData);
         $this->procDataContratto($newData);
         $newData=strtotime('+ '.$i.' days',strtotime($dataInizio));
       }
