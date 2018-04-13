@@ -39,7 +39,7 @@ trait contratto{
 
 
 
-  //controllo se ci sono conflitti con altre 
+  //controllo se ci sono conflitti con altre
   private function checkConflict(){
     return true;
     //TODO: da sistemare, controllo sul db se ci sono casi di sovraposizione
@@ -89,7 +89,6 @@ trait contratto{
   private function getVCont($var){
     if(empty($this->varWork[$var])){
       $this->logCont("Variabile $var non trovata");
-      print_r($this->varWork);
       return false;
     }
     return $this->varWork[$var];
