@@ -218,6 +218,7 @@ trait contratto{
       }
       $this->logCont("Fine esecuzione occupa");
     }
+    
 
 
   }//end classe
