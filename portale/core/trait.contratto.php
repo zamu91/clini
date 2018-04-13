@@ -59,6 +59,8 @@ trait contratto{
     VALUES(:id,:idAmbulatorio,:tempo,:verso,$iniz,$fine,:oraIniz,:oraFine) ";
     $this->queryPrepare($str);
 
+    $this->logCont("Iniz  e start inserimento contratto");
+
     $idContrattoNew=$this->getIdNext("IDCONTRATTO","XDM_AMBULATORIO_CONTRATTO");
     $this->queryBind('id',$idContrattoNew);
     $this->queryBind('tempo',$this->getVCont('TEMPO'));
@@ -69,6 +71,8 @@ trait contratto{
     $this->queryBind('oraIniz',$this->getVCont('ORAINIZIO'));
     $this->queryBind('oraFine',$this->getVCont('ORAFINE'));
     $this->executePrepare();
+    $this->logCont("Salvataggio contratto");
+
 
     $this->logCont("Iniz variabile e start inserimento spazio");
     $this->setIdContratto($idContrattoNew);
