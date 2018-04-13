@@ -171,7 +171,7 @@ trait contratto{
       $this->queryBind("oraInizio",$newOra);
       $this->queryBind("oraFine",$newOra);
       $this->queryBind("tempo",$this->getVCont('TEMPO'));
-      $this->prepareExecute();
+      $this->executePrepare();
 
 
     }
@@ -191,7 +191,6 @@ trait contratto{
       $durata=$this->getVCont("TEMPO");
       $i=0;
       while($newOra<=$oraFine){
-        echo "volta --->  $i - $newOra ";
         $i++;
         $this->occupaSpazioSingolo($data,$newOra,$durata);
         $newOra=strtotime('+'.$durata.' minutes',$newOra);
