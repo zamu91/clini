@@ -153,7 +153,7 @@ class chiamate{
       $this->getClinicaPerData();
       break;
 
-      case 'dataPerClinica':
+      case 'getDataPerClinica':
       $this->getDataPerClinica();
       break;
 
