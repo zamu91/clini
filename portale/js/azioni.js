@@ -57,7 +57,9 @@ function apriProfilo(sender, newdoc){
 
 
 function caricaListaProfili(){
-  var jd = { azione: "listaProfili" };
+  var jd = { azione: "listaProfili", tipoValutazione: $("#COMBO15_297").val(), cognome: $("#TESTO10_297").val(),
+  nome: $("#TESTO13_297").val(), deceduto: $("#CHECK17_1").val(), telefono: $("#TESTO14_297").val(), 
+  mail: $("#TESTO12_297").val() };
   // doAjax(jd, function(data){
   //   $("#containerListaProfili").html(data);
   // });

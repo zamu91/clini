@@ -53,11 +53,8 @@ trait arxivar{
     */
 
     $tipo_valutazione = $ARX_Dati->Dm_CampiSpecifici_GetValues($sessionid, "COMBO15_297",$profile,null);
-    // $this->arxDebug($tipo_valutazione);
     $cognome = $ARX_Dati->Dm_CampiSpecifici_GetValues($sessionid, "TESTO10_297",$profile,null);
-    // $this->arxDebug($cognome);
     $nome = $ARX_Dati->Dm_CampiSpecifici_GetValues($sessionid, "TESTO13_297",$profile,null);
-    // $this->arxDebug($nome);
 
     ?>
       <span class="btn btn-success fileinput-button">
@@ -324,25 +321,19 @@ trait arxivar{
     $ARX_Documenti = new ARX_Documenti\ARX_Documenti($this->baseUrl."ARX_Documenti.asmx?WSDL");
     $sessionid = $this->loginResult->SessionId;
 
-    /* TODO: Parametrizzo il campo da cercare (proprietario del profilo) in modo da agevolare la ricerca successivamente */
-    /* TODO: Sarà necessario inserire la ricerca dell'utente e dell'AOO partendo dal login. */
     $ses = $this->checkExistSessionFromToken();
     $comboUtente = "{$ses["AOO"]}\\{$ses["USERNAME"]}";
-    $this->arxDebug($comboUtente);
-    // $comboUtente = "1\\3aMestre"; // aoo\utente
 
-    // esecuzione ricerca
-    // GEST.POS classe della ricerca.
     $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
-    //  select per quali campi
     $select = $ARX_Search->Dm_Profile_Select_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
-    // $this->arxDebug($select->Aggiuntivi);
-    // esempio di ricerca per campo standard "NUMERO"
-    /*
-    $search->Numero->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
-    $search->Numero->Valore = "123456";
-    */
-    // esempio di ricerca per campo aggiuntivo
+    $this->arxDebug($select);
+
+    $tipoValutazione = $this->post("tipoValutazione", false);
+    $cognome = $this->post("cognome", false);
+    $nome = $this->post("nome", false);
+    $deceduto = $this->post("deceduto", false);
+    $telefono = $this->post("telefono", false);
+    $mail = $this->post("mail", false);
 
     foreach ($search->Aggiuntivi->Field_Abstract as $agg) {
       /* @var $agg \ARX_Search\Field_String */
@@ -350,15 +341,62 @@ trait arxivar{
         $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
         $agg->Valore = $comboUtente;
       }
-
-      // per ricercare per id esterno (alias per SDK) si può verificare $agg->ExternalId
+      if($agg->Nome == "COMBO15_297" && !empty($tipoValutazione) ){
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+        $agg->Valore = $tipoValutazione;
+      }
+      if($agg->Nome == "TESTO10_297" && !empty($cognome) ){
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+        $agg->Valore = $cognome;
+      }
+      if($agg->Nome == "TESTO13_297" && !empty($nome) ){
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+        $agg->Valore = $nome;
+      }
+      if($agg->Nome == "CHECK17_1" && !empty($deceduto) ){
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+        $agg->Valore = $deceduto;
+      }
+      if($agg->Nome == "TESTO14_297" && !empty($telefono) ){
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+        $agg->Valore = $telefono;
+      }
+      if($agg->Nome == "TESTO12_297" && !empty($mail) ){
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+        $agg->Valore = $mail;
+      }
     }
 
+
     $select->DOCNUMBER->Selected = true;
-    $select->DOCNAME->Selected = true;
     $select->DATADOC->Selected = true;
-    $select->Aggiuntivi->Selected = true;
     $select->STATO->Selected = true;
+    foreach ($search->Aggiuntivi->Aggiuntivo_Selected as $ix => $agg) {
+      /* @var $agg \ARX_Search\Field_String */
+      if ($agg->Nome == "COMBO19_1") {
+        $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+      }
+      if($agg->Nome == "COMBO15_297" && !empty($tipoValutazione) ){
+        $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+      }
+      if($agg->Nome == "TESTO10_297" && !empty($cognome) ){
+        $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+      }
+      if($agg->Nome == "TESTO13_297" && !empty($nome) ){
+        $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+      }
+      if($agg->Nome == "CHECK17_1" && !empty($deceduto) ){
+        $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+      }
+      if($agg->Nome == "TESTO14_297" && !empty($telefono) ){
+        $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+      }
+      if($agg->Nome == "TESTO12_297" && !empty($mail) ){
+        $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+      }
+    }
+
+
     $result = $ARX_Search->Dm_Profile_GetData($sessionid, $select, $search);
     $ds = simplexml_load_string($result);
     // $this->arxDebug($ds);
@@ -406,8 +444,6 @@ trait arxivar{
     //// estrazione documento
     // $file = $ARX_Documenti->Dm_Profile_GetDocument($sessionid, $docnumber);
     // file_put_contents("/tm#f5f5f5p/".$file->FileName, $file->File);
-
-
 
     $this->logoutArxivar();
   }
@@ -647,6 +683,24 @@ trait arxivar{
 
     // si può anche controllare se l'operazione è già stata eseguita con la variabile $dmTaskDoc->OP_ESEGUITA
 
+    // // preparo il profilo per l'operazione
+    // $profileInsertMv = $ARX_Workflow->Dm_Profile_Insert_MV_Get_New_Instance_By_DmTaskDocId($sessionid, $idTaskWork, $idTaskDoc, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale);
+    // $profileBase = $profileInsertMv->DmProfileDefault->Dm_Profile_Insert_Base;
+    // // qui va valorizzato il profilo da inserire...
+    // $profileBase->InOut = ARX_Workflow\DmProfileInOut::Interno;
+    // $profileBase->Stato = "VALIDO";
+    // $profileBase->Aoo = "01";
+    // $profileBase->DocName = "Prova importazione da TASK";
+    // $profileBase->ProtocolloInterno = "123456+++";
+    // $filepath = "c:\test.txt";
+    //     $arxFile = new ARX_Dati\Arx_File();
+    //     $arxFile->CreationDate = date("c", filectime($filepath));
+    //     $arxFile->FileName = basename($filepath);
+    //     $arxFile->File = file_get_contents($filepath);
+    // $profileBase->File = $arxFile;
+    // $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale);
+
+
     // preparo il profilo per l'operazione
     $profileInsertMv = $ARX_Workflow->Dm_Profile_Insert_MV_Get_New_Instance_By_DmTaskDocId($sessionid, $idTaskWork, $idTaskDoc, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale);
     $profileBase = $profileInsertMv->DmProfileDefault->Dm_Profile_Insert_Base;
@@ -657,25 +711,16 @@ trait arxivar{
     $profileBase->Aoo = "1";
     $profileBase->ProtocolloInterno = "123456";
 
-    // $filepath = "c:\\Apache24\\INSTALL.txt";
-    $arxFile = new ARX_Dati\Arx_File();
-
     $this->arxDebug($files);
     foreach ($files as $key => $value) {
       $profileBase->DocName = basename($value);
       // $filepath = $basepath.$profileBase->DocName;
       $filepath = $basepath.trim($value, ".");
-      $this->arxDebug($filepath);
-
+      $arxFile = new ARX_Dati\Arx_File();
       $arxFile->CreationDate = date("c", filectime($filepath));
-      $this->arxDebug($arxFile->CreationDate);
       $arxFile->FileName = basename($filepath);
-      $this->arxDebug($arxFile->FileName);
       $arxFile->File = file_get_contents($filepath);
-      $this->arxDebug($arxFile->File);
-
       $profileBase->File = $arxFile;
-
       $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale);
       // $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale, $arxFile);
       $this->arxDebug($dmProfileResult);

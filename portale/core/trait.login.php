@@ -90,15 +90,13 @@ trait login {
     $password=$this->getPassword();
     $row=$this->checkExistSession();
 
-    $this->arxDebug($aoo);
     $aoo = intval($aoo);
-    $this->arxDebug($gruppo);
 
     if( !empty($row["USERNAME"]) ){
       $this->loginLog("sessione trovata, aggiorno");
       $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = :sess,
       SCADENZA = TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), AOO = :aoo, GRUPPO = :gru
-      WHERE USERNAME = :us AND PASSWORD = : ps ";
+      WHERE USERNAME = :us AND PASSWORD = :pa ";
 
       $this->queryPrepare($que);
       $this->queryBind("us", $username);
@@ -129,6 +127,7 @@ trait login {
       $this->setJsonMess('sessionMess','registrazione Sessione');
 
     }
+
     $this->setJsonMess("token",$session);
     $this->setJsonMess("login", true);
 
