@@ -255,7 +255,7 @@ function cercaPerClinica(){
   j={};
   j.clinica=$('#clinicaCerca').val();
   j.azione='getDataPerClinica';
-  doLoad('#resultClinica',data);
+  doLoad('#resultClinica',j);
 }
 
 
