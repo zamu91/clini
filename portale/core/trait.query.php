@@ -9,7 +9,7 @@ trait sql{
 
 
 
-  private function getNextId($col,$tabella){
+  private function getIdNext($col,$tabella){
     $this->query("SELECT max({$col}) as ID from {$tabella}  ");
     $row=$row=$this->fetch();
     $id=$row['ID'];

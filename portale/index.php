@@ -132,11 +132,6 @@
       </div>
 
     </div> <!-- cerca per data -->
-
-
-
-
-
   </div> <!-- cerca primo spazio in clinica -->
 
 
