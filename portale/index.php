@@ -43,7 +43,7 @@
 
       <div class="inputDiv"><div class="clearSpace"></div>
       <div>
-        <label for="comuneAmbulatoria">Comune</label>
+        <label for="comuneAmbulatorio">Comune</label>
         <input type="edit" id="nomeAmbulatorio">
       </div>
     </div>
