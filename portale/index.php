@@ -112,7 +112,7 @@
         <label for="dataCercaClinica">Data</label>
         <input type="edit" class="data" id="data">
       </div>
-      <div class="resultDataClinica">
+      <div class="resultClinica">
 
       </div>
     </div> <!-- cerca per data -->
@@ -121,7 +121,7 @@
     <div class="cercaPerData">
       <div class="inputDiv">
         <label for="clinica">Clinica</label>
-        <select class="select" id="clinica">
+        <select class="select" id="clinicaCerca">
           <option value='4'>TEST</option>
         </select>
       </div>

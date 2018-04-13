@@ -249,9 +249,17 @@ function salvaContratto(){
 
 function cercaPerClinica(){
   j={};
-  j.data=$('#dataCercaClinica').val();
+  j.clinica=$('#clinicaCerca').val();
   j.azione='getDataPerClinica';
-  doLoad('#resultDataClinica',data);
+  doLoad('#resultClinica',data);
+}
+
+
+function cercaPerData(){
+  j={};
+  j.data=$('#clinicaCerca').val();
+  j.azione='getClinicaPerData';
+  doLoad('#resultClinica',data);
 }
 
 function getOptionClinica(idElement){
