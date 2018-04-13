@@ -31,7 +31,15 @@ trait contratto{
   }
 
 
+  //controllo se l'input è ok
+  private function checkInput(){
 
+
+  }
+
+
+
+  //controllo se ci sono conflitti con altre 
   private function checkConflict(){
     return true;
     //TODO: da sistemare, controllo sul db se ci sono casi di sovraposizione
