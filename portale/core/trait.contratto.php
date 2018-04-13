@@ -179,6 +179,8 @@ trait contratto{
     // inserisco la data
     private function procDataContratto($data){
       $giorno = date('w', strtotime($data));
+      echo "......>$giorno cercato ";
+      return 0;
       if(!$this->ifDayWork($giorno)){
         return false; //giorno da saltare
       }
@@ -214,7 +216,7 @@ trait contratto{
         $i++;
         echo "processo data $i";
         $this->procDataContratto($newData);
-        $newData=strtotime('+ '.$i.' days',$dataInizio);
+        $newData=strtotime('+ '.$i.' days',strtotime($dataInizio));
       }
       $this->logCont("Fine esecuzione occupa");
     }
