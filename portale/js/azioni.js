@@ -221,12 +221,12 @@ function getValGiorni(nome){
 
 function getGiorniContratto(){
   giorni={};
-  giorni.Monday=getValGiorni('lun');
-  giorni.Tuesday=getValGiorni('mar');
-  giorni.Wednesday=getValGiorni('mer');
-  giorni.Thursday=getValGiorni('gio');
-  giorni.Friday=getValGiorni('ven');
-  giorni.Saturday=getValGiorni('sab');
+  giorni[1]=getValGiorni('lun');
+  giorni[2]=getValGiorni('mar');
+  giorni[3]=getValGiorni('mer');
+  giorni[4]=getValGiorni('gio');
+  giorni[5]=getValGiorni('ven');
+  giorni[6]=getValGiorni('sab');
   return giorni;
 }
 
