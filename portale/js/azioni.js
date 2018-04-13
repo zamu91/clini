@@ -179,7 +179,7 @@ function salvaAmbulatorio(){
   data={};
   add={};
   add.NOME=$('#nomeAmbulatorio').val();
-  add.PROVINCIA=$('provinciaAmbulatorio').val();
+  add.PROVINCIA=$('#provinciaAmbulatorio').val();
   add.COMUNE=$('#comuneAmbulatorio').val();
   add.INDIRIZZO=$('#indirizzoAmbulatorio').val();
 
