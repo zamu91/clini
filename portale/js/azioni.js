@@ -261,6 +261,7 @@ function cercaPerClinica(){
 }
 
 
+
 function cercaPerData(){
   j={};
   j.data=$('#clinicaCerca').val();

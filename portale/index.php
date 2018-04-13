@@ -145,7 +145,7 @@
     </div>
     <button onclick="cercaPerClinica();">Cerca Per clinica</button>
 
-    <div class="resultDataClinica">
+    <div class="resultClinica">
 
     </div>
 
