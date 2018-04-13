@@ -214,7 +214,7 @@ trait contratto{
         $i++;
         echo "processo data $i";
         $this->procDataContratto($newData);
-        $newData=strtotime('+ '.$i.' days',strtotime($dataInizio));
+        $newData=strtotime('+ '.$i.' days',$dataInizio);
       }
       $this->logCont("Fine esecuzione occupa");
     }
