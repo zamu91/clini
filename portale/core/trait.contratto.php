@@ -200,7 +200,6 @@ trait contratto{
       $newData=strtotime($dataInizio);
       $i=0;
       while($newData<=$dataFine){ //ciclo i giorni da data inizio e data fine
-        $this->logCont("Processo $newData");
         $i++;
         $this->procDataContratto($newData);
         $newData=strtotime('+ '.$i.' days',strtotime($dataInizio));
