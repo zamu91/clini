@@ -171,6 +171,8 @@ trait contratto{
       $this->queryBind("oraInizio",$newOra);
       $this->queryBind("oraFine",$newOra);
       $this->queryBind("tempo",$this->getVCont('TEMPO'));
+      $this->queryBind("data",date('Y-m-d',$data) );
+
       $this->executePrepare();
 
 
