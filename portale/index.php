@@ -105,7 +105,7 @@
     </div>
 
     <div class="giornoDiv">
-      <label for="giov">Giovedì</label>
+      <label for="gio">Giovedì</label>
       <input type="checkbox" id="giov">
     </div>
 
