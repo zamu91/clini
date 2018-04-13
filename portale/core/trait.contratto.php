@@ -91,6 +91,7 @@ trait contratto{
     $giorni=$this->giorni;
     print_r($this->giorni);
     echo $day;
+
     if($giorni[$day]=='1'){
       return true;
     }else{
