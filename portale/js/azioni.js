@@ -107,10 +107,6 @@ function dettagliTaskProfilo(target){
 
 }
 
-function doLoad(id,jd){
-  $(id).load('core/class.chiamate.php',jd);
-}
-
 function doAjax(jd, doneFunc, failFunc){
   jd.token=getToken();
   jqXHR = $.ajax({
@@ -255,11 +251,11 @@ function cercaPerClinica(){
   j={};
   j.data=$('#dataCercaClinica').val();
   j.azione='getDataPerClinica';
-  $('#resultDataClinica').load();
+  doLoad('#resultDataClinica',data);
 }
 
 function getOptionClinica(idElement){
   data={};
   data.azione='getOptionClinica';
-  $(idElement).load('core/class.chiamate.php',data);
+  doLoad(idElement,data);
 }
