@@ -89,8 +89,8 @@ trait contratto{
   //controllo se il giorni è da contare nel contratto o no
   private function ifDayWork($day){
     echo $day;
-    print_r($giorni);
     $giorni=$this->giorni;
+    print_r($giorni);
     if($giorni[$day]=='1'){
       return true;
     }else{
