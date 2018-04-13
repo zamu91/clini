@@ -105,7 +105,7 @@ trait contratto{
     $idContratto=$this->getIdContratto();
     foreach ($giorni as $giorno => $attivo) {
       if($attivo=='1'){
-        $this->queryPrepare("INSERT INTO XDM_AMBULATORIO_CONTRATTO_GIORNO
+        $this->queryPrepare("INSERT INTO XDM_CONTRATTO_GIORNO
           (IDCONTRATTO,GIORNO)
           VALUES(:idcont,:giorno) ");
           $this->queryBind('idcont',$idContratto);
