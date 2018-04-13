@@ -17,6 +17,7 @@ function apriProfilo(sender, newdoc){
   doLoad("#modal-body", jd, function(){
     $("#modal-title").html( $(sender).html() );
     $("#modal-action").modal("toggle");
+    $("#modal-salva").unbind("click");
     $("#modal-salva").on("click", function(){
       if(docnumber != ""){
         scriviDocumentiProfilo();
@@ -29,27 +30,27 @@ function apriProfilo(sender, newdoc){
     // Change this to the location of your server-side upload handler:
     var url = "core/jquery-file-upload-9.21.0/index.php";
     $('#fileupload').fileupload({
-      url: url,
-      dataType: 'json',
-      done: function (e, data) {
-        $.each(data.result.files, function (index, file) {
-          if( typeof file.error != 'undefined' && file.error != "" ) {
-            alert("Errore nel caricamento di fle."+ file.name+' --> '+file.error );
-          } else {
-            $('<p class="uploadedFile" data-info="'+file.url+'"/>').text(file.name).appendTo('#files');
-          }
-        });
-      },
-      progressall: function (e, data) {
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        $('#progress .progress-bar').css(
-          'width',
-          progress + '%'
-        );
-      },
-      fail: function(jqXHR, errorThrown, textStatus){
-        alert("Errore nella procedura di caricamento dei file.");
-      }
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+              if( typeof file.error != 'undefined' && file.error != "" ) {
+                alert("Errore nel caricamento di fle."+ file.name+' --> '+file.error );
+              } else {
+                $('<p class="uploadedFile" data-info="'+decodeURIComponent(file.url)+'"/>').text(file.name).appendTo('#files');
+              }
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+        },
+        fail: function(jqXHR, errorThrown, textStatus){
+          alert("Errore nella procedura di caricamento dei file.");
+        }
     }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
   });
 }
@@ -204,9 +205,10 @@ function scriviDocumentiProfilo(){
   jd.files = file;
   console.log(jd);
   // return false;
-  doAjax(jd, function(mess){
-    $("#requestResult").html(mess);
-  });
+  // doAjax(jd, function(mess){
+  //   $("#requestResult").html(mess);
+  // });
+  doLoad("#requestResult", jd);
 }
 
 function getValGiorni(nome){

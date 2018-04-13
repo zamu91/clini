@@ -45,8 +45,26 @@ class chiamate{
     $this->debug=true;
   }
 
-  public function dSep(){
-    return DIRECTORY_SEPARATOR;
+  public function dSep($forceSystem = false){
+    if(!$forceSystem){
+      return DIRECTORY_SEPARATOR;
+    }else{
+      switch ($forceSystem) {
+        case "W":
+        case "win":
+          return "\\";
+          break;
+
+        case "L":
+        case "linux":
+          return "/";
+          break;
+
+        default:
+          return "/";
+          break;
+      }
+    }
   }
 
   private function debugHtml($mess){

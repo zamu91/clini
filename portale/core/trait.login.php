@@ -65,30 +65,24 @@ trait login {
     return $row;
   }
 
-  public function registerSessionLogin(){
+  public function registerSessionLogin($aoo, $gruppo){
     $this->loginLog("Check login oracle");
     $loginResult=$this->getLoginResult();
-    $app = $loginResult->ExpiratedTime;
-    // $this->debugHtml("Start register login");
-    $expirationTime = substr($app, 0, 10).' '.substr($app, 11, 8);
-    // $this->debugHtml("Check register login");
-    $row=$this->checkExistSession();
-    // $this->debugHtml("after check");
     $session=$loginResult->SessionId;
+    $app = $loginResult->ExpiratedTime;
+    $expirationTime = substr($app, 0, 10).' '.substr($app, 11, 8);
+    $row=$this->checkExistSession();
+
     if( !empty($row["USERNAME"]) ){
       $this->loginLog("sessione trovata, aggiorno");
       $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = :sess,
       SCADENZA = TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS') ";
-      // $this->debugHtml("Preparo la query");
 
       $this->queryPrepare($que);
       $this->queryBind('sess',$session);
-      // $this->debugHtml("bind");
       $this->queryBind('expi',$expirationTime);
-      // $this->debugHtml("expi");
-
       $this->executePrepare();
-      // $this->debugHtml("after check");
+
       $this->commit();
       $this->setJsonMess('sessionMess','aggiornamento Sessione');
     } else {
@@ -103,13 +97,13 @@ trait login {
 
     }
     $this->setJsonMess("token",$session);
-    $this->setJsonMess("login",true);
+    $this->setJsonMess("login", false);
 
     $this->loginToken=true;
   }
 
   public function controlloARXLogin(){
-    $token = $this->post("token");
+    $token = $this->post("token", false);
     $que = "SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
     FROM XDM_WEBSERVICE_SESSION
     WHERE ARXSESSION = '$token' AND SYSDATE <= SCADENZA";
@@ -117,7 +111,7 @@ trait login {
     $this->queryPrepare("SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
     FROM XDM_WEBSERVICE_SESSION
     WHERE ARXSESSION = :tok AND SYSDATE <= SCADENZA");
-    $this->queryBind("tok",$token);
+    $this->queryBind("tok", $token);
     $this->executePrepare();
     //$this->query($que);
     $this->commit();
@@ -127,7 +121,6 @@ trait login {
     if(!empty($row['username'])){
       $this->loginToken=true;
       return true;
-
     }else{
       return false;
     }
