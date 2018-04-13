@@ -88,9 +88,7 @@ trait contratto{
 
   //controllo se il giorni è da contare nel contratto o no
   private function ifDayWork($day){
-    echo $day;
     $giorni=$this->giorni;
-    print_r($giorni);
     if($giorni[$day]=='1'){
       return true;
     }else{
@@ -121,7 +119,7 @@ trait contratto{
     //setup giorni della settimana
     private function inizVar(){
       $giorni=$this->post('giorni');
-      $giorni['Sunday']=0;
+      $giorni[0]=0;
       $this->giorni=$giorni;
       $this->insGiorniDb();
       $this->setTime();
@@ -187,7 +185,7 @@ trait contratto{
 
     // inserisco la data
     private function procDataContratto($data){
-      $giorno = date('l', strtotime($data));
+      $giorno = date('w', strtotime($data));
       if(!$this->ifDayWork($giorno)){
         return false; //giorno da saltare
       }
