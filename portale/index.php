@@ -33,6 +33,17 @@
       <label for="nomeAmbulatorio">Nome Ambulatorio</label>
       <input type="edit" id="nomeAmbulatorio">
     </div>
+
+    <div class="inputDiv"><div class="clearSpace"></div>
+    <label for="provinciaAmbulatorio">Provincia</label>
+    <input type="edit" id="nomeAmbulatorio">
+  </div>
+
+  <div class="inputDiv"><div class="clearSpace"></div>
+  <label for="comuneAmbulatoria">Comune</label>
+  <input type="edit" id="nomeAmbulatorio">
+</div>
+
     <button onclick="salvaAmbulatorio();">TEST AMBULATORIO</button>
   </div>
 
