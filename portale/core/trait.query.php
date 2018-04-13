@@ -9,6 +9,20 @@ trait sql{
 
 
 
+  private function getNextId($col,$tabella){
+    $this->query("SELECT max({$col}) as ID from {$tabella}  ");
+    $row=$row=$this->fetch();
+    $id=$row['ID'];
+    if(empty($id)){
+      $id=1;
+    }else{
+      $id++;
+    }
+    return $id;
+  }
+
+
+
   private function logQuery($mess){
     if($this->isDebug()){
       $this->setJsonMess("query",$mess);
@@ -153,7 +167,7 @@ trait sql{
     }
     oci_execute($compiled);
   }
-  
+
 }
 
 

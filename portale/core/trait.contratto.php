@@ -37,21 +37,6 @@ trait contratto{
 
   }
 
-  private function getNextIdContratto(){
-    $this->query("SELECT max(IDCONTRATTO) as ID from XDM_AMBULATORIO_CONTRATTO ");
-    $row=$this->fetch();
-    $id=$row['ID'];
-    if(empty($id)){
-      $id=1;
-    }else{
-      $id++;
-    }
-
-    return $id;
-
-  }
-
-
 
   public function insContratto(){
     //TODO: Controllo se i dati inseriti non sono in conflitto con altre prenotazioni
@@ -62,7 +47,7 @@ trait contratto{
       $this->error("Durata inferiore del previsto, controllare");
     }
     $this->logCont("inserimento contratto");
-    $data['IDCONTRATTO']=$this->getNextIdContratto();
+    $data['IDCONTRATTO']=$this->getIdNext("IDCONTRATTO","XDM_AMBULATORIO_CONTRATTO");
     $data['DATAINIZIOCONTRATTO']=$this->formOcDate($data['DATAINIZIOCONTRATTO']);
     $data['DATAFINECONTRATTO']=$this->formOcDate($data['DATAFINECONTRATTO']);
     $this->insertPrepare('XDM_AMBULATORIO_CONTRATTO',$data);

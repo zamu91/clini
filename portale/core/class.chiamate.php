@@ -89,6 +89,8 @@ class chiamate{
     }
   }
 
+  
+
   public function launcher(){
     $azione=$this->post('azione');
     switch($azione){
