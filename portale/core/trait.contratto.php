@@ -102,7 +102,6 @@ trait contratto{
   private function insGiorniDb(){
     $giorni=$this->giorni;
     $i=1;
-    echo "inserisco";
     $idContratto=$this->getIdContratto();
     foreach ($giorni as $giorno => $attivo) {
       if($attivo=='1'){
@@ -187,9 +186,12 @@ trait contratto{
       $oraFine=$this->oraFine;
       $newOra=$oraInizio;
       $durata=$this->getVCont("TEMPO");
+      $i=0;
       while($newOra<=$oraFine){
+        echo "volta --->  $i - $newOra ";
+        $i++;
         $this->occupaSpazioSingolo($data,$newOra,$durata);
-        $newData=strtotime('+'.$durata.' minutes',$newOra);
+        $newOra=strtotime('+'.$durata.' minutes',$newOra);
       }
     }
 
