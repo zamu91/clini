@@ -6,8 +6,20 @@ trait prenotazione{
   public function salvaPrenotazione(){
     $this->startTransaction();
     $data=$this->post('data');
-    $data['IDPRENOTAZIONE']=$this->getNextId('IDPRENOTAZIONE','XDM_AMBULATORIO_PRENOTAZIONE');
-    $this->insertPrepare('XDM_AMBULATORIO_PRENOTAZIONE',$data);
+    //$data['IDPRENOTAZIONE']=$this->getNextId('IDPRENOTAZIONE','XDM_AMBULATORIO_PRENOTAZIONE');
+    $dataIns=$this->ocFormData(':data');
+    $str="INSERT INTO XDM_PRENOTAZIONE
+    (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO)VALUES
+    (:id,:idContratto,:oraInizio,:oraFine,:tempo)  ";
+
+    $this->queryPrepare($str);
+    $this->queryBind("id",$this->getIdNext("IDPRENOTAZIONE","XDM_PRENOTAZIONE"));
+    $this->queryBind("idContratto",$data['IDCONTRATTO']);
+    $this->queryBind("oraInizio",$data['ORAINIZIO']);
+    $this->queryBind("oraFine",$data['ORAFINE']);
+    $this->queryBind("tempo",$data['TEMPO']);
+    $this->prepareExecute();
+    //TODO: da segnare questo?
     $idOccupato=$data['IDOCCUPATO'];
     $this->segnaOccupato($idOccupato);
     $this->commit();
