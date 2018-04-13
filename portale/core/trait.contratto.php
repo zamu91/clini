@@ -193,6 +193,9 @@ trait contratto{
         $this->occupaSpazioSingolo($data,$newOra,$durata);
         $newOra=strtotime('+'.$durata.' minutes',$newOra);
       }
+      echo "fatto";
+      die;
+
     }
 
 
