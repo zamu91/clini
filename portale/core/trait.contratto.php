@@ -91,6 +91,8 @@ trait contratto{
   //controllo se il giorni è da contare nel contratto o no
   private function ifDayWork($day){
     $giorni=$this->giorni;
+    echo " cerco il giorno --> $day ";
+    print_r($giorni);
     if($giorni[$day]=='1'){
       return true;
     }else{
@@ -183,7 +185,7 @@ trait contratto{
         return false; //giorno da saltare
       }
 
-      echo "start inizio"; 
+      echo "start inizio";
 
       //procedo con il calcolo dei blocchi temporali
       $oraInizio=$this->oraInizio;
