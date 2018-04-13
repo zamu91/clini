@@ -168,7 +168,13 @@ trait sql{
     oci_execute($compiled);
   }
 
-}
+  public function formOcDate($date){
+    $str="TO_DATE($date, 'DD/MM/YYYY')";
+    return $str;  
+  }
+
+
+} //fine classe
 
 
 

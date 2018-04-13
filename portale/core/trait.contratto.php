@@ -42,18 +42,34 @@ trait contratto{
     //TODO: Controllo se i dati inseriti non sono in conflitto con altre prenotazioni
     $this->checkConflict();
 
+
+    $this->varWork=$this->post('data');
     $data=$this->post("data");
     if($data['TEMPO']<10){
       $this->error("Durata inferiore del previsto, controllare");
     }
     $this->logCont("inserimento contratto");
-    $idContrattoNew=$this->getIdNext("IDCONTRATTO","XDM_AMBULATORIO_CONTRATTO");
-    $data['IDCONTRATTO']=$idContrattoNew;
-    $data['DATAINIZIOCONTRATTO']=$this->formOcDate($data['DATAINIZIOCONTRATTO']);
-    $data['DATAFINECONTRATTO']=$this->formOcDate($data['DATAFINECONTRATTO']);
 
-    print_r($data);
-    $this->insertPrepare('XDM_AMBULATORIO_CONTRATTO',$data);
+    $iniz=$this->formOcDate(':dataIniz');
+    $fine=$this->formOcDate(':dataFine');
+
+
+    $str="INSERT INTO XDM_AMBULATORIO_CONTRATTO
+    (IDCONTRATTO,DURATA,VERSO,DATAINIZIOCONTRATTO,DATAFINECONTRATTO,ORAINIZIO,ORAFINE)
+    VALUES(:id,:durata,:verso,$iniz,$fine,:oraIniz,:oraFine) ";
+    echo $str;
+    $this->queryPrepare($str);
+
+    $idContrattoNew=$this->getIdNext("IDCONTRATTO","XDM_AMBULATORIO_CONTRATTO");
+    $this->queryBind('id',$idContrattoNew);
+    $this->queryBind('durata',$this->getVCont('DURATA'));
+    $this->queryBind('verso',$this->getVCont('VERSO'));
+    $this->queryBind('dataIniz',$this->getVCont('DATAINIZIOCONTRATTO'));
+    $this->queryBind('dataFine',$this->getVCont('DATAFINECONTRATTO'));
+    $this->queryBind('oraIniz',$this->getVCont('ORAINIZIO'));
+    $this->queryBind('oraFine',$this->getVCont('ORAFINE'));
+
+
     $this->logCont("Iniz variabile e start inserimento spazio");
     $this->setIdContratto($idContrattoNew);
     $this->occupaSpazioPrenotazione();
@@ -97,12 +113,10 @@ trait contratto{
         }
         $i++;
       }
-
     }
 
     //setup giorni della settimana
     private function inizVar(){
-      $this->varWork=$this->post('data');
       $giorni=$this->post('giorni');
       $giorni['Sunday']=0;
       $this->giorni=$giorni;
