@@ -109,7 +109,7 @@
   <div class="cercaClinica">
     <div class="cercaPerData">
       <div class="inputDiv">
-        <label for="data">Data</label>
+        <label for="dataCercaClinica">Data</label>
         <input type="edit" class="data" id="data">
       </div>
       <div class="resultDataClinica">
@@ -124,9 +124,8 @@
         <select class="select" id="clinica">
           <option value='4'>TEST</option>
         </select>
-
-
       </div>
+      <button onclick="cercaPerClinica();">Cerca Per clinica</button>
 
       <div class="resultDataClinica">
 
