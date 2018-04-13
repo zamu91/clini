@@ -90,6 +90,9 @@ trait login {
     $password=$this->getPassword();
     $row=$this->checkExistSession();
 
+    $this->arxDebug($aoo);
+    $this->arxDebug($gruppo);
+
     if( !empty($row["USERNAME"]) ){
       $this->loginLog("sessione trovata, aggiorno");
       $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = :sess,
