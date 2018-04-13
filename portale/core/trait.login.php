@@ -86,13 +86,15 @@ trait login {
     $session=$loginResult->SessionId;
     $app = $loginResult->ExpiratedTime;
     $expirationTime = substr($app, 0, 10).' '.substr($app, 11, 8);
+    $username=$this->getUsername();
+    $password=$this->getPassword();
     $row=$this->checkExistSession();
 
     if( !empty($row["USERNAME"]) ){
       $this->loginLog("sessione trovata, aggiorno");
-      $que = "UPDATE XDM_WEBSERVICE_SESSION AS ses SET ARXSESSION = :sess,
+      $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = :sess,
       SCADENZA = TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), AOO = :aoo, GRUPPO = :gru
-      WHERE ses.USERNAME = :us AND ses.PASSWORD = : ps ";
+      WHERE USERNAME = :us AND PASSWORD = : ps ";
 
       $this->queryPrepare($que);
       $this->queryBind("us", $username);
@@ -106,8 +108,6 @@ trait login {
       $this->commit();
       $this->setJsonMess('sessionMess','aggiornamento Sessione');
     } else {
-      $username=$this->getUsername();
-      $password=$this->getPassword();
       $this->loginLog("nuova sessione, registro");
       $que = "INSERT INTO XDM_WEBSERVICE_SESSION (USERNAME, PASSWORD, ARXSESSION, SCADENZA, AOO, GRUPPO)
       VALUES (:us, :pa, :sess, TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), :aoo, :gru) ";
