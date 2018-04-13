@@ -128,7 +128,7 @@ trait contratto{
     }
 
     private function setIdPrenotazione(){
-      $id=$this->getNexId("IDPRENOTAZIONE","XDM_PRENOTAZIONE");
+      $id=$this->getIdNext("IDPRENOTAZIONE","XDM_PRENOTAZIONE");
       $this->idPrenotazione=$id;
     }
 
