@@ -194,7 +194,7 @@ trait contratto{
       $oraInizio=$this->oraInizio;
       $oraFine=$this->oraFine;
       $newOra=$oraInizio;
-      $durata=$this->getValC("TEMPO");
+      $durata=$this->getVCont("TEMPO");
       while($newOra<=$oraFine){
         $this->occupaSpazioSingolo($data,$newOra,$durata);
         $newData=strtotime('+'.$durata.' minutes',$newOra);
@@ -209,6 +209,7 @@ trait contratto{
       $newData=strtotime($dataInizio);
       $i=0;
       while($newData<=$dataFine){ //ciclo i giorni da data inizio e data fine
+        $this->logCont("Processo $newData");
         $i++;
         $this->procDataContratto($newData);
         $newData=strtotime('+ '.$i.' days',strtotime($dataInizio));
