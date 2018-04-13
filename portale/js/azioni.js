@@ -30,7 +30,6 @@ function apriProfilo(sender, newdoc){
     // Change this to the location of your server-side upload handler:
     var url = "core/jquery-file-upload-9.21.0/index.php";
     $('#fileupload').fileupload({
-<<<<<<< HEAD
         url: url,
         dataType: 'json',
         done: function (e, data) {
@@ -52,29 +51,6 @@ function apriProfilo(sender, newdoc){
         fail: function(jqXHR, errorThrown, textStatus){
           alert("Errore nella procedura di caricamento dei file.");
         }
-=======
-      url: url,
-      dataType: 'json',
-      done: function (e, data) {
-        $.each(data.result.files, function (index, file) {
-          if( typeof file.error != 'undefined' && file.error != "" ) {
-            alert("Errore nel caricamento di fle."+ file.name+' --> '+file.error );
-          } else {
-            $('<p class="uploadedFile" data-info="'+file.url+'"/>').text(file.name).appendTo('#files');
-          }
-        });
-      },
-      progressall: function (e, data) {
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        $('#progress .progress-bar').css(
-          'width',
-          progress + '%'
-        );
-      },
-      fail: function(jqXHR, errorThrown, textStatus){
-        alert("Errore nella procedura di caricamento dei file.");
-      }
->>>>>>> aaf7913abbd9f9c07f84eafab3f6b236591c3298
     }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
   });
 }
