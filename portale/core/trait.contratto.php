@@ -142,7 +142,7 @@ trait contratto{
     }
 
     public function setTime(){
-      $oraInizio=$this->getVCont("ORANIZIO");
+      $oraInizio=$this->getVCont("ORAINIZIO");
       $oraFine=$this->getVCont("ORAFINE");
       $oraInizio=strtotime($oraInizio);
       $oraFine=strtotime($oraFine);
@@ -151,8 +151,8 @@ trait contratto{
     }
 
     public function setDate(){
-      $dataInizio=$this->getVCont("DATAINIZIO");
-      $dataFine=$this->getVCont("DATAFINE");
+      $dataInizio=$this->getVCont("DATAINIZIOCONTRATTO");
+      $dataFine=$this->getVCont("DATAFINECONTRATTO");
       $dataInzio=strtotime($dataInizio);
       $dataFine=strtotime($dataFine);
       $this->dataInizio=$dataInizio;
