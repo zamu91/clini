@@ -162,22 +162,16 @@ trait contratto{
       $durata=$this->getVCont("TEMPO");
       $dataIns=$this->formOcDate(':data');
 
-      $data['ORAINIZIO']=$newOra;
-      $data['ORAFINE']=$newOra;
-      $data['TEMPO']=$durata;
-      $data['IDPRENOTAZIONE']=$this->getIncPrenotazione();
-      $data['IDCONTRATTO']=$this->getIdContratto();
-
       $str="INSERT INTO XDM_PRENOTAZIONE
       (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO,DATA)VALUES
       (:id,:idContratto,:oraInizio,:oraFine,:tempo,$dataIns)  ";
       echo $str;
       $this->queryPrepare($str);
-      $this->queryBind("id",$this->getIdNext("IDPRENOTAZIONE","XDM_PRENOTAZIONE"));
-      $this->queryBind("idContratto",$data['IDCONTRATTO']);
-      $this->queryBind("oraInizio",$data['ORAINIZIO']);
-      $this->queryBind("oraFine",$data['ORAFINE']);
-      $this->queryBind("tempo",$data['TEMPO']);
+      $this->queryBind("id",$this->getIncPrenotazione());
+      $this->queryBind("idContratto",$this->getIdContratto());
+      $this->queryBind("oraInizio",$newOra);
+      $this->queryBind("oraFine",$newOra);
+      $this->queryBind("tempo",$this->getVCont('TEMPO'));
       $this->prepareExecute();
 
 
