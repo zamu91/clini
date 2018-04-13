@@ -80,6 +80,7 @@ trait contratto{
   private function getVCont($var){
     if(empty($this->varWork[$var])){
       $this->logCont("Variabile $var non trovata");
+      print_r($this->varWork);
       return false;
     }
     return $this->varWork[$var];
