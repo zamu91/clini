@@ -36,10 +36,13 @@ trait prenotazione{
 
   public function getClinicaPerData(){
     $data=$this->post('data');
-    $que = "SELECT  IDAMBULATORIO
-    FROM XDM_AMBULATORIO AS AMB INNER JOIN XDM_AMBULATORIO_CONTRATTO_OCCUPATO AS OCCU
-    ON AMB.IDAMBULATORIO=OCCU.IDAMBULATORIO AND OCCUPATO=0
-    WHERE DATA=:data  ";
+    $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,XDM_PRENOTAZIONE.DATA
+    FROM XDM_AMBULATORIO
+    JOIN XDM_AMBULATORIO_CONTRATTO
+    ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
+    JOIN XDM_PRENOTAZIONE ON XDM_PRENOTAZIONE.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
+    AND XDM_PRENOTAZIONE.STATO=0
+    WHERE XDM_PRENOTAZIONE=:data  ";
     $this->queryPrepare($que);
     $this->queryBind("data", $data);
     $this->executeQuery();
@@ -59,7 +62,7 @@ trait prenotazione{
         <?php
       }
       if($i==0){
-        ?>Nessuna Data valida per la clinica selezionata<?php
+        ?>Nessuna clinica valida per la data selezionata<?php
       }
 
     }
