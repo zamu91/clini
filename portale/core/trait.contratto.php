@@ -55,13 +55,14 @@ trait contratto{
 
 
     $str="INSERT INTO XDM_AMBULATORIO_CONTRATTO
-    (IDCONTRATTO,TEMPO,VERSO,DATAINIZIOCONTRATTO,DATAFINECONTRATTO,ORAINIZIO,ORAFINE)
-    VALUES(:id,:tempo,:verso,$iniz,$fine,:oraIniz,:oraFine) ";
+    (IDCONTRATTO,IDAMBULATORIO, TEMPO,VERSO,DATAINIZIOCONTRATTO,DATAFINECONTRATTO,ORAINIZIO,ORAFINE)
+    VALUES(:id,:idAmbulatorio,:tempo,:verso,$iniz,$fine,:oraIniz,:oraFine) ";
     $this->queryPrepare($str);
 
     $idContrattoNew=$this->getIdNext("IDCONTRATTO","XDM_AMBULATORIO_CONTRATTO");
     $this->queryBind('id',$idContrattoNew);
     $this->queryBind('tempo',$this->getVCont('TEMPO'));
+    $this->queryBind('idAmbulatorio',$this->getVCont('IDAMBULATORIO'));
     $this->queryBind('verso',$this->getVCont('VERSO'));
     $this->queryBind('dataIniz',$this->getVCont('DATAINIZIOCONTRATTO'));
     $this->queryBind('dataFine',$this->getVCont('DATAFINECONTRATTO'));
