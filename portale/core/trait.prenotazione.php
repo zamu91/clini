@@ -95,7 +95,7 @@ trait prenotazione{
           <?php
         }
 
-        if(!$row){
+        if($i==0){
           ?>
           <h2>Nessuna Clinica disponibile per la data cercata</h2>
           <?php
