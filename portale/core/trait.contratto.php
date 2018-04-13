@@ -22,7 +22,7 @@ trait contratto{
   }
 
   private function logCont($mess){
-    if($this->ifDebug()==false){return 0;}
+    if($this->isDebug()==false){return 0;}
     $this->setJsonMess("logContratto",$mess);
   }
 
@@ -159,9 +159,7 @@ trait contratto{
 
     //scrivo il blocco sul db
     private function occupaSpazioSingolo($data,$newOra){
-      $durata=$this->getVCont("TEMPO");
       $dataIns=$this->formOcDate(':data');
-
       $str="INSERT INTO XDM_PRENOTAZIONE
       (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO,DATA)VALUES
       (:id,:idContratto,:oraInizio,:oraFine,:tempo,$dataIns)  ";
