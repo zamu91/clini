@@ -441,29 +441,73 @@ trait arxivar{
     // estrazione documento
     // $file = $ARX_Documenti->Dm_Profile_GetDocument($sessionid, $docnumber);
     // file_put_contents("docs/".$file->FileName, $file->File);
+
+
+    $this->loginArxivarServizio();
+    $sessionid = $this->loginResult->SessionId;
+    $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
+    $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
+
+    /* TODO: Parametrizzo il campo da cercare (proprietario del profilo) in modo da agevolare la ricerca successivamente */
+    /* TODO: Sarà necessario inserire la ricerca dell'utente e dell'AOO partendo dal login. */
+    $docnumber = $this->post("docnumber", false);
+
+    // esecuzione ricerca
+    // GEST.POS classe della ricerca.
+    $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.DOCMED");
+    //  select per quali campi
+    $select = $ARX_Search->Dm_Profile_Select_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.DOCMED");
+    // $this->arxDebug($select->Aggiuntivi);
+    // esempio di ricerca per campo standard "NUMERO"
+    /*
+    $search->Numero->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+    $search->Numero->Valore = "123456";
+    */
+    // esempio di ricerca per campo aggiuntivo
+
+    foreach ($search->Aggiuntivi->Field_Abstract as $agg) {
+      /* @var $agg \ARX_Search\Field_String */
+      if ($agg->Nome == "NUMERIC16_299") {
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+        $agg->Valore = $docnumber;
+      }
+
+      // per ricercare per id esterno (alias per SDK) si può verificare $agg->ExternalId
+    }
+
+    $select->DOCNUMBER->Selected = true;
+    $select->DOCNAME->Selected = true;
+    $select->DATADOC->Selected = true;
+    $select->CREATION_DATE->Selected = true;
+    $select->FILESIZE->Selected = true;
+    $select->Aggiuntivi->Selected = true;
+    $select->STATO->Selected = true;
+    $result = $ARX_Search->Dm_Profile_GetData($sessionid, $select, $search);
+    $ds = simplexml_load_string($result);
+    // $this->arxDebug($ds);
+
     ?>
-    <table class="fullWidthTable">
+    <table class="fullWidthTable clickable">
       <thead>
         <tr>
-          <th>Documento</th>
-          <th>Campo 1</th>
-          <th>Campo 2</th>
-          <th>Campo 3</th>
+          <th>DOCNUMBER</th>
+          <th>NOME DOCUMENTO</th>
+          <th>DATA DOCUMENTO</th>
+          <th>DIMENSIONE DOCUMENTO</th>
+          <th>STATO</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Primo.txt</td>
-          <td>200 kb</td>
-          <td>inserito oggi</td>
-          <td><button>Visualizza</button></td>
-        </tr>
-        <tr>
-          <td>secondo.txt</td>
-          <td>253 kb</td>
-          <td>inserito oggi</td>
-          <td><button>Visualizza</button></td>
-        </tr>
+        <?php
+        foreach ($ds->Ricerca as $row) { ?>
+          <tr data-doc="<?php echo $row->DOCNUMBER; ?>" >
+            <td><?php echo $row->DOCNUMBER; ?></td>
+            <td><?php echo $row->DOCNAME; ?></td>
+            <td><?php echo $row->DATADOC; ?></td>
+            <td><?php echo $row->FILESIZE; ?></td>
+            <td><?php echo $row->STATO; ?></td>
+          </tr>
+        <?php } ?>
       </tbody>
     </table>
     <?php
@@ -588,7 +632,9 @@ trait arxivar{
     $sessionid = $this->loginResult->SessionId;
     $idTaskWork = $this->post("taskwork", false);
     $files = $this->post("files", false);
-    $basepath = dirname($_SERVER['DOCUMENT_ROOT']).'/arx_portale/clini/portale/uploads/';
+    // $basepath = dirname($_SERVER['DOCUMENT_ROOT']).$this->dSep("W")."arx_portale{$this->dSep("W")}clini{$this->dSep("W")}portale{$this->dSep("W")}uploads{$this->dSep("W")}";
+    $basepath = dirname($_SERVER['DOCUMENT_ROOT']);
+
 
     // cerco l'operazione di inserimento documento per questo task
     $dmTaskDocs = $ARX_Workflow->Dm_TaskDoc_GetData_By_DmTaskworkId($sessionid, $idTaskWork);
@@ -614,13 +660,18 @@ trait arxivar{
     $this->arxDebug($files);
     foreach ($files as $key => $value) {
       $profileBase->DocName = basename($value);
-      $filepath = $basepath.$profileBase->DocName;
+      // $filepath = $basepath.$profileBase->DocName;
+      $filepath = $basepath.trim($value, ".");
+      $this->arxDebug($filepath);
 
       $arxFile->CreationDate = date("c", filectime($filepath));
+      $this->arxDebug($arxFile->CreationDate);
       $arxFile->FileName = basename($filepath);
+      $this->arxDebug($arxFile->FileName);
       $arxFile->File = file_get_contents($filepath);
+      $this->arxDebug($arxFile->File);
       $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale, $arxFile);
-      var_dump($dmProfileResult);
+      $this->arxDebug($dmProfileResult);
     }
 
     $this->logoutArxivar();
@@ -703,16 +754,16 @@ trait arxivar{
       $this->sessionid = $this->loginResult->SessionId;
       $this->isLogin=true;
 
-      // echo 'Siamo prima del getinfo';
-      // var_dump($this->sessionid);
-      // $userC = $ARX_Login->GetInfoUserConnected($this->sessionid);
-      // var_dump($userC);
-      //
-      // $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
-      // $userB = $ARX_Dati->Dm_Gruppi_GetData_By_Utente($this->sessionid, 52);
-      // // $userB = $userC->ToUtentiBase();
-      // var_dump($userB);
-      // // die;
+      echo 'Siamo prima del getinfo';
+      var_dump($this->sessionid);
+      $userC = $ARX_Login->GetInfoUserConnected($this->sessionid);
+      var_dump($userC);
+
+      $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
+      $userB = $ARX_Dati->Dm_Gruppi_GetData_By_Utente($this->sessionid, 52);
+      // $userB = $userC->ToUtentiBase();
+      var_dump($userB);
+      // die;
 
 
       $this->logoutArxivar(); //rilascio la sessione per nuovi login

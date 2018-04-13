@@ -17,6 +17,7 @@ function apriProfilo(sender, newdoc){
   doLoad("#modal-body", jd, function(){
     $("#modal-title").html( $(sender).html() );
     $("#modal-action").modal("toggle");
+    $("#modal-salva").unbind("click");
     $("#modal-salva").on("click", function(){
       if(docnumber != ""){
         scriviDocumentiProfilo();
@@ -36,7 +37,7 @@ function apriProfilo(sender, newdoc){
               if( typeof file.error != 'undefined' && file.error != "" ) {
                 alert("Errore nel caricamento di fle."+ file.name+' --> '+file.error );
               } else {
-                $('<p class="uploadedFile" data-info="'+file.url+'"/>').text(file.name).appendTo('#files');
+                $('<p class="uploadedFile" data-info="'+decodeURIComponent(file.url)+'"/>').text(file.name).appendTo('#files');
               }
             });
         },
@@ -204,9 +205,10 @@ function scriviDocumentiProfilo(){
   jd.files = file;
   console.log(jd);
   // return false;
-  doAjax(jd, function(mess){
-    $("#requestResult").html(mess);
-  });
+  // doAjax(jd, function(mess){
+  //   $("#requestResult").html(mess);
+  // });
+  doLoad("#requestResult", jd);
 }
 
 function getValGiorni(nome){

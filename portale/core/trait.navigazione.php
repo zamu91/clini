@@ -49,6 +49,8 @@ trait navigazione {
       </div>
       <div id="containerDocumenti" class="hidden dashSection" data-task=""></div>
 
+      <div id="requestResult"></div>
+
       <div id="modal-action" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
