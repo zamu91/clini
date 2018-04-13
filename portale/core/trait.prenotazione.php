@@ -7,7 +7,7 @@ trait prenotazione{
     $this->startTransaction();
     $data=$this->post('data');
     //$data['IDPRENOTAZIONE']=$this->getNextId('IDPRENOTAZIONE','XDM_AMBULATORIO_PRENOTAZIONE');
-    $dataIns=$this->ocFormData(':data');
+    $dataIns=$this->formOcDate(':data');
     $str="INSERT INTO XDM_PRENOTAZIONE
     (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO)VALUES
     (:id,:idContratto,:oraInizio,:oraFine,:tempo)  ";

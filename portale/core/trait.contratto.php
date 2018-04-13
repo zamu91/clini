@@ -97,6 +97,7 @@ trait contratto{
 
   //inserisco i giorni in oracle come log per capire i giorni della prenotazione
   private function insGiorniDb(){
+    return 0; //TODO: da creare la tabella
     $giorni=$this->giorni;
     $i=1;
     $idContratto=$this->getIdContratto();
@@ -158,14 +159,28 @@ trait contratto{
     //scrivo il blocco sul db
     private function occupaSpazioSingolo($data,$newOra){
       $durata=$this->getValC("TEMPO");
-      $data['DATA']=$data;
+      $dataIns=$this->formOcDate(':data');
+
       $data['ORAINIZIO']=$newOra;
+      $data['ORAFINE']=$newOra;
       $data['TEMPO']=$durata;
       $data['IDPRENOTAZIONE']=$this->getIncPrenotazione();
       //$data['IDAMBULATORIO']=$this->getValC("idAmbulatorio");
       $data['IDCONTRATTO']=$this->getIdContratto();
-      $this->insertPrepare("AMBULARIO_CONTRATTO_PRENOTAZIONE",$data);
-      $this->execute();
+
+      $str="INSERT INTO XDM_PRENOTAZIONE
+      (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO,DATA)VALUES
+      (:id,:idContratto,:oraInizio,:oraFine,:tempo,$dataIns)  ";
+
+      $this->queryPrepare($str);
+      $this->queryBind("id",$this->getIdNext("IDPRENOTAZIONE","XDM_PRENOTAZIONE"));
+      $this->queryBind("idContratto",$data['IDCONTRATTO']);
+      $this->queryBind("oraInizio",$data['ORAINIZIO']);
+      $this->queryBind("oraFine",$data['ORAFINE']);
+      $this->queryBind("tempo",$data['TEMPO']);
+      $this->prepareExecute();
+
+
     }
 
     // inserisco la data
