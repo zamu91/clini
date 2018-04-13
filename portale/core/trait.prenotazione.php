@@ -67,39 +67,40 @@ trait prenotazione{
 
     public function getDataPerClinica(){
       $id=$this->post('clinica');
-      $que = "SELECT  XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,XDM_PRENOTAZIONE.DATA
+      $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,XDM_PRENOTAZIONE.DATA
       FROM XDM_AMBULATORIO
-         JOIN XDM_AMBULATORIO_CONTRATTO
-          ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
-         JOIN XDM_PRENOTAZIONE ON XDM_PRENOTAZIONE.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
-         AND XDM_PRENOTAZIONE.STATO=0
-      WHERE XDM_AMBULATORIO.IDAMBULATORIO=:id GROUP BY IDAMBULATORIO,NOME,DATA ";
-
-      echo $que;
+      JOIN XDM_AMBULATORIO_CONTRATTO
+      ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
+      JOIN XDM_PRENOTAZIONE ON XDM_PRENOTAZIONE.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
+      AND XDM_PRENOTAZIONE.STATO=0
+      WHERE XDM_AMBULATORIO.IDAMBULATORIO=:id  ";
 
 
       $this->queryPrepare($que);
       $this->queryBind("id", $id);
       $this->executeQuery();
-      echo "eseguito";
       $this->procCercaClinica();
-      echo "fine";
     }
 
     private function procCercaClinica(){
-      $row=$this->fetch();
-      if(!$row){
+      $i=0;
+      while($this->fetch()){
+        $i++;
+
         ?>
-        <h2>Nessuna Clinica disponibile per la data cercata</h2>
-        <?php
-        return 0;
-      }
-      ?>
-      <div class="containerClinca">
-        <h2><?php echo $row['NOME'];?></h2>
-        <button onclick="prenota"><?php echo $row['IDAMBULATORIO'] ?></button
-        </div>
-        <?php
+        <div class="containerClinca">
+          <h2><?php echo $row['NOME']." ".$row['DATA'];?></h2>
+          <button onclick="prenota"><?php echo $row['IDAMBULATORIO'] ?></button
+          </div>
+          <?php
+        }
+
+        if(!$row){
+          ?>
+          <h2>Nessuna Clinica disponibile per la data cercata</h2>
+          <?php
+          return 0;
+        }
       }
 
 
