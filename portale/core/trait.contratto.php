@@ -91,7 +91,6 @@ trait contratto{
   //controllo se il giorni è da contare nel contratto o no
   private function ifDayWork($day){
     $giorni=$this->giorni;
-    echo "cercato-->$day";
     if($giorni[$day]=='1'){
       return true;
     }else{
@@ -184,7 +183,6 @@ trait contratto{
       if(!$this->ifDayWork($giorno)){
         return false; //giorno da saltare
       }
-      echo "start inizio";
 
       //procedo con il calcolo dei blocchi temporali
       $oraInizio=$this->oraInizio;
@@ -197,8 +195,6 @@ trait contratto{
         $this->occupaSpazioSingolo($data,$newOra,$durata);
         $newOra=strtotime('+'.$durata.' minutes',$newOra);
       }
-      echo "fatto";
-      die;
 
     }
 
