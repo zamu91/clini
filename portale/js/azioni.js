@@ -181,6 +181,8 @@ function salvaAmbulatorio(){
   add.NOME=$('#nomeAmbulatorio').val();
   add.PROVINCIA=$('provinciaAmbulatorio').val();
   add.COMUNE=$('#comuneAmbulatorio').val();
+  add.INDIRIZZO=$('#indirizzoAmbulatorio').val();
+
   data.data=add;
   data.azione="salvaClinica";
   doAjax(data,function(mess){

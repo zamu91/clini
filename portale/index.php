@@ -38,14 +38,19 @@
       <div class="inputDiv"><div class="clearSpace"></div>
       <div>
         <label for="provinciaAmbulatorio">Provincia</label>
-        <input type="edit" id="nomeAmbulatorio">
+        <input type="edit" id="provinciaAmbulatorio">
       </div>
 
       <div class="inputDiv"><div class="clearSpace"></div>
       <div>
         <label for="comuneAmbulatorio">Comune</label>
-        <input type="edit" id="nomeAmbulatorio">
+        <input type="edit" id="comuneAmbulatorio">
       </div>
+      <div>
+        <label for="indirizzoAmbulatorio">indirizzo</label>
+        <input type="edit" id="indirizzoAmbulatorio">
+      </div>
+
     </div>
 
 
