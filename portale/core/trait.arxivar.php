@@ -673,7 +673,11 @@ trait arxivar{
       $this->arxDebug($arxFile->FileName);
       $arxFile->File = file_get_contents($filepath);
       $this->arxDebug($arxFile->File);
-      $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale, $arxFile);
+
+      $profileBase->File = $arxFile;
+
+      $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale);
+      // $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale, $arxFile);
       $this->arxDebug($dmProfileResult);
     }
 
