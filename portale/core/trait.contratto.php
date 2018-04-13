@@ -41,8 +41,6 @@ trait contratto{
   public function insContratto(){
     //TODO: Controllo se i dati inseriti non sono in conflitto con altre prenotazioni
     $this->checkConflict();
-
-
     $this->varWork=$this->post('data');
     $data=$this->post("data");
     if($data['TEMPO']<10){
@@ -72,10 +70,8 @@ trait contratto{
     $this->queryBind('oraFine',$this->getVCont('ORAFINE'));
     $this->executePrepare();
     $this->logCont("Salvataggio contratto");
-
-
-    $this->logCont("Iniz variabile e start inserimento spazio");
     $this->setIdContratto($idContrattoNew);
+    $this->logCont("Iniz variabile e start inserimento spazio");
     $this->occupaSpazioPrenotazione();
     $this->commit();
     $this->halt();
@@ -152,8 +148,8 @@ trait contratto{
     }
 
     public function setDate(){
-      $dataInizio=$this->getValC("dataInizio");
-      $dataFine=$this->getValC("dataFine");
+      $dataInizio=$this->getVCont("dataInizio");
+      $dataFine=$this->getVCont("dataFine");
       $dataInzio=strtotime($dataInizio);
       $dataFine=strtotime($dataFine);
       $this->dataInizio=$dataInizio;
