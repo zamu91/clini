@@ -158,8 +158,9 @@ trait contratto{
 
 
     //scrivo il blocco sul db
-    private function occupaSpazioSingolo($data,$newOra){
+    private function occupaSpazioSingolo($data,$newOra,$fineOra){
       $dataIns=$this->formOcDate(':data');
+
       //TODO: Da storicizzare il prepare solo al primo insert per rendere più veloce tutto
       $str="INSERT INTO XDM_PRENOTAZIONE
       (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO,DATA)VALUES
@@ -168,7 +169,7 @@ trait contratto{
       $this->queryBind("id",$this->getIncPrenotazione());
       $this->queryBind("idContratto",$this->getIdContratto());
       $this->queryBind("oraInizio",date('H:M',$newOra));
-      $this->queryBind("oraFine",date('H:M',$newOra));
+      $this->queryBind("oraFine",date('H:M',$fineOra));
       $this->queryBind("tempo",$this->getVCont('TEMPO'));
       $this->queryBind("data",date('Y-m-d',$data) );
 
@@ -192,7 +193,8 @@ trait contratto{
       $i=0;
       while($newOra<=$oraFine){
         $i++;
-        $this->occupaSpazioSingolo($data,$newOra,$durata);
+        $fineOra=strtotime('+'.$durata.' minutes',$newOra);
+        $this->occupaSpazioSingolo($data,$newOra,$fineOra);
         $newOra=strtotime('+'.$durata.' minutes',$newOra);
       }
 
