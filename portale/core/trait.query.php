@@ -169,7 +169,7 @@ trait sql{
   }
 
   public function formOcDate($date){
-    $str="TO_DATE($date, 'DD/MM/YYYY')";
+    $str="TO_DATE($date, 'YYYY-MM-DD')";
     return $str;
   }
 
