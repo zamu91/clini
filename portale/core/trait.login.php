@@ -91,6 +91,7 @@ trait login {
     $row=$this->checkExistSession();
 
     $this->arxDebug($aoo);
+    $aoo = intval($aoo);
     $this->arxDebug($gruppo);
 
     if( !empty($row["USERNAME"]) ){
