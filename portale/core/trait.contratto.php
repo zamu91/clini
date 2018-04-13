@@ -178,7 +178,7 @@ trait contratto{
 
     // inserisco la data
     private function procDataContratto($data){
-      $giorno = date('w', strtotime($data));
+      $giorno = date('w', $data);
       echo "......>$giorno cercato ";
       return 0;
       if(!$this->ifDayWork($giorno)){
