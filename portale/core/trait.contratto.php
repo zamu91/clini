@@ -57,7 +57,6 @@ trait contratto{
     $str="INSERT INTO XDM_AMBULATORIO_CONTRATTO
     (IDCONTRATTO,TEMPO,VERSO,DATAINIZIOCONTRATTO,DATAFINECONTRATTO,ORAINIZIO,ORAFINE)
     VALUES(:id,:tempo,:verso,$iniz,$fine,:oraIniz,:oraFine) ";
-    echo $str;
     $this->queryPrepare($str);
 
     $idContrattoNew=$this->getIdNext("IDCONTRATTO","XDM_AMBULATORIO_CONTRATTO");
@@ -68,7 +67,7 @@ trait contratto{
     $this->queryBind('dataFine',$this->getVCont('DATAFINECONTRATTO'));
     $this->queryBind('oraIniz',$this->getVCont('ORAINIZIO'));
     $this->queryBind('oraFine',$this->getVCont('ORAFINE'));
-
+    $this->executePrepare();
 
     $this->logCont("Iniz variabile e start inserimento spazio");
     $this->setIdContratto($idContrattoNew);
@@ -109,7 +108,7 @@ trait contratto{
           $this->queryBind('idcont',$idContratto);
           $this->queryBind('giorno',$giorno);
           $this->queryBind('nGiorno',$i);
-          $this->execute();
+          $this->executePrepare();
         }
         $i++;
       }
