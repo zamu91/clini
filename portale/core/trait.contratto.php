@@ -163,8 +163,8 @@ trait contratto{
 
       //TODO: Da storicizzare il prepare solo al primo insert per rendere più veloce tutto
       $str="INSERT INTO XDM_PRENOTAZIONE
-      (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO,DATA)VALUES
-      (:id,:idContratto,:oraInizio,:oraFine,:tempo,$dataIns)  ";
+      (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO,DATA,STATO)VALUES
+      (:id,:idContratto,:oraInizio,:oraFine,:tempo,$dataIns,0)  ";
       $this->queryPrepare($str);
       $this->queryBind("id",$this->getIncPrenotazione());
       $this->queryBind("idContratto",$this->getIdContratto());
