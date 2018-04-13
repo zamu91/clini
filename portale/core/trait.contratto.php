@@ -81,7 +81,8 @@ trait contratto{
   //inserisco i giorni in oracle come log per capire i giorni della prenotazione
   private function insGiorniDb(){
     $giorni=$this->giorni;
-    $id=1;
+    $i=1;
+    $idContratto=$this->getIdContratto();
     foreach ($giorni as $giorno => $attivo) {
       if($attivo=='1'){
         $this->queryPrepare("INSERT INTO XDM_AMBULATORIO_CONTRATTO_GIORNO
@@ -93,7 +94,6 @@ trait contratto{
           $this->execute();
         }
         $i++;
-
       }
 
     }
@@ -122,8 +122,8 @@ trait contratto{
     }
 
     public function setTime(){
-      $oraInizio=$this->getVCont("oraInizio");
-      $oraFine=$this->getVCont("oraFine");
+      $oraInizio=$this->getVCont("ORANIZIO");
+      $oraFine=$this->getVCont("ORAFINE");
       $oraInizio=strtotime($oraInizio);
       $oraFine=strtotime($oraFine);
       $this->oraInizio=$oraInizio;
@@ -142,14 +142,15 @@ trait contratto{
 
     //scrivo il blocco sul db
     private function occupaSpazioSingolo($data,$newOra){
-      $durata=$this->getValC("durata");
-      $data['data']=$data;
-      $data['inizio']=$newOra;
-      $data['durata']=$durata;
-      $data['idPrenotazione']=$this->getIncPrenotazione();
-      $data['idAmbulatorio']=$this->getValC("idAmbulatorio");
-      $data['idContratto']=$this->getIdContratto();
+      $durata=$this->getValC("TEMPO");
+      $data['DATA']=$data;
+      $data['ORAINIZIO']=$newOra;
+      $data['TEMPO']=$durata;
+      $data['IDPRENOTAZIONE']=$this->getIncPrenotazione();
+      //$data['IDAMBULATORIO']=$this->getValC("idAmbulatorio");
+      $data['IDCONTRATTO']=$this->getIdContratto();
       $this->insertPrepare("AMBULARIO_CONTRATTO_PRENOTAZIONE",$data);
+      $this->execute();
     }
 
     // inserisco la data
@@ -162,7 +163,7 @@ trait contratto{
       $oraInizio=$this->oraInizio;
       $oraFine=$this->oraFine;
       $newOra=$oraInizio;
-      $durata=$this->getValC("durata");
+      $durata=$this->getValC("TEMPO");
       while($newOra<=$oraFine){
         $this->occupaSpazioSingolo($data,$newOra,$durata);
         $newData=strtotime('+'.$durata.' minutes',$newOra);
@@ -179,7 +180,7 @@ trait contratto{
       while($newData<=$dataFine){ //ciclo i giorni da data inizio e data fine
         $i++;
         $this->procDataContratto($newData);
-        $newData=strtotime('+ '.$ad.' days',strtotime($dataInizio));
+        $newData=strtotime('+ '.$i.' days',strtotime($dataInizio));
       }
       $this->logCont("Fine esecuzione occupa");
     }
