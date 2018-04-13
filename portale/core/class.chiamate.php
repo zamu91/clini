@@ -89,7 +89,7 @@ class chiamate{
     }
   }
 
-  
+
 
   public function launcher(){
     $azione=$this->post('azione');
@@ -99,15 +99,19 @@ class chiamate{
       break;
 
       case 'loginSessionActive':
-        $this->controlloARXLogin();
-        break;
+      $this->controlloARXLogin();
+      break;
 
       case "controlloTokenARXLogin":
-        $this->controlloTokenARXLogin();
-        break;
+      $this->controlloTokenARXLogin();
+      break;
 
       case 'salvaClinica':
       $this->salvaClinica();
+      break;
+
+      case 'getOptionClinica':
+      $this->optClinica();
       break;
 
       case 'insContratto':
@@ -131,16 +135,16 @@ class chiamate{
       break;
 
       case "scriviDatiProfilo":
-        $this->scriviDatiProfilo();
-        break;
+      $this->scriviDatiProfilo();
+      break;
 
       case "scriviDocumentiProfilo":
-        $this->scriviDocumentiProfilo();
-        break;
+      $this->scriviDocumentiProfilo();
+      break;
 
       case "listaDocumenti":
-        $this->listaDocumenti();
-        break;
+      $this->listaDocumenti();
+      break;
     } //end swtich
     $this->halt();
 
