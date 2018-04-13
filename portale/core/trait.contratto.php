@@ -51,6 +51,8 @@ trait contratto{
     $data['IDCONTRATTO']=$idContrattoNew;
     $data['DATAINIZIOCONTRATTO']=$this->formOcDate($data['DATAINIZIOCONTRATTO']);
     $data['DATAFINECONTRATTO']=$this->formOcDate($data['DATAFINECONTRATTO']);
+
+    print_r($data);
     $this->insertPrepare('XDM_AMBULATORIO_CONTRATTO',$data);
     $this->logCont("Iniz variabile e start inserimento spazio");
     $this->setIdContratto($idContrattoNew);
