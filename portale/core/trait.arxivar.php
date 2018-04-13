@@ -326,7 +326,10 @@ trait arxivar{
 
     /* TODO: Parametrizzo il campo da cercare (proprietario del profilo) in modo da agevolare la ricerca successivamente */
     /* TODO: Sarà necessario inserire la ricerca dell'utente e dell'AOO partendo dal login. */
-    $comboUtente = "1\\3aMestre"; // aoo\utente
+    $ses = $this->checkExistSessionFromToken();
+    $comboUtente = "{$ses["AOO"]}\\{$ses["USERNAME"]}";
+    $this->arxDebug($comboUtente);
+    // $comboUtente = "1\\3aMestre"; // aoo\utente
 
     // esecuzione ricerca
     // GEST.POS classe della ricerca.
@@ -754,21 +757,15 @@ trait arxivar{
       $this->sessionid = $this->loginResult->SessionId;
       $this->isLogin=true;
 
-      echo 'Siamo prima del getinfo';
-      var_dump($this->sessionid);
       $userC = $ARX_Login->GetInfoUserConnected($this->sessionid);
-      var_dump($userC);
-
+      $aoo = $userC->AOO;
       $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
       $userB = $ARX_Dati->Dm_Gruppi_GetData_By_Utente($this->sessionid, 52);
-      // $userB = $userC->ToUtentiBase();
-      var_dump($userB);
-      // die;
-
+      $gruppo = $userB->Dm_Gruppi->GRUPPO;
 
       $this->logoutArxivar(); //rilascio la sessione per nuovi login
       $this->arxLog('Logout e registrazione');
-      $this->registerSessionLogin();
+      $this->registerSessionLogin($aoo, $gruppo);
       return true;
     }else{
       $this->arxLog(' Login fallito ');
