@@ -167,8 +167,8 @@ trait contratto{
       $this->queryPrepare($str);
       $this->queryBind("id",$this->getIncPrenotazione());
       $this->queryBind("idContratto",$this->getIdContratto());
-      $this->queryBind("oraInizio",$newOra);
-      $this->queryBind("oraFine",$newOra);
+      $this->queryBind("oraInizio",date('H:M',$newOra));
+      $this->queryBind("oraFine",date('H:M',$newOra));
       $this->queryBind("tempo",$this->getVCont('TEMPO'));
       $this->queryBind("data",date('Y-m-d',$data) );
 
