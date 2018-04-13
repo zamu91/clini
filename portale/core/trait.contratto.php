@@ -180,6 +180,8 @@ trait contratto{
       $giorno = date('w', strtotime($data));
       if(!$this->ifDayWork($giorno)){
         return false; //giorno da saltare
+      }else{
+        echo "salto il gionro";
       }
       //procedo con il calcolo dei blocchi temporali
       $oraInizio=$this->oraInizio;
