@@ -2,6 +2,9 @@
 
 trait contratto{
 
+  private $durataMin=60;
+
+
   private $idContrattoWork; //riferimento id su quale associare i blocchi temporali
   private $giorni; //array configurazione giorni
   private $dataWork;
@@ -13,6 +16,7 @@ trait contratto{
   private $dataFine;
   private $oraInizio;
   private $oraFine;
+
 
 
   private $idPrenotazione; //indice impostato manuale dal ciclo
@@ -31,36 +35,55 @@ trait contratto{
   }
 
 
-  //controllo se l'input è ok
-  private function checkInput(){
+  private function errorInputCnt($error,$mess){
+    $this->setJsonMess($error,$mess);
+    $this->halt();
+  }
 
+  //controllo se l'input inserito è valido
+  private function controlInputContratto(){
+    $dataInizio=$this->dataInizio;
+    $dataFine=$this->dataFine;
+
+    if($dataInizio<strtotime(date('Y-m-d'))){
+      $this->errorInputCnt("data","Attenzione, data inizio nel passato");
+
+    }
+
+    //caso errore date non valide
+    if($dataInizio>=$dataFine){
+      $this->errorInputCnt("data","Attenzione, data inizio avanti dalla data fine");
+    }
+
+    if($oraInizio>=$oraFine){
+      $this->errorInputCnt("ora","Attenzione, ora inizio avanti dall'ora fine");
+    }
+
+    $durataMin=$this->durataMin;
+    if($this->getVCont("TEMPO")<$durataMin){
+      $this->errorInputCnt("durata","durata troppo breve, il minimo è $durataMin ");
+    }
+
+    if(is_int($this->getVCont("TEMPO"))){
+      $this->errorInputCnt("durata","Formato invalido per il tempo");
+    }
 
   }
 
-
-
   //controllo se ci sono conflitti con altre
   private function checkConflict(){
+
+
     return true;
     //TODO: da sistemare, controllo sul db se ci sono casi di sovraposizione
 
   }
 
 
-  public function insContratto(){
-    //TODO: Controllo se i dati inseriti non sono in conflitto con altre prenotazioni
-    $this->checkConflict();
-    $this->varWork=$this->post('data');
-    $data=$this->post("data");
-    if($data['TEMPO']<10){
-      $this->error("Durata inferiore del previsto, controllare");
-    }
-    $this->logCont("inserimento contratto");
-
+  private function insContrattoDb(){
+    $this->logCont("Inizio inserimento contratto");
     $iniz=$this->formOcDate(':dataIniz');
     $fine=$this->formOcDate(':dataFine');
-
-
     $str="INSERT INTO XDM_AMBULATORIO_CONTRATTO
     (IDCONTRATTO,IDAMBULATORIO, TEMPO,VERSO,DATAINIZIOCONTRATTO,DATAFINECONTRATTO,ORAINIZIO,ORAFINE)
     VALUES(:id,:idAmbulatorio,:tempo,:verso,$iniz,$fine,:oraIniz,:oraFine) ";
@@ -80,6 +103,18 @@ trait contratto{
     $this->executePrepare();
     $this->logCont("Salvataggio contratto");
     $this->setIdContratto($idContrattoNew);
+    $this->insGiorniDb();
+  }
+
+  public function insContratto(){
+    $this->inizVarContratto();
+    //TODO: Controllo se i dati inseriti non sono in conflitto con altre prenotazioni
+    $data=$this->post("data");
+
+    $this->controlInputContratto();
+    $this->checkConflict();
+
+    $this->insContrattoDb();
     $this->logCont("Iniz variabile e start inserimento spazio");
     $this->occupaSpazioPrenotazione();
     $this->commit();
@@ -124,11 +159,12 @@ trait contratto{
     }
 
     //setup giorni della settimana
-    private function inizVar(){
+    private function inizVarContratto(){
+      $this->varWork=$this->post('data');
+
       $giorni=$this->post('giorni');
       $giorni[0]=0;
       $this->giorni=$giorni;
-      $this->insGiorniDb();
       $this->setTime();
       $this->setDate();
       $this->setIdPrenotazione();
@@ -206,7 +242,6 @@ trait contratto{
 
 
     public function occupaSpazioPrenotazione(){
-      $this->inizVar();
       $dataInizio=$this->dataInizio;
       $dataFine=$this->dataFine;
       $newData=strtotime($dataInizio);
