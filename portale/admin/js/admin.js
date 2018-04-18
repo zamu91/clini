@@ -4,7 +4,7 @@ function isFunction(functionToCheck) {
 }
 
 function datPick(elem){
-      $( elem ).datepicker($.datepicker.regional["fr"]);
+      $( elem ).datepicker({ dateFormat: 'dd/mm/yy' });
 }
 
 function timePick(elem){
