@@ -722,8 +722,8 @@ trait arxivar{
       $arxFile->File = file_get_contents($filepath);
       $profileBase->File = $arxFile;
       // $ARX_Documenti->Dm_AllegatiDoc_Insert_Document($sessionid, $idTaskWork, $arxFile);
-      // $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale);
-      $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale, $arxFile);
+      $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale);
+      // $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale, $arxFile);
       $this->arxDebug($dmProfileResult);
     }
 
