@@ -1,5 +1,5 @@
 <?php
-include_once 'header.php';
+include_once 'template/header.php';
 include_once 'template/head.php';
 ?>
 <body>
