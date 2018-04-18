@@ -829,15 +829,34 @@ trait arxivar{
     $sessionid = $this->loginResult->SessionId;
 
     $code = $this->post("code", false);
-    $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
-    $select = $ARX_Search->Dm_Contatti_Select_Get_New_Instance();
-    $this->arxDebug($select);
-    $search = $ARX_Search->Dm_Contatti_Search_Get_New_Instance();
-    $this->arxDebug($search);
+    // $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
+    // $select = $ARX_Search->Dm_Contatti_Select_Get_New_Instance();
+    // $this->arxDebug($select);
+    // $search = $ARX_Search->Dm_Contatti_Search_Get_New_Instance();
+    // $this->arxDebug($search);
 
-    $select->DM_RUBRICA_SYSTEM_ID->Selected = true;
-    $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
-    $agg->Valore = $docnumber;
+    $str="SELECT * FROM DM_RUBRICA R INNER JOIN DM_UTENTI U ON R.CONTATTI = U.DESCRIPTION
+    WHERE R.PARTIVA = :partiva ";
+    $this->queryPrepare($str);
+    $this->queryBind("partiva", $code);
+    $this->executeQuery();
+    $row = $this->fetch();
+
+    $this->arxDebug($row);
+
+
+    $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
+    $impersonate = $ARX_Login->Impersonate_By_UserName($sessionid, $row["DESCRIPTION"]);
+    $this->arxDebug($impersonate);
+
+    $ARX_Login->DeImpersonate();
+
+
+
+
+    // $select->DM_RUBRICA_SYSTEM_ID->Selected = true;
+    // $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+    // $agg->Valore = $docnumber;
     // $select->Dm_Rubrica->PARTIVA.SetFilter(Dm_Base_Search_Operatore_String.Uguale, "PARTITA IVA");
     //
     //                 //eseguo la search
