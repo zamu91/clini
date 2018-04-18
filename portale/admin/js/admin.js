@@ -1,6 +1,5 @@
 
 function doAjax(jd, doneFunc, failFunc){
-  jd.token=getToken();
   jqXHR = $.ajax({
     url: "../core/class.chiamate.php",
     type: 'POST',
