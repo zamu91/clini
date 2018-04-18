@@ -67,7 +67,7 @@ trait login {
 
   private function checkExistSessionFromToken(){
     $token = $this->post("token", false);
-    $que = "SELECT ARXSESSION, ses.USERNAME, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA, ses.AOO, ses.GRUPPO
+    $que = "SELECT ARXSESSION, ses.USERNAME, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA, ses.AOO, ses.INSDOC
     FROM XDM_WEBSERVICE_SESSION ses
     WHERE ses.ARXSESSION = :tok ";
 
@@ -111,8 +111,8 @@ trait login {
       $this->setJsonMess('sessionMess','aggiornamento Sessione');
     } else {
       $this->loginLog("nuova sessione, registro");
-      $que = "INSERT INTO XDM_WEBSERVICE_SESSION (USERNAME, PASSWORD, ARXSESSION, SCADENZA, AOO, INSDOC)
-      VALUES (:us, :pa, :sess, TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), :aoo, :insdoc) ";
+      $que = "INSERT INTO XDM_WEBSERVICE_SESSION (IDSESSIONE, USERNAME, PASSWORD, ARXSESSION, SCADENZA, AOO, INSDOC)
+      VALUES ( XDM_WEBSERVICE_SESSION_SEQ1.NEXTVAL ,:us, :pa, :sess, TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), :aoo, :insdoc) ";
 
       $this->queryPrepare($que);
       $this->queryBind("us", $username);
