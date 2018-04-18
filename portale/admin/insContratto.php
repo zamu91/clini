@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<?php 
+<?php
 include_once 'template/head.php';
-
  ?>
+
 <body>
   <div id="container">
 
