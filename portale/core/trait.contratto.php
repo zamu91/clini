@@ -76,7 +76,7 @@ trait contratto{
     for($i=1;$i<=7;$i++){
       if($this->ifDayWork($i)){
         $tab="GIORNO$I";
-        $adQuery.=" INNER JOIN XDM_CONTRATTO_GIORNO as $tab
+        $adQuery.=" INNER JOIN XDM_CONTRATTO_GIORNO  $tab
         ON $tab.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
         ";
       }
@@ -103,13 +103,15 @@ trait contratto{
     $this->queryBind('oraIniz',$this->getVCont('ORAINIZIO'));
     $this->queryBind('oraFine',$this->getVCont('ORAFINE'));
     $this->queryExecute();
-    $row=$this->fetch();
-    $this->setJsonMess("conflitto",$row);
-    $this->setJsonMess("Conflitto nel contratto trovato");
-    $this->halt();
+    if($this->queryNumRows()>0){
+      $row=$this->fetch();
+      $this->setJsonMess("conflitto",$row);
+      $this->setJsonMess("Conflitto nel contratto trovato");
+      $this->halt();
+    }else{
+      return true;
+    }
 
-    return true;
-    
 
   }
 
