@@ -7,7 +7,7 @@ trait clinica
 {
 
   private function optClinica(){
-    $this->query("SELECT IDAMBULATORIO,NOME from XDM_AMBULATORIO where STATO=0 ");
+    $this->query("SELECT IDAMBULATORIO,NOME from XDM_AMBULATORIO  ");
     $html="";
     while($row=$this->fetch()){
       $html.="<option value='{$row['IDAMBULATORIO']}'>{$row['NOME']}</option>";
@@ -16,7 +16,7 @@ trait clinica
   }
 
   private function optClinicaProvincia(){
-    $this->query("SELECT PROVINCIA from XDM_AMBULATORIO where STATO=0 ");
+    $this->query("SELECT DISTINCT PROVINCIA from XDM_AMBULATORIO  ");
     $html="";
     while($row=$this->fetch()){
       $html.="<option value='{$row['PROVINCIA']}'>{$row['PROVINCIA']}</option>";

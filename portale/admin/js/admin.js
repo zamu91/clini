@@ -28,7 +28,7 @@ function doAjax(jd, doneFunc, failFunc){
 
 
 function doLoad(target, jd, doneFunc, failFunc){
-  jd.token=getToken();
+  
   jqXHR = $.ajax({
     url: "../core/class.chiamate.php",
     type: 'POST',
