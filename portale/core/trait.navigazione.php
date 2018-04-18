@@ -23,10 +23,10 @@ trait navigazione {
     // return file_get_contents ( $path );
     ob_start();
     ?>
-      <button onclick="apriProfilo(this);">Responsabilità civile auto</button>
-      <button onclick="apriProfilo(this);">Responsabilità civile terzi</button>
-      <button onclick="apriProfilo(this);">Polizza privata infortuni</button>
-      <button onclick="apriProfilo(this);">Consulenza tecnica di parte</button>
+      <button class="button" onclick="apriProfilo(this);">Responsabilità civile auto</button>
+      <button class="button" onclick="apriProfilo(this);">Responsabilità civile terzi</button>
+      <button class="button" onclick="apriProfilo(this);">Polizza privata infortuni</button>
+      <button class="button" onclick="apriProfilo(this);">Consulenza tecnica di parte</button>
 
       <div class="clearSpace"></div>
 
@@ -34,7 +34,7 @@ trait navigazione {
         <div id="containerFieldList">
           <?php echo $this->getFieldListMascheraRicherca(); ?>
 
-          <button class="floatRight buttonSearch" onclick="caricaListaProfili();">Ricerca</button>
+          <button class="floatRight button buttonSearch" onclick="caricaListaProfili();">Ricerca</button>
         </div>
       </div>
 

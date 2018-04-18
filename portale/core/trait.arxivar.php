@@ -28,7 +28,7 @@ trait arxivar{
       if( $agg->Nome != 'COMBO19_1') {?>
         <div class="fieldBox">
           <label><?php echo $agg->Label; ?></label><br>
-          <input type="text" data-name="<?php echo $agg->Nome ?>" />
+          <input type="text" class="input" data-name="<?php echo $agg->Nome ?>" />
         </div>
       <?php }
     }
