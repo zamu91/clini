@@ -326,7 +326,7 @@ trait arxivar{
 
     $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
     $select = $ARX_Search->Dm_Profile_Select_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
-    $this->arxDebug($select);
+    // $this->arxDebug($select);
 
     $tipoValutazione = $this->post("tipoValutazione", false);
     $cognome = $this->post("cognome", false);
@@ -371,28 +371,27 @@ trait arxivar{
     $select->DOCNUMBER->Selected = true;
     $select->DATADOC->Selected = true;
     $select->STATO->Selected = true;
-    foreach ($search->Aggiuntivi->Aggiuntivo_Selected as $ix => $agg) {
-      /* @var $agg \ARX_Search\Field_String */
+    foreach ($search->Aggiuntivi->Field_Abstract as $ix => $agg) {
       if ($agg->Nome == "COMBO19_1") {
-        $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+        $search->Aggiuntivi->Field_Abstract[$ix]->Selected = true;
       }
       if($agg->Nome == "COMBO15_297" && !empty($tipoValutazione) ){
-        $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+        $search->Aggiuntivi->Field_Abstract[$ix]->Selected = true;
       }
       if($agg->Nome == "TESTO10_297" && !empty($cognome) ){
-        $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+        $search->Aggiuntivi->Field_Abstract[$ix]->Selected = true;
       }
       if($agg->Nome == "TESTO13_297" && !empty($nome) ){
-        $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+        $search->Aggiuntivi->Field_Abstract[$ix]->Selected = true;
       }
       if($agg->Nome == "CHECK17_1" && !empty($deceduto) ){
-        $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+        $search->Aggiuntivi->Field_Abstract[$ix]->Selected = true;
       }
       if($agg->Nome == "TESTO14_297" && !empty($telefono) ){
-        $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+        $search->Aggiuntivi->Field_Abstract[$ix]->Selected = true;
       }
       if($agg->Nome == "TESTO12_297" && !empty($mail) ){
-        $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+        $search->Aggiuntivi->Field_Abstract[$ix]->Selected = true;
       }
     }
 
@@ -519,7 +518,6 @@ trait arxivar{
     $select->DATADOC->Selected = true;
     $select->CREATION_DATE->Selected = true;
     $select->FILESIZE->Selected = true;
-    $select->Aggiuntivi->Selected = true;
     $select->STATO->Selected = true;
     $result = $ARX_Search->Dm_Profile_GetData($sessionid, $select, $search);
     $ds = simplexml_load_string($result);
@@ -667,6 +665,7 @@ trait arxivar{
     $this->loginArxivarServizio();
     $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
     $ARX_Workflow = new ARX_Workflow\ARX_Workflow($this->baseUrl."ARX_Workflow.asmx?WSDL");
+    // $ARX_Documenti = new ARX_Documenti\ARX_Documenti($this->baseUrl."ARX_Documenti.asmx?WSDL");
 
     $sessionid = $this->loginResult->SessionId;
     $idTaskWork = $this->post("taskwork", false);
@@ -721,8 +720,9 @@ trait arxivar{
       $arxFile->FileName = basename($filepath);
       $arxFile->File = file_get_contents($filepath);
       $profileBase->File = $arxFile;
-      $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale);
-      // $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale, $arxFile);
+      // $ARX_Documenti->Dm_AllegatiDoc_Insert_Document($sessionid, $idTaskWork, $arxFile);
+      // $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale);
+      $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profileBase, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale, $arxFile);
       $this->arxDebug($dmProfileResult);
     }
 
@@ -809,7 +809,7 @@ trait arxivar{
       $userC = $ARX_Login->GetInfoUserConnected($this->sessionid);
       $aoo = $userC->AOO;
       $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
-      $userB = $ARX_Dati->Dm_Gruppi_GetData_By_Utente($this->sessionid, 52);
+      $userB = $ARX_Dati->Dm_Gruppi_GetData_By_Utente($this->sessionid, $userC->UTENTE);
       $gruppo = $userB->Dm_Gruppi->GRUPPO;
 
       $this->logoutArxivar(); //rilascio la sessione per nuovi login
@@ -822,6 +822,54 @@ trait arxivar{
       $this->logError=$this->loginResult->ArxLogOnErrorTypeString;
       return false;
     }
+  }
+
+  public function loginArxivarImpersonate(){
+    $this->loginArxivarServizio();
+    $sessionid = $this->loginResult->SessionId;
+    $code = $this->post("code", false);
+
+    $str="SELECT * FROM DM_RUBRICA R INNER JOIN DM_UTENTI U ON R.CONTATTI = U.DESCRIPTION
+    WHERE R.PARTIVA = :partiva ";
+    $this->queryPrepare($str);
+    $this->queryBind("partiva", $code);
+    $this->executeQuery();
+    $row = $this->fetch();
+
+    $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
+    $impersonate = $ARX_Login->Impersonate_By_UserName($sessionid, $row["DESCRIPTION"]);
+    $this->arxDebug($impersonate);
+    $userI = $ARX_Login->GetInfoUserImpersonated($sessionid);
+    $aoo = $userI->AOO;
+    $userIA = $ARX_Dati->Dm_Gruppi_GetData_By_Utente($this->sessionid, $userI->UTENTE);
+    $gruppo = $userB->Dm_Gruppi->GRUPPO;
+    $ARX_Login->DeImpersonate($sessionid);
+    $this->logoutArxivar();
+
+    // $this->registerSessionLogin($aoo, $gruppo, true);
+    return true;
+
+
+    // $select->DM_RUBRICA_SYSTEM_ID->Selected = true;
+    // $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+    // $agg->Valore = $docnumber;
+    // $select->Dm_Rubrica->PARTIVA.SetFilter(Dm_Base_Search_Operatore_String.Uguale, "PARTITA IVA");
+    //
+    //                 //eseguo la search
+    //                 using (Arx_DataSource dmRubricaAzienda = _manager.ARX_SEARCH.Dm_Contatti_GetData(searchRubrica, selectRubrica))
+    //                 {
+    //                     //ho trovato il contatto in rubrica
+    //                     if (dmRubricaAzienda.TableCount == 1 && dmRubricaAzienda.RowsCount(0) > 0)
+    //                     {
+    //                         //int systemid contatto
+    //                         //CI SONO RUBRICHE CON QUESTA PARTITA IVA
+    //                     }
+    //                 }
+    //
+    //             }
+    // $result = $ARX_Search->Dm_Contatti_GetData($sessionid, $select, $search);
+    // $this->arxDebug($result);
+
   }
 
   private function logoutArxivar(){

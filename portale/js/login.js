@@ -10,13 +10,28 @@ function login(){
     dataType:'json',
     data: { azione: "loginPatrocinatore", username: user, password: pass},
   }).done(function(data, textStatus){
-    console.log(data);
-    console.log("token: ");
-    console.log(data.token);
-    console.log(data.ciao);
     localStorage.setItem("tok",data.token);
     $("#resultCall").html(data);
-    console.log(data.login);
+    if(data.login){
+      navigaDashboard();
+    } else {
+      alert("Errore login");
+    }
+  });
+}
+
+function loginImpersonate(){
+  $("#resultCall").html("");
+  var code = $("#codiceIdentificazione").val();
+
+  jqXHR = $.ajax({
+    url: "core/class.chiamate.php",
+    type: 'POST',
+    dataType:'json',
+    data: { azione: "loginImpersonatePatrocinatore", code: code},
+  }).done(function(data, textStatus){
+    localStorage.setItem("tok",data.token);
+    $("#resultCall").html(data);
     if(data.login){
       navigaDashboard();
     } else {
