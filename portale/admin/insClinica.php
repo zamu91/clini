@@ -48,7 +48,7 @@
     </div><!-- ins clinica -->
 
 
-    <button onclick="salvaAmbulatorio();">TEST AMBULATORIO</button>
+    <button onclick="salvaAmbulatorio();">SALVA AMBULATORIO</button>
   </div> <!-- container -->
 
 
