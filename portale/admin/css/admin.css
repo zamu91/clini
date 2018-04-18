@@ -12,5 +12,6 @@ header.card-header{
 div.giorno{
   float:left;
   margin:20px;
+  margin-left:35px;
   flex: none;
 }
