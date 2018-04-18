@@ -26,6 +26,11 @@ function doAjax(jd, doneFunc, failFunc){
 }
 
 
+function tornaMenu(){
+  window.location='index.php';
+
+}
+
 function insClinica(){
   window.location = 'insClinica.php';
 }

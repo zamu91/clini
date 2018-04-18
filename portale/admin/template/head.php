@@ -5,6 +5,7 @@
   <link rel="stylesheet" type="text/css" href="../css/bulma.css" />
   <link rel="stylesheet" type="text/css" href="../css/myStyle.css" />
   <link rel="stylesheet" type="text/css" href="../css/custom.css" />
+  <link rel="stylesheet" type="text/css" href="css/admin.css" />
   <link rel="stylesheet" type="text/css" href="../vendor/bootstrap-4.0.0-dist/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="../vendor/jquery-file-upload-9.21.0/css/jquery.fileupload.css">
   <!-- javascript -->
