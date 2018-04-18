@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html>
 <head>
   <!-- c -->
   <link rel="stylesheet" type="text/css" href="../css/bulma.css" />
