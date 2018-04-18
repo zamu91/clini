@@ -10,6 +10,7 @@ trait arxivar{
   public $softwareNameSecret ="035518E483DE4436";
   private $loginResult;
   private $isLoginArxivar;
+  private $arxVer = 5;
 
   private $logError;
 
@@ -767,11 +768,29 @@ trait arxivar{
   }
 
   private function loginArxivarServizio(){
-    $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
-    $this->loginResult = $ARX_Login->Login($this->adminUser, $this->adminPass, $this->softwareName);
-    if ($this->loginResult->ArxLogOnErrorType != Arx_Login\ArxLogOnErrorType::None){
-      $this->arxLog("Logon Failed: ".$this->loginResult->ArxLogOnErrorType);
-      die();
+    if( $this->arxVer == 5){
+      $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
+      $this->loginResult = $ARX_Login->Login($this->adminUser, $this->adminPass, $this->softwareName);
+      if ($this->loginResult->ArxLogOnErrorType != Arx_Login\ArxLogOnErrorType::None){
+        $this->arxLog("Logon Failed: ".$this->loginResult->ArxLogOnErrorType);
+        die();
+      }
+    }else {
+      /* ARXivarNext */
+      $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
+      // esecuzione login
+      $logonRequest = new \ARX_Login\ArxLogonRequest();
+      $logonRequest->Username = $this->adminUser;
+      $logonRequest->Password = $this->adminPass;
+      // specificare qui Client ID e Client Secret configurati nel portale Authentication
+      $logonRequest->ClientId = $this->softwareName;
+      $logonRequest->ClientSecret = $this->softwareNameSecret;
+      $logonRequest->EnablePushEvents = FALSE;
+      $this->loginResult = $ARX_Login->Login($logonRequest);
+      if ($this->loginResult->ArxLogOnErrorType != Arx_Login\ArxLogOnErrorType::None){
+        $this->arxLog("Logon Failed: ".$this->loginResult->ArxLogOnErrorType);
+        die();
+      }
     }
   }
 
@@ -796,10 +815,28 @@ trait arxivar{
 
 
   public function loginArxivar(){
-    $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
-    $userName = $this->getUsername();
-    $password = $this->getPassword();
-    $this->loginResult = $ARX_Login->Login($userName, $password, $this->softwareName);
+    if( $this->arxVer == 5 ){
+      $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
+      $userName = $this->getUsername();
+      $password = $this->getPassword();
+      $this->loginResult = $ARX_Login->Login($userName, $password, $this->softwareName);
+    } else {
+      /* ARXivarNext */
+      $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
+      // esecuzione login
+      $logonRequest = new \ARX_Login\ArxLogonRequest();
+      $logonRequest->Username = $this->getUsername();
+      $logonRequest->Password = $this->getPassword();
+      // specificare qui Client ID e Client Secret configurati nel portale Authentication
+      $logonRequest->ClientId = $this->softwareName;
+      $logonRequest->ClientSecret = $this->softwareNameSecret;
+      $logonRequest->EnablePushEvents = FALSE;
+      $this->loginResult = $ARX_Login->Login($logonRequest);
+      if ($this->loginResult->ArxLogOnErrorType != Arx_Login\ArxLogOnErrorType::None){
+        $this->arxLog("Logon Failed: ".$this->loginResult->ArxLogOnErrorType);
+        die();
+      }
+    }
     $this->arxLog('WCF chiamate');
     if( $this->loginResult->LoggedIn ){
       $this->arxLog('Login eseguito con successo');
