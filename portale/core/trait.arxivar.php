@@ -374,30 +374,70 @@ trait arxivar{
     $select->DOCNUMBER->Selected = true;
     $select->DATADOC->Selected = true;
     $select->STATO->Selected = true;
-    foreach ($search->Aggiuntivi->Field_Abstract as $ix => $agg) {
-      if ($agg->Nome == "COMBO19_1") {
-        $search->Aggiuntivi->Field_Abstract[$ix]->Selected = true;
-      }
-      if($agg->Nome == "COMBO15_297" && !empty($tipoValutazione) ){
-        $search->Aggiuntivi->Field_Abstract[$ix]->Selected = true;
-      }
-      if($agg->Nome == "TESTO10_297" && !empty($cognome) ){
-        $search->Aggiuntivi->Field_Abstract[$ix]->Selected = true;
-      }
-      if($agg->Nome == "TESTO13_297" && !empty($nome) ){
-        $search->Aggiuntivi->Field_Abstract[$ix]->Selected = true;
-      }
-      if($agg->Nome == "CHECK17_1" && !empty($deceduto) ){
-        $search->Aggiuntivi->Field_Abstract[$ix]->Selected = true;
-      }
-      if($agg->Nome == "TESTO14_297" && !empty($telefono) ){
-        $search->Aggiuntivi->Field_Abstract[$ix]->Selected = true;
-      }
-      if($agg->Nome == "TESTO12_297" && !empty($mail) ){
-        $search->Aggiuntivi->Field_Abstract[$ix]->Selected = true;
-      }
+    // foreach ($select->Aggiuntivi as $ix => $agg) {
+    //   $this->arxDebug($agg);
+    //   echo "<hr/>";
+    //   $select->Aggiuntivi[$ix]->Aggiuntivo_Selected->Selected = true;
+      // if ($agg->Aggiuntivo_Selected->Nome == "COMBO19_1") {
+      //   $select->Aggiuntivi[$ix]->Aggiuntivo_Selected->Selected = true;
+      // }
+      // if($agg->Aggiuntivo_Selected->Nome == "COMBO15_297" && !empty($tipoValutazione) ){
+      //   $select->Aggiuntivi[$ix]->Aggiuntivo_Selected->Selected = true;
+      // }
+      // if($agg->Aggiuntivo_Selected->Nome == "TESTO10_297" && !empty($cognome) ){
+      //   $select->Aggiuntivi[$ix]->Aggiuntivo_Selected->Selected = true;
+      // }
+      // if($agg->Aggiuntivo_Selected->Nome == "TESTO13_297" && !empty($nome) ){
+      //   $select->Aggiuntivi[$ix]->Aggiuntivo_Selected->Selected = true;
+      // }
+      // if($agg->Aggiuntivo_Selected->Nome == "CHECK17_1" && !empty($deceduto) ){
+      //   $search->Aggiuntivi[$ix]->Aggiuntivo_Selected->Selected = true;
+      // }
+      // if($agg->Aggiuntivo_Selected->Nome == "TESTO14_297" && !empty($telefono) ){
+      //   $search->Aggiuntivi[$ix]->Aggiuntivo_Selected->Selected = true;
+      // }
+      // if($agg->Aggiuntivo_Selected->Nome == "TESTO12_297" && !empty($mail) ){
+      //   $search->Aggiuntivi[$ix]->Aggiuntivo_Selected->Selected = true;
+      // }
+    // }
+    $classAggiuntivo = new ARX_Search\Aggiuntivo_Selected();
+    // $this->arxDebug($classAggiuntivo);
+    $listAggiuntivi = [];
+
+    // $this->arxDebug($search->Aggiuntivi);
+    foreach ($search->Aggiuntivi->Field_Abstract as $item) {
+      // $agg = $item->ToAggiuntivoSelected();
+      // $this->arxDebug($item);
+      $item->Selected = true;
+      array_push($listAggiuntivi, $item);
+      // $search->Aggiuntivi->Field_Abstract[$ix]->Selected = true;
+      // $this->arxDebug($search->Aggiuntivi->Field_Abstract[$ix]);
+      // if ($agg->Nome == "COMBO19_1") {
+      //   $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+      // }
+      // if($agg->Nome == "COMBO15_297" && !empty($tipoValutazione) ){
+      //   $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+      // }
+      // if($agg->Nome == "TESTO10_297" && !empty($cognome) ){
+      //   $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+      // }
+      // if($agg->Nome == "TESTO13_297" && !empty($nome) ){
+      //   $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+      // }
+      // if($agg->Nome == "CHECK17_1" && !empty($deceduto) ){
+      //   $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+      // }
+      // if($agg->Nome == "TESTO14_297" && !empty($telefono) ){
+      //   $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+      // }
+      // if($agg->Nome == "TESTO12_297" && !empty($mail) ){
+      //   $search->Aggiuntivi->Aggiuntivo_Selected[$ix]->Selected = true;
+      // }
     }
 
+    // $this->arxDebug($listAggiuntivi);
+    $select->Aggiuntivi->Field_Abstract = $listAggiuntivi;
+    // $this->arxDebug($select->Aggiuntivi->Field_Abstract);
 
     $result = $ARX_Search->Dm_Profile_GetData($sessionid, $select, $search);
     $ds = simplexml_load_string($result);
@@ -850,10 +890,13 @@ trait arxivar{
       $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
       $userB = $ARX_Dati->Dm_Gruppi_GetData_By_Utente($this->sessionid, $userC->UTENTE);
       $gruppi = $userB->Dm_Gruppi;
-
-      $insDoc = false;
-      foreach ($gruppi as $key => $value) {
-        if( $value->GRUPPO == $this->gruppoPatrocinatori ){ $insDoc = true; }
+      $insDoc = 0;
+      if(is_array($gruppi)){
+        foreach ($gruppi as $key => $value) {
+          if( $value->GRUPPO == $this->gruppoPatrocinatori ){ $insDoc = 1; }
+        }
+      } else {
+        if( $gruppi->GRUPPO == $this->gruppoPatrocinatori ){ $insDoc = 1; }
       }
 
       $this->logoutArxivar(); //rilascio la sessione per nuovi login
