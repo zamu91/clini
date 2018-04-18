@@ -1,4 +1,9 @@
 
+function isFunction(functionToCheck) {
+  return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+}
+
+
 function doAjax(jd, doneFunc, failFunc){
   jqXHR = $.ajax({
     url: "../core/class.chiamate.php",
