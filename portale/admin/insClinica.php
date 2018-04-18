@@ -11,15 +11,15 @@ include_once 'template/html.php';
   <div class="container">
     <div class="columns">
 
-      <?php divElement('  <input class="input is-large" placeholder="nomeAmbulatorio" id="nomeAmbulatorio" type="text">',"Nome Ambulatorio","6"); ?>
-      <?php divElement('  <input class="input is-large" placeholder="provincia" id="provinciaAmbulatorio" type="text">',"Provincia Ambulatorio","6"); ?>
+      <?php divElement('  <input class="input " placeholder="nomeAmbulatorio" id="nomeAmbulatorio" type="text">',"Nome Ambulatorio","6"); ?>
+      <?php divElement('  <input class="input " placeholder="provincia" id="provinciaAmbulatorio" type="text">',"Provincia Ambulatorio","6"); ?>
 
     </div>
 
     <div class="columns">
 
-      <?php divElement('  <input class="input is-large" placeholder="comune" id="comuneAmbulatorio" type="text">',"Comune Ambulatorio","6"); ?>
-      <?php divElement('  <input class="input is-large" placeholder="indirizzo" id="indirizzoAmbulatorio" type="text">',"Indirizzo Ambulatorio","6"); ?>
+      <?php divElement('  <input class="input " placeholder="comune" id="comuneAmbulatorio" type="text">',"Comune Ambulatorio","6"); ?>
+      <?php divElement('  <input class="input " placeholder="indirizzo" id="indirizzoAmbulatorio" type="text">',"Indirizzo Ambulatorio","6"); ?>
     </div>
 
     <div class="columns">

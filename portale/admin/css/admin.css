@@ -3,10 +3,14 @@ p.card-header-title{
   padding:0px !important;
 }
 
+header.card-header{
+  padding:5px !important;
+
+}
+
 
 div.giorno{
   float:left;
   margin:20px;
   flex: none;
-
 }
