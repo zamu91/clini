@@ -12,9 +12,9 @@ include_once 'template/html.php';
 
   <section class="container">
     <div class="columns features">
-        
-      <?php divElement('<button class="button" onclick="insClinica();">INSERISCI CLINICA</button>',"Inserisci Clinica","6"); ?>
-      <?php divElement('<button class="button" onclick="insContratto();">INSERISCI CONTRATTO</button>',"Inserisci Contratto","6"); ?>
+
+      <?php divElement('<center><button class="button is-primary" onclick="insClinica();">INSERISCI CLINICA</button></center>',"Inserisci Clinica","6"); ?>
+      <?php divElement('<center><button class="button is-primary" onclick="insContratto();">INSERISCI CONTRATTO</button></center>',"Inserisci Contratto","6"); ?>
 
     </div> <!-- end columns feauteres -->
   </section> <!-- end section container -->

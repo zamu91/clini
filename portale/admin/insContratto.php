@@ -5,7 +5,7 @@ include_once 'template/html.php';
 ?>
 <body>
   <?php
-  getHeader("Ambulatorio","Inserimento di un nuovo ambulatorio");
+  getHeader("CONTRATTO","Inserimento di un nuovo contratto per ambulatorio");
   getSubHeader();
   ?>
   <div class="container">
@@ -16,6 +16,8 @@ include_once 'template/html.php';
     </div>
 
 
+
+
     <div class="columns">
       <?php divElement('  <input class="input " placeholder="Ora Inizio" id="oraInizio" type="text">',"Ora Inizio","3"); ?>
       <?php divElement('  <input class="input " placeholder="Ora Fine" id="oraInizio" type="text">',"Ora Fine","3"); ?>
@@ -23,82 +25,31 @@ include_once 'template/html.php';
       <?php divElement('  <input class="input " placeholder="Verso" id="verso" type="text">',"Verso","3"); ?>
     </div>
 
+
+    <?php getGiorniDiv(); ?>
+
+
     <div class="columns">
-      <div class="columns is-12">
-      <div class="card events-card">
-        <header class="card-header">
-          <p class="card-header-title">
-            Giorni del contratto
-          </p>
-          <a href="#" class="card-header-icon" aria-label="more options">
-            <span class="icon">
-              <i class="fa fa-angle-down" aria-hidden="true"></i>
-            </span>
-          </a>
-        </header>
-        <div class="card-table">
-          <div class="content">
-
-
-            <div class="giorno">
-              <label for="lun">Lunedì</label>
-              <input type="checkbox" id="lun">
-            </div>
-
-            <div class="giorno">
-              <label for="mar">Martedì</label>
-              <input type="checkbox" id="mar">
-            </div>
-
-            <div class="giorno">
-              <label for="mer">Mercoledì</label>
-              <input type="checkbox" id="mer">
-            </div>
-
-            <div class="giorno">
-              <label for="gio">Giovedì</label>
-              <input type="checkbox" id="giov">
-            </div>
-
-            <div class="giorno">
-              <label for="ven">Venerdì</label>
-              <input type="checkbox" id="ven">
-            </div>
-
-            <div class="giorno">
-              <label for="sab">Sabato</label>
-              <input type="checkbox" id="sab">
-            </div>
-
-          </div> <!-- end content -->
-        </div>
+      <div class="column is-6">
+        <button class="button is-primary" onclick="salvaContratto();">Salva Contratto</button>
       </div>
 
-    </div> <!-- 12 -->
-  </div> <!-- end columns giorni -->
+      <div class="column is-6">
+        <button class="button is-primary" onclick="tornaMenu();">TORNA A MENÙ</button>
+      </div>
+
+    </div> <!-- end tasti -->
 
 
-  <div class="columns">
-    <div class="columns columns is-6">
-      <button class="button is-primary" onclick="salvaContratto();">Salva Contratto</button>
-    </div>
-
-    <div class="columns columns is-6">
-      <button class="button is-primary" onclick="tornaMenu();">TORNA A MENÙ</button>
-    </div>
-
-  </div>
 
 
-</div> <!-- ins contratto -->
+  </div> <!-- conteiner -->
 
 
 
 </body>
 </html>
-
-
-
+<script>loadClinicheCont();</script>
 
 <?php
 
@@ -148,5 +99,77 @@ if(1==2){
 
 }
 
+
+function getGiorni(){
+  ?>
+
+
+  <div class="giorno">
+    <label for="lun">Lunedì</label>
+    <input type="checkbox" id="lun">
+  </div>
+
+  <div class="giorno">
+    <label for="mar">Martedì</label>
+    <input type="checkbox" id="mar">
+  </div>
+
+  <div class="giorno">
+    <label for="mer">Mercoledì</label>
+    <input type="checkbox" id="mer">
+  </div>
+
+  <div class="giorno">
+    <label for="gio">Giovedì</label>
+    <input type="checkbox" id="giov">
+  </div>
+
+  <div class="giorno">
+    <label for="ven">Venerdì</label>
+    <input type="checkbox" id="ven">
+  </div>
+
+  <div class="giorno">
+    <label for="sab">Sabato</label>
+    <input type="checkbox" id="sab">
+  </div>
+
+
+  <?php
+
+
+}
+
+
+function getGiorniDiv(){
+  ?>
+
+  <div class="columns">
+    <div class="column is-12">
+      <div class="card events-card">
+        <header class="card-header">
+          <p class="card-header-title">
+            Giorni del contratto
+          </p>
+          <a href="#" class="card-header-icon" aria-label="more options">
+            <span class="icon">
+              <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </a>
+        </header>
+        <div class="content">
+
+          <?php getGiorni(); ?>
+
+        </div> <!-- end content -->
+      </div>
+
+    </div> <!-- 12 -->
+  </div> <!-- end columns giorni -->
+
+  <?php
+
+
+}
 
 ?>
