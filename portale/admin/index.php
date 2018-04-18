@@ -1,6 +1,8 @@
 <?php
 include_once 'template/header.php';
 include_once 'template/head.php';
+include_once 'template/html.php';
+
 ?>
 <body>
   <?php
@@ -10,28 +12,10 @@ include_once 'template/head.php';
 
   <section class="container">
     <div class="columns features">
+        
+      <?php divElement('<button class="button" onclick="insClinica();">INSERISCI CLINICA</button>',"Inserisci Clinica","6"); ?>
+      <?php divElement('<button class="button" onclick="insContratto();">INSERISCI CONTRATTO</button>',"Inserisci Contratto","6"); ?>
 
-      <div class="column is-6">
-        <div class="card is-shady">
-          <div class="card-image has-text-centered">
-            <h2>Procedura di inserimento di una nuova clinica</h2>
-          </div>
-          <div class="card-content">
-            <button class="button" onclick="insClinica();">INSERISCI CLINICA</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="column is-6">
-        <div class="card is-shady">
-          <div class="card-image has-text-centered">
-            <h2>Procedura di inserimento di un nuovo contratto</h2>
-          </div>
-          <div class="card-content">
-            <button class="button" onclick="insContratto();">INSERISCI CONTRATTO</button>
-          </div>
-        </div>
-      </div>
     </div> <!-- end columns feauteres -->
   </section> <!-- end section container -->
 
