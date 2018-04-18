@@ -3,24 +3,6 @@ function isFunction(functionToCheck) {
   return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
 }
 
-function custom_alert( message, title ) {
-  if ( !title )
-  title = 'Alert';
-
-  if ( !message )
-  message = 'No Message to Display.';
-
-  $('<div></div>').html( message ).dialog({
-    title: title,
-    resizable: false,
-    modal: true,
-    buttons: {
-      'Ok': function()  {
-        $( this ).dialog( 'close' );
-      }
-    }
-  });
-}
 
 function doAjax(jd, doneFunc, failFunc){
   jqXHR = $.ajax({
@@ -195,10 +177,9 @@ function salvaAmbulatorio(){
   data.azione="salvaClinica";
   doAjax(data,function(mess){
     if(mess.ok){
-      custom_alert('Clinica','Clinica salvata con successo');
-      tornaMenu();
+      swal('Clinica','Clinica salvata con successo','success');
     }else{
-      custom_alert('ATTENZIONE','impossibile inserire la clinica');
+      swal('ATTENZIONE','impossibile inserire la clinica','warning');
     }
   });
 
