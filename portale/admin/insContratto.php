@@ -49,8 +49,7 @@ include_once 'template/html.php';
 
 </body>
 </html>
-<script>loadClinicheCont();</script>
-
+<script src="js/contratto.js"></script>
 <?php
 
 if(1==2){
