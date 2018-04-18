@@ -26,6 +26,15 @@
     <input type="text" id="token" name="an_token" placeholder="Token"/>
     <button onclick="controlloLogin();">Controllo login</button>
     <hr>
+
+    <h1>Login impersonate</h1>
+    <input type="text" id="codiceIdentificazione" name="an_codiceIdentificazione" placeholder="Codice patrocinatore" />
+    <button onclick="loginImpersonate();">Login</button>
+    <hr>
+    <input type="text" id="token" name="an_token" placeholder="Token"/>
+    <button onclick="controlloLoginImpersonate();">Controllo login</button>
+    <hr>
+
     <pre id="resultCall"></pre>
 
     <div id="insClinica">

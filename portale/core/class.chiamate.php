@@ -109,6 +109,10 @@ class chiamate{
       $this->loginArxivar();
       break;
 
+      case "loginImpersonatePatrocinatore":
+      $this->loginArxivarImpersonate();
+      break;
+
       case 'loginSessionActive':
       $this->controlloARXLogin();
       break;
