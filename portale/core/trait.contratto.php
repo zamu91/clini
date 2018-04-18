@@ -64,18 +64,52 @@ trait contratto{
       $this->errorInputCnt("durata","durata troppo breve, il minimo è $durataMin ");
     }
 
-    if(is_int($this->getVCont("TEMPO"))){
+    if(!is_int($this->getVCont("TEMPO"))){
       $this->errorInputCnt("durata","Formato invalido per il tempo");
     }
 
   }
 
+
+  private function getJoinConflict(){
+    $adQuery="";
+    for($i=1;$i<=7;$i++){
+      if($this->ifDayWork($i)){
+        $tab="GIORNO$I";
+        $adQuery.=" INNER JOIN XDM_CONTRATTO_GIORNO as $tab
+        ON $tab.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
+        ";
+      }
+    }
+    return $adQuery;
+  }
+
   //controllo se ci sono conflitti con altre
   private function checkConflict(){
 
+    $iniz=$this->formOcDate(':dataIniz');
+    $fine=$this->formOcDate(':dataFine');
+
+    $adJoin=$this->getJoinConflict();
+    $str="SELECT * FROM XDM_AMBULATORIO_CONTRATTO
+    $adJoin
+    where IDAMBULATORIO=:idAmb and DATAINIZIOCONTRATTO>=$iniz
+    and DATAFINECONTRATTO<=$fine and ORAINIZIO>=:oraIniz and ORAFINE<:oraFine
+    ";
+
+    $this->queryPrepare($str);
+    $this->queryBind('dataIniz',$this->getVCont('DATAINIZIOCONTRATTO'));
+    $this->queryBind('dataFine',$this->getVCont('DATAFINECONTRATTO'));
+    $this->queryBind('oraIniz',$this->getVCont('ORAINIZIO'));
+    $this->queryBind('oraFine',$this->getVCont('ORAFINE'));
+    $this->queryExecute();
+    $row=$this->fetch();
+    $this->setJsonMess("conflitto",$row);
+    $this->setJsonMess("Conflitto nel contratto trovato");
+    $this->halt();
 
     return true;
-    //TODO: da sistemare, controllo sul db se ci sono casi di sovraposizione
+    
 
   }
 
@@ -108,7 +142,6 @@ trait contratto{
 
   public function insContratto(){
     $this->inizVarContratto();
-    //TODO: Controllo se i dati inseriti non sono in conflitto con altre prenotazioni
     $data=$this->post("data");
 
     $this->controlInputContratto();
