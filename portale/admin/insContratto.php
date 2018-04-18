@@ -13,12 +13,14 @@
   <script type="text/javascript" src="vendor/jquery-ui/jquery.ui.widget.js"></script>
   <script type="text/javascript" src="vendor/jquery-file-upload-9.21.0/js/jquery.iframe-transport.js"></script>
   <script type="text/javascript" src="vendor/jquery-file-upload-9.21.0/js/jquery.fileupload.js"></script>
-  <script type="text/javascript" src="js/login.js"></script>
-  <script type="text/javascript" src="js/azioni.js"></script>
+  <script type="text/javascript" src="../js/login.js"></script>
+  <script type="text/javascript" src="../js/azioni.js"></script>
+  <script type="text/javascript" src="js/admin.js"></script>
+
 </head>
 <body>
   <div id="container">
-    
+
 
     <div id="insContratto">
       <div class="inputDiv">
