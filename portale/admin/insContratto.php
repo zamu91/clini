@@ -1,63 +1,49 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <!-- c -->
-  <link rel="stylesheet" type="text/css" href="css/bulma.css" />
-  <link rel="stylesheet" type="text/css" href="css/myStyle.css" />
-  <link rel="stylesheet" type="text/css" href="css/custom.css" />
-  <link rel="stylesheet" type="text/css" href="vendor/bootstrap-4.0.0-dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="vendor/jquery-file-upload-9.21.0/css/jquery.fileupload.css">
-  <!-- javascript -->
-  <script type="text/javascript" src="vendor/jquery/jquery.js"></script>
-  <script type="text/javascript" src="vendor/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="vendor/jquery-ui/jquery.ui.widget.js"></script>
-  <script type="text/javascript" src="vendor/jquery-file-upload-9.21.0/js/jquery.iframe-transport.js"></script>
-  <script type="text/javascript" src="vendor/jquery-file-upload-9.21.0/js/jquery.fileupload.js"></script>
-  <script type="text/javascript" src="js/login.js"></script>
-  <script type="text/javascript" src="js/azioni.js"></script>
-</head>
+<?php
+include_once 'template/head.php';
+?>
+
 <body>
   <div id="container">
-    
+
 
     <div id="insContratto">
       <div class="inputDiv">
         <label for="idAmbulatorio">Ambulatorio</label>
-        <select class="dataProc" id="idAmbulatorio">
+        <select class="dataProc input" id="idAmbulatorio">
           <option value="4">test</option>
         </select>
       </div>
 
       <div class="inputDiv">
         <label for="dataInzio">Data inizio</label>
-        <input class="dataProc" type="edit" id="dataInizio">
+        <input class="dataProc input" type="edit" id="dataInizio">
       </div>
 
       <div class="inputDiv">
         <label for="dataFine">Data Fine</label>
-        <input type="edit" id="dataFine">
+        <input type="edit" class="input" id="dataFine">
       </div>
 
 
       <div class="inputDiv">
         <label for="oraInizio">Ora Inizio</label>
-        <input type="edit" class="dataProc" id="oraInizio">
+        <input type="edit" class="input" id="oraInizio">
       </div>
 
       <div class="inputDiv">
         <label for="oraFine">Ora Fine</label>
-        <input type="edit" class="dataProc" id="oraFine">
+        <input type="edit" class="dataProc input" id="oraFine">
       </div>
 
       <div class="inputDiv">
         <label for="durata">Durata</label>
-        <input type="edit" class="durata" id="durata">
+        <input type="edit" class="durata input" id="durata">
       </div>
 
       <div class="iputDiv">
         <div class="giornoDiv">
           <label for="lun">Lunedì</label>
-          <input type="checkbox" id="lun">
+          <input type="checkbox input" id="lun">
         </div>
 
         <div class="giornoDiv">
@@ -67,35 +53,33 @@
 
         <div class="giornoDiv">
           <label for="mer">Mercoledì</label>
-          <input type="checkbox" id="mer">
+          <input type="checkbox input" id="mer">
         </div>
 
         <div class="giornoDiv">
           <label for="gio">Giovedì</label>
-          <input type="checkbox" id="giov">
+          <input type="checkbox input" id="giov">
         </div>
 
         <div class="giornoDiv">
           <label for="ven">Venerdì</label>
-          <input type="checkbox" id="ven">
+          <input type="checkbox input" id="ven">
         </div>
 
         <div class="giornoDiv">
           <label for="sab">Sabato</label>
-          <input type="checkbox" id="sab">
+          <input type="checkbox input" id="sab">
         </div>
 
 
       </div> <!-- giorni contratto -->
-      <button onclick="salvaContratto();">Salva Contratto</button>
+      <button class="button" onclick="salvaContratto();">Salva Contratto</button>
 
     </div> <!-- ins contratto -->
 
 
 
   </div> <!-- container -->
-  <script type="text/jscript">
-  skipLoginIfTokenIsValid();
-</script>
+  
 </body>
 </html>

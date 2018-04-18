@@ -1,31 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <!-- c -->
-  <link rel="stylesheet" type="text/css" href="css/bulma.css" />
-  <link rel="stylesheet" type="text/css" href="css/myStyle.css" />
-  <link rel="stylesheet" type="text/css" href="css/custom.css" />
-  <link rel="stylesheet" type="text/css" href="vendor/bootstrap-4.0.0-dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="vendor/jquery-file-upload-9.21.0/css/jquery.fileupload.css">
-  <!-- javascript -->
-  <script type="text/javascript" src="vendor/jquery/jquery.js"></script>
-  <script type="text/javascript" src="vendor/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="vendor/jquery-ui/jquery.ui.widget.js"></script>
-  <script type="text/javascript" src="vendor/jquery-file-upload-9.21.0/js/jquery.iframe-transport.js"></script>
-  <script type="text/javascript" src="vendor/jquery-file-upload-9.21.0/js/jquery.fileupload.js"></script>
-  <script type="text/javascript" src="js/admin.js"></script>
-
-</head>
+<?php
+include_once 'template/header.php';
+include_once 'template/head.php';
+?>
 <body>
-  <div class="container">
-  <div class="navButtonContainer">
-    <button onclick="insClinica();">INSERISCI CLINICA</button>
-  </div>
+  <?php
+  getHeader("Amministrazione clinica","Seleziona l'azione da eseguire");
+  ?>
 
-  <div class="navButtonContainer">
-    <button onclick="insContratto();">INSERISCI CONTRATTO</button>
-  </div>
-</div>
+  <section class="container">
+    <div class="columns features">
+      <div class="column is-4">
+        <div class="card is-shady">
+          <h2>Procedura di inserimento di una nuova clinica</h2>
+          <button class="button" onclick="insClinica();">INSERISCI CLINICA</button>
+        </div>
+      </div>
+
+      <div class="column is-4">
+        <div class="card is-shady">
+          <h2>Procedura di inserimento di un nuovo contratto</h2>
+          <button class="button" onclick="insContratto();">INSERISCI CONTRATTO</button>
+        </div>
+      </div>
+    </div> <!-- end columns feauteres -->
+  </section> <!-- end section container -->
 
 </body>
 </html>
