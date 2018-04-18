@@ -130,12 +130,14 @@ trait sql{
     $this->executePrepare();
   }
 
+
+  public function queryNumRows(){
+    return oci_num_rows($this->resActive);
+  }
+
   public function executePrepare(){
     oci_execute($this->stmtPrepare, OCI_NO_AUTO_COMMIT);
-
     $this->resActive=$this->stmtPrepare;
-
-
   }
 
 
