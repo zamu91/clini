@@ -7,7 +7,7 @@ trait clinica
 {
 
   private function optClinica(){
-    $this->query("SELECT IDAMBULATORIO,NOME from XDM_AMBULATORIO  ");
+    $this->query("SELECT IDAMBULATORIO,NOME from XDM_AMBULATORIO where STATO=1 ");
     $html="";
     while($row=$this->fetch()){
       $html.="<option value='{$row['IDAMBULATORIO']}'>{$row['NOME']}</option>";
@@ -41,6 +41,8 @@ trait clinica
   public function salvaClinica(){
     $data=$this->post('data');
     $data['IDAMBULATORIO']=$this->getNexIdAmbulatorio();
+    $data['STATO']='1';
+
     $this->insertPrepare('XDM_AMBULATORIO',$data);
     $this->commit();
     $this->setJsonMess("mess","Dati inseriti");

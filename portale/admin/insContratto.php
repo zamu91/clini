@@ -46,10 +46,10 @@ include_once 'template/html.php';
   </div> <!-- conteiner -->
 
 
-
+  <script src="js/contratto.js"></script>
+  
 </body>
 </html>
-<script src="js/contratto.js"></script>
 <?php
 
 if(1==2){
