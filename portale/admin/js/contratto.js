@@ -1,8 +1,7 @@
 $( document ).ready(function() {
 datPick('#dataInizio');
 datPick('#dataFine');
-timePick('#oraInizio');
-timePick('#oraFine');
+timePick('.timep');
 getOptionClinica('idAmbulatorio');
 });
 
