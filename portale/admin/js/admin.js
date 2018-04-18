@@ -26,6 +26,37 @@ function doAjax(jd, doneFunc, failFunc){
 }
 
 
+
+function doLoad(target, jd, doneFunc, failFunc){
+  jd.token=getToken();
+  jqXHR = $.ajax({
+    url: "../core/class.chiamate.php",
+    type: 'POST',
+    dataType:'html',
+    data: jd
+  }).done(function(data, textStatus, jqXHR){
+    // console.log(data);
+    $(""+target).html(data);
+    if( isFunction(doneFunc) ) {
+      doneFunc(data);
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    if( isFunction(failFunc) ) {
+      failFunc(jqXHR, textStatus, errorThrown);
+    }else{
+      alert(jqXHR);
+    }
+  });
+}
+
+
+function loadClinicheCont(){
+  jd={};
+  jd.azione='getOptionClinica';
+  doLoad('#idAmbulatorio',jd);
+
+}
+
 function tornaMenu(){
   window.location='index.php';
 

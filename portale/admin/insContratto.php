@@ -5,7 +5,7 @@ include_once 'template/html.php';
 ?>
 <body>
   <?php
-  getHeader("Ambulatorio","Inserimento di un nuovo ambulatorio");
+  getHeader("CONTRATTO","Inserimento di un nuovo contratto per ambulatorio");
   getSubHeader();
   ?>
   <div class="container">
@@ -49,9 +49,7 @@ include_once 'template/html.php';
 
 </body>
 </html>
-
-
-
+<script>loadClinicheCont();</script>
 
 <?php
 
