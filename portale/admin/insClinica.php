@@ -1,9 +1,24 @@
 <?php
 include_once 'template/head.php';
+include_once 'template/header.php';
+include_once 'template/html.php';
 ?>
 <body>
-  <div id="container">
-    <div class="clearSpace"></div>
+  <?php
+  getHeader("Ambulatorio","Inserimento di un nuovo ambulatorio");
+  getSubHeader();
+  ?>
+  <section class="container">
+    <div class="columns">
+
+      <div class="column is-6">
+          <?php divElement('  <input class="input is-large" placeholder="" id="nomeAmbulatorio" type="text">',"Nome Ambulatorio"); ?>
+      </div>
+
+
+
+    </div> <!-- end sandbox -->
+
 
     <div id="insClinica">
       <div class="inputDiv">
@@ -34,7 +49,7 @@ include_once 'template/head.php';
 
 
     <button class="button" onclick="salvaAmbulatorio();">SALVA AMBULATORIO</button>
-  </div> <!-- container -->
+  </section> <!-- container -->
 
 
 </body>

@@ -16,7 +16,7 @@ function getHeader($title,$sub){
   <?php
 }
 
-function subHeader(){
+function getSubHeader(){
   ?>
   <div class="box cta">
     <p class="has-text-centered">
