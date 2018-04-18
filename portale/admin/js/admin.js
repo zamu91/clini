@@ -4,8 +4,21 @@ function isFunction(functionToCheck) {
 }
 
 function datPick(elem){
+      $( elem ).datepicker($.datepicker.regional["fr"]);
+}
 
-      $( elem ).datepicker();
+function timePick(elem){
+  $(elem).timepicker({
+      timeFormat: 'H:mm',
+      interval: 30,
+      minTime: '7',
+      maxTime: '20:00',
+      defaultTime: '9',
+      startTime: '08:00',
+      dynamic: false,
+      dropdown: true,
+      scrollbar: true
+  });
 }
 
 

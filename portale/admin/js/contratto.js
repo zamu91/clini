@@ -1,6 +1,8 @@
 $( document ).ready(function() {
 datPick('#dataInizio');
 datPick('#dataFine');
+timePick('#oraInizio');
+timePick('#oraFine');
 getOptionClinica('idAmbulatorio');
 });
 
@@ -14,14 +16,18 @@ function salvaContratto(){
   data.IDAMBULATORIO=$('#idAmbulatorio').val();
   data.DATAINIZIOCONTRATTO=$('#dataInizio').val();
   data.DATAFINECONTRATTO=$('#dataFine').val();
-  data.ORAINIZIO=$('#oraInizio').val();
-  data.ORAFINE=$('#oraFine').val();
-  data.VERSO='1';
+  data.ORAINIZIO=$('#oraInizio').val()+':00';
+  data.ORAFINE=$('#oraFine').val()+':00';;
+  data.VERSO=$('#verso').val();
   j.data=data;
   j.giorni=getGiorniContratto();
   j.azione='insContratto';
   doAjax(j,function(mess){
-    alert('Contratto salvata con successo');
+    if(mess.ok){
+      swal('Contratto','Contratto salvato con successo','success');
+    }else{
+      swal('Contratto','Impossibile salvare il contratto '+mess.mess,'warning');
+    }
   });
 }
 
