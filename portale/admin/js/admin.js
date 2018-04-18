@@ -25,10 +25,27 @@ function doAjax(jd, doneFunc, failFunc){
   });
 }
 
+function custom_alert( message, title ) {
+  if ( !title )
+  title = 'Alert';
 
+  if ( !message )
+  message = 'No Message to Display.';
+
+  $('<div></div>').html( message ).dialog({
+    title: title,
+    resizable: false,
+    modal: true,
+    buttons: {
+      'Ok': function()  {
+        $( this ).dialog( 'close' );
+      }
+    }
+  });
+}
 
 function doLoad(target, jd, doneFunc, failFunc){
-  
+
   jqXHR = $.ajax({
     url: "../core/class.chiamate.php",
     type: 'POST',
@@ -154,7 +171,12 @@ function salvaContratto(){
     data.data=add;
     data.azione="salvaClinica";
     doAjax(data,function(mess){
-      alert('Clinica salvata con successo');
+      if(mess.ok){
+        custom_alert('Clinica','Clinica salvata con successo');
+        tornaMenu();
+      }else{
+        custom_alert('ATTENZIONE','impossibile inserire la clinica');
+      }
     });
   }
 
