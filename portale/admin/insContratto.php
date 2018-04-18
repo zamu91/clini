@@ -23,8 +23,69 @@ include_once 'template/html.php';
       <?php divElement('  <input class="input is-large" placeholder="Verso" id="verso" type="text">',"Verso","3"); ?>
     </div>
 
+    <div class="columns">
 
-  </div>
+
+      <div class="columns is-3">
+        <label for="lun">Lunedì</label>
+        <input type="checkbox input" id="lun">
+      </div>
+
+      <div class="columns is-3">
+        <label for="mar">Martedì</label>
+        <input type="checkbox" id="mar">
+      </div>
+
+      <div class="columns is-3">
+        <label for="mer">Mercoledì</label>
+        <input type="checkbox input" id="mer">
+      </div>
+
+      <div class="columns is-3">
+        <label for="gio">Giovedì</label>
+        <input type="checkbox input" id="giov">
+      </div>
+
+      <div class="columns is-3">
+        <label for="ven">Venerdì</label>
+        <input type="checkbox input" id="ven">
+      </div>
+
+      <div class="columns is-3">
+        <label for="sab">Sabato</label>
+        <input type="checkbox input" id="sab">
+      </div>
+
+    </div> <!-- end columns giorni -->
+
+
+    <div class="columns">
+      <div class="columns columns is-6">
+        <button class="button" onclick="salvaContratto();">Salva Contratto</button>
+      </div>
+
+      <div class="columns columns is-6">
+        <button class="button is-primary" onclick="tornaMenu();">TORNA A MENÙ</button>
+      </div>
+
+    </div>
+
+
+  </div> <!-- ins contratto -->
+
+
+
+</body>
+</html>
+
+
+
+
+<?php
+
+if(1==2){
+  ?>
+
 
   <div id="insContratto">
     <div class="inputDiv">
@@ -60,46 +121,13 @@ include_once 'template/html.php';
       <input type="edit" class="durata input" id="durata">
     </div>
 
-    <div class="iputDiv">
-      <div class="giornoDiv">
-        <label for="lun">Lunedì</label>
-        <input type="checkbox input" id="lun">
-      </div>
-
-      <div class="giornoDiv">
-        <label for="mar">Martedì</label>
-        <input type="checkbox" id="mar">
-      </div>
-
-      <div class="giornoDiv">
-        <label for="mer">Mercoledì</label>
-        <input type="checkbox input" id="mer">
-      </div>
-
-      <div class="giornoDiv">
-        <label for="gio">Giovedì</label>
-        <input type="checkbox input" id="giov">
-      </div>
-
-      <div class="giornoDiv">
-        <label for="ven">Venerdì</label>
-        <input type="checkbox input" id="ven">
-      </div>
-
-      <div class="giornoDiv">
-        <label for="sab">Sabato</label>
-        <input type="checkbox input" id="sab">
-      </div>
 
 
-    </div> <!-- giorni contratto -->
-    <button class="button" onclick="salvaContratto();">Salva Contratto</button>
+  </div> <!-- giorni contratto -->
 
-  </div> <!-- ins contratto -->
+  <?php
+
+}
 
 
-
-</div> <!-- container -->
-
-</body>
-</html>
+?>
