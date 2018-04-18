@@ -7,14 +7,24 @@ trait clinica
 {
 
   private function optClinica(){
-    $this->query("SELECT * from XDM_AMBULATORIO where STATO=0 ");
+    $this->query("SELECT IDAMBULATORIO,NOME from XDM_AMBULATORIO where STATO=0 ");
     $html="";
     while($row=$this->fetch()){
       $html.="<option value='{$row['IDAMBULATORIO']}'>{$row['NOME']}</option>";
     }
     echo $html;
+  }
+
+  private function optClinicaProvincia(){
+    $this->query("SELECT PROVINCIA from XDM_AMBULATORIO where STATO=0 ");
+    $html="";
+    while($row=$this->fetch()){
+      $html.="<option value='{$row['PROVINCIA']}'>{$row['PROVINCIA']}</option>";
+    }
+    echo $html;
 
   }
+
 
   private function getNexIdAmbulatorio(){
     $this->query("SELECT max(IDAMBULATORIO) as ID from XDM_AMBULATORIO  ");

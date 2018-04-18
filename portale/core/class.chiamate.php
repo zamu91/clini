@@ -129,6 +129,11 @@ class chiamate{
       $this->optClinica();
       break;
 
+      case 'optClinicaProvincia':
+      $this->optClinicaProvincia();
+      break;
+
+
       case 'insContratto':
       $this->insContratto();
       break;
