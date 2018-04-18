@@ -8,32 +8,32 @@ include_once 'template/head.php';
     <div id="insClinica">
       <div class="inputDiv">
         <label for="nomeAmbulatorio">Nome Ambulatorio</label>
-        <input type="edit" id="nomeAmbulatorio">
+        <input class="input" type="edit" id="nomeAmbulatorio">
       </div>
 
       <div class="inputDiv">
         <div>
           <label for="provinciaAmbulatorio">Provincia</label>
-          <input type="edit" id="provinciaAmbulatorio">
+          <input class="input" type="edit" id="provinciaAmbulatorio">
         </div>
       </div>
 
       <div class="inputDiv">
         <div>
           <label for="comuneAmbulatorio">Comune</label>
-          <input type="edit" id="comuneAmbulatorio">
+          <input class="input" type="edit" id="comuneAmbulatorio">
         </div>
       </div>
 
       <div class="inputDiv">
         <label for="indirizzoAmbulatorio">indirizzo</label>
-        <input type="edit" id="indirizzoAmbulatorio">
+        <input class="input" type="edit" id="indirizzoAmbulatorio">
       </div>
 
     </div><!-- ins clinica -->
 
 
-    <button onclick="salvaAmbulatorio();">SALVA AMBULATORIO</button>
+    <button class="button" onclick="salvaAmbulatorio();">SALVA AMBULATORIO</button>
   </div> <!-- container -->
 
 
