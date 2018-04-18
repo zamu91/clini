@@ -11,6 +11,8 @@ trait arxivar{
   private $loginResult;
   private $isLoginArxivar;
   private $arxVer = 5;
+  private $gruppoPatrocinatori = 27;
+
 
   private $logError;
 
@@ -195,18 +197,18 @@ trait arxivar{
                 if(strpos($alias,'(HH:MM)')>0){
                   // campo time
                   ?>
-                  <input type="text" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="time" id="<?php echo $aggiuntivo->NomeCampo; ?>" value="" maxlength="5" <?php if($required) echo "required";?>><br />
+                  <input type="text" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="input time" id="<?php echo $aggiuntivo->NomeCampo; ?>" value="" maxlength="5" <?php if($required) echo "required";?>><br />
                   <?php
                 }
                 elseif($row_count>1){
                   // textarea
                   ?>
-                  <textarea name="<?php echo $aggiuntivo->NomeCampo; ?>" id="<?php echo $aggiuntivo->NomeCampo; ?>" maxlength="<?php echo $n_char; ?>" <?php if($required) echo "required";?>></textarea>
+                  <textarea name="<?php echo $aggiuntivo->NomeCampo; ?>" class="textarea" id="<?php echo $aggiuntivo->NomeCampo; ?>" maxlength="<?php echo $n_char; ?>" <?php if($required) echo "required";?>></textarea>
                   <br /><?php
                 }
                 else{
                   ?>
-                  <input type="text" name="<?php echo $aggiuntivo->NomeCampo; ?>" id="<?php echo $aggiuntivo->NomeCampo; ?>" maxlength="<?php echo $n_char; ?>" value="" <?php if($required) echo "required";?>><br />
+                  <input type="text" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="input" id="<?php echo $aggiuntivo->NomeCampo; ?>" maxlength="<?php echo $n_char; ?>" value="" <?php if($required) echo "required";?>><br />
                   <?php
                 }
               }
@@ -847,11 +849,16 @@ trait arxivar{
       $aoo = $userC->AOO;
       $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
       $userB = $ARX_Dati->Dm_Gruppi_GetData_By_Utente($this->sessionid, $userC->UTENTE);
-      $gruppo = $userB->Dm_Gruppi->GRUPPO;
+      $gruppi = $userB->Dm_Gruppi;
+
+      $insDoc = false;
+      foreach ($gruppi as $key => $value) {
+        if( $value->GRUPPO == $this->gruppoPatrocinatori ){ $insDoc = true; }
+      }
 
       $this->logoutArxivar(); //rilascio la sessione per nuovi login
       $this->arxLog('Logout e registrazione');
-      $this->registerSessionLogin($aoo, $gruppo);
+      $this->registerSessionLogin($aoo, $insDoc);
       return true;
     }else{
       $this->arxLog(' Login fallito ');
