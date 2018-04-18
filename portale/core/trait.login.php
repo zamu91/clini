@@ -80,7 +80,7 @@ trait login {
     return $row;
   }
 
-  public function registerSessionLogin($aoo, $gruppo){
+  public function registerSessionLogin($aoo, $insDoc){
     $this->loginLog("Check login oracle");
     $loginResult=$this->getLoginResult();
     $session=$loginResult->SessionId;
@@ -95,7 +95,7 @@ trait login {
     if( !empty($row["USERNAME"]) ){
       $this->loginLog("sessione trovata, aggiorno");
       $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = :sess,
-      SCADENZA = TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), AOO = :aoo, GRUPPO = :gru
+      SCADENZA = TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), AOO = :aoo, INSDOC = :insdoc
       WHERE USERNAME = :us AND PASSWORD = :pa ";
 
       $this->queryPrepare($que);
@@ -104,15 +104,15 @@ trait login {
       $this->queryBind('sess',$session);
       $this->queryBind('expi',$expirationTime);
       $this->queryBind("aoo", $aoo);
-      $this->queryBind("gru", $gruppo);
+      $this->queryBind("insdoc", $insDoc);
       $this->executePrepare();
 
       $this->commit();
       $this->setJsonMess('sessionMess','aggiornamento Sessione');
     } else {
       $this->loginLog("nuova sessione, registro");
-      $que = "INSERT INTO XDM_WEBSERVICE_SESSION (USERNAME, PASSWORD, ARXSESSION, SCADENZA, AOO, GRUPPO)
-      VALUES (:us, :pa, :sess, TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), :aoo, :gru) ";
+      $que = "INSERT INTO XDM_WEBSERVICE_SESSION (USERNAME, PASSWORD, ARXSESSION, SCADENZA, AOO, INSDOC)
+      VALUES (:us, :pa, :sess, TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), :aoo, :insdoc) ";
 
       $this->queryPrepare($que);
       $this->queryBind("us", $username);
@@ -120,7 +120,7 @@ trait login {
       $this->queryBind("sess", $session);
       $this->queryBind("expi", $expirationTime);
       $this->queryBind("aoo", $aoo);
-      $this->queryBind("gru", $gruppo);
+      $this->queryBind("insdoc", $insDoc);
       $this->executePrepare();
 
       $this->commit();
