@@ -13,17 +13,17 @@
   <script type="text/javascript" src="vendor/jquery-ui/jquery.ui.widget.js"></script>
   <script type="text/javascript" src="vendor/jquery-file-upload-9.21.0/js/jquery.iframe-transport.js"></script>
   <script type="text/javascript" src="vendor/jquery-file-upload-9.21.0/js/jquery.fileupload.js"></script>
-  <script type="text/javascript" src="js/login.js"></script>
-  <script type="text/javascript" src="js/azioni.js"></script>
+  <script type="text/javascript" src="js/admin.js"></script>
+
 </head>
 <body>
   <div class="container">
   <div class="navButtonContainer">
-    <button>INSERISCI CLINICA</button>
+    <button onclick="insClinica();">INSERISCI CLINICA</button>
   </div>
 
   <div class="navButtonContainer">
-    <button>INSERISCI CONTRATTO</button>
+    <button onclick="insContratto();">INSERISCI CONTRATTO</button>
   </div>
 </div>
 
