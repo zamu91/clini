@@ -102,6 +102,8 @@ trait contratto{
     $this->queryBind('dataFine',$this->getVCont('DATAFINECONTRATTO'));
     $this->queryBind('oraIniz',$this->getVCont('ORAINIZIO'));
     $this->queryBind('oraFine',$this->getVCont('ORAFINE'));
+    $this->queryBind('idAmb',$this->getVCont('IDAMBULATORIO'));
+
     $this->queryExecute();
     if($this->queryNumRows()>0){
       $row=$this->fetch();
