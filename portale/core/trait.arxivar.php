@@ -809,7 +809,7 @@ trait arxivar{
       $userC = $ARX_Login->GetInfoUserConnected($this->sessionid);
       $aoo = $userC->AOO;
       $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
-      $userB = $ARX_Dati->Dm_Gruppi_GetData_By_Utente($this->sessionid, 52);
+      $userB = $ARX_Dati->Dm_Gruppi_GetData_By_Utente($this->sessionid, $userC->UTENTE);
       $gruppo = $userB->Dm_Gruppi->GRUPPO;
 
       $this->logoutArxivar(); //rilascio la sessione per nuovi login
@@ -827,13 +827,7 @@ trait arxivar{
   public function loginArxivarImpersonate(){
     $this->loginArxivarServizio();
     $sessionid = $this->loginResult->SessionId;
-
     $code = $this->post("code", false);
-    // $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
-    // $select = $ARX_Search->Dm_Contatti_Select_Get_New_Instance();
-    // $this->arxDebug($select);
-    // $search = $ARX_Search->Dm_Contatti_Search_Get_New_Instance();
-    // $this->arxDebug($search);
 
     $str="SELECT * FROM DM_RUBRICA R INNER JOIN DM_UTENTI U ON R.CONTATTI = U.DESCRIPTION
     WHERE R.PARTIVA = :partiva ";
@@ -842,16 +836,18 @@ trait arxivar{
     $this->executeQuery();
     $row = $this->fetch();
 
-    $this->arxDebug($row);
-
-
     $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
     $impersonate = $ARX_Login->Impersonate_By_UserName($sessionid, $row["DESCRIPTION"]);
     $this->arxDebug($impersonate);
+    $userI = $ARX_Login->GetInfoUserImpersonated($sessionid);
+    $aoo = $userI->AOO;
+    $userIA = $ARX_Dati->Dm_Gruppi_GetData_By_Utente($this->sessionid, $userI->UTENTE);
+    $gruppo = $userB->Dm_Gruppi->GRUPPO;
+    $ARX_Login->DeImpersonate($sessionid);
+    $this->logoutArxivar();
 
-    $ARX_Login->DeImpersonate();
-
-
+    // $this->registerSessionLogin($aoo, $gruppo, true);
+    return true;
 
 
     // $select->DM_RUBRICA_SYSTEM_ID->Selected = true;
@@ -874,7 +870,6 @@ trait arxivar{
     // $result = $ARX_Search->Dm_Contatti_GetData($sessionid, $select, $search);
     // $this->arxDebug($result);
 
-    $this->logoutArxivar();
   }
 
   private function logoutArxivar(){
