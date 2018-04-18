@@ -24,44 +24,47 @@ include_once 'template/html.php';
     </div>
 
     <div class="columns">
+      <div class="columns is-12">
+        <p class="title">Giorni</p>
+
+          <div class="giorno">
+            <label for="lun">Lunedì</label>
+            <input type="checkbox" id="lun">
+          </div>
+
+          <div class="giorno">
+            <label for="mar">Martedì</label>
+            <input type="checkbox" id="mar">
+          </div>
+
+          <div class="giorno">
+            <label for="mer">Mercoledì</label>
+            <input type="checkbox" id="mer">
+          </div>
+
+          <div class="giorno">
+            <label for="gio">Giovedì</label>
+            <input type="checkbox" id="giov">
+          </div>
+
+          <div class="giorno">
+            <label for="ven">Venerdì</label>
+            <input type="checkbox" id="ven">
+          </div>
+
+          <div class="giorno">
+            <label for="sab">Sabato</label>
+            <input type="checkbox" id="sab">
+          </div>
 
 
-      <div class="columns is-3">
-        <label for="lun">Lunedì</label>
-        <input type="checkbox input" id="lun">
       </div>
-
-      <div class="columns is-3">
-        <label for="mar">Martedì</label>
-        <input type="checkbox" id="mar">
-      </div>
-
-      <div class="columns is-3">
-        <label for="mer">Mercoledì</label>
-        <input type="checkbox input" id="mer">
-      </div>
-
-      <div class="columns is-3">
-        <label for="gio">Giovedì</label>
-        <input type="checkbox input" id="giov">
-      </div>
-
-      <div class="columns is-3">
-        <label for="ven">Venerdì</label>
-        <input type="checkbox input" id="ven">
-      </div>
-
-      <div class="columns is-3">
-        <label for="sab">Sabato</label>
-        <input type="checkbox input" id="sab">
-      </div>
-
     </div> <!-- end columns giorni -->
 
 
     <div class="columns">
       <div class="columns columns is-6">
-        <button class="button" onclick="salvaContratto();">Salva Contratto</button>
+        <button class="button is-primary" onclick="salvaContratto();">Salva Contratto</button>
       </div>
 
       <div class="columns columns is-6">
