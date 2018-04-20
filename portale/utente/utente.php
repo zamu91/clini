@@ -1,6 +1,6 @@
 <?php
-include_once 'template/head.php';
-include_once 'admin/template/html.php';
+include_once '../template/head.php';
+include_once '../admin/template/html.php';
 
  ?>
  <body>
