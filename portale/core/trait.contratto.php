@@ -243,9 +243,11 @@ trait contratto{
     public function setDate(){
       $dataInizio=$this->getVCont("DATAINIZIOCONTRATTO");
       $dataFine=$this->getVCont("DATAFINECONTRATTO");
+      $dataInizio=$this->formatData($dataInizio);
+      $dataFine=$this->formatData($dataFine);
 
-      $this->dataInizioSTR=$this->formatData($dataInizio);
-      $this->dataFineSTR=$this->formatData($dataFine);
+      $this->dataInizioSTR=$dataInizio; //$this->formatData($dataInizio);
+      $this->dataFineSTR=$dataFine; //$this->formatData($dataFine);
 
       $dataInizio=strtotime($dataInizio);
       $dataFine=strtotime($dataFine);
