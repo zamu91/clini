@@ -10,12 +10,12 @@ include_once '../admin/template/html.php';
 
  <div class="container">
    <div class="columns">
-     <?php divElement('<input type="text" class="input" id="codPatro">',"Inserisci Codice patrocinatore","12"); ?>
+     <?php divElement('<button class="button" onclick="apriProfilo("0");">Responsabilità civile auto</button>',"Inserisci Codice patrocinatore","6"); ?>
+     <?php divElement('<button class="button" onclick="apriProfilo("1");">Responsabilità civile terzi</button>',"Inserisci Codice patrocinatore","6"); ?>
    </div>
    <div class="columns">
-     <div class="column is-12">
-       <button onclick="accediCercaLibero();" class="button is-primary">Accedi</button>
-    </div>
+     <?php divElement('<button class="button" onclick="apriProfilo("2");">Polizza privata infortuni</button>',"Inserisci Codice patrocinatore","6"); ?>
+     <?php divElement('<button class="button" onclick="apriProfilo("3");">Consulenza tecnica di parte</button>',"Inserisci Codice patrocinatore","6"); ?>    
    </div>
 
  </div>
