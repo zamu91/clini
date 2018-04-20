@@ -17,20 +17,18 @@ include_once '../admin/template/html.php';
     </div>
   </div>
   <script>
-    $( document ).ready(function() {
-      if(empty(getToken())){
-        return 0;
+  $( document ).ready(function() {
+    if(getToken()==""){
+      return 0;
+    }
+    jd={};
+    jd.azione='controlloTokenARXLogin';
+    doAjax(jd,function(data){
+      if(data.validToken){
+        accediMenu();
       }
-      jd={};
-      jd.azione='controlloTokenARXLogin';
-      doAjax(jd,function(data){
-        if(data.validToken){
-          console.log('Ok login');
-        }else{
-          goIndexUtente();
-        }
-      });
     });
+  });
 
   </script>
 
