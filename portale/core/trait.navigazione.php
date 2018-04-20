@@ -23,10 +23,10 @@ trait navigazione {
     // return file_get_contents ( $path );
     ob_start();
     ?>
-      <button class="button" onclick="apriProfilo(this);">Responsabilità civile auto</button>
-      <button class="button" onclick="apriProfilo(this);">Responsabilità civile terzi</button>
-      <button class="button" onclick="apriProfilo(this);">Polizza privata infortuni</button>
-      <button class="button" onclick="apriProfilo(this);">Consulenza tecnica di parte</button>
+      <button class="button" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile auto</button>
+      <button class="button" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile terzi</button>
+      <button class="button" data-maskix="0" onclick="apriProfilo(this);">Polizza privata infortuni</button>
+      <button class="button" data-maskix="0" onclick="apriProfilo(this);">Consulenza tecnica di parte</button>
 
       <div class="clearSpace"></div>
 

@@ -15,7 +15,7 @@ function apriProfilo(sender, newdoc){
   // Apre la pagina della maschera con la possibilità di inserire o modificare il profilo e quindi della pratica.
   // TODO: Parametrizzo il profilo da aprire, nel caso stiamo usando un profilo esistente docnumber deve essere valorizzato, altrimenti predispongo la maschera per l'inserimento.
   var docnumber = ( typeof newdoc != 'undefined' && !newdoc) ? getDocunumberDashboard() : "";
-  var jd = { azione: "dettaglioProfilo", docnumber: docnumber };
+  var jd = { azione: "dettaglioProfilo", docnumber: docnumber, maskix: $(sender).data("maskix") };
   doLoad("#modal-body", jd, function(){
     $("#modal-title").html( $(sender).html() );
     $("#modal-action").modal("toggle");
@@ -181,6 +181,7 @@ function navigaDashboard(){
 function scriviDatiProfilo(){
   var jd = $("#formMaschera").serialize();
   jd += "&azione=scriviDatiProfilo";
+  jd += "&maskIx="+$("#maskIx").val();
   console.log(jd);
   doAjax(jd, function(mess){
     $("#requestResult").html(mess);

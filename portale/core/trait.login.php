@@ -47,17 +47,25 @@ trait login {
   }
 
 
-  private function checkExistSession(){
-    $userName = $this->getUsername();
-    $password = $this->getPassword();
-      $que = "SELECT  ARXSESSION,ses.USERNAME, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
-    FROM XDM_WEBSERVICE_SESSION ses
-    WHERE ses.USERNAME = :ut AND ses.PASSWORD = :credenz ";
-    // $this->debugHtml($userName);
-    // $this->debugHtml($password);
-    $this->queryPrepare($que);
-    $this->queryBind("ut", $userName);
-    $this->queryBind("credenz", $password);
+  private function checkExistSession( $imp = 0 ){
+    if( $imp == 1 ){
+      $partiva =  $this->post("code", false);
+      $que = "SELECT ARXSESSION, ses.USERNAME, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
+      FROM XDM_WEBSERVICE_SESSION ses WHERE ses.USERNAME = :partiva ";
+      $this->queryPrepare($que);
+      $this->queryBind("partiva", $partiva);
+    } else {
+      $userName = $this->getUsername();
+      $password = $this->getPassword();
+      $que = "SELECT ARXSESSION,ses.USERNAME, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
+      FROM XDM_WEBSERVICE_SESSION ses
+      WHERE ses.USERNAME = :ut AND ses.PASSWORD = :credenz ";
+      // $this->debugHtml($userName);
+      // $this->debugHtml($password);
+      $this->queryPrepare($que);
+      $this->queryBind("ut", $userName);
+      $this->queryBind("credenz", $password);
+    }
     $this->executeQuery();
 
     $row=$this->fetch();
@@ -80,24 +88,53 @@ trait login {
     return $row;
   }
 
-  public function registerSessionLogin($aoo, $insDoc){
+  public function registerSessionLogin($aoo, $insDoc, $imp = 0){
     $this->loginLog("Check login oracle");
-    $loginResult=$this->getLoginResult();
-    $session=$loginResult->SessionId;
+    $loginResult = $this->getLoginResult();
+    $session = $loginResult->SessionId;
     $app = $loginResult->ExpiratedTime;
     $expirationTime = substr($app, 0, 10).' '.substr($app, 11, 8);
-    $username=$this->getUsername();
-    $password=$this->getPassword();
-    $row=$this->checkExistSession();
-
     $aoo = intval($aoo);
+    $row = $this->checkExistSession($imp);
+    if($imp == 1){
+      /* Login tramite impersonate */
+      $partiva = $this->post("code", false);
+      if( !empty($row["USERNAME"]) ){
+        $this->loginLog("sessione trovata, aggiorno");
+        $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = :sess, SCADENZA = TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), AOO = :aoo,
+        IMPERSONATE = :imp, INSDOC = :insdoc
+        WHERE PARTIVA = :partiva ";
+      } else {
+        $this->loginLog("nuova sessione, registro");
+        $que = "INSERT INTO XDM_WEBSERVICE_SESSION (IDSESSIONE, USERNAME, PASSWORD, ARXSESSION, SCADENZA, AOO, INSDOC, IMPERSONATE, PARTIVA)
+        VALUES ( XDM_WEBSERVICE_SESSION_SEQ1.NEXTVAL , '', '', :sess, TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), :aoo, :insdoc, :imp, :partiva) ";
+      }
+      $this->queryPrepare($que);
+      $this->queryBind('sess',$session);
+      $this->queryBind('expi',$expirationTime);
+      $this->queryBind("aoo", $aoo);
+      $this->queryBind("insdoc", $insDoc);
+      $this->queryBind('imp',$imp);
+      $this->queryBind('partiva',$partiva);
+      $this->executePrepare();
 
-    if( !empty($row["USERNAME"]) ){
-      $this->loginLog("sessione trovata, aggiorno");
-      $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = :sess,
-      SCADENZA = TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), AOO = :aoo, INSDOC = :insdoc
-      WHERE USERNAME = :us AND PASSWORD = :pa ";
+      $this->commit();
 
+    } else {
+      /* Login canonico */
+      $username=$this->getUsername();
+      $password=$this->getPassword();
+
+      if( !empty($row["USERNAME"]) ){
+        $this->loginLog("sessione trovata, aggiorno");
+        $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = :sess,
+        SCADENZA = TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), AOO = :aoo, INSDOC = :insdoc, IMPERSONATE = :imp
+        WHERE USERNAME = :us AND PASSWORD = :pa ";
+      } else {
+        $this->loginLog("nuova sessione, registro");
+        $que = "INSERT INTO XDM_WEBSERVICE_SESSION (IDSESSIONE, USERNAME, PASSWORD, ARXSESSION, SCADENZA, AOO, INSDOC, IMPERSONATE, PARTIVA)
+        VALUES ( XDM_WEBSERVICE_SESSION_SEQ1.NEXTVAL ,:us, :pa, :sess, TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), :aoo, :insdoc, :imp, '') ";
+      }
       $this->queryPrepare($que);
       $this->queryBind("us", $username);
       $this->queryBind("pa", $password);
@@ -105,49 +142,28 @@ trait login {
       $this->queryBind('expi',$expirationTime);
       $this->queryBind("aoo", $aoo);
       $this->queryBind("insdoc", $insDoc);
+      $this->queryBind('imp',$imp);
       $this->executePrepare();
 
       $this->commit();
-      $this->setJsonMess('sessionMess','aggiornamento Sessione');
-    } else {
-      $this->loginLog("nuova sessione, registro");
-      $que = "INSERT INTO XDM_WEBSERVICE_SESSION (IDSESSIONE, USERNAME, PASSWORD, ARXSESSION, SCADENZA, AOO, INSDOC)
-      VALUES ( XDM_WEBSERVICE_SESSION_SEQ1.NEXTVAL ,:us, :pa, :sess, TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), :aoo, :insdoc) ";
-
-      $this->queryPrepare($que);
-      $this->queryBind("us", $username);
-      $this->queryBind("pa", $password);
-      $this->queryBind("sess", $session);
-      $this->queryBind("expi", $expirationTime);
-      $this->queryBind("aoo", $aoo);
-      $this->queryBind("insdoc", $insDoc);
-      $this->executePrepare();
-
-      $this->commit();
-      $this->setJsonMess('sessionMess','registrazione Sessione');
-
     }
+
 
     $this->setJsonMess("token",$session);
     $this->setJsonMess("login", true);
 
     $this->loginToken=true;
+    $this->halt();
   }
 
   public function controlloARXLogin(){
     $token = $this->post("token", false);
-    $que = "SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
-    FROM XDM_WEBSERVICE_SESSION
-    WHERE ARXSESSION = '$token' AND SYSDATE <= SCADENZA";
-
-    $this->queryPrepare("SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
+    $this->queryPrepare("SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA, IMPERSONATE, PARTIVA
     FROM XDM_WEBSERVICE_SESSION
     WHERE ARXSESSION = :tok AND SYSDATE <= SCADENZA");
     $this->queryBind("tok", $token);
     $this->executePrepare();
-    //$this->query($que);
     $this->commit();
-
 
     $row =$this->fetch();
     if(!empty($row['username'])){
@@ -160,7 +176,7 @@ trait login {
 
   public function controlloTokenARXLogin(){
     $token = $this->post("token");
-    $this->queryPrepare("SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
+    $this->queryPrepare("SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA, IMPERSONATE, PARTIVA
     FROM XDM_WEBSERVICE_SESSION
     WHERE ARXSESSION = :tok AND SYSDATE <= SCADENZA");
     $this->queryBind("tok", $token);
