@@ -229,7 +229,7 @@ trait contratto{
 
     private function formatData($data){
         if(strlen($data)==10){
-          return $data[9].$data[8].$data[7].$data[6]."-".$data[3].$data[4]."-".$data[0].$data[1];
+          return $data[6].$data[7].$data[8].$data[9]."-".$data[3].$data[4]."-".$data[0].$data[1];
         }else{
           $this->errorInputCnt("Errore formatazzione data");
         }
@@ -239,13 +239,7 @@ trait contratto{
       $dataInizio=$this->getVCont("DATAINIZIOCONTRATTO");
       $dataFine=$this->getVCont("DATAFINECONTRATTO");
       $dataInizio=$this->formatData($dataInizio);
-      echo $dataInizio;
-
       $dataFine=$this->formatData($dataFine);
-      echo $dataInizio;
-
-      die;
-
 
       $dataInizio=strtotime($dataInizio);
       $dataFine=strtotime($dataFine);
