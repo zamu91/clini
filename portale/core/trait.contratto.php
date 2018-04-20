@@ -76,7 +76,7 @@ trait contratto{
 
   private function getJoinConflict(){
     $adQuery="";
-    for($i=1;$i<=7;$i++){
+    for($i=1;$i<7;$i++){
       if($this->ifDayWork($i)){
         $tab="GIORNO$i";
         $adQuery.=" INNER JOIN XDM_CONTRATTO_GIORNO  $tab
