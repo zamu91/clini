@@ -203,9 +203,7 @@ trait contratto{
 
     //setup giorni della settimana
     private function inizVarContratto(){
-      print_r($this->post('data'));
       $this->varWork=$this->post('data');
-
       $giorni=$this->post('giorni');
       $giorni[0]=0;
       $this->giorni=$giorni;
