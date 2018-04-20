@@ -165,7 +165,7 @@ trait contratto{
   }
 
   private function getVCont($var){
-    if(empty($this->varWork[$var])){
+    if(!isset($this->varWork[$var])){
       $this->logCont("Variabile $var non trovata");
       return false;
     }
