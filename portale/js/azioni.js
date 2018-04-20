@@ -1,3 +1,5 @@
+var urlAjax="core/class.chiamate.php";
+
 function apriProfiloOld(){
   // Apre la pagina della maschera con la possibilità di inserire o modificare il profilo e quindi della pratica.
   // TODO: Parametrizzo il profilo da aprire, nel caso stiamo usando un profilo esistente docnumber deve essere valorizzato, altrimenti predispongo la maschera per l'inserimento.
@@ -113,7 +115,7 @@ function dettagliTaskProfilo(target){
 function doAjax(jd, doneFunc, failFunc){
   jd.token=getToken();
   jqXHR = $.ajax({
-    url: "core/class.chiamate.php",
+    url: urlAjax,
     type: 'POST',
     dataType:'json',
     data: jd
