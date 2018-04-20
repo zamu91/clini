@@ -17,6 +17,10 @@ trait contratto{
   private $oraInizio;
   private $oraFine;
 
+  private $dataFineSTR;
+  private $dataInizioSTR;
+
+
 
 
   private $idPrenotazione; //indice impostato manuale dal ciclo
@@ -102,8 +106,8 @@ trait contratto{
 
 
     $this->queryPrepare($str);
-    $this->queryBind('dataIniz',$this->dataInizio);
-    $this->queryBind('dataFine',$this->dataFine);
+    $this->queryBind('dataIniz',$this->dataInizioSTR);
+    $this->queryBind('dataFine',$this->dataFineSTR);
     $this->queryBind('oraIniz',$this->getVCont('ORAINIZIO'));
     $this->queryBind('oraFine',$this->getVCont('ORAFINE'));
     $this->queryBind('idAmb',$this->getVCont('IDAMBULATORIO'));
@@ -244,6 +248,8 @@ trait contratto{
       $dataFine=$this->getVCont("DATAFINECONTRATTO");
       $dataInizio=$this->formatData($dataInizio);
       $dataFine=$this->formatData($dataFine);
+      $this->dataInizioSTR=$dataInizio;
+      $this->dataFineSTR=$dataFine;
 
       $dataInizio=strtotime($dataInizio);
       $dataFine=strtotime($dataFine);
