@@ -67,7 +67,7 @@ trait contratto{
     }
 
     if(!is_int($this->getVCont("TEMPO"))){
-      $this->errorInputCnt("durata","Formato invalido per il tempo");
+      $this->errorInputCnt("tempo","Formato invalido per il tempo");
     }
 
   }
