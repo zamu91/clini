@@ -53,7 +53,7 @@ trait contratto{
     $oraInizio=$this->oraInizio;
     $oraFine=$this->oraFine;
 
-    if($dataInizio<strtotime(date('Y-m-d'))){
+    if($dataInizio<date('Y-m-d')){
       $this->errorInputCnt("data","Attenzione, data inizio nel passato");
     }
 
