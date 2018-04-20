@@ -307,7 +307,7 @@ trait contratto{
         echo "cilo $i ";
         $i++;
         $this->procDataContratto($newData);
-        $newData=strtotime('+ '.$i.' days',strtotime($dataInizio));
+        $newData=strtotime('+ '.$i.' days',($dataInizio));
       }
       $this->setJsonMess("ok",true);
       $this->logCont("Fine esecuzione occupa");
