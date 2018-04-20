@@ -7,7 +7,10 @@ include_once '../admin/template/html.php';
  <div class="container">
    <div class="columns">
      <?php divElement('<input type="text" class="input" id="codPatro">',"Inserisci Codice patrocinatore","12"); ?>
-     <button onclick="accediCercaLibero();" class="button is-primary">Accedi</button>
+   </div>
+   <div class="columns">
+     <?php divElement('     <button onclick="accediCercaLibero();" class="button is-primary">Accedi</button>',"","12"); ?>
+
    </div>
  </div>
 </body>
