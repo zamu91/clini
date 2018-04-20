@@ -2,7 +2,7 @@ $( document ).ready(function() {
 datPick('#dataInizio');
 datPick('#dataFine');
 timePick('.timep');
-getOptionClinica('idAmbulatorio');
+getOptionClinica('#idAmbulatorio');
 });
 
 
