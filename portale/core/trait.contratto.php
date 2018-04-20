@@ -100,6 +100,8 @@ trait contratto{
     and DATAFINECONTRATTO<=$fine and ORAINIZIO>=:oraIniz and ORAFINE<:oraFine
     ";
 
+    echo $str;
+
     $this->queryPrepare($str);
     $this->queryBind('dataIniz',$this->dataInizio);
     $this->queryBind('dataFine',$this->dataFine);
@@ -114,6 +116,7 @@ trait contratto{
       $this->setJsonMess("Conflitto nel contratto trovato");
       $this->halt();
     }else{
+      $this->halt();
       return true;
     }
 
