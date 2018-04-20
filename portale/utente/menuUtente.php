@@ -6,7 +6,7 @@ include_once '../admin/template/html.php';
  ?>
  <body>
    <script src="js/navigazione.js"></script>
-   <script src="js/menu.js"></script>
+   <script src="js/menu.js?v=1"></script>
 
  <div class="container">
    <div class="columns">
