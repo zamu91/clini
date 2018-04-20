@@ -2,7 +2,7 @@
 
 trait contratto{
 
-  private $durataMin=60;
+  private $durataMin=20;
 
 
   private $idContrattoWork; //riferimento id su quale associare i blocchi temporali
@@ -304,7 +304,6 @@ trait contratto{
       $i=0;
 
       while($newData<=$dataFine){ //ciclo i giorni da data inizio e data fine
-        echo "cilo $i - $newData / $dataFine ";
         $i++;
         $this->procDataContratto($newData);
         $newData=strtotime('+ '.$i.' days',($dataInizio));
