@@ -4,7 +4,7 @@ include_once '../admin/template/html.php';
 
 ?>
 <body>
-  <script src=js/navigazione.js""></script>
+  <script src="js/navigazione.js"></script>
   <div class="container">
     <div class="columns">
       <?php divElement('<input type="text" class="input" id="codPatro">',"Inserisci Codice patrocinatore","12"); ?>
