@@ -7,7 +7,7 @@ function accediCercaLibero(){
   data={ azione: "loginImpersonatePatrocinatore", code: code};
   doAjax(data,function(data, textStatus){
     if(data.login){
-      localStorage.setItem("tok",data.token);
+      setToken(data.token);
       accediMenu();
     } else {
       swal("Errore","Codice patrocinatore non trovato","error");
@@ -21,7 +21,7 @@ function accediMenu(){
 }
 
 function goIndexUtente(){
-  window.location.href="utente.php";  
+  window.location.href="utente.php";
 }
 
 

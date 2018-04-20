@@ -40,6 +40,10 @@ function loginImpersonate(){
   });
 }
 
+function setToken(tok){
+  localStorage.setItem("tok",tok);
+}
+
 function getToken(){
   token=localStorage.getItem("tok");
   return token;

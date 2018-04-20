@@ -26,6 +26,8 @@ include_once '../admin/template/html.php';
     doAjax(jd,function(data){
       if(data.validToken){
         accediMenu();
+      }else{
+        setToken('');
       }
     });
   });
