@@ -302,6 +302,7 @@ trait contratto{
       $i=0;
 
       while($newData<=$dataFine){ //ciclo i giorni da data inizio e data fine
+        echo "cilo $i ";
         $i++;
         $this->procDataContratto($newData);
         $newData=strtotime('+ '.$i.' days',strtotime($dataInizio));
