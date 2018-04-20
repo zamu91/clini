@@ -1,13 +1,18 @@
 <?php
-include_once 'template/head.php';
-include_once 'admin/template/html.php';
+include_once '../template/head.php';
+include_once '../admin/template/html.php';
 
  ?>
  <body>
  <div class="container">
    <div class="columns">
      <?php divElement('<input type="text" class="input" id="codPatro">',"Inserisci Codice patrocinatore","12"); ?>
-     <button onclick="accediCercaLibero();" class="button is-primary">Accedi</button>
    </div>
+   <div class="columns">
+     <div class="column is-12">
+       <button onclick="accediCercaLibero();" class="button is-primary">Accedi</button>
+    </div>
+   </div>
+
  </div>
 </body>

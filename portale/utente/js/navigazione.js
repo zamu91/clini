@@ -8,11 +8,16 @@ function accediCercaLibero(){
   doAjax(data,function(data, textStatus){
     if(data.login){
       localStorage.setItem("tok",data.token);
-      alert('Fatto');
+      accediMenu();
     } else {
       swal("Errore","Codice patrocinatore non trovato","error");
     }
   });
+
+}
+
+function accediMenu(){
+  window.location.href="menuUtente.php";
 
 }
 
