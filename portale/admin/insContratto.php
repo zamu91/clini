@@ -20,7 +20,7 @@ include_once 'template/html.php';
 
     <div class="columns">
       <?php divElement('  <input class="input timep " placeholder="Ora Inizio" id="oraInizio" type="text">',"Ora Inizio","3"); ?>
-      <?php divElement('  <input class="input timep " placeholder="Ora Fine" id="oraInizio" type="text">',"Ora Fine","3"); ?>
+      <?php divElement('  <input class="input timep " placeholder="Ora Fine" id="oraFine" type="text">',"Ora Fine","3"); ?>
       <?php divElement('  <input class="input " placeholder="Durata" id="durata" type="text">',"Durata","3"); ?>
       <?php divElement('  <select class="input "  id="verso" ><option value="0">Dalla chiusura</option><option value="1">Dall\'apertura</option></select>',"Verso","3"); ?>
     </div>
