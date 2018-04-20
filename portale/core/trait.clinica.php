@@ -13,6 +13,7 @@ trait clinica
       $html.="<option value='{$row['IDAMBULATORIO']}'>{$row['NOME']}</option>";
     }
     echo $html;
+    die;
   }
 
   private function optClinicaProvincia(){
