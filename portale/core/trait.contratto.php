@@ -44,6 +44,8 @@ trait contratto{
   private function controlInputContratto(){
     $dataInizio=$this->dataInizio;
     $dataFine=$this->dataFine;
+    $oraInizio=$this->oraInizio;
+    $oraFine=$this->oraFine;
 
     if($dataInizio<strtotime(date('Y-m-d'))){
       $this->errorInputCnt("data","Attenzione, data inizio nel passato");
@@ -231,7 +233,7 @@ trait contratto{
         if(strlen($data)==10){
           return $data[6].$data[7].$data[8].$data[9]."-".$data[3].$data[4]."-".$data[0].$data[1];
         }else{
-          $this->errorInputCnt("Errore formatazzione data");
+          $this->errorInputCnt("format data","Errore formatazzione data");
         }
     }
 
