@@ -49,7 +49,6 @@ trait contratto{
 
     if($dataInizio<strtotime(date('Y-m-d'))){
       $this->errorInputCnt("data","Attenzione, data inizio nel passato");
-
     }
 
     //caso errore date non valide
@@ -65,8 +64,8 @@ trait contratto{
     if($this->getVCont("TEMPO")<$durataMin){
       $this->errorInputCnt("durata","durata troppo breve, il minimo è $durataMin ");
     }
-
-    if(!is_int($this->getVCont("TEMPO"))){
+    $tempo=($this->getVCont("TEMPO"));
+    if(!is_numeric($tempo)){
       $this->errorInputCnt("tempo","Formato invalido per il tempo");
     }
 
