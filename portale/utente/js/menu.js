@@ -5,9 +5,8 @@ $( document ).ready(function() {
     if(data.validToken){
       console.log('Ok login');
     }else{
-      goIndexUtente();
+      alert('problam');
+  //    goIndexUtente();
     }
-
   });
-
 });
