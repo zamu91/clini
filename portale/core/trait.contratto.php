@@ -287,7 +287,7 @@ trait contratto{
       $newOra=$oraInizio;
       $durata=$this->getVCont("TEMPO");
       $i=0;
-      while($newOra<=$oraFine){
+      while($newOra<$oraFine){
         $i++;
         $fineOra=strtotime('+'.$durata.' minutes',$newOra);
         $this->occupaSpazioSingolo($data,$newOra,$fineOra);
