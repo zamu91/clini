@@ -103,10 +103,6 @@ trait contratto{
     where IDAMBULATORIO=:idAmb and DATAINIZIOCONTRATTO>=$iniz
     and DATAFINECONTRATTO<=$fine and ORAINIZIO>=:oraIniz and ORAFINE<:oraFine
     ";
-    echo "|".$this->dataInizioSTR."|<br>";
-    echo "|".$this->dataFineSTR."|<br>";
-
-    echo $str;
     $this->queryPrepare($str);
     $this->queryBind('dataIniz',$this->dataInizioSTR);
     $this->queryBind('dataFine',$this->dataFineSTR);
@@ -115,7 +111,6 @@ trait contratto{
     $this->queryBind('idAmb',$this->getVCont('IDAMBULATORIO'));
 
     $this->executePrepare();
-    die;
     if($this->queryNumRows()>0){
       $row=$this->fetch();
       $this->setJsonMess("conflitto",$row);
@@ -145,8 +140,8 @@ trait contratto{
     $this->queryBind('tempo',$this->getVCont('TEMPO'));
     $this->queryBind('idAmbulatorio',$this->getVCont('IDAMBULATORIO'));
     $this->queryBind('verso',$this->getVCont('VERSO'));
-    $this->queryBind('dataIniz',$this->getVCont('DATAINIZIOCONTRATTO'));
-    $this->queryBind('dataFine',$this->getVCont('DATAFINECONTRATTO'));
+    $this->queryBind('dataIniz',$this->dataInizioSTR);
+    $this->queryBind('dataFine',$this->dataFineSTR);
     $this->queryBind('oraIniz',$this->getVCont('ORAINIZIO'));
     $this->queryBind('oraFine',$this->getVCont('ORAFINE'));
     $this->executePrepare();
