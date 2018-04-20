@@ -227,10 +227,27 @@ trait contratto{
       $this->oraFine=$oraFine;
     }
 
+    private function formatData($data){
+        if(strlen($data)==10){
+          return $data[9].$data[8].$data[7].$data[6]."-".$data[3].$data[4]."-".$data[0].$data[1];
+        }else{
+          $this->errorInputCnt("Errore formatazzione data");
+        }
+    }
+
     public function setDate(){
       $dataInizio=$this->getVCont("DATAINIZIOCONTRATTO");
       $dataFine=$this->getVCont("DATAFINECONTRATTO");
-      $dataInzio=strtotime($dataInizio);
+      $dataInizio=$this->formatData($dataInizio);
+      echo $dataInizio;
+
+      $dataFine=$this->formatData($dataFine);
+      echo $dataInizio;
+
+      die;
+
+
+      $dataInizio=strtotime($dataInizio);
       $dataFine=strtotime($dataFine);
       $this->dataInizio=$dataInizio;
       $this->dataFine=$dataFine;
@@ -290,6 +307,11 @@ trait contratto{
         $newData=strtotime('+ '.$i.' days',strtotime($dataInizio));
       }
       $this->logCont("Fine esecuzione occupa");
+    }
+
+
+    public function getTable(){
+
     }
 
 
