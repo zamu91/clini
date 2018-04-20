@@ -3,10 +3,8 @@ $( document ).ready(function() {
   jd.azione='controlloTokenARXLogin';
   doAjax(jd,function(data){
     if(data.validToken){
-      console.log('Ok login');
     }else{
-      alert('problam');
-  //    goIndexUtente();
+      goIndexUtente();
     }
   });
 });

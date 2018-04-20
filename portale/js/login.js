@@ -46,7 +46,11 @@ function setToken(tok){
 
 function getToken(){
   token=localStorage.getItem("tok");
-  return token;
+  if (typeof token!="undefined"){
+    return token;
+  }else{
+    return "";
+  }
 }
 
 function skipLoginIfTokenIsValid(){
