@@ -107,7 +107,7 @@ trait contratto{
     $this->queryBind('oraFine',$this->getVCont('ORAFINE'));
     $this->queryBind('idAmb',$this->getVCont('IDAMBULATORIO'));
 
-    $this->queryExecute();
+    $this->executePrepare();
     if($this->queryNumRows()>0){
       $row=$this->fetch();
       $this->setJsonMess("conflitto",$row);
