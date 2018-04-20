@@ -203,6 +203,7 @@ trait contratto{
 
     //setup giorni della settimana
     private function inizVarContratto(){
+      print_r($this->post('data'));
       $this->varWork=$this->post('data');
 
       $giorni=$this->post('giorni');
@@ -308,6 +309,7 @@ trait contratto{
         $this->procDataContratto($newData);
         $newData=strtotime('+ '.$i.' days',strtotime($dataInizio));
       }
+      $this->setJsonMess("ok",true);
       $this->logCont("Fine esecuzione occupa");
     }
 
