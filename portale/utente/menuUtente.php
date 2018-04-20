@@ -1,9 +1,13 @@
 <?php
 include_once '../template/head.php';
 include_once '../admin/template/html.php';
-
+//include_once '../core/class.chiamate.php';
+//$chiamate->controlloArxLogin();
  ?>
  <body>
+   <script src="js/navigazione.js"></script>
+   <script src="js/menu.js"></script>
+
  <div class="container">
    <div class="columns">
      <?php divElement('<input type="text" class="input" id="codPatro">',"Inserisci Codice patrocinatore","12"); ?>

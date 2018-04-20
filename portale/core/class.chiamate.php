@@ -181,6 +181,8 @@ class chiamate{
 }
 
 $chiamate=new chiamate();
-$chiamate->launcher();
+if(!empty($noChiamte)){
+  $chiamate->launcher();
+}
 
 ?>

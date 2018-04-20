@@ -18,8 +18,12 @@ function accediCercaLibero(){
 
 function accediMenu(){
   window.location.href="menuUtente.php";
-
 }
+
+function goIndexUtente(){
+  window.location.href="utente.php";  
+}
+
 
 
 
