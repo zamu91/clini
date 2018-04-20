@@ -48,8 +48,8 @@ trait contratto{
 
   //controllo se l'input inserito è valido
   private function controlInputContratto(){
-    $dataInizio=$this->dataInizio;
-    $dataFine=$this->dataFine;
+    $dataInizio=$this->dataInizioSTR;
+    $dataFine=$this->dataFineSTR;
     $oraInizio=$this->oraInizio;
     $oraFine=$this->oraFine;
 
@@ -243,7 +243,7 @@ trait contratto{
     public function setDate(){
       $dataInizio=$this->getVCont("DATAINIZIOCONTRATTO");
       $dataFine=$this->getVCont("DATAFINECONTRATTO");
-      
+
       $this->dataInizioSTR=$this->formatData($dataInizio);
       $this->dataFineSTR=$this->formatData($dataFine);
 
