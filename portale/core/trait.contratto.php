@@ -94,15 +94,15 @@ trait contratto{
     $fine=$this->formOcDate(':dataFine');
 
     $adJoin=$this->getJoinConflict();
-    $str="SELECT * FROM XDM_AMBULATORIO_CONTRATTO
+    $str="SELECT  FROM XDM_AMBULATORIO_CONTRATTO
     $adJoin
     where IDAMBULATORIO=:idAmb and DATAINIZIOCONTRATTO>=$iniz
     and DATAFINECONTRATTO<=$fine and ORAINIZIO>=:oraIniz and ORAFINE<:oraFine
     ";
 
     $this->queryPrepare($str);
-    $this->queryBind('dataIniz',$this->getVCont('DATAINIZIOCONTRATTO'));
-    $this->queryBind('dataFine',$this->getVCont('DATAFINECONTRATTO'));
+    $this->queryBind('dataIniz',$this->dataInizio);
+    $this->queryBind('dataFine',$this->dataFine);
     $this->queryBind('oraIniz',$this->getVCont('ORAINIZIO'));
     $this->queryBind('oraFine',$this->getVCont('ORAFINE'));
     $this->queryBind('idAmb',$this->getVCont('IDAMBULATORIO'));
