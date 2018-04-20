@@ -37,6 +37,8 @@ trait contratto{
 
   private function errorInputCnt($error,$mess){
     $this->setJsonMess($error,$mess);
+    $this->setJsonMess('mess',$mess);
+
     $this->halt();
   }
 

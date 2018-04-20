@@ -25,7 +25,7 @@ function salvaContratto(){
     if(mess.ok){
       swal('Contratto','Contratto salvato con successo','success');
     }else{
-      swal('Contratto','Impossibile salvare il contratto '+mess.mess,'warning');
+      swal('Contratto','Impossibile salvare il contratto '+mess.mess,'error');
     }
   });
 }
