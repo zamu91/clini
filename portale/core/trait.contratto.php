@@ -17,6 +17,10 @@ trait contratto{
   private $oraInizio;
   private $oraFine;
 
+  private $dataFineSTR;
+  private $dataInizioSTR;
+
+
 
 
   private $idPrenotazione; //indice impostato manuale dal ciclo
