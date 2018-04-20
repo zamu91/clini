@@ -112,7 +112,7 @@ trait contratto{
     if($this->queryNumRows()>0){
       $row=$this->fetch();
       $this->setJsonMess("conflitto",$row);
-      $this->setJsonMess("Conflitto nel contratto trovato");
+      $this->setJsonMess("mess","Conflitto nel contratto trovato ".$row['IDCONTRATTO']);
       $this->halt();
     }else{
       return true;
