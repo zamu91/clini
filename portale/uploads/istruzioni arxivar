@@ -1,0 +1,95 @@
+Definito di creare in toto i blocchi di prenotazione. 
+Definito prenotazione occupata quelle con campo IDARXIVAR not null.
+
+
+
+dm_profile: 
+
+
+dm_campi_specifici: Campi aggiuntivi
+
+
+griglia campi aggiuntivi.
+forum.arxivar.it/index.php?topic=127.msg460#msg460
+
+ricerca documenti 
+una votla caricato il file in task 99 viene valorizzato il campo numeric NUMERIC16_299 come "riferimento posizione" che contiene il docunumber della posizione come valore.
+
+cercare per ogni classe documentale ( al momento tutte trane posizione)
+
+
+recupero classi documentali con determinato campo aggiuntivo:
+forum.arxivar.it/index.php?topic=459.msg1980#msg1980
+
+
+impersonate
+http://forum.arxivar.it/index.php?topic=1731.msg6934#msg6934
+
+ricerca campo aggiuntivo riferimento patrocinatore (Piva) con ricerca da rubrica.
+select * from dm_rubrica where contatti = 'daniel.sl10@gmail.com'; -- contatti -> dm_utenti.description
+select * from dm_utenti where description = 'daniel.sl10@gmail.com';
+forum.arxivar.it/index.php?topic=1456.msg5776#msg5776
+
+
+metodi utente:
+dev.arxivar.it/webframe.html#topic12240.html
+(classi e metodi -> arxwebserviceassembly -> arxlogin -> namespace -> classi -> loagin soap client)
+
+
+
+profilazione semplificata -> caricamento file senza workflow:
+forum.arxivar.it/index.php?topic=75.msg287#msg287
+
+fielkind Allegato.
+
+forum.arxivar.it/index.php?topic=617.msg2295#msg2295
+
+dimensioni file da definire.
+
+
+
+
+http://forum.arxivar.it/index.php?topic=1752.0
+Ricerca per la partita iva. (esempio su telefono)
+
+
+getinfo_user_connected -> ritorna oggetto dmUtenti
+DMUtenti-> ToUtentiBase 
+
+
+
+
+cittadino -> 4 bottoni con 4 maschere.
+patrocinatore -> 4 bottoni di roba nuova.
+
+
+
+
+/* Gestione "permessi" */
+select * from dm_utenti WHERE UTENTE = 27;
+SELECT * FROM DM_GRUPPI WHERE MEMBRO = 52;
+
+SELECT * FROM DM_GRUPPI WHERE gruppo = 7;
+SELECT *  FROM DM_UTENTI WHERE LOWER(DESCRIPTION) LIKE '%segreter%';
+
+
+
+Per le azioni far in modo di creare un menù sotto con la lista delle azioni e delle documentazioni allegate al profilo.
+Popup per gli inserimenti (pratiche / documentazione ).
+
+
+Caricamento file in area temporanea dei file da caricare. In caso di errore il file può rimanere fermo in temp. Operazione schedulata per la pulizia ad un orario consono.
+
+
+172.24.1.109:76/SYSTEM
+
+
+creazione file config con
+configurazione classe patrocinatore 
+configurazione flag arxivar next?
+
+
+
+
+
+

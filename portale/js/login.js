@@ -61,7 +61,7 @@ function skipLoginIfTokenIsValid(){
 
 function controlloLogin(){
   $("#resultCall").html("");
-  var token = $("#token").val();
+  var token = getToken();
 
   jqXHR = $.ajax({
     url: "core/class.chiamate.php",
