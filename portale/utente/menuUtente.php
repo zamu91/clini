@@ -10,12 +10,12 @@ include_once '../admin/template/html.php';
 
  <div class="container">
    <div class="columns">
-     <?php divElement('<button class="button is-primary" data-maskix="0" onclick="apriProfilo(sender);">Responsabilità civile auto</button>',"Inserisci Codice patrocinatore","6"); ?>
-     <?php divElement('<button class="button is-primary" data-maskix="0" onclick="apriProfilo(sender);">Responsabilità civile terzi</button>',"Inserisci Codice patrocinatore","6"); ?>
+     <?php divElement('<button class="button is-primary" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile auto</button>',"Inserisci Codice patrocinatore","6"); ?>
+     <?php divElement('<button class="button is-primary" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile terzi</button>',"Inserisci Codice patrocinatore","6"); ?>
    </div>
    <div class="columns">
-     <?php divElement('<button class="button is-primary" data-maskix="0" onclick="apriProfilo(sender);">Polizza privata infortuni</button>',"Inserisci Codice patrocinatore","6"); ?>
-     <?php divElement('<button class="button is-primary" data-maskix="0" onclick="apriProfilo(sender);">Consulenza tecnica di parte</button>',"Inserisci Codice patrocinatore","6"); ?>
+     <?php divElement('<button class="button is-primary" data-maskix="0" onclick="apriProfilo(this);">Polizza privata infortuni</button>',"Inserisci Codice patrocinatore","6"); ?>
+     <?php divElement('<button class="button is-primary" data-maskix="0" onclick="apriProfilo(this);">Consulenza tecnica di parte</button>',"Inserisci Codice patrocinatore","6"); ?>
    </div>
 
  </div>
