@@ -98,7 +98,7 @@ trait contratto{
     $fine=$this->formOcDate(':dataFine');
 
     $adJoin=$this->getJoinConflict();
-    $str="SELECT  FROM XDM_AMBULATORIO_CONTRATTO
+    $str="SELECT XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO  FROM XDM_AMBULATORIO_CONTRATTO
     $adJoin
     where IDAMBULATORIO=:idAmb and DATAINIZIOCONTRATTO>=$iniz
     and DATAFINECONTRATTO<=$fine and ORAINIZIO>=:oraIniz and ORAFINE<:oraFine
@@ -236,11 +236,11 @@ trait contratto{
     }
 
     private function formatData($data){
-        if(strlen($data)==10){
-          return $data[6].$data[7].$data[8].$data[9]."-".$data[3].$data[4]."-".$data[0].$data[1];
-        }else{
-          $this->errorInputCnt("format data","Errore formatazzione data");
-        }
+      if(strlen($data)==10){
+        return $data[6].$data[7].$data[8].$data[9]."-".$data[3].$data[4]."-".$data[0].$data[1];
+      }else{
+        $this->errorInputCnt("format data","Errore formatazzione data");
+      }
     }
 
     public function setDate(){
