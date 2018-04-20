@@ -104,7 +104,8 @@ trait contratto{
     and DATAFINECONTRATTO<=$fine and ORAINIZIO>=:oraIniz and ORAFINE<:oraFine
     ";
     echo $str;
-
+    echo $this->dataInizioSTR."<br>";
+    echo $this->dataFineSTR;
     $this->queryPrepare($str);
     $this->queryBind('dataIniz',$this->dataInizioSTR);
     $this->queryBind('dataFine',$this->dataFineSTR);
