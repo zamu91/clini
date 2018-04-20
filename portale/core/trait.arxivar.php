@@ -36,7 +36,7 @@ trait arxivar{
 
     $this->loginArxivarServizio();
     $sessionid = $this->loginResult->SessionId;
-    $maskix = $this->post("mask", false);
+    $maskix = $this->post("maskix", false);
 
     $ARX_Dati  = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
     $profileMv = $ARX_Dati->Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId($sessionid, $this->maskid[$maskix]);
@@ -69,7 +69,7 @@ trait arxivar{
     $this->loginArxivarServizio();
     $ARX_Dati  = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
     $sessionid = $this->loginResult->SessionId;
-    $maskix = $this->post("mask", false);
+    $maskix = $this->post("maskix", false);
     try
     {
       $masks = $ARX_Dati->Dm_MaskGetData($sessionid);
@@ -397,7 +397,8 @@ trait arxivar{
     $this->loginArxivarServizio();
     $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
     $sessionid = $this->loginResult->SessionId;
-    $maskix = $this->post("mask", false);
+    $maskix = $this->post("maskix", false);
+    $files = $this->post("files", false);
 
     try {
       $profileMv = $ARX_Dati->Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId($sessionid, $this->maskid[$maskix]);
@@ -445,6 +446,7 @@ trait arxivar{
       $profileForMask->Reason = \ARX_Dati\Dm_Mask_Type::Archiviazione;
       $profileForMask->DataFile = date("c");
 
+      $basepath = dirname($_SERVER['DOCUMENT_ROOT']);
       $attach = array();
       foreach ($files as $chiave => $valore) {
         $filepath = $basepath.trim($valore, ".");

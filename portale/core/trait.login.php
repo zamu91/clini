@@ -96,7 +96,7 @@ trait login {
     $expirationTime = substr($app, 0, 10).' '.substr($app, 11, 8);
     $aoo = intval($aoo);
     $row = $this->checkExistSession($imp);
-    if($imp == 1){
+    if($imp == 1){$basepath = dirname($_SERVER['DOCUMENT_ROOT']);
       /* Login tramite impersonate */
       $partiva = $this->post("code", false);
       if( !empty($row["USERNAME"]) ){
@@ -183,9 +183,8 @@ trait login {
     $this->executePrepare();
     $this->commit();
 
-
     $row =$this->fetch();
-    if(!empty($row['username'])){
+    if(!empty($row['ARXSESSION'])){
       $this->loginToken=true;
       $this->setJsonMess("res", true);
       $this->setJsonMess("validToken", true);
