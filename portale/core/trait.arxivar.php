@@ -523,16 +523,7 @@ trait arxivar{
     try{
       $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
       $ARX_Workflow = new ARX_Workflow\ARX_Workflow($this->baseUrl."ARX_Workflow.asmx?WSDL");
-      $sessionid = $this->loginResult->SessioSystem.Web.Services.Protocols.SoapException: Server was unable to process request. ---> System.ServiceModel.FaultException: L'utente non fa parte del ruolo ARXMASK_ec6009ba90064374a09956b7b7a61328_Execute
-
-Server stack trace:
-  at System.ServiceModel.Channels.ServiceChannel.HandleReply(ProxyOperationRuntime operation, ProxyRpc& rpc)
-  at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
-  at Sys…DatiClient.<>c__DisplayClass711_0.<Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId>b__0()
-  at Abletech.Arxivar.Client.Interceptors.CacheInterceptor.Intercept(CacheMethod cacheMethod, Func`1 func, Object& cacheResult)
-  at Abletech.Arxivar.Client.ARX_S_Dati.DatiClient.Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId(String dmMaskId)
-  at Abletech.Arxivar.Web.Asmx.ARX_Dati.Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId(String sessionId, String dmMaskId)
-  --- End of inner exception stack trace ---AnteprimaPayload risposta 1{"query":"Connessione vuota, da istanziare Connesso a OCI","warn":"username non trovato","res":false,"errorMessage":"System.Web.Services.Protocols.SoapException: Server was unable to process request. ---> System.ServiceModel.FaultException: L'utente non fa parte del ruolo ARXMASK_ec6009ba90064374a09956b7b7a61328_Execute\n\nServer stack trace: \n   at System.ServiceModel.Channels.ServiceChannel.HandleReply(ProxyOperationRuntime operation, ProxyRpc& rpc)\n   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)\n   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)\n   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)\n\nException rethrown at [0]: \n   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)\n   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)\n   at Abletech.Arxivar.Client.ARX_S_Dati.IDati.Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId(String dmMaskId)\n   at Abletech.Arxivar.Client.ARX_S_Dati.DatiClient.<>c__DisplayClass711_0.<Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId>b__0()\n   at Abletech.Arxivar.Client.Interceptors.CacheInterceptor.Intercept(CacheMethod cacheMethod, Func`1 func, Object& cacheResult)\n   at Abletech.Arxivar.Client.ARX_S_Dati.DatiClient.Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId(String dmMaskId)\n   at Abletech.Arxivar.Web.Asmx.ARX_Dati.Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId(String sessionId, String dmMaskId)\n   --- End of inner exception stack trace ---"}nId;
+      $sessionid = $this->loginResult->SessionId;
       $idTaskWork = $this->post("taskwork", false);
       $files = $this->post("files", false);
       $basepath = dirname($_SERVER['DOCUMENT_ROOT']);
