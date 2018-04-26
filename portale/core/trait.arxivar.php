@@ -23,7 +23,7 @@ trait arxivar{
       if(in_array($agg->Nome,$campidaesporre)) {?>
         <div class="fieldBox">
           <label><?php echo $agg->Label; ?></label><br>
-          <input type="text" class="input" data-name="<?php echo $agg->Nome ?>" />
+          <input type="text" id="<?php echo $agg->Nome ?>" name="<?php echo $agg->Nome ?>" class="input" data-name="<?php echo $agg->Nome ?>" />
         </div>
       <?php }
     }
