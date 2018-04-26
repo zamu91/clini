@@ -4,8 +4,6 @@ var ajaxLoad;
 
 
 function apriProfiloOld(){
-  // Apre la pagina della maschera con la possibilità di inserire o modificare il profilo e quindi della pratica.
-  // TODO: Parametrizzo il profilo da aprire, nel caso stiamo usando un profilo esistente docnumber deve essere valorizzato, altrimenti predispongo la maschera per l'inserimento.
   var docnumber = "";
   var jd = { azione: "naviga", page: "profilo", docnumber: docnumber };
   doAjax(jd, function(data){
@@ -15,8 +13,6 @@ function apriProfiloOld(){
 }
 
 function apriProfilo(sender, newdoc){
-  // Apre la pagina della maschera con la possibilità di inserire o modificare il profilo e quindi della pratica.
-  // TODO: Parametrizzo il profilo da aprire, nel caso stiamo usando un profilo esistente docnumber deve essere valorizzato, altrimenti predispongo la maschera per l'inserimento.
   var docnumber = ( typeof newdoc != 'undefined' && !newdoc) ? getDocunumberDashboard() : "";
   var jd = { azione: "dettaglioProfilo", docnumber: docnumber, maskix: $(sender).data("maskix") };
   doLoad("#modal-body", jd, function(){
@@ -74,9 +70,6 @@ function caricaListaProfili(){
   var jd = { azione: "listaProfili", tipoValutazione: $("#COMBO15_297").val(), cognome: $("#TESTO10_297").val(),
   nome: $("#TESTO13_297").val(), deceduto: $("#CHECK17_1").val(), telefono: $("#TESTO14_297").val(),
   mail: $("#TESTO12_297").val() };
-  // doAjax(jd, function(data){
-  //   $("#containerListaProfili").html(data);
-  // });
   doLoad("#containerListaProfili", jd);
 
 }
@@ -121,8 +114,6 @@ function dettagliTaskProfilo(target){
       alert("Errore recupero taskwork");
     }
   });
-
-
 }
 
 function doAjax(jd, doneFunc, failFunc){
@@ -157,7 +148,7 @@ function doLoad(target, jd, doneFunc, failFunc){
   if(ajaxLoad){ return false; }
   ajaxLoad = true;
   jqXHR = $.ajax({
-    url: urlAjax,
+    url: "core/class.chiamate.php",
     type: 'POST',
     dataType:'html',
     data: jd
@@ -191,13 +182,7 @@ function isFunction(functionToCheck) {
 
 function navigaDashboard(){
   var jd = { azione: "naviga", page: "dashboard" };
-  alert("prima");
   doLoad("#container", jd);
-  alert("dopo");
-  // doAjax(jd, function(data){
-  //   $("#container").html(data);
-  //   // caricaListaProfili();
-  // });
 }
 
 function scriviDatiProfilo(){
@@ -217,9 +202,14 @@ function scriviDatiProfilo(){
   });
   jd.files = file;
   console.log(jd);
-  doAjax(jd, function(mess){
-    // $("#requestResult").html(mess);
-    caricaListaProfili();
+  doAjax(jd, function(data){
+    if(data.res){
+      $("#modal-action").modal("toggle");
+      $("#modal-body").html("");
+      caricaListaProfili();
+    } else {
+      alert("Salvataggio profilazione fallito.")
+    }
   }, function(jqXHR, textStatus, errorThrown){
     alert("Errore salvataggio profilazione.")
   });
@@ -236,10 +226,28 @@ function scriviDocumentiProfilo(){
   jd.files = file;
   console.log(jd);
   doAjax(jd, function(mess){
-    // $("#requestResult").html(mess);
-    caricaListaProfili();
+    if(data.res){
+      $("#modal-action").modal("toggle");
+      $("#modal-body").html("");
+      caricaListaProfili();
+    } else {
+      alert("Salvataggio documentazione fallito.")
+    }
   }, function(jqXHR, textStatus, errorThrown){
     alert("Errore salvataggio documentazione.")
   });
-  // doLoad("#requestResult", jd);
+}
+
+function cercaPerClinica(){
+  j={};
+  j.clinica=$('#clinicaCerca').val();
+  j.azione='getDataPerClinica';
+  doLoad('.resultClinica',j);
+}
+
+function cercaPerData(){
+  j={};
+  j.data=$('#clinicaCerca').val();
+  j.azione='getClinicaPerData';
+  doLoad('#resultClinica',data);
 }
