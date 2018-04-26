@@ -1,5 +1,5 @@
-var idAmbulatorioSelect=null;
-var dataSelect=null;
+var idPrenotazioneSelect=null;
+
 
 
 $( document ).ready(function() {
@@ -54,9 +54,8 @@ function cercaPerData(){
 }
 
 
-function scegliPrenotazione(id,data){
-  idAmbulatorioSelect=id;
-  dataSelect=data;
+function scegliPrenotazione(id){
+  idPrenotazioneSelect=id;
   $('#cercaClinica').hide('slow');
   $('#tipoPrenotazione').show('slow');
 }
