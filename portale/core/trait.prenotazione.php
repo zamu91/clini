@@ -41,7 +41,7 @@ trait prenotazione{
     ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
     JOIN XDM_PRENOTAZIONE ON XDM_PRENOTAZIONE.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
     AND XDM_PRENOTAZIONE.STATO=0
-    WHERE XDM_PRENOTAZIONE=:data  ";
+    WHERE XDM_PRENOTAZIONE.DATA=:data  ";
     $this->queryPrepare($que);
     $this->queryBind("data", $data);
     $this->executeQuery();
@@ -68,18 +68,19 @@ trait prenotazione{
 
 
     public function getDataPerClinica(){
-      $id=$this->post('clinica');
-      $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,XDM_PRENOTAZIONE.DATA
+      $prov=$this->post('clinica');
+      $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,
+      XDM_PRENOTAZIONE.DATA,XDM_AMBULATORIO.IDPRENOTAZIONE
       FROM XDM_AMBULATORIO
       JOIN XDM_AMBULATORIO_CONTRATTO
       ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
       JOIN XDM_PRENOTAZIONE ON XDM_PRENOTAZIONE.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
       AND XDM_PRENOTAZIONE.STATO=0
-      WHERE XDM_AMBULATORIO.IDAMBULATORIO=:id  ";
+      WHERE XDM_AMBULATORIO.PROVINCIA=:prov  ";
 
 
       $this->queryPrepare($que);
-      $this->queryBind("id", $id);
+      $this->queryBind("prov", $prov);
       $this->executeQuery();
       $this->procCercaClinica();
     }
@@ -92,14 +93,14 @@ trait prenotazione{
         ?>
         <div class="containerClinca">
           <h2><?php echo $row['NOME']." ".$row['DATA'];?></h2>
-          <button onclick="prenota"><?php echo $row['IDAMBULATORIO'] ?></button
+          <button class="button is_primary" onclick="prenota('<?php $row['IDPRENOTAZIONE']; ?>');"><?php echo $row['IDAMBULATORIO'] ?></button
           </div>
           <?php
         }
 
         if($i==0){
           ?>
-          <h2>Nessuna Clinica disponibile per la data cercata</h2>
+          <h2>Nessuna Clinica disponibile</h2>
           <?php
           return 0;
         }
