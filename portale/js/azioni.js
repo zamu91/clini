@@ -4,8 +4,6 @@ var ajaxLoad;
 
 
 function apriProfiloOld(){
-  // Apre la pagina della maschera con la possibilità di inserire o modificare il profilo e quindi della pratica.
-  // TODO: Parametrizzo il profilo da aprire, nel caso stiamo usando un profilo esistente docnumber deve essere valorizzato, altrimenti predispongo la maschera per l'inserimento.
   var docnumber = "";
   var jd = { azione: "naviga", page: "profilo", docnumber: docnumber };
   doAjax(jd, function(data){
@@ -15,8 +13,6 @@ function apriProfiloOld(){
 }
 
 function apriProfilo(sender, newdoc){
-  // Apre la pagina della maschera con la possibilità di inserire o modificare il profilo e quindi della pratica.
-  // TODO: Parametrizzo il profilo da aprire, nel caso stiamo usando un profilo esistente docnumber deve essere valorizzato, altrimenti predispongo la maschera per l'inserimento.
   var docnumber = ( typeof newdoc != 'undefined' && !newdoc) ? getDocunumberDashboard() : "";
   var jd = { azione: "dettaglioProfilo", docnumber: docnumber, maskix: $(sender).data("maskix") };
   doLoad("#modal-body", jd, function(){
@@ -31,32 +27,45 @@ function apriProfilo(sender, newdoc){
       }
     });
 
-    'use strict';
-    // Change this to the location of your server-side upload handler:
-    var url = "core/jquery-file-upload-9.21.0/index.php";
-    $('#fileupload').fileupload({
-        url: url,
-        dataType: 'json',
-        done: function (e, data) {
-            $.each(data.result.files, function (index, file) {
-              if( typeof file.error != 'undefined' && file.error != "" ) {
-                alert("Errore nel caricamento di fle."+ file.name+' --> '+file.error );
-              } else {
-                $('<p class="uploadedFile" data-info="'+decodeURIComponent(file.url)+'"/>').text(file.name).appendTo('#files');
-              }
-            });
-        },
-        progressall: function (e, data) {
-            var progress = parseInt(data.loaded / data.total * 100, 10);
-            $('#progress .progress-bar').css(
-                'width',
-                progress + '%'
-            );
-        },
-        fail: function(jqXHR, errorThrown, textStatus){
-          alert("Errore nella procedura di caricamento dei file.");
-        }
-    }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
+    if( $("#fileupload").length ){
+      var url = "core/jquery-file-upload-9.21.0/index.php";
+      $('#fileupload').fileupload({
+          url: url,
+          dataType: 'json',
+          done: function (e, data) {
+              $.each(data.result.files, function (index, file) {
+                if( typeof file.error != 'undefined' && file.error != "" ) {
+                  alert("Errore nel caricamento di fle."+ file.name+' --> '+file.error );
+                } else {
+                  $('<p class="uploadedFile" data-info="'+decodeURIComponent(file.url)+'"/>').text(file.name).appendTo('#files');
+                }
+              });
+          },
+          progressall: function (e, data) {
+              var progress = parseInt(data.loaded / data.total * 100, 10);
+              $('#progress .progress-bar').css(
+                  'width',
+                  progress + '%'
+              );
+          },
+          fail: function(jqXHR, errorThrown, textStatus){
+            alert("Errore nella procedura di caricamento dei file.");
+          }
+      }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
+    }
+  });
+}
+
+function apriProfiloImpersonate(sender, newdoc){
+  var docnumber = ( typeof newdoc != 'undefined' && !newdoc) ? getDocunumberDashboard() : "";
+  var jd = { azione: "dettaglioProfilo", docnumber: docnumber, maskix: $(sender).data("maskix") };
+  doLoad("#modal-body", jd, function(){
+    $("#modal-title").html( $(sender).html() );
+    $("#modal-action").modal("toggle");
+    $("#modal-salva").unbind("click");
+    $("#modal-salva").on("click", function(){
+        scriviDatiProfiloImpersonate();
+    });
   });
 }
 
@@ -74,9 +83,6 @@ function caricaListaProfili(){
   var jd = { azione: "listaProfili", tipoValutazione: $("#COMBO15_297").val(), cognome: $("#TESTO10_297").val(),
   nome: $("#TESTO13_297").val(), deceduto: $("#CHECK17_1").val(), telefono: $("#TESTO14_297").val(),
   mail: $("#TESTO12_297").val() };
-  // doAjax(jd, function(data){
-  //   $("#containerListaProfili").html(data);
-  // });
   doLoad("#containerListaProfili", jd);
 
 }
@@ -121,8 +127,6 @@ function dettagliTaskProfilo(target){
       alert("Errore recupero taskwork");
     }
   });
-
-
 }
 
 function doAjax(jd, doneFunc, failFunc){
@@ -157,7 +161,7 @@ function doLoad(target, jd, doneFunc, failFunc){
   if(ajaxLoad){ return false; }
   ajaxLoad = true;
   jqXHR = $.ajax({
-    url: urlAjax,
+    url: "core/class.chiamate.php",
     type: 'POST',
     dataType:'html',
     data: jd
@@ -191,13 +195,7 @@ function isFunction(functionToCheck) {
 
 function navigaDashboard(){
   var jd = { azione: "naviga", page: "dashboard" };
-  alert("prima");
   doLoad("#container", jd);
-  alert("dopo");
-  // doAjax(jd, function(data){
-  //   $("#container").html(data);
-  //   // caricaListaProfili();
-  // });
 }
 
 function scriviDatiProfilo(){
@@ -217,9 +215,39 @@ function scriviDatiProfilo(){
   });
   jd.files = file;
   console.log(jd);
-  doAjax(jd, function(mess){
-    // $("#requestResult").html(mess);
-    caricaListaProfili();
+  doAjax(jd, function(data){
+    if(data.res){
+      $("#modal-action").modal("toggle");
+      $("#modal-body").html("");
+      caricaListaProfili();
+    } else {
+      alert("Salvataggio profilazione fallito.")
+    }
+  }, function(jqXHR, textStatus, errorThrown){
+    alert("Errore salvataggio profilazione.")
+  });
+}
+
+function scriviDatiProfiloImpersonate(){
+  var jd = {};
+  jd.azione = "scriviDatiProfilo";
+  jd.maskIx = $("#maskIx").val();
+  jd.COMBO15_297 = $("#COMBO15_297").val();
+  jd.COMBO19_1 = $("#COMBO19_1").val();
+  jd.TESTO10_297 = $("#TESTO10_297").val();
+  jd.TESTO13_297 = $("#TESTO13_297").val();
+  jd.CHECK17_1 = $("#CHECK17_1").val();
+  jd.TESTO14_297 = $("#TESTO14_297").val();
+  jd.TESTO12_297 = $("#TESTO12_297").val();
+  var file = [];
+  jd.files = file;
+  doAjax(jd, function(data){
+    if(data.res){
+      $("#modal-action").modal("toggle");
+      $("#modal-body").html("");
+    } else {
+      alert("Salvataggio profilazione fallito.")
+    }
   }, function(jqXHR, textStatus, errorThrown){
     alert("Errore salvataggio profilazione.")
   });
@@ -236,10 +264,28 @@ function scriviDocumentiProfilo(){
   jd.files = file;
   console.log(jd);
   doAjax(jd, function(mess){
-    // $("#requestResult").html(mess);
-    caricaListaProfili();
+    if(data.res){
+      $("#modal-action").modal("toggle");
+      $("#modal-body").html("");
+      caricaListaProfili();
+    } else {
+      alert("Salvataggio documentazione fallito.")
+    }
   }, function(jqXHR, textStatus, errorThrown){
     alert("Errore salvataggio documentazione.")
   });
-  // doLoad("#requestResult", jd);
+}
+
+function cercaPerClinica(){
+  j={};
+  j.clinica=$('#clinicaCerca').val();
+  j.azione='getDataPerClinica';
+  doLoad('.resultClinica',j);
+}
+
+function cercaPerData(){
+  j={};
+  j.data=$('#clinicaCerca').val();
+  j.azione='getClinicaPerData';
+  doLoad('#resultClinica',data);
 }
