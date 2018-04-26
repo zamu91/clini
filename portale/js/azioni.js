@@ -279,17 +279,3 @@ function scriviDocumentiProfilo(){
     alert("Errore salvataggio documentazione.")
   });
 }
-
-function cercaPerClinica(){
-  j={};
-  j.clinica=$('#clinicaCerca').val();
-  j.azione='getDataPerClinica';
-  doLoad('.resultClinica',j);
-}
-
-function cercaPerData(){
-  j={};
-  j.data=$('#clinicaCerca').val();
-  j.azione='getClinicaPerData';
-  doLoad('#resultClinica',data);
-}

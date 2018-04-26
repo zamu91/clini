@@ -17,6 +17,22 @@ $( document ).ready(function() {
 });
 
 
+
+function cercaPerClinica(){
+  j={};
+  j.clinica=$('#clinicaCerca').val();
+  j.azione='getDataPerClinica';
+  doLoad('.resultClinica',j);
+}
+
+function cercaPerData(){
+  j={};
+  j.data=$('#clinicaCerca').val();
+  j.azione='getClinicaPerData';
+  doLoad('.resultClinica',data);
+}
+
+
 function loadProvClinica(){
   data={};
   data.azione='optClinicaProvincia';
@@ -84,7 +100,7 @@ function apriProfiloImpersonate(sender, newdoc){
 
 function scriviDatiProfiloImpersonate(){
   var jd = {};
-alert('innizio ');
+  alert('innizio ');
   jd.azione = "scriviDatiProfilo";
   jd.maskIx = $("#maskIx").val();
   jd.COMBO15_297 = $("#COMBO15_297").val();
