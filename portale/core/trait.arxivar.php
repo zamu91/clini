@@ -70,6 +70,10 @@ trait arxivar{
     $ARX_Dati  = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
     $sessionid = $this->loginResult->SessionId;
     $maskix = $this->post("maskix", false);
+
+    $ses = $this->checkExistSessionFromToken();
+    $abiFile = ( $ses["impersonate"] == '1') ? false : true;
+
     try
     {
       $masks = $ARX_Dati->Dm_MaskGetData($sessionid);
@@ -188,6 +192,7 @@ trait arxivar{
         </fieldset>
       </form>
 
+      <?php if($abiFile) { ?>
       <br><br>
       <input type="hidden" id="maskix" value="<?php echo $maskix; ?>" />
       <span class="btn btn-success fileinput-button">
@@ -201,6 +206,7 @@ trait arxivar{
           <div class="progress-bar progress-bar-success"></div>
       </div>
       <div id="files" class="files"></div>
+      <?php } ?>
 
       <div id="requestResult"></div>
       <?php
