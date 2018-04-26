@@ -286,7 +286,7 @@ trait arxivar{
     $result = $ARX_Search->Dm_Profile_GetData($sessionid, $select, $search);
     $ds = simplexml_load_string($result);
     ?>
-    <table class="fullWidthTable clickable">
+    <table class="table is-fullwidth is-hoverable clickable">
       <thead>
         <tr>
           <th>DOCNUMBER</th>
@@ -369,7 +369,7 @@ trait arxivar{
     $ds = simplexml_load_string($result);
 
     ?>
-    <table class="fullWidthTable clickable">
+    <table class="table is-fullwidth is-hoverable clickable">
       <thead>
         <tr>
           <th>DOCNUMBER</th>

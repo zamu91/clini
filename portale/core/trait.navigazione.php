@@ -23,10 +23,10 @@ trait navigazione {
     // return file_get_contents ( $path );
     ob_start();
     ?>
-      <button class="button" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile auto</button>
-      <button class="button" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile terzi</button>
-      <button class="button" data-maskix="0" onclick="apriProfilo(this);">Polizza privata infortuni</button>
-      <button class="button" data-maskix="0" onclick="apriProfilo(this);">Consulenza tecnica di parte</button>
+      <button class="button is-primary" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile auto</button>
+      <button class="button is-primary" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile terzi</button>
+      <button class="button is-primary" data-maskix="0" onclick="apriProfilo(this);">Polizza privata infortuni</button>
+      <button class="button is-primary" data-maskix="0" onclick="apriProfilo(this);">Consulenza tecnica di parte</button>
 
       <div class="clearSpace"></div>
 
@@ -34,7 +34,7 @@ trait navigazione {
         <div id="containerFieldList">
           <?php echo $this->getFieldListMascheraRicherca(); ?>
 
-          <button class="floatRight button buttonSearch" onclick="caricaListaProfili();">Ricerca</button>
+          <button class="button is-primary floatRight buttonSearch" onclick="caricaListaProfili();">Ricerca</button>
         </div>
       </div>
 
@@ -45,7 +45,7 @@ trait navigazione {
       <div class="clearSpace"></div>
 
       <div id="containerComandi" class="hidden dashSection" data-task="">
-        <button onclick="apriProfilo(this, false);">Modifica</button>
+        <button class="button is-primary" onclick="apriProfilo(this, false);">Modifica</button>
       </div>
       <div id="containerDocumenti" class="hidden dashSection" data-task=""></div>
 

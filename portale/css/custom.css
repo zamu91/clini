@@ -43,7 +43,7 @@ div.dashSection{
   float: left;
   margin: 2px;
   padding: 2px;
-  border: 1px solid #dbdbdb;
+  /* border: 1px solid #dbdbdb; */
   border-radius: 2px;
   box-sizing: border-box;
 }

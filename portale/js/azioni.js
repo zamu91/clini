@@ -1,4 +1,7 @@
 var urlAjax="core/class.chiamate.php";
+var ajaxCall;
+var ajaxLoad;
+
 
 function apriProfiloOld(){
   // Apre la pagina della maschera con la possibilità di inserire o modificare il profilo e quindi della pratica.
@@ -59,6 +62,15 @@ function apriProfilo(sender, newdoc){
 
 
 function caricaListaProfili(){
+
+  /* Reset dell'area dei taskwork */
+  $("#containerComandi").attr("data-task", "");
+  $("#containerComandi").attr("data-work", "");
+  $("#containerDocumenti").attr("data-task", "");
+  $("#containerDocumenti").attr("data-work", "");
+  $("#containerComandi").hide();
+  $("#containerDocumenti").hide();
+
   var jd = { azione: "listaProfili", tipoValutazione: $("#COMBO15_297").val(), cognome: $("#TESTO10_297").val(),
   nome: $("#TESTO13_297").val(), deceduto: $("#CHECK17_1").val(), telefono: $("#TESTO14_297").val(),
   mail: $("#TESTO12_297").val() };
@@ -66,6 +78,7 @@ function caricaListaProfili(){
   //   $("#containerListaProfili").html(data);
   // });
   doLoad("#containerListaProfili", jd);
+
 }
 
 function caricaProfiloOld(docnumber){
@@ -85,8 +98,8 @@ function dettagliTaskProfilo(target){
   $("#containerDocumenti").attr("data-task", "");
   $("#containerDocumenti").attr("data-work", "");
 
-  $(target).parent("tbody").children("tr.selected").removeClass("selected");
-  $(target).addClass("selected");
+  $(target).parent("tbody").children("tr.is-selected").removeClass("is-selected");
+  $(target).addClass("is-selected");
 
   var docnumber = $(target).data("task");
 
@@ -114,22 +127,26 @@ function dettagliTaskProfilo(target){
 
 function doAjax(jd, doneFunc, failFunc){
   jd.token=getToken();
-  jqXHR = $.ajax({
+  if( ajaxCall ){ return false; }
+  ajaxCall = true;
+  ajaxCall = $.ajax({
     url: urlAjax,
     type: 'POST',
     dataType:'json',
     data: jd
   }).done(function(data, textStatus, jqXHR){
+    ajaxCall = false;
     if( isFunction(doneFunc) ) {
       doneFunc(data);
     }else{
       alert(data);
     }
   }).fail(function(jqXHR, textStatus, errorThrown){
+    ajaxCall = false;
     if( isFunction(failFunc) ) {
       failFunc(jqXHR, textStatus, errorThrown);
     }else{
-      alert(jqXHR);
+      alert("Errore nella comunicazione.");
       console.log(jqXHR);
     }
   });
@@ -137,6 +154,8 @@ function doAjax(jd, doneFunc, failFunc){
 
 function doLoad(target, jd, doneFunc, failFunc){
   jd.token=getToken();
+  if(ajaxLoad){ return false; }
+  ajaxLoad = true;
   jqXHR = $.ajax({
     url: "core/class.chiamate.php",
     type: 'POST',
@@ -144,11 +163,13 @@ function doLoad(target, jd, doneFunc, failFunc){
     data: jd
   }).done(function(data, textStatus, jqXHR){
     // console.log(data);
+    ajaxLoad = false;
     $(""+target).html(data);
     if( isFunction(doneFunc) ) {
       doneFunc(data);
     }
   }).fail(function(jqXHR, textStatus, errorThrown){
+    ajaxLoad = false;
     if( isFunction(failFunc) ) {
       failFunc(jqXHR, textStatus, errorThrown);
     }else{
@@ -170,13 +191,14 @@ function isFunction(functionToCheck) {
 
 function navigaDashboard(){
   var jd = { azione: "naviga", page: "dashboard" };
+  alert("prima");
   doLoad("#container", jd);
+  alert("dopo");
   // doAjax(jd, function(data){
   //   $("#container").html(data);
   //   // caricaListaProfili();
   // });
 }
-
 
 function scriviDatiProfilo(){
   var jd = {};
@@ -196,7 +218,10 @@ function scriviDatiProfilo(){
   jd.files = file;
   console.log(jd);
   doAjax(jd, function(mess){
-    $("#requestResult").html(mess);
+    // $("#requestResult").html(mess);
+    caricaListaProfili();
+  }, function(jqXHR, textStatus, errorThrown){
+    alert("Errore salvataggio profilazione.")
   });
 }
 
@@ -210,9 +235,28 @@ function scriviDocumentiProfilo(){
   });
   jd.files = file;
   console.log(jd);
-  // return false;
-  // doAjax(jd, function(mess){
-  //   $("#requestResult").html(mess);
-  // });
-  doLoad("#requestResult", jd);
+  doAjax(jd, function(mess){
+    // $("#requestResult").html(mess);
+    caricaListaProfili();
+  }, function(jqXHR, textStatus, errorThrown){
+    alert("Errore salvataggio documentazione.")
+  });
+  // doLoad("#requestResult", jd);
 }
+<<<<<<< HEAD
+=======
+
+function cercaPerClinica(){
+  j={};
+  j.clinica=$('#clinicaCerca').val();
+  j.azione='getDataPerClinica';
+  doLoad('.resultClinica',j);
+}
+
+function cercaPerData(){
+  j={};
+  j.data=$('#clinicaCerca').val();
+  j.azione='getClinicaPerData';
+  doLoad('#resultClinica',data);
+}
+>>>>>>> 3e944ba17c61e5031940c09164d977ed53ca7455
