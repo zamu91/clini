@@ -72,7 +72,7 @@ trait arxivar{
     $maskix = $this->post("maskix", false);
 
     $ses = $this->checkExistSessionFromToken();
-    $abiFile = ( $ses["impersonate"] == '1') ? false : true;
+    $abiFile = ( $ses["IMPERSONATE"] == '1') ? false : true;
 
     try
     {
@@ -405,14 +405,15 @@ trait arxivar{
 
       $ses = $this->checkExistSessionFromToken();
       if( $ses["IMPERSONATE"] == '0' ){
-
+        $this->logoutArxivar();
+        $this->loginArxivarServizio( $ses["USERNAME"], $ses["PASSWORD"] );
         $sessionid = $this->loginResult->SessionId;
       } else {
         $sessionid = $this->loginResult->SessionId;
         $str="SELECT * FROM DM_RUBRICA R INNER JOIN DM_UTENTI U ON R.CONTATTI = U.DESCRIPTION
         WHERE R.PARTIVA = :partiva ";
         $this->queryPrepare($str);
-        $this->queryBind("partiva", $code);
+        $this->queryBind("partiva", $ses["PARTIVA"]);
         $this->executeQuery();
         $row = $this->fetch();
 
@@ -497,17 +498,11 @@ trait arxivar{
         // echo "Errore in fase di importazione: ".$result->EXCEPTION."; ".$result->MESSAGE."<hr/>";
       }
     } catch (Exception $e) {
-      $this->setJsonMess("res", false);$str="SELECT * FROM DM_RUBRICA R INNER JOIN DM_UTENTI U ON R.CONTATTI = U.DESCRIPTION
-    WHERE R.PARTIVA = :partiva ";
-    $this->queryPrepare($str);
-    $this->queryBind("partiva", $code);
-    $this->executeQuery();
-    $row = $this->fetch();
-
-    $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
-    $impersonate = $ARX_Login->Impersonate_By_UserName($sessionid, $row["DESCRIPTION"]);
+      $this->setJsonMess("res", false);
       $this->setJsonMess("errorMessage", $e->getMessage());
     }
+
+    if( $ses["IMPERSONATE"] == '1' ){ $ARX_Login->DeImpersonate($sessionid); }
     $this->logoutArxivar();
     $this->halt();
   }
