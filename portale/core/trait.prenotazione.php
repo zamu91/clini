@@ -2,23 +2,21 @@
 
 trait prenotazione{
 
+  private $idPrenotazioneWork; //var di lavorazione dell'idPrenotazione
 
   private function getPrimaDisp(){
-    $idPrenotazione=$this->post('idPrenotazione');
-
-    $str="SELECT DATA,IDAMBULATORIO,DATA,VERSO,ID_CONTRATTO FROM XDM_PRENOTAZIONE
-    INNER JOIN  XDM_AMBULATORIO_CONTRATTO ON
-    XDM_AMBULATORIO_CONTRATTO.IDPRENOTAZIONE=XDM_PRENOTAZIONE.IDPRENOTAZIONE
-    WHERE XDM_PRENOTAZIONE.IDPRENOTAZIONE=:id ";
+    $idCont=$this->post('idContratto');
+    $str="SELECT VERSO FROM XDM_AMBULATORIO_CONTRATTO
+    WHERE IDCONTRATTO=:id ";
 
     $this->queryPrepare($str);
-    $this->queryBind("id","$idPrenotazione");
+    $this->queryBind("id","$idCont");
     $this->prepareExecute();
     $row=$this->fetch();
 
-    $data=$row['DATA'];
+    $data=$this->post('data');
     $verso=$row['VERSO'];
-    $idCont=$row['IDCONTRATTO'];
+
     if($verso=='0'){
       $order=" order by IDPRENOTAZIONE desc ";
     }else{
@@ -33,6 +31,7 @@ trait prenotazione{
     $this->queryBind("data",$data);
     $this->prepareExecute();
     $row=$this->fetch();
+    $this->idPrenotazioneWork=$row['IDPRENOTAZIONE'];
     return $row;
   }
 
@@ -60,9 +59,11 @@ trait prenotazione{
 
   }
 
-  private function segnaOccupato($idPrenotazione){
-    $this->queryPrepare("UPDATE XDM_PRENOTAZIONE SET STATO=1 WHERE IDPRENOTAZIONE=:id ");
-    $this->queryBind("id",$idPrenotazione);
+  private function segnaOccupato($doc){
+    $this->queryPrepare("UPDATE XDM_PRENOTAZIONE SET STATO=1,DOCNUMBER=:doc WHERE IDPRENOTAZIONE=:id ");
+    $this->queryBind("id",$this->idPrenotazioneWork);
+    $this->queryBind("doc",$doc);
+
     $this->prepareExecute();
   }
 
