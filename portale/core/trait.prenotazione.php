@@ -69,7 +69,7 @@ trait prenotazione{
   public function getClinicaPerData(){
     $data=$this->post('data');
     $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,
-    XDM_PRENOTAZIONE.DATA,VERSO,INDIRIZZO,PROVINCIA,COMUNE
+    XDM_PRENOTAZIONE.DATA,VERSO,INDIRIZZO,PROVINCIA,COMUNE,IDCONTRATTO,XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
     FROM XDM_AMBULATORIO
     JOIN XDM_AMBULATORIO_CONTRATTO
     ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
@@ -104,7 +104,7 @@ trait prenotazione{
     public function getDataPerClinica(){
       $prov=$this->post('clinica');
       $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,
-      XDM_PRENOTAZIONE.DATA,VERSO,INDIRIZZO,PROVINCIA,COMUNE
+      XDM_PRENOTAZIONE.DATA,VERSO,INDIRIZZO,PROVINCIA,COMUNE,XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
       FROM XDM_AMBULATORIO
       JOIN XDM_AMBULATORIO_CONTRATTO
       ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
@@ -125,10 +125,10 @@ trait prenotazione{
         $i++;
 
         ?>
-        <div class="containerClinca">
+        <div class="containerClinica">
           <h2><?php echo $row['NOME']." - ".$row['INDIRIZZO']." , ".$row['PROVINCIA']." ".$row['COMUNE']." IN DATA :".$row['DATA'];  ?></h2>
           <button class="button is-primary"
-          onclick="scegliPrenotazione('<?php echo $row['IDPRENOTAZIONE'];?>');">PRENOTA
+          onclick="scegliPrenotazione('<?php echo $row['IDCONTRATTO'];?>');">PRENOTA
           </button
         </div>
         <?php
