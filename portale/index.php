@@ -169,7 +169,7 @@
 
 </div> <!-- container -->
 <script type="text/jscript">
-skipLoginIfTokenIsValid();
+// skipLoginIfTokenIsValid();
 </script>
 </body>
 </html>
