@@ -19,7 +19,7 @@ include_once '../admin/template/html.php';
 
       <div class="cercaPerData" style="display:none;" >
         <div class="columns">
-          <?php divElement('<input type="edit" class="data input" id="dataCercaClinica">',
+          <?php divElement('<input type="edit" class="data input" id="dataCerca">',
           "Data","12"); ?>
         </div>
 

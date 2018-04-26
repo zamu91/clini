@@ -27,7 +27,7 @@ function cercaPerClinica(){
 
 function cercaPerData(){
   j={};
-  j.data=$('#clinicaCerca').val();
+  j.data=$('#dataCerca').val();
   j.azione='getClinicaPerData';
   doLoad('.resultClinica',data);
 }
