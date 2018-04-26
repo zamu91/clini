@@ -8,8 +8,7 @@ function accediCercaLibero(){
   doAjax(data,function(data, textStatus){
     if(data.login){
       setToken(data.token);
-      alert('token registrato');
-      //accediMenu();
+      accediMenu();
 
     } else {
       swal("Errore","Codice patrocinatore non trovato","error");
