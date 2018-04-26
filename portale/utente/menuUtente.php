@@ -43,9 +43,6 @@ include_once '../admin/template/html.php';
             <button onclick="cercaPerClinica();" class="button is-primary">Cerca</button>
           </div>
         </div>
-
-
-      
       </div>
 
       <div class="resultClinica">
