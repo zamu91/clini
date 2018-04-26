@@ -23,7 +23,7 @@ trait prenotazione{
 
 
     $str="SELECT IDPRENOTAZIONE,ORAINIZIO,ORAFINE,TEMPO,DATA FROM XDM_PRENOTAZIONE
-    WHERE XDM_PRENOTAZIONE.ID_CONTRATTO=:idCont and DATA=:data AND STATO=0 $order ";
+    WHERE XDM_PRENOTAZIONE.IDCONTRATTO=:idCont and DATA=:data AND STATO=0 $order ";
     $this->queryPrepare($str);
     $this->queryBind("idCont",$idCont);
     $this->queryBind("data",$data);
@@ -131,7 +131,7 @@ trait prenotazione{
         <div class="containerClinica">
           <h2><?php echo $row['NOME']." - ".$row['INDIRIZZO']." , ".$row['PROVINCIA']." ".$row['COMUNE']." IN DATA :".$row['DATA'];  ?></h2>
           <button class="button is-primary"
-          onclick="scegliPrenotazione('<?php echo $row['IDCONTRATTO'];?>');">PRENOTA
+          onclick="scegliPrenotazione('<?php echo $row['IDCONTRATTO'];?>','<?php echo $row['DATA']; ?>');">PRENOTA
           </button
         </div>
         <?php

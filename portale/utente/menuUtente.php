@@ -22,7 +22,7 @@ include_once '../admin/template/html.php';
           <label for="dataCercaClinica">Data</label>
           <input type="edit" class="data input" id="dataCercaClinica">
         </div>
-        <button class="button is_primary" onclick="cercaPerData();">Cerca</button>
+        <button class="button is-primary" onclick="cercaPerData();">Cerca</button>
       </div> <!-- cerca per data -->
 
       <div class="cercaPerProv">
@@ -31,7 +31,7 @@ include_once '../admin/template/html.php';
           <select class="input" class="select" id="clinicaCerca">
           </select>
         </div>
-        <button class="button is_primary" onclick="cercaPerClinica();">Cerca</button>
+        <button class="button is-primary" onclick="cercaPerClinica();">Cerca</button>
       </div>
 
       <div class="resultClinica">
