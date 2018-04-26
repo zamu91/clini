@@ -56,6 +56,6 @@ function cercaPerData(){
 
 function scegliPrenotazione(id){
   idPrenotazioneSelect=id;
-  $('#cercaClinica').hide('slow');
-  $('#tipoPrenotazione').show('slow');
+  $('.cercaClinica').hide('slow');
+  $('.tipoPrenotazione').show('slow');
 }
