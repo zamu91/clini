@@ -84,6 +84,7 @@ function apriProfiloImpersonate(sender, newdoc){
 
 function scriviDatiProfiloImpersonate(){
   var jd = {};
+alert('innizio ');
   jd.azione = "scriviDatiProfilo";
   jd.maskIx = $("#maskIx").val();
   jd.COMBO15_297 = $("#COMBO15_297").val();
@@ -97,6 +98,7 @@ function scriviDatiProfiloImpersonate(){
   jd.data=dataSelect;
   var file = [];
   jd.files = file;
+  alert('fine data');
   doAjax(jd, function(data){
     if(data.res){
       swal('Prenotaizone','Prenotazione avvenuta con successo','success');
