@@ -161,7 +161,7 @@ function doLoad(target, jd, doneFunc, failFunc){
   if(ajaxLoad){ return false; }
   ajaxLoad = true;
   jqXHR = $.ajax({
-    url: "core/class.chiamate.php",
+    url: urlAjax,
     type: 'POST',
     dataType:'html',
     data: jd
