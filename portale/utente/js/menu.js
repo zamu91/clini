@@ -74,10 +74,9 @@ function apriProfiloImpersonate(sender, newdoc){
 
     $("#modal-title").html( $(sender).html() );
     $("#modal-action").modal("toggle");
-    $("#modal-salva").unbind("click");
-    $("#modal-salva").on("click", function(){
-      scriviDatiProfiloImpersonate();
-    });
+    $('.maschera').append('<button class="is-primary button" '+
+    ' onclick="scriviDatiProfiloImpersonate();">SALVA PROFILO</button>');
+
   });
 }
 
