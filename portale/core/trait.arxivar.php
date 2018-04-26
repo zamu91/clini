@@ -242,7 +242,7 @@ trait arxivar{
 
     $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
     $select = $ARX_Search->Dm_Profile_Select_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
-    // $this->arxDebug($select);
+    $this->arxDebug($_POST);
 
     $tipoValutazione = $this->post("tipoValutazione", false);
     $cognome = $this->post("cognome", false);
@@ -399,7 +399,6 @@ trait arxivar{
   }
 
   public function scriviDatiProfilo(){
-
     $this->loginArxivarServizio();
     try {
 
@@ -487,15 +486,25 @@ trait arxivar{
 
       $profileForMask->Attachments = $attach;
 
-      $result = $ARX_Dati->Dm_Profile_Insert_For_Mask($sessionid, $profileForMask);
-      if ($result->EXCEPTION == \ARX_Dati\Security_Exception::Nothing) {
-        $this->setJsonMess("res", true);
-        $this->setJsonMess("docnumber", $result->PROFILE->DOCNUMBER);
-        // echo "Importazione completata con system ID: ".$result->PROFILE->DOCNUMBER."<hr/>";
-      } else {
+      $primaDisp = $this->getPrimaDisp();
+      if( $ses["IMPERSONATE"] == '1' && !$primaDisp){
         $this->setJsonMess("res", false);
-        $this->setJsonMess("errorMessage", $result->MESSAGE);
-        // echo "Errore in fase di importazione: ".$result->EXCEPTION."; ".$result->MESSAGE."<hr/>";
+        $this->setJsonMess("errorMessage", "Sembra che la tua prenotazione sia già stata presa da qualche altro cliente. Ritenta.");
+      } else {
+        $result = $ARX_Dati->Dm_Profile_Insert_For_Mask($sessionid, $profileForMask);
+        if ($result->EXCEPTION == \ARX_Dati\Security_Exception::Nothing) {
+          $this->setJsonMess("res", true);
+          $this->setJsonMess("docnumber", $result->PROFILE->DOCNUMBER);
+          // echo "Importazione completata con system ID: ".$result->PROFILE->DOCNUMBER."<hr/>";
+          if( $ses["IMPERSONATE"] == '1' ){
+            /* Occupazione prenotazione */
+            $this->segnaOccupato($result->PROFILE->DOCNUMBER);
+          }
+        } else {
+          $this->setJsonMess("res", false);
+          $this->setJsonMess("errorMessage", $result->MESSAGE);
+          // echo "Errore in fase di importazione: ".$result->EXCEPTION."; ".$result->MESSAGE."<hr/>";
+        }
       }
     } catch (Exception $e) {
       $this->setJsonMess("res", false);
