@@ -3,6 +3,41 @@
 trait prenotazione{
 
 
+  private function getPrimaDisp(){
+    $idPrenotazione=$this->post('idPrenotazione');
+
+    $str="SELECT DATA,IDAMBULATORIO,DATA,VERSO,ID_CONTRATTO FROM XDM_PRENOTAZIONE
+    INNER JOIN  XDM_AMBULATORIO_CONTRATTO ON
+    XDM_AMBULATORIO_CONTRATTO.IDPRENOTAZIONE=XDM_PRENOTAZIONE.IDPRENOTAZIONE
+    WHERE XDM_PRENOTAZIONE.IDPRENOTAZIONE=:id ";
+
+    $this->queryPrepare($str);
+    $this->queryBind("id","$idPrenotazione");
+    $this->prepareExecute();
+    $row=$this->fetch();
+
+    $data=$row['DATA'];
+    $verso=$row['VERSO'];
+    $idCont=$row['IDCONTRATTO'];
+    if($verso=='0'){
+      $order=" order by IDPRENOTAZIONE desc ";
+    }else{
+      $order="";
+    }
+
+
+    $str="SELECT IDPRENOTAZIONE,ORAINIZIO,ORAFINE,TEMPO FROM XDM_PRENOTAZIONE
+    WHERE XDM_PRENOTAZIONE.ID_CONTRATTO=:idCont and DATA=:data AND STATO=0 $order ";
+    $this->queryPrepare($str);
+    $this->queryBind("idCont",$idCont);
+    $this->queryBind("data",$data);
+    $this->prepareExecute();
+    $row=$this->fetch();
+    return $row;
+
+
+  }
+
   public function salvaPrenotazione(){
     $this->startTransaction();
     $data=$this->post('data');
@@ -27,15 +62,16 @@ trait prenotazione{
 
   }
 
-  private function segnaOccupato($idOccupato){
-    $this->queryPrepare("UPDATE XDM_AMBULATORIO_CONTRATTO_OCCUPATO SET STATO=1 WHERE IDOCCUPATO=:id ");
-    $this->queryBind("id",$idOccupato);
+  private function segnaOccupato($idPrenotazione){
+    $this->queryPrepare("UPDATE XDM_PRENOTAZIONE SET STATO=1 WHERE IDPRENOTAZIONE=:id ");
+    $this->queryBind("id",$idPrenotazione);
     $this->executeQuery();
   }
 
   public function getClinicaPerData(){
     $data=$this->post('data');
-    $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,XDM_PRENOTAZIONE.DATA
+    $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,
+    XDM_PRENOTAZIONE.DATA,VERSO
     FROM XDM_AMBULATORIO
     JOIN XDM_AMBULATORIO_CONTRATTO
     ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
@@ -70,7 +106,7 @@ trait prenotazione{
     public function getDataPerClinica(){
       $prov=$this->post('clinica');
       $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,
-      XDM_PRENOTAZIONE.DATA,XDM_PRENOTAZIONE.IDPRENOTAZIONE
+      XDM_PRENOTAZIONE.DATA,VERSO
       FROM XDM_AMBULATORIO
       JOIN XDM_AMBULATORIO_CONTRATTO
       ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
@@ -93,21 +129,23 @@ trait prenotazione{
         ?>
         <div class="containerClinca">
           <h2><?php echo $row['NOME']." ".$row['DATA'];?></h2>
-          <button class="button is_primary" onclick="prenota('<?php $row['IDPRENOTAZIONE']; ?>');"><?php echo $row['NOME'] ?></button
-          </div>
-          <?php
-        }
-
-        if($i==0){
-          ?>
-          <h2>Nessuna Clinica disponibile</h2>
-          <?php
-          return 0;
-        }
+          <button class="button is_primary"
+          onclick="prenota('<?php echo $row['IDAMBULATORIO'];?>','<?php echo $row['DATA'] ?>');">
+          <?php echo $row['NOME']." - ".$row['INDIRIZZO']." , ".$row['PROVINCIA']." ".$row['comune'];  ?></button
+        </div>
+        <?php
       }
 
+      if($i==0){
+        ?>
+        <h2>Nessuna Clinica disponibile</h2>
+        <?php
+        return 0;
+      }
+    }
 
-    }//end trait
+
+  }//end trait
 
 
-    ?>
+  ?>
