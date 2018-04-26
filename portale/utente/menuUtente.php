@@ -20,7 +20,7 @@ include_once '../admin/template/html.php';
       <div class="cercaPerData" style="display:none;" >
         <div class="columns">
           <?php divElement('<input type="edit" class="data input" id="dataCercaClinica">',
-          "Data","6"); ?>
+          "Data","12"); ?>
         </div>
 
         <div class="columns">
@@ -29,16 +29,23 @@ include_once '../admin/template/html.php';
           </div>
         </div>
 
-    
+
       </div> <!-- cerca per data -->
 
       <div class="cercaPerProv">
-        <div class="inputDiv">
-          <label for="clinica">Clinica</label>
-          <select class="input" class="select" id="clinicaCerca">
-          </select>
+        <div class="columns">
+          <?php divElement('<select class="input" class="select" id="clinicaCerca">
+          </select>',"Data","12"); ?>
         </div>
-        <button class="button is-primary" onclick="cercaPerClinica();">Cerca</button>
+
+        <div class="columns">
+          <div class="column is-6">
+            <button onclick="cercaPerClinica();" class="button is-primary">Cerca</button>
+          </div>
+        </div>
+
+
+      
       </div>
 
       <div class="resultClinica">
