@@ -464,11 +464,12 @@ trait arxivar{
       }
 
       $profileForMask = new \ARX_Dati\Dm_Profile_Insert_For_Mask();
-
       $props = get_object_vars($profile);
       foreach ($props as $key => $value) {
         $profileForMask->$key = $value;
       }
+      /* TODO: da caricare la lista dei dati effettivi per in caricamento della dataora */
+      $primaDisp = $this->getPrimaDisp();
 
       $profileForMask->DmMaskId = $profileMv->DmMask->ID;
       $profileForMask->Reason = \ARX_Dati\Dm_Mask_Type::Archiviazione;
@@ -488,7 +489,6 @@ trait arxivar{
 
       $profileForMask->Attachments = $attach;
 
-      $primaDisp = $this->getPrimaDisp();
       if( $ses["IMPERSONATE"] == '1' && !$primaDisp){
         $this->setJsonMess("res", false);
         $this->setJsonMess("errorMessage", "Sembra che la tua prenotazione sia già stata presa da qualche altro cliente. Ritenta.");
