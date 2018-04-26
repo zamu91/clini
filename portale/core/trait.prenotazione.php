@@ -26,7 +26,7 @@ trait prenotazione{
     }
 
 
-    $str="SELECT IDPRENOTAZIONE,ORAINIZIO,ORAFINE,TEMPO FROM XDM_PRENOTAZIONE
+    $str="SELECT IDPRENOTAZIONE,ORAINIZIO,ORAFINE,TEMPO,DATA FROM XDM_PRENOTAZIONE
     WHERE XDM_PRENOTAZIONE.ID_CONTRATTO=:idCont and DATA=:data AND STATO=0 $order ";
     $this->queryPrepare($str);
     $this->queryBind("idCont",$idCont);
@@ -34,8 +34,6 @@ trait prenotazione{
     $this->prepareExecute();
     $row=$this->fetch();
     return $row;
-
-
   }
 
   public function salvaPrenotazione(){
@@ -65,7 +63,7 @@ trait prenotazione{
   private function segnaOccupato($idPrenotazione){
     $this->queryPrepare("UPDATE XDM_PRENOTAZIONE SET STATO=1 WHERE IDPRENOTAZIONE=:id ");
     $this->queryBind("id",$idPrenotazione);
-    $this->executeQuery();
+    $this->prepareExecute();
   }
 
   public function getClinicaPerData(){
