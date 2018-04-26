@@ -692,7 +692,8 @@ trait arxivar{
   public function loginArxivarImpersonate(){
     $this->loginArxivarServizio();
     $sessionid = $this->loginResult->SessionId;
-    $code = $this->post("code", false);
+    $this->partiva = $this->post("code", false);
+    $code = $this->getPartiva();
 
     $str="SELECT * FROM DM_RUBRICA R INNER JOIN DM_UTENTI U ON R.CONTATTI = U.DESCRIPTION
     WHERE R.PARTIVA = :partiva ";

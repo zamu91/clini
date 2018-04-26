@@ -6,6 +6,7 @@ trait login {
 
   public $username;
   public $password;
+  public $partiva;
 
   private $idArxivar;
 
@@ -23,13 +24,18 @@ trait login {
     return $this->username;
   }
 
-
-
   private function getPassword(){
     if(empty($this->password)){
       $this->password=$this->post('password');
     }
     return $this->password;
+  }
+
+  private function getPartiva(){
+    if(empty($this->partiva)){
+      $this->partiva=$this->post('code');
+    }
+    return $this->partiva;
   }
 
 
@@ -49,7 +55,7 @@ trait login {
 
   private function checkExistSession( $imp = 0 ){
     if( $imp == 1 ){
-      $partiva =  $this->post("code", false);
+      $partiva = $this->getPartiva();
       $que = "SELECT ARXSESSION, ses.USERNAME, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA
       FROM XDM_WEBSERVICE_SESSION ses WHERE ses.USERNAME = :partiva ";
       $this->queryPrepare($que);
@@ -98,7 +104,7 @@ trait login {
     $row = $this->checkExistSession($imp);
     if($imp == 1){$basepath = dirname($_SERVER['DOCUMENT_ROOT']);
       /* Login tramite impersonate */
-      $partiva = $this->post("code", false);
+      $partiva = $this->getPartiva();
       if( !empty($row["USERNAME"]) ){
         $this->loginLog("sessione trovata, aggiorno");
         $que = "UPDATE XDM_WEBSERVICE_SESSION SET ARXSESSION = :sess, SCADENZA = TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), AOO = :aoo,
