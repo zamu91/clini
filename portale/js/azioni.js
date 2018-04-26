@@ -3,6 +3,11 @@ var ajaxCall;
 var ajaxLoad;
 
 
+
+function datPick(elem){
+      $( elem ).datepicker({ dateFormat: 'dd/mm/yy' });
+}
+
 function apriProfiloOld(){
   var docnumber = "";
   var jd = { azione: "naviga", page: "profilo", docnumber: docnumber };
