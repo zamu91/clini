@@ -90,7 +90,7 @@ trait arxivar{
       ?>
       <form id="formMaschera" action="#" onsubmit="function(){ return false; }" method="post">
         <fieldset>
-          <legend>Maschera</legend>
+          <legend></legend>
           <?php
           foreach ($details as $field) {
 
@@ -216,7 +216,8 @@ trait arxivar{
     }
 
     $this->logoutArxivar();
-    return ob_get_clean();
+    echo ob_get_clean();
+    die();
   }
 
   public function dettaglioProfilo(){
@@ -322,6 +323,7 @@ trait arxivar{
     <?php
 
     $this->logoutArxivar();
+    die();
   }
 
   public function getTaskworkFromDocnumber(){
