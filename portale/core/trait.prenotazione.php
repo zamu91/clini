@@ -126,10 +126,10 @@ trait prenotazione{
 
         ?>
         <div class="containerClinca">
-          <h2><?php echo $row['NOME']." ".$row['DATA'];?></h2>
+          <h2><?php echo $row['NOME']." - ".$row['INDIRIZZO']." , ".$row['PROVINCIA']." ".$row['COMUNE']." IN DATA :".$row['DATA'];  ?></h2>
           <button class="button is_primary"
           onclick="prenota('<?php echo $row['IDAMBULATORIO'];?>','<?php echo $row['DATA'] ?>');">
-          <?php echo $row['NOME']." - ".$row['INDIRIZZO']." , ".$row['PROVINCIA']." ".$row['COMUNE'];  ?></button
+          </button
         </div>
         <?php
       }
