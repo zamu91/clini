@@ -76,7 +76,6 @@ function apriProfiloImpersonate(sender, newdoc){
 
 
 function caricaListaProfili(){
-
   /* Reset dell'area dei taskwork */
   $("#containerComandi").attr("data-task", "");
   $("#containerComandi").attr("data-work", "");
@@ -89,7 +88,6 @@ function caricaListaProfili(){
   nome: $("#TESTO13_297").val(), deceduto: $("#CHECK17_1").val(), telefono: $("#TESTO14_297").val(),
   mail: $("#TESTO12_297").val() };
   doLoad("#containerListaProfili", jd);
-
 }
 
 function caricaProfiloOld(docnumber){
