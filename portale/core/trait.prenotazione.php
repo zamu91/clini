@@ -8,12 +8,10 @@ trait prenotazione{
     $idCont=$this->post('idContratto');
     $str="SELECT VERSO FROM XDM_AMBULATORIO_CONTRATTO
     WHERE IDCONTRATTO=:id ";
-
     $this->queryPrepare($str);
     $this->queryBind("id","$idCont");
     $this->prepareExecute();
     $row=$this->fetch();
-
     $data=$this->post('data');
     $verso=$row['VERSO'];
 
@@ -31,6 +29,10 @@ trait prenotazione{
     $this->queryBind("data",$data);
     $this->prepareExecute();
     $row=$this->fetch();
+    if($this->queryNumRows()==0){
+      return false;
+    }
+
     $this->idPrenotazioneWork=$row['IDPRENOTAZIONE'];
     return $row;
   }
