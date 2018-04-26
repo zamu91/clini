@@ -22,7 +22,7 @@ include_once '../admin/template/html.php';
           <label for="dataCercaClinica">Data</label>
           <input type="edit" class="data input" id="dataCercaClinica">
         </div>
-        <button class="button is_primary" onclick="cercaPerProvincia();">Cerca</button>
+        <button class="button is_primary" onclick="cercaPerData();">Cerca</button>
       </div> <!-- cerca per data -->
 
       <div class="cercaPerProv">
