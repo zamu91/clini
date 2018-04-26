@@ -420,6 +420,7 @@ trait arxivar{
 
         $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
         $impersonate = $ARX_Login->Impersonate_By_UserName($sessionid, $row["DESCRIPTION"]);
+        // var_dump($impersonate);
       }
 
 
