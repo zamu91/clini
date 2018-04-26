@@ -462,50 +462,63 @@ trait arxivar{
 
       $result = $ARX_Dati->Dm_Profile_Insert_For_Mask($sessionid, $profileForMask);
       if ($result->EXCEPTION == \ARX_Dati\Security_Exception::Nothing) {
-        echo "Importazione completata con system ID: ".$result->PROFILE->DOCNUMBER."<hr/>";
+        $this->setJsonMess("res", true);
+        $this->setJsonMess("docnumber", $result->PROFILE->DOCNUMBER);
+        // echo "Importazione completata con system ID: ".$result->PROFILE->DOCNUMBER."<hr/>";
       } else {
-        echo "Errore in fase di importazione: ".$result->EXCEPTION."; ".$result->MESSAGE."<hr/>";
+        $this->setJsonMess("res", false);
+        $this->setJsonMess("errorMessage", $result->MESSAGE);
+        // echo "Errore in fase di importazione: ".$result->EXCEPTION."; ".$result->MESSAGE."<hr/>";
       }
     } catch (Exception $e) {
-      echo 'Caught exception: ',  $e->getMessage(), "\n";
+      $this->setJsonMess("res", false);
+      $this->setJsonMess("errorMessage", $e->getMessage());
     }
     $this->logoutArxivar();
+    $this->halt();
   }
 
   public function scriviDocumentiProfilo(){
     $this->loginArxivarServizio();
-    $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
-    $ARX_Workflow = new ARX_Workflow\ARX_Workflow($this->baseUrl."ARX_Workflow.asmx?WSDL");
-    $sessionid = $this->loginResult->SessionId;
-    $idTaskWork = $this->post("taskwork", false);
-    $files = $this->post("files", false);
-    $basepath = dirname($_SERVER['DOCUMENT_ROOT']);
-    $dmTaskDocs = $ARX_Workflow->Dm_TaskDoc_GetData_By_DmTaskworkId($sessionid, $idTaskWork);
-    $dmTaskDoc = $dmTaskDocs->Dm_TaskDoc;
-    $idTaskDoc = $dmTaskDoc->ID;
-    $profileInsertMv = $ARX_Workflow->Dm_Profile_Insert_MV_Get_New_Instance_By_DmTaskDocId($sessionid, $idTaskWork, $idTaskDoc, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale);
-    $profileBase = $profileInsertMv->DmProfileDefault->Dm_Profile_Insert_Base;
-    $profileBase->InOut = ARX_Workflow\DmProfileInOut::Interno;
-    $profileBase->Stato = "VALIDO";
-    $profileBase->Aoo = "1";
-    $profileBase->ProtocolloInterno = "123456";
-    foreach ($files as $chiave => $valore) {
-      $profile = new ARX_Workflow\Dm_Profile_ForInsert();
-      foreach (get_object_vars($profileBase) as $key => $value) {
-        $profile->$key = $value;
+    try{
+      $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
+      $ARX_Workflow = new ARX_Workflow\ARX_Workflow($this->baseUrl."ARX_Workflow.asmx?WSDL");
+      $sessionid = $this->loginResult->SessionId;
+      $idTaskWork = $this->post("taskwork", false);
+      $files = $this->post("files", false);
+      $basepath = dirname($_SERVER['DOCUMENT_ROOT']);
+      $dmTaskDocs = $ARX_Workflow->Dm_TaskDoc_GetData_By_DmTaskworkId($sessionid, $idTaskWork);
+      $dmTaskDoc = $dmTaskDocs->Dm_TaskDoc;
+      $idTaskDoc = $dmTaskDoc->ID;
+      $profileInsertMv = $ARX_Workflow->Dm_Profile_Insert_MV_Get_New_Instance_By_DmTaskDocId($sessionid, $idTaskWork, $idTaskDoc, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale);
+      $profileBase = $profileInsertMv->DmProfileDefault->Dm_Profile_Insert_Base;
+      $profileBase->InOut = ARX_Workflow\DmProfileInOut::Interno;
+      $profileBase->Stato = "VALIDO";
+      $profileBase->Aoo = "1";
+      $profileBase->ProtocolloInterno = "123456";
+      foreach ($files as $chiave => $valore) {
+        $profile = new ARX_Workflow\Dm_Profile_ForInsert();
+        foreach (get_object_vars($profileBase) as $key => $value) {
+          $profile->$key = $value;
+        }
+        $profile->DocName = basename($valore);
+        $filepath = $basepath.trim($valore, ".");
+        $arxFile = new ARX_Dati\Arx_File();
+        $arxFile->CreationDate = date("c", filectime($filepath));
+        $arxFile->FileName = basename($filepath);
+        $arxFile->File = file_get_contents($filepath);
+        $arxFile->DeleteFolderOnDisposeIfEmpty = FALSE;
+        $profile->File = $arxFile;
+        $profile->DataFile = date("c", filectime($filepath));
+        $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profile, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale);
       }
-      $profile->DocName = basename($valore);
-      $filepath = $basepath.trim($valore, ".");
-      $arxFile = new ARX_Dati\Arx_File();
-      $arxFile->CreationDate = date("c", filectime($filepath));
-      $arxFile->FileName = basename($filepath);
-      $arxFile->File = file_get_contents($filepath);
-      $arxFile->DeleteFolderOnDisposeIfEmpty = FALSE;
-      $profile->File = $arxFile;
-      $profile->DataFile = date("c", filectime($filepath));
-      $dmProfileResult = $ARX_Workflow->Dm_Profile_Insert($sessionid, $idTaskWork, $idTaskDoc, $profile, ARX_Workflow\Dm_TaskDoc_ProfileMode::Normale);
+      $this->setJsonMess("res", true);
+    } catch (Exception $e) {
+      $this->setJsonMess("res", false);
+      $this->setJsonMess("errorMessage", $e->getMessage());
     }
     $this->logoutArxivar();
+    $this->halt();
   }
 
   public function getLoginResult(){

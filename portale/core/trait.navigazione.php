@@ -45,7 +45,7 @@ trait navigazione {
       <div class="clearSpace"></div>
 
       <div id="containerComandi" class="hidden dashSection" data-task="">
-        <button class="button is-primary" onclick="apriProfilo(this, false);">Modifica</button>
+        <button class="button is-primary" onclick="apriProfilo(this, false);">Carica doc.</button>
       </div>
       <div id="containerDocumenti" class="hidden dashSection" data-task=""></div>
 
