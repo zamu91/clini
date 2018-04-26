@@ -254,27 +254,27 @@ trait arxivar{
 
     foreach ($search->Aggiuntivi->Field_Abstract as $agg) {
       if($agg->Nome == "COMBO15_297" && !empty($tipoValutazione) ){
-        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Contiene;
         $agg->Valore = $tipoValutazione;
       }
       if($agg->Nome == "TESTO10_297" && !empty($cognome) ){
-        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Contiene;
         $agg->Valore = $cognome;
       }
       if($agg->Nome == "TESTO13_297" && !empty($nome) ){
-        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Contiene;
         $agg->Valore = $nome;
       }
       if($agg->Nome == "CHECK17_1" && !empty($deceduto) ){
-        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Contiene;
         $agg->Valore = $deceduto;
       }
       if($agg->Nome == "TESTO14_297" && !empty($telefono) ){
-        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Contiene;
         $agg->Valore = $telefono;
       }
       if($agg->Nome == "TESTO12_297" && !empty($mail) ){
-        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Contiene;
         $agg->Valore = $mail;
       }
     }
