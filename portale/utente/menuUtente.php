@@ -18,11 +18,18 @@ include_once '../admin/template/html.php';
 
 
       <div class="cercaPerData" style="display:none;" >
-        <div class="inputDiv">
-          <label for="dataCercaClinica">Data</label>
-          <input type="edit" class="data input" id="dataCercaClinica">
+        <div class="columns">
+          <?php divElement('<input type="edit" class="data input" id="dataCercaClinica">',
+          "Data","6"); ?>
         </div>
-        <button class="button is-primary" onclick="cercaPerData();">Cerca</button>
+
+        <div class="columns">
+          <div class="column is-6">
+            <button onclick="cercaPerData();" class="button is-primary">Cerca</button>
+          </div>
+        </div>
+
+    
       </div> <!-- cerca per data -->
 
       <div class="cercaPerProv">
