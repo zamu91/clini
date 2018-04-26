@@ -9,7 +9,7 @@ $( document ).ready(function() {
   doAjax(jd,function(data){
     if(data.validToken){
       loadProvClinica();
-      datPick('#dataCercaClinica');
+      datPick('#dataCerca');
     }else{
       goIndexUtente();
     }
