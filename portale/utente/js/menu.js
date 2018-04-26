@@ -1,3 +1,5 @@
+var idPrenotazioneSelect=null;
+
 $( document ).ready(function() {
   jd={};
   jd.azione='controlloTokenARXLogin';
@@ -14,7 +16,7 @@ $( document ).ready(function() {
 function loadProvClinica(){
     data={};
     data.azione='optClinicaProvincia';
-    doLoad('#clinicaCerca',data);  
+    doLoad('#clinicaCerca',data);
 }
 
 
@@ -46,4 +48,11 @@ function cercaPerData(){
   j.data=$('#clinicaCerca').val();
   j.azione='getClinicaPerData';
   doLoad('#resultClinica',data);
+}
+
+
+function scegliPrenotazione(idPrenotazione){
+  idPrenotazioneSelect=idPrenotazione;
+  $('#cercaClinica').hide('slow');
+  $('#tipoPrenotazione').show('slow');
 }

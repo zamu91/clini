@@ -93,7 +93,7 @@ trait prenotazione{
         ?>
         <div class="containerClinca">
           <h2><?php echo $row['NOME']." ".$row['DATA'];?></h2>
-          <button class="button is_primary" onclick="prenota('<?php $row['IDPRENOTAZIONE']; ?>');"><?php echo $row['IDAMBULATORIO'] ?></button
+          <button class="button is_primary" onclick="prenota('<?php $row['IDPRENOTAZIONE']; ?>');"><?php echo $row['NOME'] ?></button
           </div>
           <?php
         }
