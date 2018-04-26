@@ -110,7 +110,7 @@ trait prenotazione{
       ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
       JOIN XDM_PRENOTAZIONE ON XDM_PRENOTAZIONE.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
       AND XDM_PRENOTAZIONE.STATO=0
-      WHERE XDM_AMBULATORIO.PROVINCIA=:prov  ";
+      WHERE XDM_AMBULATORIO.PROVINCIA=:prov order by DATA  ";
 
 
       $this->queryPrepare($que);
@@ -127,8 +127,8 @@ trait prenotazione{
         ?>
         <div class="containerClinca">
           <h2><?php echo $row['NOME']." - ".$row['INDIRIZZO']." , ".$row['PROVINCIA']." ".$row['COMUNE']." IN DATA :".$row['DATA'];  ?></h2>
-          <button class="button is_primary"
-          onclick="prenota('<?php echo $row['IDAMBULATORIO'];?>','<?php echo $row['DATA'] ?>');">
+          <button class="button is-primary"
+          onclick="prenota('<?php echo $row['IDAMBULATORIO'];?>','<?php echo $row['DATA'] ?>');">PRENOTA
           </button
         </div>
         <?php
