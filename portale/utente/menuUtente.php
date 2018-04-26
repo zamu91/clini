@@ -43,7 +43,7 @@ include_once '../admin/template/html.php';
 
 
 
-    <div class="tipoPrenotazione">
+    <div class="tipoPrenotazione" style="display:none;">
 
       <div class="columns">
         <?php divElement('<button class="button is-primary" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile auto</button>',"Inserisci Codice patrocinatore","6"); ?>
