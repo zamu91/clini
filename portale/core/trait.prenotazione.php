@@ -141,8 +141,10 @@ trait prenotazione{
         ?>
         <h2>Nessuna Clinica disponibile</h2>
         <?php
+
         return 0;
       }
+      die;
     }
 
 
