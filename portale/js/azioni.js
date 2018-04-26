@@ -61,18 +61,6 @@ function apriProfilo(sender, newdoc){
   });
 }
 
-function apriProfiloImpersonate(sender, newdoc){
-  var docnumber = ( typeof newdoc != 'undefined' && !newdoc) ? getDocunumberDashboard() : "";
-  var jd = { azione: "dettaglioProfilo", docnumber: docnumber, maskix: $(sender).data("maskix") };
-  doLoad("#modal-body", jd, function(){
-    $("#modal-title").html( $(sender).html() );
-    $("#modal-action").modal("toggle");
-    $("#modal-salva").unbind("click");
-    $("#modal-salva").on("click", function(){
-        scriviDatiProfiloImpersonate();
-    });
-  });
-}
 
 
 function caricaListaProfili(){

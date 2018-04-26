@@ -54,5 +54,10 @@ include_once '../admin/template/html.php';
         <?php divElement('<button class="button is-primary" data-maskix="0" onclick="apriProfiloImpersonate(this);">Consulenza tecnica di parte</button>',"Inserisci Codice patrocinatore","6"); ?>
       </div>
     </div> <!-- end tipo prenotazione -->
+
+
+    <div class="maschera">
+    </div>
+
   </div><!-- end container -->
 </body>

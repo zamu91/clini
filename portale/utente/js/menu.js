@@ -18,9 +18,9 @@ $( document ).ready(function() {
 
 
 function loadProvClinica(){
-    data={};
-    data.azione='optClinicaProvincia';
-    doLoad('#clinicaCerca',data);
+  data={};
+  data.azione='optClinicaProvincia';
+  doLoad('#clinicaCerca',data);
 }
 
 
@@ -64,6 +64,25 @@ function scegliPrenotazione(id,data){
 
 
 
+function apriProfiloImpersonate(sender, newdoc){
+
+  var docnumber = ( typeof newdoc != 'undefined' && !newdoc) ? getDocunumberDashboard() : "";
+  var jd = { azione: "dettaglioProfilo", docnumber: docnumber, maskix: $(sender).data("maskix") };
+  doLoad(".maschera", jd, function(){
+    $('.tipoPrenotazione').hide('slow');
+    $('.maschera').show('slow');
+
+    $("#modal-title").html( $(sender).html() );
+    $("#modal-action").modal("toggle");
+    $("#modal-salva").unbind("click");
+    $("#modal-salva").on("click", function(){
+      scriviDatiProfiloImpersonate();
+    });
+  });
+}
+
+
+
 
 function scriviDatiProfiloImpersonate(){
   var jd = {};
@@ -82,12 +101,11 @@ function scriviDatiProfiloImpersonate(){
   jd.files = file;
   doAjax(jd, function(data){
     if(data.res){
-      $("#modal-action").modal("toggle");
-      $("#modal-body").html("");
+      swal('Prenotaizone','Prenotazione avvenuta con successo','success');
     } else {
-      alert("Salvataggio profilazione fallito.")
+      swal("Errore","Salvataggio profilazione fallito.","error");
     }
   }, function(jqXHR, textStatus, errorThrown){
-    alert("Errore salvataggio profilazione.")
+    swal("errore","Errore salvataggio profilazione.","error");
   });
 }
