@@ -72,7 +72,8 @@ trait prenotazione{
   public function getClinicaPerData(){
     $data=$this->post('data');
     $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,
-    XDM_PRENOTAZIONE.DATA,VERSO,INDIRIZZO,PROVINCIA,COMUNE,IDCONTRATTO,XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
+    XDM_PRENOTAZIONE.DATA,VERSO,INDIRIZZO,PROVINCIA,COMUNE,IDCONTRATTO,
+    XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO,TO_DATE(XDM_PRENOTAZIONE.DATA,'dd/mm/yyyy') as dataForm
     FROM XDM_AMBULATORIO
     JOIN XDM_AMBULATORIO_CONTRATTO
     ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
@@ -107,7 +108,8 @@ trait prenotazione{
     public function getDataPerClinica(){
       $prov=$this->post('clinica');
       $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,
-      XDM_PRENOTAZIONE.DATA,VERSO,INDIRIZZO,PROVINCIA,COMUNE,XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
+      XDM_PRENOTAZIONE.DATA,VERSO,INDIRIZZO,PROVINCIA,COMUNE,
+      XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO,TO_DATE(XDM_PRENOTAZIONE.DATA,'dd/mm/yyyy') as dataForm
       FROM XDM_AMBULATORIO
       JOIN XDM_AMBULATORIO_CONTRATTO
       ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
@@ -129,7 +131,7 @@ trait prenotazione{
 
         ?>
         <div class="containerClinica">
-          <h2><?php echo $row['NOME']." - ".$row['INDIRIZZO']." , ".$row['PROVINCIA']." ".$row['COMUNE']." IN DATA :".$row['DATA'];  ?></h2>
+          <h2><?php echo $row['NOME']." - ".$row['INDIRIZZO']." , ".$row['PROVINCIA']." ".$row['COMUNE']." IN DATA :".$row['dataForm'];  ?></h2>
           <button class="button is-primary"
           onclick="scegliPrenotazione('<?php echo $row['IDCONTRATTO'];?>','<?php echo $row['DATA']; ?>');">PRENOTA
           </button
