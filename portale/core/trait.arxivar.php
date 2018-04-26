@@ -401,12 +401,32 @@ trait arxivar{
   public function scriviDatiProfilo(){
 
     $this->loginArxivarServizio();
-    $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
-    $sessionid = $this->loginResult->SessionId;
-    $maskix = $this->post("maskix", false);
-    $files = $this->post("files", false);
-
     try {
+
+      $ses = $this->checkExistSessionFromToken();
+      if( $ses["IMPERSONATE"] == '0' ){
+
+        $sessionid = $this->loginResult->SessionId;
+      } else {
+        $sessionid = $this->loginResult->SessionId;
+        $str="SELECT * FROM DM_RUBRICA R INNER JOIN DM_UTENTI U ON R.CONTATTI = U.DESCRIPTION
+        WHERE R.PARTIVA = :partiva ";
+        $this->queryPrepare($str);
+        $this->queryBind("partiva", $code);
+        $this->executeQuery();
+        $row = $this->fetch();
+
+        $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
+        $impersonate = $ARX_Login->Impersonate_By_UserName($sessionid, $row["DESCRIPTION"]);
+      }
+
+
+
+      $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
+      $maskix = $this->post("maskix", false);
+      $files = $this->post("files", false);
+
+
       $profileMv = $ARX_Dati->Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId($sessionid, $this->maskid[$maskix]);
       $details = $profileMv->DmMaskDetails->Dm_MaskDetail;
       $profile = $profileMv->DmProfileDefault->Dm_Profile_Insert_Base;
@@ -477,7 +497,15 @@ trait arxivar{
         // echo "Errore in fase di importazione: ".$result->EXCEPTION."; ".$result->MESSAGE."<hr/>";
       }
     } catch (Exception $e) {
-      $this->setJsonMess("res", false);
+      $this->setJsonMess("res", false);$str="SELECT * FROM DM_RUBRICA R INNER JOIN DM_UTENTI U ON R.CONTATTI = U.DESCRIPTION
+    WHERE R.PARTIVA = :partiva ";
+    $this->queryPrepare($str);
+    $this->queryBind("partiva", $code);
+    $this->executeQuery();
+    $row = $this->fetch();
+
+    $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
+    $impersonate = $ARX_Login->Impersonate_By_UserName($sessionid, $row["DESCRIPTION"]);
       $this->setJsonMess("errorMessage", $e->getMessage());
     }
     $this->logoutArxivar();
@@ -563,7 +591,7 @@ trait arxivar{
     }
   }
 
-  private function loginArxivarServizio(){
+  private function loginArxivarServizio($username = "", $password = ""){
     if( $this->arxVer == 5){
       $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
       $this->loginResult = $ARX_Login->Login($this->adminUser, $this->adminPass, $this->softwareName);
@@ -576,8 +604,11 @@ trait arxivar{
       $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
       // esecuzione login
       $logonRequest = new \ARX_Login\ArxLogonRequest();
-      $logonRequest->Username = $this->adminUser;
-      $logonRequest->Password = $this->adminPass;
+      if( !empty($username) ){ $logonRequest->Username = $username; }
+        else { $logonRequest->Username = $this->adminUser; }
+
+      if( !empty($password) ){ $logonRequest->Password = $password; }
+        else { $logonRequest->Password = $this->adminPass; }
       // specificare qui Client ID e Client Secret configurati nel portale Authentication
       $logonRequest->ClientId = $this->softwareName;
       $logonRequest->ClientSecret = $this->softwareNameSecret;
