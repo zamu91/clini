@@ -216,7 +216,7 @@ trait arxivar{
     }
 
     $this->logoutArxivar();
-    return ob_get_clean();
+    echo ob_get_clean();
     die();
   }
 
