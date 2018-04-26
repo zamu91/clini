@@ -243,7 +243,7 @@ trait arxivar{
 
     $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
     $select = $ARX_Search->Dm_Profile_Select_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
-    $this->arxDebug($_POST);
+    // $this->arxDebug($_POST);
 
     $tipoValutazione = $this->post("tipoValutazione", false);
     $cognome = $this->post("cognome", false);

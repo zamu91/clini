@@ -61,6 +61,18 @@ function apriProfilo(sender, newdoc){
   });
 }
 
+function apriProfiloImpersonate(sender, newdoc){
+  var docnumber = ( typeof newdoc != 'undefined' && !newdoc) ? getDocunumberDashboard() : "";
+  var jd = { azione: "dettaglioProfilo", docnumber: docnumber, maskix: $(sender).data("maskix") };
+  doLoad("#modal-body", jd, function(){
+    $("#modal-title").html( $(sender).html() );
+    $("#modal-action").modal("toggle");
+    $("#modal-salva").unbind("click");
+    $("#modal-salva").on("click", function(){
+        scriviDatiProfiloImpersonate();
+    });
+  });
+}
 
 
 function caricaListaProfili(){
@@ -75,7 +87,7 @@ function caricaListaProfili(){
   var jd = { azione: "listaProfili", tipoValutazione: $("#COMBO15_297").val(), cognome: $("#TESTO10_297").val(),
   nome: $("#TESTO13_297").val(), deceduto: $("#CHECK17_1").val(), telefono: $("#TESTO14_297").val(),
   mail: $("#TESTO12_297").val() };
-  console.log(jd);
+  // console.log(jd);
   doLoad("#containerListaProfili", jd);
 }
 
