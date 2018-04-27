@@ -173,6 +173,10 @@ class chiamate{
       case "listaDocumenti":
       $this->listaDocumenti();
       break;
+
+      case "getContrattiInseriti":
+      $this->getContrattiInseriti();
+      break;
     } //end swtich
     $this->halt();
 
