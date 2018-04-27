@@ -115,7 +115,7 @@ trait prenotazione{
 
       ?>
 
-      <div class="containerClinica box">
+      <div class="containerClinica box is-half">
         <h2><?php echo $row['NOME']." - ".$row['INDIRIZZO']." , ".$row['PROVINCIA']." ".$row['COMUNE']."
         <br> <b>IN DATA : ".$row['DATAFORM'];  ?></b></h2>
         <button class="button is-primary"
