@@ -40,7 +40,7 @@ include_once 'template/html.php';
 
     </div> <!-- end tasti -->
 
-
+    <div id="tabellaContratti" class="colimns"></div>
 
 
   </div> <!-- conteiner -->

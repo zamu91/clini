@@ -51,3 +51,8 @@ function getGiorniContratto(){
   giorni[6]=getValGiorni('sab');
   return giorni;
 }
+
+function getContrattiInseriti(){
+  var jd = { azione: "getContrattiInseriti", docnumber: docnumber, maskix: $(sender).data("maskix") };
+  doLoad("#tabellaContratti", jd);
+}
