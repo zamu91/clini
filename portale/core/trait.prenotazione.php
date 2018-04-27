@@ -113,8 +113,6 @@ trait prenotazione{
     while($row=$this->fetch()){
       $i++;
       if($i==1){
-        echo "ciao sono qui";
-        die;
         ?>
         <div class="box column is-12">
           <h3>Appuntamenti Disponibili</h3>
