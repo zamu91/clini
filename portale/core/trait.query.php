@@ -175,6 +175,12 @@ trait sql{
     return $str;
   }
 
+  public function formOcDateEu($date){
+    $str="TO_DATE($date, 'DD-MM-YYYY')";
+    return $str;
+  }
+
+
 
 } //fine classe
 
