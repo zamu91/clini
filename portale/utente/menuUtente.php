@@ -11,9 +11,13 @@ include_once '../admin/template/html.php';
   <div class="container">
 
     <div class="cercaClinica">
-      <div class="radioOpzioni">
-        <label><input type="radio" name="tipo" value="data" onclick="cercaClinica('data');" > Cerca Clinica per data</label>
-        <label><input type="radio" name="tipo" value="posizione" checked onclick="cercaClinica('provincia');">Cerca Clinica per posizione</label>
+      <div class="radioOpzioni columns">
+        <div class="column is-6">
+          <label><input type="radio" name="tipo" value="data" onclick="cercaClinica('data');" > Cerca Clinica per data</label>
+        </div>
+        <div class="column is-6">
+          <label><input type="radio" name="tipo" value="posizione" checked onclick="cercaClinica('provincia');">Cerca Clinica per posizione</label>
+        </div>
       </div> <!-- radioOpzioni -->
 
 
