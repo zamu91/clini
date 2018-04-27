@@ -1,12 +1,10 @@
 $( document ).ready(function() {
-datPick('#dataInizio');
-datPick('#dataFine');
-timePick('.timep');
-getOptionClinica('#idAmbulatorio');
+  datPick('#dataInizio');
+  datPick('#dataFine');
+  timePick('.timep');
+  getOptionClinica('#idAmbulatorio');
+  getContrattiInseriti();
 });
-
-
-
 
 function salvaContratto(){
   j={};
@@ -29,9 +27,6 @@ function salvaContratto(){
     }
   });
 }
-
-
-
 
 function getValGiorni(nome){
   if ($('#'+nome).is(':checked')) {
