@@ -48,6 +48,6 @@ function getGiorniContratto(){
 }
 
 function getContrattiInseriti(){
-  var jd = { azione: "getContrattiInseriti", docnumber: docnumber, maskix: $(sender).data("maskix") };
+  var jd = { azione: "getContrattiInseriti" };
   doLoad("#tabellaContratti", jd);
 }

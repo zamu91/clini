@@ -323,7 +323,7 @@ trait contratto{
       ORAINIZIO, ORAFINE
       FROM XDM_AMBULATORIO AM
       INNER JOIN XDM_AMBULATORIO_CONTRATTO AMC ON AM.IDAMBULATORIO = AMC.IDAMBULATORIO";
-      $this->queryPrepare($str);
+      $this->queryPrepare($que);
       $this->executePrepare();
 
       ?>
