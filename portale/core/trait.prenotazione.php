@@ -82,7 +82,6 @@ trait prenotazione{
     JOIN XDM_PRENOTAZIONE ON XDM_PRENOTAZIONE.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
     AND XDM_PRENOTAZIONE.STATO=0
     WHERE XDM_PRENOTAZIONE.DATA=$cercaData  ";
-    echo $que;
     $this->queryPrepare($que);
     $this->queryBind("data", $data);
     $this->executeQuery();
