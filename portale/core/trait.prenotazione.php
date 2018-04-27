@@ -71,7 +71,7 @@ trait prenotazione{
 
   public function getClinicaPerData(){
     $data=$this->post('data');
-    $cercaData=$this->formOcDateEu('XDM_PRENOTAZIONE.DATA');
+    $cercaData=$this->formOcDateEu(':data');
     $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,
     XDM_PRENOTAZIONE.DATA,VERSO,INDIRIZZO,PROVINCIA,COMUNE,XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO,
     XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO,
@@ -81,7 +81,7 @@ trait prenotazione{
     ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
     JOIN XDM_PRENOTAZIONE ON XDM_PRENOTAZIONE.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
     AND XDM_PRENOTAZIONE.STATO=0
-    WHERE $cercaData=:data  ";
+    WHERE XDM_PRENOTAZIONE.DATA=$cercaData  ";
     echo $que;
     $this->queryPrepare($que);
     $this->queryBind("data", $data);
