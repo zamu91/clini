@@ -7,10 +7,10 @@ trait clinica
 {
 
   private function optClinica(){
-    $this->query("SELECT IDAMBULATORIO,NOME from XDM_AMBULATORIO where STATO=1 ");
+    $this->query("SELECT IDAMBULATORIO,NOME,INDIRIZZO,COMUNE from XDM_AMBULATORIO where STATO=1 ");
     $html="";
     while($row=$this->fetch()){
-      $html.="<option value='{$row['IDAMBULATORIO']}'>{$row['NOME']}</option>";
+      $html.="<option value='{$row['IDAMBULATORIO']}'>{$row['NOME']} - {$row['COMUNE']},{$row['INDIRIZZO']}</option>";
     }
     echo $html;
     die;
