@@ -116,12 +116,15 @@ trait prenotazione{
       ?>
 
       <div class="containerClinica box is-half">
-        <h2><?php echo $row['NOME']." - ".$row['INDIRIZZO']." , ".$row['PROVINCIA']." ".$row['COMUNE']."
-        <br> <b>IN DATA : ".$row['DATAFORM'];  ?></b></h2>
-        <button class="button is-primary"
-        onclick="scegliPrenotazione('<?php echo $row['IDCONTRATTO'];?>',
-        '<?php echo $row['DATA']; ?>');">PRENOTA
-      </button>
+        <div class="content">
+          <p><strong>DATA <?php echo $row['DATAFORM']; ?></strong></p>
+          <p><?php echo $row['NOME']." - ".$row['INDIRIZZO']." , ".$row['PROVINCIA']." ".$row['COMUNE']; ?>
+         </p>
+          <button class="button is-primary"
+          onclick="scegliPrenotazione('<?php echo $row['IDCONTRATTO'];?>',
+          '<?php echo $row['DATA']; ?>');">PRENOTA
+        </button>
+      </div>
     </div>
     <?php
   }
