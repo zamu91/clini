@@ -112,14 +112,23 @@ trait prenotazione{
     $i=0;
     while($row=$this->fetch()){
       $i++;
-
+      if($i==1){
+        echo "ciao sono qui";
+        die;
+        ?>
+        <div class="box column is-12">
+          <h3>Appuntamenti Disponibili</h3>
+        </div>
+        <div style="clear:both;"></div>
+        <?php
+      }
       ?>
 
       <div class="containerClinica box">
         <div class="content">
           <p><strong>DATA <?php echo $row['DATAFORM']; ?></strong></p>
           <p><?php echo $row['NOME']." - ".$row['INDIRIZZO']." , ".$row['PROVINCIA']." ".$row['COMUNE']; ?>
-         </p>
+          </p>
           <button class="button is-primary"
           onclick="scegliPrenotazione('<?php echo $row['IDCONTRATTO'];?>',
           '<?php echo $row['DATA']; ?>');">PRENOTA
@@ -127,7 +136,7 @@ trait prenotazione{
       </div>
     </div>
     <?php
-  }
+  } //end ciclo fetch
 
   if($i==0){
     ?>
