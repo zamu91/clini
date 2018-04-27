@@ -3,7 +3,7 @@ $( document ).ready(function() {
   datPick('#dataFine');
   timePick('.timep');
   getOptionClinica('#idAmbulatorio');
-  getContrattiInseriti
+  getContrattiInseriti();
 });
 
 function salvaContratto(){
