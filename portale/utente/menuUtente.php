@@ -32,8 +32,6 @@ include_once '../admin/template/html.php';
             <button onclick="cercaPerData();" class="button is-primary">Cerca</button>
           </div>
         </div>
-
-
       </div> <!-- cerca per data -->
 
       <div class="cercaPerProv">
@@ -47,9 +45,9 @@ include_once '../admin/template/html.php';
             <button onclick="cercaPerClinica();" class="button is-primary">Cerca</button>
           </div>
         </div>
-      </div>
+      </div> <!-- end cercaPerProv-->
 
-      <div class="resultClinica columns">
+      <div class="resultClinica">
 
       </div> <!-- end res Clinica-->
 
