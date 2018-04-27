@@ -114,7 +114,8 @@ trait prenotazione{
       $i++;
 
       ?>
-      <div class="containerClinica columns is-half">
+
+      <div class="containerClinica column is-half">
         <h2><?php echo $row['NOME']." - ".$row['INDIRIZZO']." , ".$row['PROVINCIA']." ".$row['COMUNE']."<br> IN DATA : ".$row['DATAFORM'];  ?></h2>
         <button class="button is-primary"
         onclick="scegliPrenotazione('<?php echo $row['IDCONTRATTO'];?>','<?php echo $row['DATA']; ?>');">PRENOTA
