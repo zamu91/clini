@@ -114,7 +114,7 @@ trait prenotazione{
       $i++;
       if($i==1){
         ?>
-        <div class="box column is-12">
+        <div class="box column is-12" style="margin-top:15px;">
           <h3>Appuntamenti Disponibili</h3>
         </div>
         <div style="clear:both;"></div>
