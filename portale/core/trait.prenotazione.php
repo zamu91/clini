@@ -85,72 +85,54 @@ trait prenotazione{
     $this->queryPrepare($que);
     $this->queryBind("data", $data);
     $this->executeQuery();
-    $this->procCercaData();
+    $this->procCercaClinica();
   }
 
-  private function procCercaData(){
-    $i=0;
 
+  public function getDataPerClinica(){
+    $prov=$this->post('clinica');
+    $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,
+    XDM_PRENOTAZIONE.DATA,VERSO,INDIRIZZO,PROVINCIA,COMUNE,
+    XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO,TO_CHAR(XDM_PRENOTAZIONE.DATA,'DD/MM/YYYY') as DATAFORM
+    FROM XDM_AMBULATORIO
+    JOIN XDM_AMBULATORIO_CONTRATTO
+    ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
+    JOIN XDM_PRENOTAZIONE ON XDM_PRENOTAZIONE.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
+    AND XDM_PRENOTAZIONE.STATO=0
+    WHERE XDM_AMBULATORIO.PROVINCIA=:prov order by DATA  ";
+
+
+    $this->queryPrepare($que);
+    $this->queryBind("prov", $prov);
+    $this->executeQuery();
+    $this->procCercaClinica();
+  }
+
+  private function procCercaClinica(){
+    $i=0;
     while($row=$this->fetch()){
       $i++;
+
       ?>
-      <div class="containerClinca">
-        <h2><?php echo $row['NOME'];?></h2>
-        <button onclick="prenota"><?php echo $row['IDAMBULATORIO'] ?></button
-        </div>
-        <?php
-      }
-      if($i==0){
-        ?>Nessuna clinica valida per la data selezionata<?php
-      }
-
+      <div class="containerClinica">
+        <h2><?php echo $row['NOME']." - ".$row['INDIRIZZO']." , ".$row['PROVINCIA']." ".$row['COMUNE']." IN DATA : ".$row['DATAFORM'];  ?></h2>
+        <button class="button is-primary"
+        onclick="scegliPrenotazione('<?php echo $row['IDCONTRATTO'];?>','<?php echo $row['DATA']; ?>');">PRENOTA
+        </button
+      </div>
+      <?php
     }
 
-
-    public function getDataPerClinica(){
-      $prov=$this->post('clinica');
-      $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,
-      XDM_PRENOTAZIONE.DATA,VERSO,INDIRIZZO,PROVINCIA,COMUNE,
-      XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO,TO_CHAR(XDM_PRENOTAZIONE.DATA,'DD/MM/YYYY') as DATAFORM
-      FROM XDM_AMBULATORIO
-      JOIN XDM_AMBULATORIO_CONTRATTO
-      ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
-      JOIN XDM_PRENOTAZIONE ON XDM_PRENOTAZIONE.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
-      AND XDM_PRENOTAZIONE.STATO=0
-      WHERE XDM_AMBULATORIO.PROVINCIA=:prov order by DATA  ";
-
-
-      $this->queryPrepare($que);
-      $this->queryBind("prov", $prov);
-      $this->executeQuery();
-      $this->procCercaClinica();
+    if($i==0){
+      ?>
+      <h2>Nessuna Clinica disponibile</h2>
+      <?php
     }
-
-    private function procCercaClinica(){
-      $i=0;
-      while($row=$this->fetch()){
-        $i++;
-
-        ?>
-        <div class="containerClinica">
-          <h2><?php echo $row['NOME']." - ".$row['INDIRIZZO']." , ".$row['PROVINCIA']." ".$row['COMUNE']." IN DATA : ".$row['DATAFORM'];  ?></h2>
-          <button class="button is-primary"
-          onclick="scegliPrenotazione('<?php echo $row['IDCONTRATTO'];?>','<?php echo $row['DATA']; ?>');">PRENOTA
-          </button
-        </div>
-        <?php
-      }
-
-      if($i==0){
-        ?>
-        <h2>Nessuna Clinica disponibile</h2>
-        <?php
-      }
-      die;
-    }
+    die;
+  }
 
 
-  }//end trait
+}//end trait
 
 
-  ?>
+?>
