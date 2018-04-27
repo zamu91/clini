@@ -317,6 +317,47 @@ trait contratto{
 
     }
 
+    public function getContrattiInseriti(){
+      $que = "SELECT AM.IDAMBULATORIO, AM.NOME, AM.PROVINCIA, AM.COMUNE, AM.INDIRIZZO,
+      TO_CHAR(AMC.DATAINIZIOCONTRATTO, 'DD/MM/YYYY') DATAINIZIOCONTRATTO, TO_CHAR(AMC.DATAFINECONTRATTO, 'DD/MM/YYYY') DATAFINECONTRATTO,
+      ORAINIZIO, ORAFINE
+      FROM XDM_AMBULATORIO AM
+      INNER JOIN XDM_AMBULATORIO_CONTRATTO AMC ON AM.IDAMBULATORIO = AMC.IDAMBULATORIO";
+      $this->queryPrepare($str);
+      $this->executePrepare();
+
+      ?>
+      <table class="table">
+        <thead>
+          <tr>
+            <td>NOME AMBULATORIO</td>
+            <td>PROVINCIA</td>
+            <td>COMUNE</td>
+            <td>INDIRIZZO</td>
+            <td>DATAINIZIOCONTRATTO</td>
+            <td>DATAFINECONTRATTO</td>
+            <td>ORAINIZIO</td>
+            <td>ORAFINE</td>
+          </tr>
+        </thead>
+        <tbody>
+          <?php while( $row=$this->fetch() ){ ?>
+            <tr>
+              <td><?php echo $row["NOME"]; ?></td>
+              <td><?php echo $row["PROVINCIA"]; ?></td>
+              <td><?php echo $row["COMUNE"]; ?></td>
+              <td><?php echo $row["INDIRIZZO"]; ?></td>
+              <td><?php echo $row["DATAINIZIOCONTRATTO"]; ?></td>
+              <td><?php echo $row["DATAFINECONTRATTO"]; ?></td>
+              <td><?php echo $row["ORAINIZIO"]; ?></td>
+              <td><?php echo $row["ORAFINE"]; ?></td>
+            </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+      <?php
+      die();
+    }
 
   }//end classe
 
