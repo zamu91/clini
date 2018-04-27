@@ -158,7 +158,7 @@ class chiamate{
       $this->scriviDatiProfilo();
       break;
 
-      case 'clinicaPerData':
+      case 'getClinicaPerData':
       $this->getClinicaPerData();
       break;
 
