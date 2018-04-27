@@ -121,18 +121,18 @@ trait prenotazione{
         <button class="button is-primary"
         onclick="scegliPrenotazione('<?php echo $row['IDCONTRATTO'];?>',
         '<?php echo $row['DATA']; ?>');">PRENOTA
-        </button
-      </div>
-      <?php
-    }
-
-    if($i==0){
-      ?>
-      <h2>Nessuna Clinica disponibile</h2>
-      <?php
-    }
-    die;
+      </button>
+    </div>
+    <?php
   }
+
+  if($i==0){
+    ?>
+    <h2>Nessuna Clinica disponibile</h2>
+    <?php
+  }
+  die;
+}
 
 
 }//end trait
