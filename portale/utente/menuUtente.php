@@ -49,7 +49,7 @@ include_once '../admin/template/html.php';
         </div>
       </div>
 
-      <div class="resultClinica">
+      <div class="resultClinica columns">
 
       </div> <!-- end res Clinica-->
 
