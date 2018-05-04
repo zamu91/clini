@@ -9,7 +9,6 @@ include_once '../admin/template/html.php';
       <div class="column is-one-quarter"></div>
       <div class="column is-half">
         <br>
-        <h1 class="title">Login</h1>
         <div class="fieldBox">
           <label>Username</label><br>
           <input type="text" id="username" name="an_username" placeholder="Username"/>
