@@ -11,7 +11,7 @@ function goIndexPatrocinatore(){
 
 function indietroSalva(){
   $('.tipoPrenotazione').show('slow');
-  $('.mascheraContainer').show('slow');
+  $('.mascheraContainer').hide('slow');
   $('.maschera').html("");
 }
 
