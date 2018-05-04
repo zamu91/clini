@@ -23,7 +23,7 @@ trait navigazione {
     // return file_get_contents ( $path );
     ob_start();
     ?>
-      <button class="button is-primary" data-maskix="0" onclick=" window.location.href='patrocinatore/inserisciPrenotazione.php' ">Inserisci prenotazione</button>
+      <button class="button is-primary" data-maskix="0" onclick=" window.location.href='inserisciPrenotazione.php' ">Inserisci prenotazione</button>
       <!-- <button class="button is-primary" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile auto</button>
       <button class="button is-primary" data-maskix="1" onclick="apriProfilo(this);">Responsabilità civile terzi</button>
       <button class="button is-primary" data-maskix="2" onclick="apriProfilo(this);">Polizza privata infortuni</button>
