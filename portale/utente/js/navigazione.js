@@ -27,6 +27,13 @@ function goIndexUtente(){
 
 
 
+function indietroSalva(){
+  $('.tipoPrenotazione').show('slow');
+  $('.mascheraContainer').hide('slow');
+  $('.maschera').html("");
+}
+
+
 
 function accediRicerca(){
 
