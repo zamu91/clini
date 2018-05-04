@@ -155,7 +155,8 @@ trait arxivar{
                 $xml=simplexml_load_string($temp) or die("Error: Cannot create object");
                 if( $aggiuntivo->NomeCampo == "COMBO19_1"){
                   ?>
-                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($required) echo "required";?>>
+                  <br>
+                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="select" <?php if($required) echo "required";?>>
                     <?php
                     // ciclo sui tag ricerca per creare i valori option del campo select html
                     foreach ($xml as $row) { ?>
@@ -166,7 +167,8 @@ trait arxivar{
                   <?php
                 } elseif ($aggiuntivo->NomeCampo == "COMBO20_2")  {
                   ?>
-                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($required) echo "required";?>>
+                  <br>
+                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="select" <?php if($required) echo "required";?>>
                     <?php
                     // ciclo sui tag ricerca per creare i valori option del campo select html
                     foreach ($xml as $row) { ?>
@@ -176,7 +178,8 @@ trait arxivar{
                   <?php
                 } else {
                   ?>
-                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($required) echo "required";?>>
+                  <br>
+                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="select" <?php if($required) echo "required";?>>
                     <?php
                     // ciclo sui tag ricerca per creare i valori option del campo select html
                     foreach ($xml as $row) { ?>
@@ -484,7 +487,7 @@ trait arxivar{
                   $agg->Valore = $primaDisp["ORAINIZIO"];
                 }
                 if( $agg->Nome == 'COMBO20_2' ){
-                  $agg->Valore = $primaDisp["ORAINIZIO"];
+                  $agg->Valore = $primaDisp["IDAMBULATORIO"];
                 }
                 if( $agg->Nome == 'COMBO29_1' ){
                   $agg->Valore = $ses["AOO"]."\\".$ses["USERNAME"];

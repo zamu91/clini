@@ -10,24 +10,25 @@ trait prenotazione{
     WHERE IDCONTRATTO=:id ";
     $this->queryPrepare($str);
     $this->queryBind("id","$idCont");
-    $this->executeQuery();
+    $this->prepareExecute();
     $row=$this->fetch();
     $data=$this->post('data');
     $verso=$row['VERSO'];
 
     if($verso=='0'){
-      $order=" order by IDPRENOTAZIONE desc ";
+      $order=" order by P.IDPRENOTAZIONE desc ";
     }else{
       $order="";
     }
 
-
-    $str="SELECT IDPRENOTAZIONE,ORAINIZIO,ORAFINE,TEMPO,DATA FROM XDM_PRENOTAZIONE
-    WHERE XDM_PRENOTAZIONE.IDCONTRATTO=:idCont and DATA=:data AND STATO=0 $order ";
+    $str="SELECT P.IDPRENOTAZIONE, P.ORAINIZIO, P.ORAFINE, P.TEMPO, P.DATA, AC.IDAMBULATORIO
+    FROM XDM_PRENOTAZIONE P
+    INNER JOIN XDM_AMBULATORIO_CONTRATTO AC ON P.IDCONTRATTO = AC.IDCONTRATTO
+    WHERE P.IDCONTRATTO=:idCont and P.DATA=:data AND P.STATO=0 $order ";
     $this->queryPrepare($str);
     $this->queryBind("idCont",$idCont);
     $this->queryBind("data",$data);
-    $this->executeQuery();
+    $this->prepareExecute();
     $row=$this->fetch();
     if($this->queryNumRows()==0){
       return false;
@@ -51,7 +52,7 @@ trait prenotazione{
     $this->queryBind("oraInizio",$data['ORAINIZIO']);
     $this->queryBind("oraFine",$data['ORAFINE']);
     $this->queryBind("tempo",$data['TEMPO']);
-    $this->executeQuery();
+    $this->prepareExecute();
     //TODO: da segnare questo?
     $idOccupato=$data['IDOCCUPATO'];
     $this->segnaOccupato($idOccupato);
@@ -66,7 +67,7 @@ trait prenotazione{
     $this->queryBind("id",$this->idPrenotazioneWork);
     $this->queryBind("doc",$doc);
 
-    $this->executeQuery();
+    $this->prepareExecute();
   }
 
   public function getClinicaPerData(){
@@ -99,7 +100,7 @@ trait prenotazione{
     ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
     JOIN XDM_PRENOTAZIONE ON XDM_PRENOTAZIONE.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
     AND XDM_PRENOTAZIONE.STATO=0
-    WHERE XDM_AMBULATORIO.PROVINCIA=:prov  order by DATA  ";
+    WHERE XDM_AMBULATORIO.PROVINCIA=:prov order by DATA  ";
 
 
     $this->queryPrepare($que);
