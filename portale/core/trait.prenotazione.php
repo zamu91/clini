@@ -67,10 +67,10 @@ trait prenotazione{
 
   private function segnaOccupato($doc){
     //$this->setJsonMess("debugOccupato",  $doc);
-    $str="UPDATE XDM_PRENOTAZIONE SET STATO=1,DOCNUMBER=:doc WHERE IDPRENOTAZIONE=:id ";
+    $str="UPDATE XDM_PRENOTAZIONE SET STATO=1,DOCNUMBER=:dnumber WHERE IDPRENOTAZIONE=:pren ";
     $this->queryPrepare($str);
-    $this->queryBind("id",$this->idPrenotazioneWork);
-    $this->queryBind("doc",$doc);
+    $this->queryBind("pren",$this->idPrenotazioneWork);
+    $this->queryBind("dnumber",$doc);
     $this->executeQuery();
 
     $this->setJsonMess("debugOccupato2",  $str);
