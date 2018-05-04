@@ -79,5 +79,17 @@ div.containerClinica{
 
 button.is-primary{
   background-color: #009fe3 !important;
+}
 
+
+
+
+button.is-primary:hover{
+
+
+  background-color: transparent !important;
+
+  border-color: #00d1b2 !important;
+
+  color: #00d1b2 !important;
 }
