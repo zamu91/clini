@@ -2,7 +2,6 @@ var idPrenotazioneSelect=null;
 var dataSelect=null;
 
 
-
 $( document ).ready(function() {
   jd={};
   jd.azione='controlloTokenARXLogin';
