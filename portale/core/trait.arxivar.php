@@ -3,7 +3,8 @@ trait arxivar{
   public $baseUrl = "http://localhost:81/";
   public $adminUser = "Admin";
   public $adminPass = "123";
-  public $maskid = array("ec6009ba90064374a09956b7b7a61328", "ec6009ba90064374a09956b7b7a61328", "ec6009ba90064374a09956b7b7a61328", "ec6009ba90064374a09956b7b7a61328");
+  public $maskid = array("d8c5b9d091784c0ab4d4b1e4307466c9", "ec6009ba90064374a09956b7b7a61328", "ec6009ba90064374a09956b7b7a61328", "ec6009ba90064374a09956b7b7a61328");
+  public $maskDefaultTipoVal = array("RCA", "ec6009ba90064374a09956b7b7a61328", "ec6009ba90064374a09956b7b7a61328", "ec6009ba90064374a09956b7b7a61328");
   public $softwareName = "PHP Gestione cliniche";
   public $softwareNameSecret ="035518E483DE4436";
   private $loginResult;
@@ -152,23 +153,38 @@ trait arxivar{
                 $xmlDoc = new DOMDocument();
                 $temp=$aggiuntivo->arxDataSource;
                 $xml=simplexml_load_string($temp) or die("Error: Cannot create object");
-                if( $aggiuntivo->NomeCampo != "COMBO19_1"){
+                if( $aggiuntivo->NomeCampo == "COMBO19_1"){
                   ?>
-                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($required) echo "required";?>>
+                  <br>
+                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="select" <?php if($required) echo "required";?>>
                     <?php
                     // ciclo sui tag ricerca per creare i valori option del campo select html
                     foreach ($xml as $row) { ?>
-                      <option value="<?php echo $row->ELEMENTO; ?>"><?php echo $row->ELEMENTO; ?></option>
+                      <?php  $selected = ( $ses["AOO"]."\\".$ses["USERNAME"] == $row->UTENTE) ? "selected" : ""; ?>
+                      <option value="<?php echo $row->UTENTE; ?>" <?php echo $selected; ?> ><?php echo $row->NOMINATIVO; ?></option>
+                    <?php } ?>
+                  </select><br />
+                  <?php
+                } elseif ($aggiuntivo->NomeCampo == "COMBO20_2")  {
+                  ?>
+                  <br>
+                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="select" <?php if($required) echo "required";?>>
+                    <?php
+                    // ciclo sui tag ricerca per creare i valori option del campo select html
+                    foreach ($xml as $row) { ?>
+                      <option value="<?php echo $row->IDAMBULATORIO; ?>"><?php echo $row->AMBULATORIO; ?></option>
                     <?php } ?>
                   </select><br />
                   <?php
                 } else {
                   ?>
-                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($required) echo "required";?>>
+                  <br>
+                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="select" <?php if($required) echo "required";?>>
                     <?php
                     // ciclo sui tag ricerca per creare i valori option del campo select html
                     foreach ($xml as $row) { ?>
-                      <option value="<?php echo $row->UTENTE; ?>"><?php echo $row->NOMINATIVO; ?></option>
+                      <?php $selected = ($this->maskDefaultTipoVal[$maskix] == $row->ELEMENTO) ? "selected" : ""; ?>
+                      <option value="<?php echo $row->ELEMENTO; ?>" <?php echo $selected; ?> ><?php echo $row->ELEMENTO; ?></option>
                     <?php } ?>
                   </select><br />
                   <?php
@@ -176,6 +192,10 @@ trait arxivar{
               } elseif($tipo=='Checkbox'){
                 ?>
                 <input type="checkbox" id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($required) echo "required";?> /><br />
+                <?php
+              } elseif( $tipo == 'Databox' ){
+                ?>
+                <input type="date" id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="input" <?php if($required) echo "required";?> /><br />
                 <?php
               }
               break;
@@ -411,15 +431,15 @@ trait arxivar{
         $sessionid = $this->loginResult->SessionId;
       } else {
         $sessionid = $this->loginResult->SessionId;
-        $str="SELECT * FROM DM_RUBRICA R INNER JOIN DM_UTENTI U ON R.CONTATTI = U.DESCRIPTION
-        WHERE R.PARTIVA = :partiva ";
-        $this->queryPrepare($str);
-        $this->queryBind("partiva", $ses["PARTIVA"]);
-        $this->executeQuery();
-        $row = $this->fetch();
+        // $str="SELECT * FROM DM_RUBRICA R INNER JOIN DM_UTENTI U ON R.CONTATTI = U.DESCRIPTION
+        // WHERE R.PARTIVA = :partiva ";
+        // $this->queryPrepare($str);
+        // $this->queryBind("partiva", $ses["PARTIVA"]);
+        // $this->executeQuery();
+        // $row = $this->fetch();
 
         $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
-        $impersonate = $ARX_Login->Impersonate_By_UserName($sessionid, $row["DESCRIPTION"]);
+        $impersonate = $ARX_Login->Impersonate_By_UserName($sessionid, $ses["USERNAME"]);
         // var_dump($impersonate);
       }
 
@@ -433,7 +453,7 @@ trait arxivar{
       $profileMv = $ARX_Dati->Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId($sessionid, $this->maskid[$maskix]);
       $details = $profileMv->DmMaskDetails->Dm_MaskDetail;
       $profile = $profileMv->DmProfileDefault->Dm_Profile_Insert_Base;
-
+      $primaDisp = $this->getPrimaDisp();
       foreach ($details as $field) {
 
         switch ($field->FIELD_KIND) {
@@ -453,6 +473,26 @@ trait arxivar{
           foreach ($profile->Aggiuntivi->Aggiuntivo_Base as $agg) {
             if(array_key_exists($agg->Nome,$_POST)){
               $agg->Valore=$_POST[$agg->Nome];
+              /* FIXME: Al momento la data e l'ora della prenotazione viene inserita sul campo mail (TESTO12_297) e su telefono (TESTO14_297)
+               * Questa sezione deve funzionare solamente con l'impersonate in quanto se è un utente normale è lecito che venga modificata in fase di inserimento.
+               * DATA = DATA21_2    ORA = TESTO22_2   LUOGO = COMBO20_2    PATROCINATORE = COMBO29_1
+               */
+               /* Siamo nel caso di utente o in impersonate o patrocinatore al quale è associato il gruppo patrocinatori che ha il permesso di INSDOC
+               * Valorizzare con l'utente di inserimento il campo patrocinatore. */
+              if( $ses["IMPERSONATE"] == 1 || $ses["INSDOC"] == 1){
+                if( $agg->Nome == 'DATA21_2' ) {
+                  $agg->Valore = $primaDisp["DATA"];
+                }
+                if( $agg->Nome == 'TESTO22_2' ){
+                  $agg->Valore = $primaDisp["ORAINIZIO"];
+                }
+                if( $agg->Nome == 'COMBO20_2' ){
+                  $agg->Valore = $primaDisp["IDAMBULATORIO"];
+                }
+                if( $agg->Nome == 'COMBO29_1' ){
+                  $agg->Valore = $ses["AOO"]."\\".$ses["USERNAME"];
+                }
+              }
             }
           }
           break;
@@ -469,8 +509,6 @@ trait arxivar{
       foreach ($props as $key => $value) {
         $profileForMask->$key = $value;
       }
-      /* TODO: da caricare la lista dei dati effettivi per in caricamento della dataora */
-      $primaDisp = $this->getPrimaDisp();
 
       $profileForMask->DmMaskId = $profileMv->DmMask->ID;
       $profileForMask->Reason = \ARX_Dati\Dm_Mask_Type::Archiviazione;
@@ -478,14 +516,16 @@ trait arxivar{
 
       $basepath = dirname($_SERVER['DOCUMENT_ROOT']);
       $attach = array();
-      foreach ($files as $chiave => $valore) {
-        $filepath = $basepath.trim($valore, ".");
-        $arxFile = new ARX_Dati\Arx_File();
-        $arxFile->CreationDate = date("c", filectime($filepath));
-        $arxFile->FileName = basename($filepath);
-        $arxFile->File = file_get_contents($filepath);
-        $arxFile->DeleteFolderOnDisposeIfEmpty = FALSE;
-        array_push($attach, $arxFile);
+      if( !empty($files)){
+        foreach ($files as $chiave => $valore) {
+          $filepath = $basepath.trim($valore, ".");
+          $arxFile = new ARX_Dati\Arx_File();
+          $arxFile->CreationDate = date("c", filectime($filepath));
+          $arxFile->FileName = basename($filepath);
+          $arxFile->File = file_get_contents($filepath);
+          $arxFile->DeleteFolderOnDisposeIfEmpty = FALSE;
+          array_push($attach, $arxFile);
+        }
       }
 
       $profileForMask->Attachments = $attach;
@@ -716,9 +756,11 @@ trait arxivar{
 
     $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
     $impersonate = $ARX_Login->Impersonate_By_UserName($sessionid, $row["DESCRIPTION"]);
-    // $this->arxDebug($impersonate);
+
     $userI = $ARX_Login->GetInfoUserImpersonated($sessionid);
+    // $this->arxDebug($userI);
     $aoo = $userI->AOO;
+    $this->username = $userI->DESCRIPTION;
     $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
     $userIA = $ARX_Dati->Dm_Gruppi_GetData_By_Utente($sessionid, $userI->UTENTE);
     $gruppi = $userIA->Dm_Gruppi;
