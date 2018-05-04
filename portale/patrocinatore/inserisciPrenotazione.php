@@ -57,12 +57,12 @@ include_once '../admin/template/html.php';
     <div class="tipoPrenotazione" style="display:none;">
 
       <div class="columns">
-        <?php divElement('<button class="button is-primary" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile auto</button>',"Inserisci Codice patrocinatore","6"); ?>
-        <?php divElement('<button class="button is-primary" data-maskix="1" onclick="apriProfilo(this);">Responsabilità civile terzi</button>',"Inserisci Codice patrocinatore","6"); ?>
+        <?php divElement('<button class="button is-primary" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile auto</button>',"","6"); ?>
+        <?php divElement('<button class="button is-primary" data-maskix="1" onclick="apriProfilo(this);">Responsabilità civile terzi</button>',"","6"); ?>
       </div>
       <div class="columns">
-        <?php divElement('<button class="button is-primary" data-maskix="2" onclick="apriProfilo(this);">Polizza privata infortuni</button>',"Inserisci Codice patrocinatore","6"); ?>
-        <?php divElement('<button class="button is-primary" data-maskix="3" onclick="apriProfilo(this);">Consulenza tecnica di parte</button>',"Inserisci Codice patrocinatore","6"); ?>
+        <?php divElement('<button class="button is-primary" data-maskix="2" onclick="apriProfilo(this);">Polizza privata infortuni</button>',"","6"); ?>
+        <?php divElement('<button class="button is-primary" data-maskix="3" onclick="apriProfilo(this);">Consulenza tecnica di parte</button>',"","6"); ?>
       </div>
     </div> <!-- end tipo prenotazione -->
 
