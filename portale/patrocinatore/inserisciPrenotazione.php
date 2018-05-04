@@ -67,7 +67,7 @@ include_once '../admin/template/html.php';
     </div> <!-- end tipo prenotazione -->
 
 
-    <div class="maschera Container">
+    <div class="mascheraContainer">
       <div class="maschera">
       </div>
     <button class="is-primary button" onclick="scriviDatiProfilo();">SALVA PROFILO</button>

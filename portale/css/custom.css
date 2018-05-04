@@ -87,3 +87,8 @@ button.is-primary:hover{
   border-color: #00d1b2 !important;
   color: #00d1b2 !important;
 }
+
+
+div.mascheraContainer{
+  display:none;
+}
