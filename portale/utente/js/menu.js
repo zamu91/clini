@@ -71,8 +71,11 @@ function apriProfiloImpersonate(sender, newdoc){
   var jd = { azione: "dettaglioProfilo",data:dataSelect, docnumber: docnumber, maskix: $(sender).data("maskix") };
   doLoad(".maschera", jd, function(){
     $('.tipoPrenotazione').hide('slow');
-    $('.maschera').show('slow');
-    $('#DATA21_2').val(dataSelect);
+
+    $('.mascheraContainer').show('slow');
+    //$('#DATA21_2').val(dataSelect);
+    $("#mask-title").html( $(sender).html() );
+
 
     $("#modal-title").html( $(sender).html() );
     $("#modal-action").modal("toggle");
