@@ -99,11 +99,7 @@ function scriviDatiProfiloImpersonate(){
   jd.files = file;
   doAjax(jd, function(data){
     if(data.res){
-      swal({
-        title:"salvataggio",
-        text:"Profilo inserito con successo",
-        type:"success",
-      }); //end swal
+      swal("salvataggio","Profilo inserito con successo","success"); //end swal
 
       setTimeout(function(){
         localStorage.setItem("tok","");

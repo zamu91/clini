@@ -124,21 +124,18 @@ function scriviDatiProfilo(){
   console.log(jd);
   doAjax(jd, function(data){
     if(data.res){
-      swal({
-        title:"salvataggio",
-        text:"Profilo inserito con successo",
-        type:"success",
-      },
-      function(){
-        goDash();
-      }
-    ); //end swal
 
+      swal("salvataggio","Profilo inserito con successo","success");
 
-  } else {
-    swal("Attenzione",data.mess,'warning');
-  }
-}, function(jqXHR, textStatus, errorThrown){
-  swal("ERRORE","Errore salvataggio profilazione.","error")
-});
+      setTimeout(function(){
+        localStorage.setItem("tok","");
+        goIndexUtente();
+      },4000);
+
+    } else {
+      swal("Attenzione",data.mess,'warning');
+    }
+  }, function(jqXHR, textStatus, errorThrown){
+    swal("ERRORE","Errore salvataggio profilazione.","error")
+  });
 }
