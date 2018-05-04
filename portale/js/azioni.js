@@ -1,4 +1,4 @@
-var urlAjax="core/class.chiamate.php";
+var urlAjax="../core/class.chiamate.php";
 var ajaxCall;
 var ajaxLoad;
 
