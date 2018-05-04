@@ -130,7 +130,7 @@ trait prenotazione{
           </p>
           <button class="button is-primary"
           onclick="scegliPrenotazione('<?php echo $row['IDCONTRATTO'];?>',
-          '<?php echo $row['DATA']; ?>');">PRENOTA
+          '<?php echo $row['DATAFORM']; ?>');">PRENOTA
         </button>
       </div>
     </div>
