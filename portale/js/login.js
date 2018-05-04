@@ -5,7 +5,7 @@ function login(){
   var pass = $("#password").val();
 
   jqXHR = $.ajax({
-    url: "core/class.chiamate.php",
+    url: "../core/class.chiamate.php",
     type: 'POST',
     dataType:'json',
     data: { azione: "loginPatrocinatore", username: user, password: pass},

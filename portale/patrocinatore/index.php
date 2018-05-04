@@ -24,9 +24,6 @@ include_once '../admin/template/html.php';
       <div class="column is-one-quarter"></div>
     </div>
   </div>
-  <script>
-  var urlAjax="../core/class.chiamate.php";
-</script>
 
 </body>
 </html>
