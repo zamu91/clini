@@ -4,7 +4,7 @@ include_once '../admin/template/html.php';
 ?>
 <body>
   <script src="js/navigazione.js"></script>
-  <div class="container">
+  <div class="container" id="container">
 
   </div><!-- end container -->
 
