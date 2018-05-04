@@ -31,8 +31,8 @@ trait prenotazione{
     $this->queryBind("idCont",$idCont);
     $this->queryBind("data",$data);
     $this->executeQuery();
-    
-    if($row=$this->fetch()){
+    $row=$this->fetch();
+    if(empty($row['IDPRENOTAZIONE'])){
       $this->setJsonMess("mess","Nessuna prenotazione disponibile per la giornata, scegli un altro giorno");
       $this->setJsonMess("res",false);
       $this->halt();
