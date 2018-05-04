@@ -170,7 +170,7 @@ trait arxivar{
                 } elseif ($aggiuntivo->NomeCampo == "COMBO20_2")  {
                   ?>
                   <br>
-                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="select" <?php if($required) echo "required";?>>
+                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" disabled class="select" <?php if($required) echo "required";?>>
                     <?php
                     // ciclo sui tag ricerca per creare i valori option del campo select html
                     foreach ($xml as $row) { ?>
@@ -196,8 +196,15 @@ trait arxivar{
                 <input type="checkbox" id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($required) echo "required";?> /><br />
                 <?php
               } elseif( $tipo == 'Databox' ){
+                $defVal = "";
+                $datapost = $this->post("data", false);
+                if($aggiuntivo->NomeCampo == "DATA21_2" && !empty($datapost)) {
+                  // $app = explode("/", $_POST["data"]);
+                  // $defVal = $app[2]."-".$app[1]."-".$app[0];
+                  $defVal = $datapost;
+                }
                 ?>
-                <input type="date" id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="input" <?php if($required) echo "required";?> /><br />
+                <input type="text" disabled id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="input" <?php if($required) echo "required";?> value="<?php echo $defVal; ?>" /><br />
                 <?php
               }
               break;
@@ -456,6 +463,7 @@ trait arxivar{
       $details = $profileMv->DmMaskDetails->Dm_MaskDetail;
       $profile = $profileMv->DmProfileDefault->Dm_Profile_Insert_Base;
       $primaDisp = $this->getPrimaDisp();
+      // $this->arxDebug($primaDisp);
       foreach ($details as $field) {
 
         switch ($field->FIELD_KIND) {
@@ -532,7 +540,7 @@ trait arxivar{
 
       $profileForMask->Attachments = $attach;
 
-      if( $ses["IMPERSONATE"] == '1' && !$primaDisp){
+      if( !$primaDisp ){
         $this->setJsonMess("res", false);
         $this->setJsonMess("errorMessage", "Sembra che la tua prenotazione sia già stata presa da qualche altro cliente. Ritenta.");
       } else {
@@ -542,8 +550,8 @@ trait arxivar{
           $this->setJsonMess("docnumber", $result->PROFILE->DOCNUMBER);
           // echo "Importazione completata con system ID: ".$result->PROFILE->DOCNUMBER."<hr/>";
           // if( $ses["IMPERSONATE"] == '1' ){
-            /* Occupazione prenotazione */
-            $this->segnaOccupato($result->PROFILE->DOCNUMBER);
+          /* Occupazione prenotazione */
+          $this->segnaOccupato($result->PROFILE->DOCNUMBER);
           // }
         } else {
           $this->setJsonMess("res", false);
