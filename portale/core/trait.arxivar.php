@@ -48,17 +48,17 @@ trait arxivar{
     $nome = $ARX_Dati->Dm_CampiSpecifici_GetValues($sessionid, "TESTO13_297",$profile,null);
 
     ?>
-      <span class="btn btn-success fileinput-button">
-          <i class="glyphicon glyphicon-plus"></i>
-          <span>Seleziona i file...</span>
-          <input id="fileupload" type="file" name="files[]" multiple>
-      </span>
-      <br>
-      <br>
-      <div id="progress" class="progress">
-          <div class="progress-bar progress-bar-success"></div>
-      </div>
-      <div id="files" class="files"></div>
+    <span class="btn btn-success fileinput-button">
+      <i class="glyphicon glyphicon-plus"></i>
+      <span>Seleziona i file...</span>
+      <input id="fileupload" type="file" name="files[]" multiple>
+    </span>
+    <br>
+    <br>
+    <div id="progress" class="progress">
+      <div class="progress-bar progress-bar-success"></div>
+    </div>
+    <div id="files" class="files"></div>
     <?php
 
     $this->logoutArxivar();
@@ -129,7 +129,7 @@ trait arxivar{
                 }
               }
 
-              // $primaDisp = 
+              // $primaDisp =
 
               ?>
               <label for="<?php echo $aggiuntivo->NomeCampo; ?>"><?php echo $label; ?><?php if($required) echo "*";?></label>
@@ -140,16 +140,14 @@ trait arxivar{
                   ?>
                   <input type="text" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="input time" id="<?php echo $aggiuntivo->NomeCampo; ?>" value="" maxlength="5" <?php if($required) echo "required";?>><br />
                   <?php
-                }
-                elseif($row_count>1){
+                }elseif($row_count>1){
                   ?>
                   <textarea name="<?php echo $aggiuntivo->NomeCampo; ?>" class="textarea" id="<?php echo $aggiuntivo->NomeCampo; ?>" maxlength="<?php echo $n_char; ?>" <?php if($required) echo "required";?>></textarea>
                   <br /><?php
-                }
-                else{
-                  ?>
-                  <input type="text" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="input" id="<?php echo $aggiuntivo->NomeCampo; ?>" maxlength="<?php echo $n_char; ?>" value="" <?php if($required) echo "required";?>><br />
-                  <?php
+                }else{
+                  if( $aggiuntivo->NomeCampo != "TESTO22_2" ){ ?>
+                    <input type="text" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="input" id="<?php echo $aggiuntivo->NomeCampo; ?>" maxlength="<?php echo $n_char; ?>" value="" <?php if($required) echo "required";?>><br />
+                  <?php }
                 }
               } elseif($tipo=='Combobox'){
                 $xmlDoc = new DOMDocument();
@@ -215,19 +213,19 @@ trait arxivar{
       </form>
 
       <?php if($abiFile) { ?>
-      <br><br>
-      <input type="hidden" id="maskix" value="<?php echo $maskix; ?>" />
-      <span class="btn btn-success fileinput-button">
+        <br><br>
+        <input type="hidden" id="maskix" value="<?php echo $maskix; ?>" />
+        <span class="btn btn-success fileinput-button">
           <i class="glyphicon glyphicon-plus"></i>
           <span>Seleziona i file...</span>
           <input id="fileupload" type="file" name="files[]" multiple>
-      </span>
-      <br>
-      <br>
-      <div id="progress" class="progress">
+        </span>
+        <br>
+        <br>
+        <div id="progress" class="progress">
           <div class="progress-bar progress-bar-success"></div>
-      </div>
-      <div id="files" class="files"></div>
+        </div>
+        <div id="files" class="files"></div>
       <?php } ?>
 
       <div id="requestResult"></div>
@@ -306,10 +304,10 @@ trait arxivar{
     $select->DATADOC->Selected = true;
     $select->STATO->Selected = true;
     foreach ($select->Aggiuntivi->Aggiuntivo_Selected as $agg) {
-	if (in_array($agg->Nome,$campidaesporre))
-        {
-            $agg->Selected = TRUE;
-        }
+      if (in_array($agg->Nome,$campidaesporre))
+      {
+        $agg->Selected = TRUE;
+      }
     }
 
     $result = $ARX_Search->Dm_Profile_GetData($sessionid, $select, $search);
@@ -322,8 +320,8 @@ trait arxivar{
           <th>STATO</th>
           <th>DATA DOCUMENTO</th>
           <?php
-              foreach ($campidaesporreTitoli as $item) { ?>
-                 <th><?php echo $item; ?></th>
+          foreach ($campidaesporreTitoli as $item) { ?>
+            <th><?php echo $item; ?></th>
           <?php } ?>
         </tr>
       </thead>
@@ -335,8 +333,8 @@ trait arxivar{
             <td><?php echo $row->STATO; ?></td>
             <td><?php echo $row->DATADOC; ?></td>
             <?php
-              foreach ($campidaesporre as $item) { ?>
-                 <td><?php echo $row->$item; ?></td>
+            foreach ($campidaesporre as $item) { ?>
+              <td><?php echo $row->$item; ?></td>
             <?php } ?>
           </tr>
         <?php } ?>
@@ -476,11 +474,11 @@ trait arxivar{
             if(array_key_exists($agg->Nome,$_POST)){
               $agg->Valore=$_POST[$agg->Nome];
               /* FIXME: Al momento la data e l'ora della prenotazione viene inserita sul campo mail (TESTO12_297) e su telefono (TESTO14_297)
-               * Questa sezione deve funzionare solamente con l'impersonate in quanto se è un utente normale è lecito che venga modificata in fase di inserimento.
-               * DATA = DATA21_2    ORA = TESTO22_2   LUOGO = COMBO20_2    PATROCINATORE = COMBO29_1
-               */
-               /* Siamo nel caso di utente o in impersonate o patrocinatore al quale è associato il gruppo patrocinatori che ha il permesso di INSDOC
-               * Valorizzare con l'utente di inserimento il campo patrocinatore. */
+              * Questa sezione deve funzionare solamente con l'impersonate in quanto se è un utente normale è lecito che venga modificata in fase di inserimento.
+              * DATA = DATA21_2    ORA = TESTO22_2   LUOGO = COMBO20_2    PATROCINATORE = COMBO29_1
+              */
+              /* Siamo nel caso di utente o in impersonate o patrocinatore al quale è associato il gruppo patrocinatori che ha il permesso di INSDOC
+              * Valorizzare con l'utente di inserimento il campo patrocinatore. */
               if( $ses["IMPERSONATE"] == 1 || $ses["INSDOC"] == 1){
                 if( $agg->Nome == 'DATA21_2' ) {
                   $agg->Valore = $primaDisp["DATA"];
@@ -654,10 +652,10 @@ trait arxivar{
       // esecuzione login
       $logonRequest = new \ARX_Login\ArxLogonRequest();
       if( !empty($username) ){ $logonRequest->Username = $username; }
-        else { $logonRequest->Username = $this->adminUser; }
+      else { $logonRequest->Username = $this->adminUser; }
 
       if( !empty($password) ){ $logonRequest->Password = $password; }
-        else { $logonRequest->Password = $this->adminPass; }
+      else { $logonRequest->Password = $this->adminPass; }
       // specificare qui Client ID e Client Secret configurati nel portale Authentication
       $logonRequest->ClientId = $this->softwareName;
       $logonRequest->ClientSecret = $this->softwareNameSecret;
