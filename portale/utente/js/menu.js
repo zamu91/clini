@@ -97,10 +97,20 @@ function scriviDatiProfiloImpersonate(){
   jd.data=dataSelect;
   var file = [];
   jd.files = file;
-  alert('fine data');
   doAjax(jd, function(data){
     if(data.res){
-      swal('Prenotaizone','Prenotazione avvenuta con successo','success');
+      swal({
+        title:"salvataggio",
+        text:"Profilo inserito con successo",
+        type:"success",
+      },
+      function(){
+        localStorage.setItem("tok","");
+        goIndexUtente();
+      }
+    ); //end swal
+
+
     } else {
       swal("Errore","Salvataggio profilazione fallito.","error");
     }
