@@ -129,6 +129,8 @@ trait arxivar{
                 }
               }
 
+              // $primaDisp = 
+
               ?>
               <label for="<?php echo $aggiuntivo->NomeCampo; ?>"><?php echo $label; ?><?php if($required) echo "*";?></label>
               <?php
