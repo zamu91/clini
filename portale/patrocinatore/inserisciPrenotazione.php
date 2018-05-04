@@ -16,6 +16,7 @@ include_once '../admin/template/html.php';
         <div class="column is-6">
           <button name="tipo"  class="button is-primary" onclick="cercaClinica('provincia');">Cerca Clinica per posizione</button>
         </div>
+
       </div> <!-- radioOpzioni -->
 
 
@@ -29,6 +30,10 @@ include_once '../admin/template/html.php';
           <div class="column is-6">
             <button onclick="cercaPerData();" class="button is-primary">Cerca</button>
           </div>
+          <div class="column is-6">
+            <button onclick="indietroCerca();" class="button is-primary">Indietro</button>
+          </div>
+
         </div>
       </div> <!-- cerca per data -->
 
@@ -42,6 +47,11 @@ include_once '../admin/template/html.php';
           <div class="column is-6">
             <button onclick="cercaPerClinica();" class="button is-primary">Cerca</button>
           </div>
+          <div class="column is-6">
+            <button onclick="indietroCerca();" class="button is-primary">Indietro</button>
+          </div>
+
+
         </div>
       </div> <!-- end cercaPerProv-->
 
@@ -71,8 +81,8 @@ include_once '../admin/template/html.php';
       <h2 id="mask-title"></h2>
       <div class="maschera">
       </div>
-    <button class="is-primary button" onclick="scriviDatiProfilo();">SALVA PROFILO</button>
-    <button class="is-primary button" onclick="indietroSalva();">INDIETRO</button>
+      <button class="is-primary button" onclick="scriviDatiProfilo();">SALVA PROFILO</button>
+      <button class="is-primary button" onclick="indietroSalva();">INDIETRO</button>
 
     </div>
 
