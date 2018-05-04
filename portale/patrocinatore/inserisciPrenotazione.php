@@ -51,7 +51,6 @@ include_once '../admin/template/html.php';
             <button onclick="indietroCerca();" class="button is-primary">Indietro</button>
           </div>
 
-
         </div>
       </div> <!-- end cercaPerProv-->
 
