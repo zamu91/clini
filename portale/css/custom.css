@@ -75,5 +75,9 @@ div.containerClinica{
   margin:5px;
   float:left;
   width:350px;
+}
+
+button.is-primary{
+  background-color: #009fe3 !important;
 
 }
