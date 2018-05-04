@@ -73,12 +73,12 @@ function apriProfilo(sender, newdoc){
   var jd = { azione: "dettaglioProfilo",data:dataSelect, docnumber: docnumber, maskix: $(sender).data("maskix") };
   doLoad(".maschera", jd, function(){
     $('.tipoPrenotazione').hide('slow');
-    $('.maschera').show('slow');
+    $('.mascheraContainer').show('slow');
     //$('#DATA21_2').val(dataSelect);
     $("#modal-title").html( $(sender).html() );
     $("#modal-action").modal("toggle");
-    $('.maschera').append('<button class="is-primary button" '+
-    ' onclick="scriviDatiProfiloImpersonate();">SALVA PROFILO</button>');
+
+
   });
 }
 
