@@ -68,7 +68,7 @@ include_once '../admin/template/html.php';
 
 
     <div class="mascheraContainer">
-      <h2 class="mask-title"></h2>
+      <h2 id="mask-title"></h2>
       <div class="maschera">
       </div>
     <button class="is-primary button" onclick="scriviDatiProfilo();">SALVA PROFILO</button>
