@@ -76,27 +76,27 @@ function apriProfilo(sender, newdoc){
     if( $("#fileupload").length ){
       var url = "../core/jquery-file-upload-9.21.0/index.php";
       $('#fileupload').fileupload({
-          url: url,
-          dataType: 'json',
-          done: function (e, data) {
-              $.each(data.result.files, function (index, file) {
-                if( typeof file.error != 'undefined' && file.error != "" ) {
-                  alert("Errore nel caricamento di fle."+ file.name+' --> '+file.error );
-                } else {
-                  $('<p class="uploadedFile" data-info="'+decodeURIComponent(file.url)+'"/>').text(file.name).appendTo('#files');
-                }
-              });
-          },
-          progressall: function (e, data) {
-              var progress = parseInt(data.loaded / data.total * 100, 10);
-              $('#progress .progress-bar').css(
-                  'width',
-                  progress + '%'
-              );
-          },
-          fail: function(jqXHR, errorThrown, textStatus){
-            alert("Errore nella procedura di caricamento dei file.");
-          }
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+          $.each(data.result.files, function (index, file) {
+            if( typeof file.error != 'undefined' && file.error != "" ) {
+              alert("Errore nel caricamento di fle."+ file.name+' --> '+file.error );
+            } else {
+              $('<p class="uploadedFile" data-info="'+decodeURIComponent(file.url)+'"/>').text(file.name).appendTo('#files');
+            }
+          });
+        },
+        progressall: function (e, data) {
+          var progress = parseInt(data.loaded / data.total * 100, 10);
+          $('#progress .progress-bar').css(
+            'width',
+            progress + '%'
+          );
+        },
+        fail: function(jqXHR, errorThrown, textStatus){
+          alert("Errore nella procedura di caricamento dei file.");
+        }
       }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
     }
   });
@@ -124,11 +124,21 @@ function scriviDatiProfilo(){
   console.log(jd);
   doAjax(jd, function(data){
     if(data.res){
-      caricaListaProfili();
-    } else {
-      swal("Attenzione",data.mess,'warning');
-    }
-  }, function(jqXHR, textStatus, errorThrown){
-    swal("ERRORE","Errore salvataggio profilazione.","error")
-  });
+      swal({
+        title:"salvataggio",
+        text:"Profilo inserito con successo",
+        type:"success",
+      },
+      function(){
+        goDash();
+      }
+    ); //end swal
+
+
+  } else {
+    swal("Attenzione",data.mess,'warning');
+  }
+}, function(jqXHR, textStatus, errorThrown){
+  swal("ERRORE","Errore salvataggio profilazione.","error")
+});
 }

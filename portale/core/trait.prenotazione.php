@@ -39,7 +39,7 @@ trait prenotazione{
       return false;
     }
     $this->idPrenotazioneWork=$row['IDPRENOTAZIONE'];
-  //  $this->setJsonMess("debugIdPreno",  $this->idPrenotazioneWork);
+    //  $this->setJsonMess("debugIdPreno",  $this->idPrenotazioneWork);
     return $row;
   }
   //
@@ -73,8 +73,8 @@ trait prenotazione{
     $this->queryBind("doc",$doc);
     $this->executeQuery();
 
-  $this->setJsonMess("debugOccupato2",  $str);
-  $this->setJsonMess("debugOccupato",  $this->idPrenotazioneWork);
+    $this->setJsonMess("debugOccupato2",  $str);
+    $this->setJsonMess("debugOccupato",  $this->idPrenotazioneWork);
 
 
 

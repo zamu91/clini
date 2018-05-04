@@ -15,6 +15,10 @@ function indietroSalva(){
   $('.maschera').html("");
 }
 
+function goDash(){
+  window.location.href="dash.php";
+}
+
 
 function accediRicerca(){
 
