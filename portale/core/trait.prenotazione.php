@@ -75,7 +75,7 @@ trait prenotazione{
 
     $this->setJsonMess("debugOccupato2",  $str);
     $this->setJsonMess("debugOccupato",  $this->idPrenotazioneWork);
-
+    $this->commit(); //fine della cosa faccio qua commit
 
 
   }
