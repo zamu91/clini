@@ -13,7 +13,8 @@ function login(){
     // $("#resultCall").html(data);
     if(data.login){
       localStorage.setItem("tok",data.token);
-      navigaDashboard();
+      window.location.href="dash.php";
+
     } else {
       swal("Attenzione","Errore login,controllare username e password","warning");
     }

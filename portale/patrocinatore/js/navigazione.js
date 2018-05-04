@@ -2,7 +2,7 @@
 
 
 function accediInserisciPatrocinatore(){
-  window.location.href="patrocinatore/inserisciPatrocinatore.php";
+  window.location.href="inserisciPatrocinatore.php";
 }
 
 function goIndexPatrocinatore(){

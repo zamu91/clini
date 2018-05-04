@@ -24,6 +24,21 @@ include_once '../admin/template/html.php';
       <div class="column is-one-quarter"></div>
     </div>
   </div>
+  <script>
+
+  $( document ).ready(function() {
+    jd={};
+    jd.azione='controlloTokenARXLogin';
+    doAjax(jd,function(data){
+      if(data.validToken){
+        window.location.href="dash.php";
+      }
+
+    });
+  });
+
+</script>
+
 
 </body>
 </html>
