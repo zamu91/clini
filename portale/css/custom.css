@@ -93,3 +93,12 @@ button.is-primary:hover{
 
   color: #00d1b2 !important;
 }
+
+
+span.btn-primary:hover{
+  background-color: transparent !important;
+
+  border-color: #00d1b2 !important;
+
+  color: #00d1b2 !important;
+}

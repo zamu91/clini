@@ -79,6 +79,33 @@ function apriProfilo(sender, newdoc){
     $("#modal-action").modal("toggle");
     $('.maschera').append('<button class="is-primary button" '+
     ' onclick="scriviDatiProfiloImpersonate();">SALVA PROFILO</button>');
+
+    if( $("#fileupload").length ){
+      var url = "../core/jquery-file-upload-9.21.0/index.php";
+      $('#fileupload').fileupload({
+          url: url,
+          dataType: 'json',
+          done: function (e, data) {
+              $.each(data.result.files, function (index, file) {
+                if( typeof file.error != 'undefined' && file.error != "" ) {
+                  alert("Errore nel caricamento di fle."+ file.name+' --> '+file.error );
+                } else {
+                  $('<p class="uploadedFile" data-info="'+decodeURIComponent(file.url)+'"/>').text(file.name).appendTo('#files');
+                }
+              });
+          },
+          progressall: function (e, data) {
+              var progress = parseInt(data.loaded / data.total * 100, 10);
+              $('#progress .progress-bar').css(
+                  'width',
+                  progress + '%'
+              );
+          },
+          fail: function(jqXHR, errorThrown, textStatus){
+            alert("Errore nella procedura di caricamento dei file.");
+          }
+      }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
+    }
   });
 }
 

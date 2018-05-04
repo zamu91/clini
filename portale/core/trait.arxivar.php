@@ -48,7 +48,7 @@ trait arxivar{
     $nome = $ARX_Dati->Dm_CampiSpecifici_GetValues($sessionid, "TESTO13_297",$profile,null);
 
     ?>
-    <span class="btn btn-success fileinput-button">
+    <span class="btn btn-primary fileinput-button">
       <i class="glyphicon glyphicon-plus"></i>
       <span>Seleziona i file...</span>
       <input id="fileupload" type="file" name="files[]" multiple>
@@ -132,7 +132,9 @@ trait arxivar{
               // $primaDisp =
 
               ?>
-              <label for="<?php echo $aggiuntivo->NomeCampo; ?>"><?php echo $label; ?><?php if($required) echo "*";?></label>
+              <?php if( $aggiuntivo->NomeCampo != "TESTO22_2" ){ ?>
+                <label for="<?php echo $aggiuntivo->NomeCampo; ?>"><?php echo $label; ?><?php if($required) echo "*";?></label>
+              <?php } ?>
               <?php
               $tipo=$aggiuntivo->Classe;
               if($tipo=='Textbox'){
@@ -215,7 +217,7 @@ trait arxivar{
       <?php if($abiFile) { ?>
         <br><br>
         <input type="hidden" id="maskix" value="<?php echo $maskix; ?>" />
-        <span class="btn btn-success fileinput-button">
+        <span class="btn btn-primary fileinput-button">
           <i class="glyphicon glyphicon-plus"></i>
           <span>Seleziona i file...</span>
           <input id="fileupload" type="file" name="files[]" multiple>

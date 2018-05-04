@@ -10,7 +10,7 @@ trait prenotazione{
     WHERE IDCONTRATTO=:id ";
     $this->queryPrepare($str);
     $this->queryBind("id","$idCont");
-    $this->prepareExecute();
+    $this->executeQuery();
     $row=$this->fetch();
     $data=$this->post('data');
     $verso=$row['VERSO'];
@@ -28,7 +28,7 @@ trait prenotazione{
     $this->queryPrepare($str);
     $this->queryBind("idCont",$idCont);
     $this->queryBind("data",$data);
-    $this->prepareExecute();
+    $this->executeQuery();
     $row=$this->fetch();
     if($this->queryNumRows()==0){
       return false;
@@ -52,7 +52,7 @@ trait prenotazione{
     $this->queryBind("oraInizio",$data['ORAINIZIO']);
     $this->queryBind("oraFine",$data['ORAFINE']);
     $this->queryBind("tempo",$data['TEMPO']);
-    $this->prepareExecute();
+    $this->executeQuery();
     //TODO: da segnare questo?
     $idOccupato=$data['IDOCCUPATO'];
     $this->segnaOccupato($idOccupato);
@@ -67,7 +67,7 @@ trait prenotazione{
     $this->queryBind("id",$this->idPrenotazioneWork);
     $this->queryBind("doc",$doc);
 
-    $this->prepareExecute();
+    $this->executeQuery();
   }
 
   public function getClinicaPerData(){
