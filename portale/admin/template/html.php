@@ -2,14 +2,14 @@
 
 
 
-function divElementOld($element,$label,$col){
+function divElement($element,$label,$col){
   ?>
   <div class="column is-<?php echo $col; ?>">
 
     <div class="element">
       <label class="label">
         <?php echo $label; ?>
-      </label><br>    
+      </label><br>
       <?php echo $element; ?>
     </div>
   </div>

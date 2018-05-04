@@ -15,7 +15,7 @@ include_once '../admin/template/html.php';
         </div>
         <div class="fieldBox">
           <label>Password</label><br>
-          <input type="text" id="password" name="an_password" placeholder="Password" />
+          <input type="password" id="password" name="an_password" placeholder="Password" />
         </div>
         <div style="clear:both;"></div>
         <br>
