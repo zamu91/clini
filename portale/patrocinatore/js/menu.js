@@ -1,3 +1,5 @@
+urlAjax="../core/class.chiamate.php";
+
 var idPrenotazioneSelect=null;
 var dataSelect=null;
 
