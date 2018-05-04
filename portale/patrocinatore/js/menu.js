@@ -107,6 +107,7 @@ function scriviDatiProfilo(){
   var jd = {};
   jd.azione = "scriviDatiProfilo";
   jd.maskIx = $("#maskIx").val();
+  jd.data=dataSelect;
   jd.COMBO15_297 = $("#COMBO15_297").val();
   jd.COMBO19_1 = $("#COMBO19_1").val();
   jd.TESTO10_297 = $("#TESTO10_297").val();
