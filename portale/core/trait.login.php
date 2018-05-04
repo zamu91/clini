@@ -104,6 +104,7 @@ trait login {
     $row = $this->checkExistSession($imp);
     if($imp == 1){$basepath = dirname($_SERVER['DOCUMENT_ROOT']);
       /* Login tramite impersonate */
+      $username=$this->getUsername();
       $partiva = $this->getPartiva();
       if( !empty($row["USERNAME"]) ){
         $this->loginLog("sessione trovata, aggiorno");
@@ -113,9 +114,10 @@ trait login {
       } else {
         $this->loginLog("nuova sessione, registro");
         $que = "INSERT INTO XDM_WEBSERVICE_SESSION (IDSESSIONE, USERNAME, PASSWORD, ARXSESSION, SCADENZA, AOO, INSDOC, IMPERSONATE, PARTIVA)
-        VALUES ( XDM_WEBSERVICE_SESSION_SEQ1.NEXTVAL , '', '', :sess, TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), :aoo, :insdoc, :imp, :partiva) ";
+        VALUES ( XDM_WEBSERVICE_SESSION_SEQ1.NEXTVAL , :us, '', :sess, TO_DATE(:expi, 'YYYY-MM-DD HH24:MI:SS'), :aoo, :insdoc, :imp, :partiva) ";
       }
       $this->queryPrepare($que);
+      $this->queryBind("us", $username);
       $this->queryBind('sess',$session);
       $this->queryBind('expi',$expirationTime);
       $this->queryBind("aoo", $aoo);
