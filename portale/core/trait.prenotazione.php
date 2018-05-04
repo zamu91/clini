@@ -73,7 +73,10 @@ trait prenotazione{
     $this->queryBind("doc",$doc);
     $this->executeQuery();
 
-  //  $this->setJsonMess("debugOccupato2",  $str);
+  $this->setJsonMess("debugOccupato2",  $str);
+  $this->setJsonMess("debugOccupato",  $this->idPrenotazioneWork);
+
+
 
   }
 
