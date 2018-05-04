@@ -18,7 +18,7 @@ include_once '../admin/template/html.php';
   </div>
 
   <?php
-
+//controllo c'è già login
   //<script>
   //
   // $( document ).ready(function() {
