@@ -17,8 +17,6 @@ $( document ).ready(function() {
   });
 });
 
-
-
 function cercaPerClinica(){
   j={};
   j.clinica=$('#clinicaCerca').val();
@@ -55,17 +53,12 @@ function cercaClinica(tipo){
   }
 }
 
-
-
-
 function scegliPrenotazione(id,data){
   idPrenotazioneSelect=id;
   dataSelect=data;
   $('.cercaClinica').hide('slow');
   $('.tipoPrenotazione').show('slow');
 }
-
-
 
 function apriProfilo(sender, newdoc){
 
@@ -77,7 +70,6 @@ function apriProfilo(sender, newdoc){
     //$('#DATA21_2').val(dataSelect);
     $("#modal-title").html( $(sender).html() );
     $("#modal-action").modal("toggle");
-<<<<<<< HEAD
     $('.maschera').append('<button class="is-primary button" '+
     ' onclick="scriviDatiProfiloImpersonate();">SALVA PROFILO</button>');
 
@@ -107,15 +99,8 @@ function apriProfilo(sender, newdoc){
           }
       }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
     }
-=======
-
-
->>>>>>> 3cac2afec3cc53f0a576b14124c54d18ab612793
   });
 }
-
-
-
 
 function scriviDatiProfilo(){
 
