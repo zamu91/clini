@@ -72,6 +72,7 @@ function apriProfiloImpersonate(sender, newdoc){
   doLoad(".maschera", jd, function(){
     $('.tipoPrenotazione').hide('slow');
     $('.maschera').show('slow');
+    $('#DATA21_2').val(dataSelect);
 
     $("#modal-title").html( $(sender).html() );
     $("#modal-action").modal("toggle");
@@ -85,7 +86,6 @@ function apriProfiloImpersonate(sender, newdoc){
 
 function scriviDatiProfiloImpersonate(){
   var jd = {};
-  alert('innizio ');
   jd.azione = "scriviDatiProfilo";
   jd.maskIx = $("#maskIx").val();
   jd.COMBO15_297 = $("#COMBO15_297").val();
