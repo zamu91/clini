@@ -74,6 +74,7 @@ function apriProfilo(sender, newdoc){
   doLoad(".maschera", jd, function(){
     $('.tipoPrenotazione').hide('slow');
     $('.maschera').show('slow');
+    alert(dataSelect);
     $('#DATA21_2').val(dataSelect);
     $("#modal-title").html( $(sender).html() );
     $("#modal-action").modal("toggle");
