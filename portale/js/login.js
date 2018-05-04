@@ -10,12 +10,12 @@ function login(){
     dataType:'json',
     data: { azione: "loginPatrocinatore", username: user, password: pass},
   }).done(function(data, textStatus){
-    localStorage.setItem("tok",data.token);
-    $("#resultCall").html(data);
+    // $("#resultCall").html(data);
     if(data.login){
+      localStorage.setItem("tok",data.token);
       navigaDashboard();
     } else {
-      alert("Errore login");
+      swal("Attenzione","Errore login,controllare username e password","warning");
     }
   });
 }
