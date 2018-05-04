@@ -10,7 +10,9 @@ $( document ).ready(function() {
       loadProvClinica();
       datPick('#dataCerca');
     }else{
-      goIndexUtente();
+      alert('da variare');
+      goIndexPatrocinatore();
+
     }
   });
 });
