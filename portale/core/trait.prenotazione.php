@@ -34,7 +34,7 @@ trait prenotazione{
     $row=$this->fetch();
     if($this->queryNumRows()==0){
       $this->setJsonMess("mess","Nessuna prenotazione disponibile per la giornata, scegli un altro giorno");
-      $this->setJsonMess("salva",false);
+      $this->setJsonMess("res",false);
       $this->halt();
 
       return false;
