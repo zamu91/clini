@@ -13,6 +13,8 @@ trait prenotazione{
     $this->executeQuery();
     $row=$this->fetch();
     $data=$this->post('data');
+    $cercaData=$this->formOcDateEu(':data');
+
     $verso=$row['VERSO'];
 
     if($verso=='0'){
@@ -24,7 +26,7 @@ trait prenotazione{
     $str="SELECT P.IDPRENOTAZIONE, P.ORAINIZIO, P.ORAFINE, P.TEMPO, P.DATA, AC.IDAMBULATORIO
     FROM XDM_PRENOTAZIONE P
     INNER JOIN XDM_AMBULATORIO_CONTRATTO AC ON P.IDCONTRATTO = AC.IDCONTRATTO
-    WHERE P.IDCONTRATTO=:idCont and P.DATA=:data AND P.STATO=0 $order ";
+    WHERE P.IDCONTRATTO=:idCont and P.DATA=$cercaData AND P.STATO=0 $order ";
     $this->queryPrepare($str);
     $this->queryBind("idCont",$idCont);
     $this->queryBind("data",$data);
