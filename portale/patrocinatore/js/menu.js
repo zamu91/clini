@@ -70,7 +70,7 @@ function apriProfilo(sender, newdoc){
     $('.tipoPrenotazione').hide('slow');
     $('.mascheraContainer').show('slow');
     //$('#DATA21_2').val(dataSelect);
-//    $("#modal-title").html( $(sender).html() );
+    $("#mask-title").html( $(sender).html() );
 
 
     if( $("#fileupload").length ){
