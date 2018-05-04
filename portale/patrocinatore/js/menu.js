@@ -70,12 +70,11 @@ function scegliPrenotazione(id,data){
 function apriProfilo(sender, newdoc){
 
   var docnumber = ( typeof newdoc != 'undefined' && !newdoc) ? getDocunumberDashboard() : "";
-  var jd = { azione: "dettaglioProfilo", docnumber: docnumber, maskix: $(sender).data("maskix") };
+  var jd = { azione: "dettaglioProfilo",data:dataSelect, docnumber: docnumber, maskix: $(sender).data("maskix") };
   doLoad(".maschera", jd, function(){
     $('.tipoPrenotazione').hide('slow');
     $('.maschera').show('slow');
-    alert(dataSelect);
-    $('#DATA21_2').val(dataSelect);
+    //$('#DATA21_2').val(dataSelect);
     $("#modal-title").html( $(sender).html() );
     $("#modal-action").modal("toggle");
     $('.maschera').append('<button class="is-primary button" '+
