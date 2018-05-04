@@ -31,15 +31,15 @@ trait prenotazione{
     $this->queryBind("idCont",$idCont);
     $this->queryBind("data",$data);
     $this->executeQuery();
-    $row=$this->fetch();
     if($this->queryNumRows()==0){
+      $this->setJsonMess("que",$str);
       $this->setJsonMess("mess","Nessuna prenotazione disponibile per la giornata, scegli un altro giorno");
       $this->setJsonMess("res",false);
       $this->halt();
 
       return false;
     }
-
+    $row=$this->fetch();
     $this->idPrenotazioneWork=$row['IDPRENOTAZIONE'];
     return $row;
   }
