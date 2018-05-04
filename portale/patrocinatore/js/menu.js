@@ -122,12 +122,11 @@ function scriviDatiProfilo(){
   console.log(jd);
   doAjax(jd, function(data){
     if(data.res){
-
       caricaListaProfili();
     } else {
-      alert("Salvataggio profilazione fallito.")
+      swal("Attenzione",data.mess,'warning');
     }
   }, function(jqXHR, textStatus, errorThrown){
-    alert("Errore salvataggio profilazione.")
+    swal("ERRORE","Errore salvataggio profilazione.","error")
   });
 }
