@@ -16,22 +16,28 @@ include_once '../admin/template/html.php';
 
     </div>
   </div>
-  <script>
-  $( document ).ready(function() {
-    if(getToken()==""){
-      return 0;
-    }
-    jd={};
-    jd.azione='controlloTokenARXLogin';
-    doAjax(jd,function(data){
-      if(data.validToken){
-        accediMenu();
-      }else{
-        setToken('');
-      }
-    });
-  });
 
-  </script>
+  <?php
+
+  //<script>
+  //
+  // $( document ).ready(function() {
+  //   if(getToken()==""){
+  //     return 0;
+  //   }
+  //   jd={};
+  //   jd.azione='controlloTokenARXLogin';
+  //   doAjax(jd,function(data){
+  //     if(data.validToken){
+  //       accediMenu();
+  //     }else{
+  //       setToken('');
+  //     }
+  //   });
+  // });
+  //
+  // </script>
+
+  ?>
 
 </body>
