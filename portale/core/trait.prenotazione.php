@@ -39,6 +39,7 @@ trait prenotazione{
       return false;
     }
     $this->idPrenotazioneWork=$row['IDPRENOTAZIONE'];
+    $this->setJsonMess("debugIdPreno",  $this->idPrenotazioneWork);
     return $row;
   }
 
@@ -67,11 +68,15 @@ trait prenotazione{
   }
 
   private function segnaOccupato($doc){
-    $this->queryPrepare("UPDATE XDM_PRENOTAZIONE SET STATO=1,DOCNUMBER=:doc WHERE IDPRENOTAZIONE=:id ");
+    $this->setJsonMess("debugOccupato",  $doc);
+    $str="UPDATE XDM_PRENOTAZIONE SET STATO=1,DOCNUMBER=:doc WHERE IDPRENOTAZIONE=:id ";
+    $this->queryPrepare($str);
     $this->queryBind("id",$this->idPrenotazioneWork);
     $this->queryBind("doc",$doc);
-
     $this->executeQuery();
+
+    $this->setJsonMess("debugOccupato2",  $str);
+
   }
 
   public function getClinicaPerData(){
