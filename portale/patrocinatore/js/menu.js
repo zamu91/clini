@@ -67,7 +67,7 @@ function scegliPrenotazione(id,data){
 
 
 
-function apriProfiloImpersonate(sender, newdoc){
+function apriProfilo(sender, newdoc){
 
   var docnumber = ( typeof newdoc != 'undefined' && !newdoc) ? getDocunumberDashboard() : "";
   var jd = { azione: "dettaglioProfilo", docnumber: docnumber, maskix: $(sender).data("maskix") };
@@ -85,7 +85,7 @@ function apriProfiloImpersonate(sender, newdoc){
 
 
 
-function scriviDatiProfiloImpersonate(){
+function scriviDatiProfilo(){
   var jd = {};
   alert('innizio ');
   jd.azione = "scriviDatiProfilo";

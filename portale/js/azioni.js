@@ -17,7 +17,7 @@ function apriProfiloOld(){
   });
 }
 
-function apriProfilo(sender, newdoc){
+function apriProfiloSTOPMETTIAMOSUPATRO(sender, newdoc){
   var docnumber = ( typeof newdoc != 'undefined' && !newdoc) ? getDocunumberDashboard() : "";
   var jd = { azione: "dettaglioProfilo", docnumber: docnumber, maskix: $(sender).data("maskix") };
   doLoad("#modal-body", jd, function(){
@@ -202,7 +202,7 @@ function navigaDashboard(){
   doLoad("#container", jd);
 }
 
-function scriviDatiProfilo(){
+function scriviDatiProfiloOLD(){
   var jd = {};
   jd.azione = "scriviDatiProfilo";
   jd.maskIx = $("#maskIx").val();
