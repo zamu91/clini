@@ -42,30 +42,28 @@ trait prenotazione{
     $this->setJsonMess("debugIdPreno",  $this->idPrenotazioneWork);
     return $row;
   }
-
-  public function salvaPrenotazione(){
-    $this->startTransaction();
-    $data=$this->post('data');
-    $dataIns=$this->formOcDate(':data');
-    $str="INSERT INTO XDM_PRENOTAZIONE
-    (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO)VALUES
-    (:id,:idContratto,:oraInizio,:oraFine,:tempo)  ";
-
-    $this->queryPrepare($str);
-    $this->queryBind("id",$this->getIdNext("IDPRENOTAZIONE","XDM_PRENOTAZIONE"));
-    $this->queryBind("idContratto",$data['IDCONTRATTO']);
-    $this->queryBind("oraInizio",$data['ORAINIZIO']);
-    $this->queryBind("oraFine",$data['ORAFINE']);
-    $this->queryBind("tempo",$data['TEMPO']);
-    $this->executeQuery();
-    //TODO: da segnare questo?
-    $idOccupato=$data['IDOCCUPATO'];
-    $this->segnaOccupato($idOccupato);
-    $this->commit();
-    $this->setJsonMess("ok",true);
-    $this->halt();
-
-  }
+  // 
+  // public function salvaPrenotazione(){
+  //   $this->startTransaction();
+  //   $data=$this->post('data');
+  //   $dataIns=$this->formOcDate(':data');
+  //   $str="INSERT INTO XDM_PRENOTAZIONE
+  //   (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO)VALUES
+  //   (:id,:idContratto,:oraInizio,:oraFine,:tempo)  ";
+  //
+  //   $this->queryPrepare($str);
+  //   $this->queryBind("id",$this->getIdNext("IDPRENOTAZIONE","XDM_PRENOTAZIONE"));
+  //   $this->queryBind("idContratto",$data['IDCONTRATTO']);
+  //   $this->queryBind("oraInizio",$data['ORAINIZIO']);
+  //   $this->queryBind("oraFine",$data['ORAFINE']);
+  //   $this->queryBind("tempo",$data['TEMPO']);
+  //   $this->executeQuery();
+  //   $idOccupato=$data['IDOCCUPATO'];
+  //   $this->segnaOccupato($idOccupato);
+  //   $this->commit();
+  //   $this->setJsonMess("ok",true);
+  //   $this->halt();
+  // }
 
   private function segnaOccupato($doc){
     $this->setJsonMess("debugOccupato",  $doc);
