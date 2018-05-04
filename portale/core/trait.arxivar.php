@@ -541,10 +541,10 @@ trait arxivar{
           $this->setJsonMess("res", true);
           $this->setJsonMess("docnumber", $result->PROFILE->DOCNUMBER);
           // echo "Importazione completata con system ID: ".$result->PROFILE->DOCNUMBER."<hr/>";
-          if( $ses["IMPERSONATE"] == '1' ){
+          // if( $ses["IMPERSONATE"] == '1' ){
             /* Occupazione prenotazione */
             $this->segnaOccupato($result->PROFILE->DOCNUMBER);
-          }
+          // }
         } else {
           $this->setJsonMess("res", false);
           $this->setJsonMess("errorMessage", $result->MESSAGE);
