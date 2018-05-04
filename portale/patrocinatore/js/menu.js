@@ -1,3 +1,5 @@
+var urlAjax="../core/class.chiamate.php";
+
 var idPrenotazioneSelect=null;
 var dataSelect=null;
 
@@ -68,10 +70,8 @@ function apriProfilo(sender, newdoc){
     $('.tipoPrenotazione').hide('slow');
     $('.mascheraContainer').show('slow');
     //$('#DATA21_2').val(dataSelect);
-    $("#modal-title").html( $(sender).html() );
-    $("#modal-action").modal("toggle");
-    $('.maschera').append('<button class="is-primary button" '+
-    ' onclick="scriviDatiProfiloImpersonate();">SALVA PROFILO</button>');
+//    $("#modal-title").html( $(sender).html() );
+
 
     if( $("#fileupload").length ){
       var url = "../core/jquery-file-upload-9.21.0/index.php";
@@ -122,8 +122,7 @@ function scriviDatiProfilo(){
   console.log(jd);
   doAjax(jd, function(data){
     if(data.res){
-      $("#modal-action").modal("toggle");
-      $("#modal-body").html("");
+
       caricaListaProfili();
     } else {
       alert("Salvataggio profilazione fallito.")
