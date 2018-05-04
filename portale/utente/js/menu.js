@@ -103,12 +103,13 @@ function scriviDatiProfiloImpersonate(){
         title:"salvataggio",
         text:"Profilo inserito con successo",
         type:"success",
-      },
-      function(){
+      }); //end swal
+
+      setTimeout(function(){
         localStorage.setItem("tok","");
         goIndexUtente();
-      }
-    ); //end swal
+      },5000);
+
 
 
     } else {
