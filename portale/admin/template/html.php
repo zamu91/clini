@@ -5,7 +5,6 @@
 function divElement($element,$label,$col){
   ?>
   <div class="column is-<?php echo $col; ?>">
-
     <div class="element">
       <label class="label">
         <?php echo $label; ?>
@@ -13,8 +12,8 @@ function divElement($element,$label,$col){
       <?php echo $element; ?>
     </div>
   </div>
-
   <?php
+}
 
 
 
@@ -37,14 +36,8 @@ function divElement($element,$label,$col){
           </div>
         </div>
       </div>
-
     </div>
-
     <?php
-
-
-
-
   }
 
 
