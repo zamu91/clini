@@ -89,15 +89,15 @@ button.is-primary:hover{
 }
 
 
-<<<<<<< HEAD
 span.btn-primary:hover{
   background-color: transparent !important;
 
   border-color: #00d1b2 !important;
 
   color: #00d1b2 !important;
-=======
+}
+
+
 div.mascheraContainer{
   display:none;
->>>>>>> 3cac2afec3cc53f0a576b14124c54d18ab612793
 }
