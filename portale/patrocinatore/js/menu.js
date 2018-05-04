@@ -86,29 +86,33 @@ function apriProfilo(sender, newdoc){
 
 
 function scriviDatiProfilo(){
-  var jd = {};
-  alert('innizio ');
-  jd.azione = "scriviDatiProfilo";
-  jd.maskIx = $("#maskIx").val();
-  jd.COMBO15_297 = $("#COMBO15_297").val();
-  jd.COMBO19_1 = $("#COMBO19_1").val();
-  jd.TESTO10_297 = $("#TESTO10_297").val();
-  jd.TESTO13_297 = $("#TESTO13_297").val();
-  jd.CHECK17_1 = $("#CHECK17_1").val();
-  jd.TESTO14_297 = $("#TESTO14_297").val();
-  jd.TESTO12_297 = $("#TESTO12_297").val();
-  jd.idContratto=idPrenotazioneSelect;
-  jd.data=dataSelect;
-  var file = [];
-  jd.files = file;
-  alert('fine data');
-  doAjax(jd, function(data){
-    if(data.res){
-      swal('Prenotaizone','Prenotazione avvenuta con successo','success');
-    } else {
-      swal("Errore","Salvataggio profilazione fallito.","error");
-    }
-  }, function(jqXHR, textStatus, errorThrown){
-    swal("errore","Errore salvataggio profilazione.","error");
-  });
+
+    var jd = {};
+    jd.azione = "scriviDatiProfilo";
+    jd.maskIx = $("#maskIx").val();
+    jd.COMBO15_297 = $("#COMBO15_297").val();
+    jd.COMBO19_1 = $("#COMBO19_1").val();
+    jd.TESTO10_297 = $("#TESTO10_297").val();
+    jd.TESTO13_297 = $("#TESTO13_297").val();
+    jd.CHECK17_1 = $("#CHECK17_1").val();
+    jd.TESTO14_297 = $("#TESTO14_297").val();
+    jd.TESTO12_297 = $("#TESTO12_297").val();
+    var file = [];
+    $("#files").children(".uploadedFile").each(function(){
+      file.push($(this).data("info"));
+    });
+    jd.files = file;
+    console.log(jd);
+    doAjax(jd, function(data){
+      if(data.res){
+        $("#modal-action").modal("toggle");
+        $("#modal-body").html("");
+        caricaListaProfili();
+      } else {
+        alert("Salvataggio profilazione fallito.")
+      }
+    }, function(jqXHR, textStatus, errorThrown){
+      alert("Errore salvataggio profilazione.")
+    });
+  }
 }

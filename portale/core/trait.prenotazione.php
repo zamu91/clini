@@ -66,7 +66,7 @@ trait prenotazione{
     $this->queryBind("id",$this->idPrenotazioneWork);
     $this->queryBind("doc",$doc);
 
-    $this->prepareExecute();
+    $this->executeQuery();
   }
 
   public function getClinicaPerData(){
@@ -99,7 +99,7 @@ trait prenotazione{
     ON XDM_AMBULATORIO.IDAMBULATORIO=XDM_AMBULATORIO_CONTRATTO.IDAMBULATORIO
     JOIN XDM_PRENOTAZIONE ON XDM_PRENOTAZIONE.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
     AND XDM_PRENOTAZIONE.STATO=0
-    WHERE XDM_AMBULATORIO.PROVINCIA=:prov order by DATA  ";
+    WHERE XDM_AMBULATORIO.PROVINCIA=:prov  order by DATA  ";
 
 
     $this->queryPrepare($que);
