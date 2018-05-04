@@ -129,7 +129,7 @@ function scriviDatiProfilo(){
 
       setTimeout(function(){
         localStorage.setItem("tok","");
-        goIndexUtente();
+        goDash();
       },4000);
 
     } else {
