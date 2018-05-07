@@ -34,6 +34,12 @@ function indietroSalva(){
 }
 
 
+function indietroBottoni(){
+  $('.cercaClinica').show('slow');
+  $('.tipoPrenotazione').hide('slow');
+
+}
+
 
 function accediRicerca(){
 
