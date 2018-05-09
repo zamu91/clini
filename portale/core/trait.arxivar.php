@@ -15,8 +15,8 @@ trait arxivar{
 
   public function getFieldListMascheraRicherca(){
     ob_start();
-    $this->loginArxivarServizio();
     try{
+    $this->loginArxivarServizio();
       $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
       $sessionid = $this->loginResult->SessionId;
       $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
