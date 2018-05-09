@@ -158,7 +158,7 @@ trait arxivar{
                 if( $aggiuntivo->NomeCampo == "COMBO19_1"){
                   ?>
                   <br>
-                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="select" <?php if($required) echo "required";?>>
+                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" disabled name="<?php echo $aggiuntivo->NomeCampo; ?>" class="select" <?php if($required) echo "required";?>>
                     <?php
                     // ciclo sui tag ricerca per creare i valori option del campo select html
                     foreach ($xml as $row) { ?>
@@ -181,7 +181,7 @@ trait arxivar{
                 } else {
                   ?>
                   <br>
-                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="select" <?php if($required) echo "required";?>>
+                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" disabled name="<?php echo $aggiuntivo->NomeCampo; ?>" class="select" <?php if($required) echo "required";?>>
                     <?php
                     // ciclo sui tag ricerca per creare i valori option del campo select html
                     foreach ($xml as $row) { ?>
