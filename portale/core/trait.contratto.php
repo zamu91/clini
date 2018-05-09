@@ -318,11 +318,37 @@ trait contratto{
     }
 
     public function getContrattiInseriti(){
-      $que = "SELECT AM.IDAMBULATORIO, AM.NOME, AM.PROVINCIA, AM.COMUNE, AM.INDIRIZZO,
-      TO_CHAR(AMC.DATAINIZIOCONTRATTO, 'DD/MM/YYYY') DATAINIZIOCONTRATTO, TO_CHAR(AMC.DATAFINECONTRATTO, 'DD/MM/YYYY') DATAFINECONTRATTO,
-      ORAINIZIO, ORAFINE
+
+      +      $que = "SELECT AM.IDAMBULATORIO
+      , AMC.IDCONTRATTO
+      , AM.NOME
+      , INITCAP(AM.PROVINCIA) PROVINCIA
+      , INITCAP(AM.COMUNE) COMUNE
+      , INITCAP(AM.INDIRIZZO) INDIRIZZO
+      , TO_CHAR(AMC.DATAINIZIOCONTRATTO, 'DD/MM/YYYY') DATAINIZIOCONTRATTO
+      , TO_CHAR(AMC.DATAFINECONTRATTO, 'DD/MM/YYYY') DATAFINECONTRATTO
+      , AMC.ORAINIZIO
+      , AMC.ORAFINE
+      , AMC.TEMPO
+      , DECODE(AMC.VERSO,1,'Apertura',0,'Chiusura','Err') VERSO
+      , LISTAGG(DECODE(AMCG.GIORNO,0,'Domenica',1,'Lunedi',2,'Martedi',3,'Mercoledi',4,'Giovedi',5,'Venerdi',6,'Sabato','Err'),' ') WITHIN GROUP (ORDER BY AMCG.GIORNO) GIORNI
       FROM XDM_AMBULATORIO AM
-      INNER JOIN XDM_AMBULATORIO_CONTRATTO AMC ON AM.IDAMBULATORIO = AMC.IDAMBULATORIO";
+      INNER JOIN XDM_AMBULATORIO_CONTRATTO AMC ON AM.IDAMBULATORIO = AMC.IDAMBULATORIO
+      INNER JOIN XDM_CONTRATTO_GIORNO AMCG ON AMCG.IDCONTRATTO=AMC.IDCONTRATTO
+      GROUP BY AM.IDAMBULATORIO
+      , AM.NOME
+      , AM.PROVINCIA
+      , AM.COMUNE
+      , AM.INDIRIZZO
+      , TO_CHAR(AMC.DATAINIZIOCONTRATTO, 'DD/MM/YYYY')
+      , TO_CHAR(AMC.DATAFINECONTRATTO, 'DD/MM/YYYY')
+      , AMC.ORAINIZIO
+      , AMC.ORAFINE
+      , AMC.TEMPO
+      , DECODE(AMC.VERSO,1,'Apertura',0,'Chiusura','Err')
+      , AMC.IDCONTRATTO";
+
+
       $this->queryPrepare($que);
       $this->executePrepare();
 
@@ -334,10 +360,13 @@ trait contratto{
             <td>PROVINCIA</td>
             <td>COMUNE</td>
             <td>INDIRIZZO</td>
-            <td>DATAINIZIOCONTRATTO</td>
-            <td>DATAFINECONTRATTO</td>
+            <td>DATA INIZIO CONTRATTO</td>
+            <td>DATA FINE CONTRATTO</td>
+            <td>GIORNI</td>
             <td>ORAINIZIO</td>
             <td>ORAFINE</td>
+            <td>DURATA VISITA</td>
+            <td>INIZIO VISITE</td>
           </tr>
         </thead>
         <tbody>
@@ -349,8 +378,11 @@ trait contratto{
               <td><?php echo $row["INDIRIZZO"]; ?></td>
               <td><?php echo $row["DATAINIZIOCONTRATTO"]; ?></td>
               <td><?php echo $row["DATAFINECONTRATTO"]; ?></td>
+              <td><?php echo $row["GIORNI"]; ?></td>
               <td><?php echo $row["ORAINIZIO"]; ?></td>
               <td><?php echo $row["ORAFINE"]; ?></td>
+              <td><?php echo $row["TEMPO"]; ?></td>
+              <td><?php echo $row["VERSO"]; ?></td>
             </tr>
           <?php } ?>
         </tbody>

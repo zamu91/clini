@@ -20,6 +20,11 @@ function goDash(){
 }
 
 
+function indietroBottoni(){
+  $('.cercaClinica').show('slow');
+  $('.tipoPrenotazione').hide('slow');
+}
+
 function accediRicerca(){
 
 }

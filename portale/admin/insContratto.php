@@ -5,8 +5,8 @@ include_once 'template/html.php';
 ?>
 <body>
   <?php
-  getHeader("CONTRATTO","Inserimento di un nuovo contratto per ambulatorio");
-  getSubHeader();
+  // getHeader("CONTRATTO","Inserimento di un nuovo contratto per ambulatorio");
+  // getSubHeader();
   ?>
   <div class="container">
     <div class="columns">
