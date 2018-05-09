@@ -65,6 +65,7 @@ include_once '../admin/template/html.php';
       <div class="columns">
         <?php divElement('<button class="button is-primary" data-maskix="2" onclick="apriProfiloImpersonate(this);">Polizza privata infortuni</button>',"","6"); ?>
         <?php divElement('<button class="button is-primary" data-maskix="3" onclick="apriProfiloImpersonate(this);">Consulenza tecnica di parte</button>',"","6"); ?>
+        <?php divElement('<button class="button is-primary" data-maskix="3" onclick="apriProfiloImpersonate(this);">Legge 210</button>',"","6"); ?>
       </div>
       <button class="button is-primary" onclick="indietroBottoni();">Indietro</button>  
     </div> <!-- end tipo prenotazione -->

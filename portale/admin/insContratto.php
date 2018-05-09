@@ -15,9 +15,6 @@ include_once 'template/html.php';
       <?php divElement('  <input class="input " placeholder="Data Fine" id="dataFine" type="text">',"Data Fine","4"); ?>
     </div>
 
-
-
-
     <div class="columns">
       <?php divElement('  <input class="input timep " placeholder="Ora Inizio" id="oraInizio" type="text">',"Ora Inizio","3"); ?>
       <?php divElement('  <input class="input timep " placeholder="Ora Fine" id="oraFine" type="text">',"Ora Fine","3"); ?>

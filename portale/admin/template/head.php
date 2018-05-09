@@ -24,5 +24,6 @@
   <script type="text/javascript" src="../vendor/jquery-file-upload-9.21.0/js/jquery.fileupload.js"></script>
   <script type="text/javascript" src="js/admin.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src=https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.1/iframeResizer.contentWindow.min.js ></script>
 
 </head>
