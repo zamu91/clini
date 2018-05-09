@@ -19,6 +19,7 @@ trait arxivar{
       $this->loginArxivarServizio();
       $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
       $sessionid = $this->loginResult->SessionId;
+      var_dump($sessionid);
       // $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
       // $campidaesporre=array("COMBO15_297","TESTO10_297","TESTO13_297","CHECK17_1","TESTO14_297","TESTO12_297");
       // foreach ($search->Aggiuntivi->Field_Abstract as $agg) {
