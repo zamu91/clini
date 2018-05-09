@@ -94,8 +94,8 @@ trait contratto{
   //controllo se ci sono conflitti con altre
   private function checkConflict(){
 
-    $iniz=$this->formOcDate(':dataIniz');
-    $fine=$this->formOcDate(':dataFine');
+    $iniz=$this->formOcDateEu(':dataIniz');
+    $fine=$this->formOcDateEu(':dataFine');
 
     $adJoin=$this->getJoinConflict();
     $str="SELECT XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO  FROM XDM_AMBULATORIO_CONTRATTO
