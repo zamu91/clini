@@ -34,7 +34,7 @@ trait navigazione {
 
       <div id="containerFiltri">
         <div id="containerFieldList">
-          <?php //echo $this->getFieldListMascheraRicherca(); ?>
+          <?php echo $this->getFieldListMascheraRicherca(); ?>
 
           <button class="button is-primary floatRight buttonSearch" onclick="caricaListaProfili();">Ricerca</button>
         </div>
