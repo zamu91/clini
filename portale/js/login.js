@@ -36,7 +36,7 @@ function loginImpersonate(){
     if(data.login){
       navigaDashboard();
     } else {
-      alert("Errore login");
+      swal("Attenzione","Errore login,controllare il codice patrocinatore","warning");
     }
   });
 }
