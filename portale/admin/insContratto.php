@@ -28,7 +28,7 @@ include_once 'template/html.php';
 
     <div class="columns">
       <div class="column is-6">
-        <button class="button is-primary" onclick="salvaContratto();">Salva Contratto</button>
+        <button class="button is-primary" onclick="salvaContratto();">SALVA CONTRATTO</button>
       </div>
 
       <div class="column is-6">
