@@ -276,8 +276,10 @@ trait contratto{
 
     // inserisco la data
     private function procDataContratto($data){
+
       $giorno = date('w', $data);
-      echo "Questo è il giorno che sto vedendo -->".$giorno;
+
+      echo "Questa $data è il giorno che sto vedendo -->".$giorno;
       if(!$this->ifDayWork($giorno)){
         return false; //giorno da saltare
       }
