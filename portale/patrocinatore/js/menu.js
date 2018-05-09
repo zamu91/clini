@@ -101,7 +101,18 @@ function apriProfilo(sender, newdoc){
   });
 }
 
+
+function validateEmail(email) {
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+
+
 function scriviDatiProfilo(){
+  if(!validateEmail($('#TESTO12_297').val())){
+    swal("warning","Mail non valida, inserirne una correttamente","warning");
+    return 0;
+  }
 
   var jd = {};
   jd.azione = "scriviDatiProfilo";
