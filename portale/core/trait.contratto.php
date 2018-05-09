@@ -308,7 +308,7 @@ trait contratto{
     public function occupaSpazioPrenotazione(){
       $dataInizio=$this->dataInizio;
       $dataFine=$this->dataFine;
-      $newData=strtotime($dataInizio);
+      $newData=$dataInizio;
       $i=0;
 
       while($newData<=$dataFine){ //ciclo i giorni da data inizio e data fine
