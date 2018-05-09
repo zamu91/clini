@@ -27,6 +27,7 @@ trait navigazione {
       <!-- <button class="button is-primary" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile auto</button>
       <button class="button is-primary" data-maskix="1" onclick="apriProfilo(this);">Responsabilità civile terzi</button>
       <button class="button is-primary" data-maskix="2" onclick="apriProfilo(this);">Polizza privata infortuni</button>
+      <button class="button is-primary" data-maskix="3" onclick="apriProfilo(this);">Legge 210</button>
       <button class="button is-primary" data-maskix="3" onclick="apriProfilo(this);">Consulenza tecnica di parte</button> -->
 
       <div class="clearSpace"></div>

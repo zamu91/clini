@@ -1,6 +1,7 @@
 <button onclick="apriProfilo();">Responsabilità civile auto</button>
 <button onclick="apriProfilo();">Responsabilità civile terzi</button>
 <button onclick="apriProfilo();">Polizza privata infortuni</button>
+<button onclick="apriProfilo();">Legge 210</button>
 <button onclick="apriProfilo();">Consulenza tecnica di parte</button>
 
 <div id="containerFiltri">

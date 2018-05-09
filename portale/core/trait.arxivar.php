@@ -3,8 +3,8 @@ trait arxivar{
   public $baseUrl = "http://localhost:81/";
   public $adminUser = "Admin";
   public $adminPass = "123";
-  public $maskid = array("d8c5b9d091784c0ab4d4b1e4307466c9", "ec6009ba90064374a09956b7b7a61328", "ec6009ba90064374a09956b7b7a61328", "ec6009ba90064374a09956b7b7a61328");
-  public $maskDefaultTipoVal = array("RCA", "ec6009ba90064374a09956b7b7a61328", "ec6009ba90064374a09956b7b7a61328", "ec6009ba90064374a09956b7b7a61328");
+  public $maskid = array("d2c91aab4a35489489675dd9fa831087", "1361f4e97b394cc39aa29fcbb2936a47", "0a326382877e4cb8a7369f2f43082815", "0c6d4ba528d34adcabda6705de8965f8","d34fde6fae8441ccaebca26fd9b8653c");
+  public $maskDefaultTipoVal = array("RCA", "RCT", "PP", "L210","CTP");
   public $softwareName = "PHP Gestione cliniche";
   public $softwareNameSecret ="035518E483DE4436";
   private $loginResult;
