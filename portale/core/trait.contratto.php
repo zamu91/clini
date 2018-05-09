@@ -263,7 +263,6 @@ trait contratto{
       $str="INSERT INTO XDM_PRENOTAZIONE
       (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO,DATA,STATO)VALUES
       (:id,:idContratto,:oraInizio,:oraFine,:tempo,$dataIns,0)  ";
-      echo $str;
       $this->queryPrepare($str);
       $this->queryBind("id",$this->getIncPrenotazione());
       $this->queryBind("idContratto",$this->getIdContratto());
@@ -279,7 +278,6 @@ trait contratto{
 
       $giorno = date('w', $data);
 
-      echo "Questa $data è il giorno che sto vedendo -->".$giorno;
       if(!$this->ifDayWork($giorno)){
         return false; //giorno da saltare
       }
@@ -290,11 +288,8 @@ trait contratto{
       $newOra=$oraInizio;
       $durata=$this->getVCont("TEMPO");
       $i=0;
-      echo $durata;
-      echo "ciao prima del processo dataContrato";
 
       while($newOra<$oraFine){
-        echo "ciao sono qua";
 
         $i++;
         $fineOra=strtotime('+'.$durata.' minutes',$newOra);
