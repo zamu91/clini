@@ -6,8 +6,8 @@ include_once 'template/html.php';
 ?>
 <body>
   <?php
-  getHeader("Amministrazione clinica","Seleziona l'azione da eseguire");
-  getSubHeader();
+  // getHeader("Amministrazione clinica","Seleziona l'azione da eseguire");
+  // getSubHeader();
   ?>
 
   <section class="container">
