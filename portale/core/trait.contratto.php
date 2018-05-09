@@ -319,7 +319,7 @@ trait contratto{
 
     public function getContrattiInseriti(){
 
-      +      $que = "SELECT AM.IDAMBULATORIO
+      $que = "SELECT AM.IDAMBULATORIO
       , AMC.IDCONTRATTO
       , AM.NOME
       , INITCAP(AM.PROVINCIA) PROVINCIA
