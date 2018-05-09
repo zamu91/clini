@@ -260,10 +260,10 @@ trait contratto{
     private function occupaSpazioSingolo($data,$newOra,$fineOra){
       $dataIns=$this->formOcDate(':data');
 
-      //TODO: Da storicizzare il prepare solo al primo insert per rendere più veloce tutto
       $str="INSERT INTO XDM_PRENOTAZIONE
       (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO,DATA,STATO)VALUES
       (:id,:idContratto,:oraInizio,:oraFine,:tempo,$dataIns,0)  ";
+      echo $str;
       $this->queryPrepare($str);
       $this->queryBind("id",$this->getIncPrenotazione());
       $this->queryBind("idContratto",$this->getIdContratto());
