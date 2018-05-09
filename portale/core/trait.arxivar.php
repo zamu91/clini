@@ -14,7 +14,7 @@ trait arxivar{
   private $logError;
 
   public function getFieldListMascheraRicherca(){
-    // ob_start();
+    ob_start();
     // try{
     // $this->loginArxivarServizio();
     //   $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
@@ -33,7 +33,7 @@ trait arxivar{
     //   echo 'Caught exception: ',  $e->getMessage(), "\n";
     // }
     // $this->logoutArxivar();
-    // return ob_get_clean();
+    return ob_get_clean();
   }
 
   public function getFieldFromMascheraUpload(){
