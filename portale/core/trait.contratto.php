@@ -277,6 +277,7 @@ trait contratto{
     // inserisco la data
     private function procDataContratto($data){
       $giorno = date('w', $data);
+      echo "Questo è il giorno che sto vedendo -->".$giorno;
       if(!$this->ifDayWork($giorno)){
         return false; //giorno da saltare
       }
@@ -287,7 +288,12 @@ trait contratto{
       $newOra=$oraInizio;
       $durata=$this->getVCont("TEMPO");
       $i=0;
+      echo $durata;
+      echo "ciao prima del processo dataContrato";
+
       while($newOra<$oraFine){
+        echo "ciao sono qua";
+
         $i++;
         $fineOra=strtotime('+'.$durata.' minutes',$newOra);
         $this->occupaSpazioSingolo($data,$newOra,$fineOra);
