@@ -277,13 +277,9 @@ trait contratto{
     private function procDataContratto($data){
 
       $giorno = date('w', $data);
-      echo "$data-----> $giorno \n ";
       if(!$this->ifDayWork($giorno)){
-        echo "no ok";
         return false; //giorno da saltare
-
       }
-      echo "ok \n";
 
       //procedo con il calcolo dei blocchi temporali
       $oraInizio=$this->oraInizio;
