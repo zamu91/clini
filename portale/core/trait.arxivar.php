@@ -16,6 +16,7 @@ trait arxivar{
   public function getFieldListMascheraRicherca(){
     ob_start();
     $this->loginArxivarServizio();
+    try{
     $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
     $sessionid = $this->loginResult->SessionId;
     $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
@@ -28,7 +29,10 @@ trait arxivar{
         </div>
       <?php }
     }
-    $this->logoutArxivar();
+  } catch (Exception $e) {
+      echo 'Caught exception: ',  $e->getMessage(), "\n";
+  }
+  $this->logoutArxivar();
     return ob_get_clean();
   }
 
