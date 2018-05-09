@@ -14,26 +14,26 @@ trait arxivar{
   private $logError;
 
   public function getFieldListMascheraRicherca(){
-    ob_start();
-    try{
-    $this->loginArxivarServizio();
-      $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
-      $sessionid = $this->loginResult->SessionId;
-      $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
-      $campidaesporre=array("COMBO15_297","TESTO10_297","TESTO13_297","CHECK17_1","TESTO14_297","TESTO12_297");
-      foreach ($search->Aggiuntivi->Field_Abstract as $agg) {
-        if(in_array($agg->Nome,$campidaesporre)) {?>
-          <div class="fieldBox">
-            <label><?php echo $agg->Label; ?></label><br>
-            <input type="text" id="<?php echo $agg->Nome ?>" name="<?php echo $agg->Nome ?>" class="input" data-name="<?php echo $agg->Nome ?>" />
-          </div>
-        <?php }
-      }
-    } catch (Exception $e) {
-      echo 'Caught exception: ',  $e->getMessage(), "\n";
-    }
-    $this->logoutArxivar();
-    return ob_get_clean();
+    // ob_start();
+    // try{
+    // $this->loginArxivarServizio();
+    //   $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
+    //   $sessionid = $this->loginResult->SessionId;
+    //   $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
+    //   $campidaesporre=array("COMBO15_297","TESTO10_297","TESTO13_297","CHECK17_1","TESTO14_297","TESTO12_297");
+    //   foreach ($search->Aggiuntivi->Field_Abstract as $agg) {
+    //     if(in_array($agg->Nome,$campidaesporre)) {?>
+    <!--       <div class="fieldBox">
+             <label><?php echo $agg->Label; ?></label><br>
+             <input type="text" id="<?php echo $agg->Nome ?>" name="<?php echo $agg->Nome ?>" class="input" data-name="<?php echo $agg->Nome ?>" />
+           </div> -->
+         <?php //}
+    //   }
+    // } catch (Exception $e) {
+    //   echo 'Caught exception: ',  $e->getMessage(), "\n";
+    // }
+    // $this->logoutArxivar();
+    // return ob_get_clean();
   }
 
   public function getFieldFromMascheraUpload(){
