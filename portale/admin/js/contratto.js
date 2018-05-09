@@ -41,7 +41,7 @@ function getGiorniContratto(){
   giorni[1]=getValGiorni('lun');
   giorni[2]=getValGiorni('mar');
   giorni[3]=getValGiorni('mer');
-  giorni[4]=getValGiorni('gio');
+  giorni[4]=getValGiorni('giov');
   giorni[5]=getValGiorni('ven');
   giorni[6]=getValGiorni('sab');
   return giorni;

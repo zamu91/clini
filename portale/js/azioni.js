@@ -154,8 +154,9 @@ function doAjax(jd, doneFunc, failFunc){
     if( isFunction(failFunc) ) {
       failFunc(jqXHR, textStatus, errorThrown);
     }else{
-      alert("Errore nella comunicazione.");
-      console.log(jqXHR);
+      swal("Attenzione","Errore, controllare i dati inseriti","error");
+      //console.log(jqXHR);
+
     }
   });
 }
@@ -181,8 +182,9 @@ function doLoad(target, jd, doneFunc, failFunc){
     if( isFunction(failFunc) ) {
       failFunc(jqXHR, textStatus, errorThrown);
     }else{
-      alert(jqXHR);
-      console.log(jqXHR);
+      swal("Errore","attenzione errore chiamata ","error");
+  //    alert(jqXHR);
+    //  console.log(jqXHR);
     }
   });
 }

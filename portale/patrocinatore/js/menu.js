@@ -12,7 +12,6 @@ $( document ).ready(function() {
       loadProvClinica();
       datPick('#dataCerca');
     }else{
-      alert('da variare');
       goIndexPatrocinatore();
 
     }
