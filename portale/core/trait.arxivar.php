@@ -583,7 +583,8 @@ trait arxivar{
       $sessionid = $this->loginResult->SessionId;
       $idTaskWork = $this->post("taskwork", false);
       $files = $this->post("files", false);
-      $basepath = dirname($_SERVER['DOCUMENT_ROOT']);
+      // $basepath = dirname($_SERVER['DOCUMENT_ROOT']);
+      $basepath = "";
       $dmTaskDocs = $ARX_Workflow->Dm_TaskDoc_GetData_By_DmTaskworkId($sessionid, $idTaskWork);
       $dmTaskDoc = $dmTaskDocs->Dm_TaskDoc;
       $idTaskDoc = $dmTaskDoc->ID;
