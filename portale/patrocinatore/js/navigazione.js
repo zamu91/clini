@@ -2,7 +2,7 @@
 
 function navigaDashboard(){
   var jd = { azione: "naviga", page: "dashboard" };
-  alert('ok');
+  doLoad('#container',jd);
 }
 
 function accediInserisciPatrocinatore(){
@@ -11,6 +11,12 @@ function accediInserisciPatrocinatore(){
 
 function goIndexPatrocinatore(){
   window.location.href="index.php";
+}
+
+function indietroCerca(){
+  window.location.href="dash.php";
+
+
 }
 
 function indietroSalva(){

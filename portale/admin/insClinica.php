@@ -5,12 +5,11 @@ include_once 'template/html.php';
 ?>
 <body>
   <?php
-//  getHeader("Ambulatorio","Inserimento di un nuovo ambulatorio");
-//  getSubHeader();
+  //  getHeader("Ambulatorio","Inserimento di un nuovo ambulatorio");
+  //  getSubHeader();
   ?>
   <div class="container">
     <div class="columns">
-
       <?php divElement('  <input class="input " placeholder="nomeAmbulatorio" id="nomeAmbulatorio" type="text">',"Nome Ambulatorio","6"); ?>
       <?php divElement('  <input class="input " placeholder="provincia" id="provinciaAmbulatorio" type="text">',"Provincia Ambulatorio","6"); ?>
 
@@ -33,54 +32,18 @@ include_once 'template/html.php';
     </div>
 
 
+
+    <div id="tabellaAmbulatori" class="colimns"></div>
+
   </div> <!-- end columns -->
+
+
+  <script>
+  $( document ).ready(function() {
+    getAmbulatoriInseriti();
+  });
+  </script>
 
 
 </body>
 </html>
-
-
-
-<?php
-if(1==2){
-  ?>
-
-  <div id="insClinica">
-    <div class="inputDiv">
-      <label for="nomeAmbulatorio">Nome Ambulatorio</label>
-      <input class="input" type="edit" id="nomeAmbulatorio">
-    </div>
-
-    <div class="inputDiv">
-      <div>
-        <label for="provinciaAmbulatorio">Provincia</label>
-        <input class="input" type="edit" id="provinciaAmbulatorio">
-      </div>
-    </div>
-
-    <div class="inputDiv">
-      <div>
-        <label for="comuneAmbulatorio">Comune</label>
-        <input class="input" type="edit" id="comuneAmbulatorio">
-      </div>
-    </div>
-
-    <div class="inputDiv">
-      <label for="indirizzoAmbulatorio">indirizzo</label>
-      <input class="input" type="edit" id="indirizzoAmbulatorio">
-    </div>
-
-    <div id="tabellaAmbulatori" class="colimns"></div>
-
-
-  </div><!-- ins clinica -->
-<script>
-  $( document ).ready(function() {
-    getAmbulatoriInseriti();
-  });
-</script>
-
-  <?php
-}
-
-?>
