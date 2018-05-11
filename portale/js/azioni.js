@@ -254,7 +254,6 @@ function scriviDocumentiProfilo(){
     file.push($(this).data("info"));
   });
   jd.files = file;
-  console.log(jd);
   doAjax(jd, function(data){
     if(data.res){
       $("#modal-action").modal("toggle");
