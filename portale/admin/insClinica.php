@@ -47,5 +47,3 @@ include_once 'template/html.php';
 
 </body>
 </html>
-
-?>
