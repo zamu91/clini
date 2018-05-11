@@ -1,5 +1,9 @@
 
 
+function navigaDashboard(){
+  var jd = { azione: "naviga", page: "dashboard" };
+  doLoad("#container", jd);
+}
 
 function accediInserisciPatrocinatore(){
   window.location.href="inserisciPatrocinatore.php";

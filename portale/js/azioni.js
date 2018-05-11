@@ -199,10 +199,6 @@ function isFunction(functionToCheck) {
   return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
 }
 
-function navigaDashboard(){
-  var jd = { azione: "naviga", page: "dashboard" };
-  doLoad("#container", jd);
-}
 
 function scriviDatiProfiloOLD(){
   var jd = {};
