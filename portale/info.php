@@ -5,6 +5,9 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include_once 'config/conOCI.php';
 $ora=new conOCI();
+if(!$ora){
+  echo "NON VA NIENTE!!!<br>";
+}
 echo "oggetto";
 $ora->connettiOracle();
 echo "connesso";
