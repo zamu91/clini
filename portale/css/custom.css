@@ -101,3 +101,10 @@ span.btn-primary:hover{
 div.mascheraContainer{
   display:none;
 }
+
+
+table#tabProfili{
+  max-height: 400px;
+  overflow: auto;
+
+}
