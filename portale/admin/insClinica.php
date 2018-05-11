@@ -5,8 +5,8 @@ include_once 'template/html.php';
 ?>
 <body>
   <?php
-//  getHeader("Ambulatorio","Inserimento di un nuovo ambulatorio");
-//  getSubHeader();
+  //  getHeader("Ambulatorio","Inserimento di un nuovo ambulatorio");
+  //  getSubHeader();
   ?>
   <div class="container">
     <div class="columns">
@@ -32,7 +32,17 @@ include_once 'template/html.php';
     </div>
 
 
+
+    <div id="tabellaAmbulatori" class="colimns"></div>
+
   </div> <!-- end columns -->
+
+
+  <script>
+  $( document ).ready(function() {
+    getAmbulatoriInseriti();
+  });
+  </script>
 
 
 </body>
@@ -69,15 +79,9 @@ if(1==2){
       <input class="input" type="edit" id="indirizzoAmbulatorio">
     </div>
 
-    <div id="tabellaAmbulatori" class="colimns"></div>
 
 
   </div><!-- ins clinica -->
-<script>
-  $( document ).ready(function() {
-    getAmbulatoriInseriti();
-  });
-</script>
 
   <?php
 }
