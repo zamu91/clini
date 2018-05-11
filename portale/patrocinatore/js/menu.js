@@ -57,6 +57,9 @@ function apriProfilo(sender, newdoc){
     //$('#DATA21_2').val(dataSelect);
     $("#mask-title").html( $(sender).html() );
 
+    $("#modal-action").modal("toggle");
+
+
 
     if( $("#fileupload").length ){
       var url = "../core/jquery-file-upload-9.21.0/index.php";

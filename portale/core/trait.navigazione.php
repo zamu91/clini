@@ -66,7 +66,7 @@ trait navigazione {
               <p>Modal body text goes here.</p>
             </div>
             <div class="modal-footer">
-              <button id="modal-salva" type="button" class="btn btn-primary">Salva</button>
+              <button id="modal-salva" onclick="scriviDocumentiProfilo();" type="button" class="btn btn-primary">Salva</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
             </div>
           </div>
