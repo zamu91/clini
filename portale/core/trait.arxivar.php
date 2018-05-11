@@ -1,6 +1,6 @@
 <?php
 trait arxivar{
-  public $baseUrl = "http://localhost:81/";
+  public $baseUrl = "http://192.168.50.250:81/";
   public $adminUser = "Admin";
   public $adminPass = "123";
   public $maskid = array("d2c91aab4a35489489675dd9fa831087", "1361f4e97b394cc39aa29fcbb2936a47", "0a326382877e4cb8a7369f2f43082815", "0c6d4ba528d34adcabda6705de8965f8","d34fde6fae8441ccaebca26fd9b8653c");
