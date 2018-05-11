@@ -263,6 +263,6 @@ function scriviDocumentiProfilo(){
       swal("Attenzione","Salvataggio documentazione fallito.","error");
     }
   }, function(jqXHR, textStatus, errorThrown){
-    alert("Errore salvataggio documentazione.")
+    swal("errore","Errore salvataggio documentazione.","error");
   });
 }
