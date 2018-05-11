@@ -13,6 +13,12 @@ function goIndexPatrocinatore(){
   window.location.href="index.php";
 }
 
+function indietroCerca(){
+  window.location.href="dash.php";
+
+
+}
+
 function indietroSalva(){
   $('.tipoPrenotazione').show('slow');
   $('.mascheraContainer').hide('slow');
