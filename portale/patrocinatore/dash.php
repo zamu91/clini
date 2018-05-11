@@ -10,7 +10,7 @@ include_once '../admin/template/html.php';
   </div><!-- end container -->
 
   <script>
-  var urlAjax="../core/class.chiamate.php";
+  // var urlAjax="../core/class.chiamate.php";
   $( document ).ready(function() {
     jd={};
     jd.azione='controlloTokenARXLogin';
