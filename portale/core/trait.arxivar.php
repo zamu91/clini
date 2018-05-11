@@ -530,7 +530,8 @@ trait arxivar{
       $profileForMask->Reason = \ARX_Dati\Dm_Mask_Type::Archiviazione;
       $profileForMask->DataFile = date("c");
 
-      $basepath = dirname($_SERVER['DOCUMENT_ROOT']);
+      // $basepath = dirname($_SERVER['DOCUMENT_ROOT']);
+      $basepath = "";
       $attach = array();
       if( !empty($files)){
         foreach ($files as $chiave => $valore) {
