@@ -119,7 +119,7 @@ trait sql{
   public function queryBind($id,$val){
     $stmt=$this->stmtPrepare;
     if(empty($stmt)){
-      echo "errroe bind dataset vuoto";
+    //  echo "errroe bind dataset vuoto";
       return false;
 
     }
