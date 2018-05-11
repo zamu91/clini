@@ -22,7 +22,6 @@ include_once '../admin/template/html.php';
       }
     });
   });
-  alert('end ready');
 
 </script>
 
