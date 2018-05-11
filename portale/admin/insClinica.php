@@ -70,6 +70,9 @@ if(1==2){
       <input class="input" type="edit" id="indirizzoAmbulatorio">
     </div>
 
+    <div id="tabellaAmbulatori" class="colimns"></div>
+
+
   </div><!-- ins clinica -->
   <?php
 }
