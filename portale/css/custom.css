@@ -101,3 +101,14 @@ span.btn-primary:hover{
 div.mascheraContainer{
   display:none;
 }
+
+div.containerDocumenti{
+  overflow:auto;
+  max-height:500px;
+}
+
+div#containerListaProfili{
+  max-height: 500px;
+  overflow: auto;
+
+}
