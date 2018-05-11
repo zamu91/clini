@@ -23,21 +23,21 @@ trait arxivar{
       var_dump($sessionid);
       var_dump($ARX_Search);
       $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
-      // $campidaesporre=array("COMBO15_297","TESTO10_297","TESTO13_297","CHECK17_1","TESTO14_297","TESTO12_297");
-      // foreach ($search->Aggiuntivi->Field_Abstract as $agg) {
-        // if(in_array($agg->Nome,$campidaesporre)) {?>
-           <div class="fieldBox">
-             <label><?php echo $agg->Label; ?></label><br>
-             <input type="text" id="<?php echo $agg->Nome ?>" name="<?php echo $agg->Nome ?>" class="input" data-name="<?php echo $agg->Nome ?>" />
-           </div>
-         <?php // }
-       // }
+      $campidaesporre=array("COMBO15_297","TESTO10_297","TESTO13_297","CHECK17_1","TESTO14_297","TESTO12_297");
+      foreach ($search->Aggiuntivi->Field_Abstract as $agg) {
+        if(in_array($agg->Nome,$campidaesporre)) {?>
+          <div class="fieldBox">
+            <label><?php echo $agg->Label; ?></label><br>
+            <input type="text" id="<?php echo $agg->Nome ?>" name="<?php echo $agg->Nome ?>" class="input" data-name="<?php echo $agg->Nome ?>" />
+          </div>
+        <?php  }
+      }
     } catch (Exception $e) {
       echo 'Caught exception: ',  $e->getMessage(), "\n";
       die;
     }
     $this->logoutArxivar();
-  //  return ob_get_clean();
+    //  return ob_get_clean();
   }
 
   public function getFieldFromMascheraUpload(){
