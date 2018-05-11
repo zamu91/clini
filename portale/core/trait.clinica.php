@@ -55,7 +55,43 @@ trait clinica
   }
 
 
+  public function getAmbulatorio(){
+
+    $que = "SELECT IDAMBULATORIO,INDIRIZZO,NOME,
+    , INITCAP(AM.PROVINCIA) PROVINCIA
+    , INITCAP(AM.COMUNE) COMUNE
+    , INITCAP(AM.INDIRIZZO) INDIRIZZO
+    FROM XDM_AMBULATORIO AM ";
+
+
+    $this->queryPrepare($que);
+    $this->executePrepare();
+
+    ?>
+    <table class="table">
+      <thead>
+        <tr>
+          <td>NOME AMBULATORIO</td>
+          <td>PROVINCIA</td>
+          <td>COMUNE</td>
+          <td>INDIRIZZO</td>
+        </tr>
+      </thead>
+      <tbody>
+        <?php while( $row=$this->fetch() ){ ?>
+          <tr>
+            <td><?php echo $row["NOME"]; ?></td>
+            <td><?php echo $row["PROVINCIA"]; ?></td>
+            <td><?php echo $row["COMUNE"]; ?></td>
+            <td><?php echo $row["INDIRIZZO"]; ?></td>
+          </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+    <?php
+    die();
+  }
+
+
 }
-
-
 ?>
