@@ -15,7 +15,9 @@ include_once '../admin/template/html.php';
     jd={};
     jd.azione='controlloTokenARXLogin';
     doAjax(jd,function(data){
+      alert('ok sono qua');
       if(data.validToken){
+        alert('prima di naviga');
         navigaDashboard();
       }else{
         goIndexPatrocinatore();
