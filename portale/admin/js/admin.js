@@ -130,7 +130,7 @@ function salvaAmbulatorio(){
 }
 
 
-function getContrattiInseriti(){
+function getAmbulatoriInseriti(){
   var jd = { azione: "getAmbulatoriInseriti" };
   doLoad("#tabellaAmbulatori", jd);
 }
