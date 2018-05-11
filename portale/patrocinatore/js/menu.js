@@ -4,20 +4,6 @@ var idPrenotazioneSelect=null;
 var dataSelect=null;
 
 
-$( document ).ready(function() {
-  jd={};
-  jd.azione='controlloTokenARXLogin';
-  doAjax(jd,function(data){
-    if(data.validToken){
-      loadProvClinica();
-      datPick('#dataCerca');
-    }else{
-      goIndexPatrocinatore();
-
-    }
-  });
-});
-
 function cercaPerClinica(){
   j={};
   j.clinica=$('#clinicaCerca').val();
