@@ -14,7 +14,7 @@ include_once '../admin/template/html.php';
   $( document ).ready(function() {
     jd={};
     jd.azione='controlloTokenARXLogin';
-    zalert('ready');
+    alert('ready');
     doAjax(jd,function(data){
       alert('ok sono qua');
       if(data.validToken){
