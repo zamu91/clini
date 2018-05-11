@@ -22,7 +22,7 @@ trait arxivar{
       $sessionid = $this->loginResult->SessionId;
       var_dump($sessionid);
       var_dump($ARX_Search);
-    //  $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
+      $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
       // $campidaesporre=array("COMBO15_297","TESTO10_297","TESTO13_297","CHECK17_1","TESTO14_297","TESTO12_297");
       // foreach ($search->Aggiuntivi->Field_Abstract as $agg) {
         // if(in_array($agg->Nome,$campidaesporre)) {?>
