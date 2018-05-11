@@ -137,6 +137,13 @@ function doAjax(jd, doneFunc, failFunc){
   jd.token=getToken();
   if( ajaxCall ){ return false; }
   ajaxCall = true;
+  console.log("doAjaxd");
+  console.log({
+    url: urlAjax,
+    type: 'POST',
+    dataType:'html',
+    data: jd
+  });
   ajaxCall = $.ajax({
     url: urlAjax,
     type: 'POST',
@@ -165,6 +172,13 @@ function doLoad(target, jd, doneFunc, failFunc){
   jd.token=getToken();
   if(ajaxLoad){ return false; }
   ajaxLoad = true;
+  console.log("doLoad");
+  console.log({
+    url: urlAjax,
+    type: 'POST',
+    dataType:'html',
+    data: jd
+  });
   jqXHR = $.ajax({
     url: urlAjax,
     type: 'POST',
