@@ -103,8 +103,8 @@ div.mascheraContainer{
 }
 
 
-table#tabProfili{
-  max-height: 400px;
+div#containerListaProfili{
+  max-height: 500px;
   overflow: auto;
 
 }
