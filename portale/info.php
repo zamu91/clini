@@ -16,7 +16,8 @@ if(!$res){
 echo "connesso";
 
 $stid = oci_parse($res, "SELECT * from XDM_WEBSERVICE_SESSION ");
-print_r($stid);
+$row = oci_fetch_array($strid, OCI_ASSOC+OCI_RETURN_NULLS);
+print_r($row);
 
 echo "fine";
 
