@@ -8,7 +8,7 @@ function datPick(elem){
       $( elem ).datepicker({ dateFormat: 'dd/mm/yy' });
 }
 
-function apriProfiloOld(){
+function apriProfiloTabella(){
   var docnumber = "";
   var jd = { azione: "naviga", page: "profilo", docnumber: docnumber };
   doAjax(jd, function(data){
@@ -254,16 +254,15 @@ function scriviDocumentiProfilo(){
     file.push($(this).data("info"));
   });
   jd.files = file;
-  console.log(jd);
-  doAjax(jd, function(mess){
+  doAjax(jd, function(data){
     if(data.res){
       $("#modal-action").modal("toggle");
       $("#modal-body").html("");
       caricaListaProfili();
     } else {
-      alert("Salvataggio documentazione fallito.")
+      swal("Attenzione","Salvataggio documentazione fallito.","error");
     }
   }, function(jqXHR, textStatus, errorThrown){
-    alert("Errore salvataggio documentazione.")
+    swal("errore","Errore salvataggio documentazione.","error");
   });
 }
