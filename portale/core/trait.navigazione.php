@@ -21,7 +21,7 @@ trait navigazione {
   public function navigaDashboard(){
     // $path = $this->getEnvPath().$this->dSep()."template{$this->dSep()}dashboard.php";
     // return file_get_contents ( $path );
-    ob_start();
+  //  ob_start();
     ?>
       <button class="button is-primary" data-maskix="0" onclick=" window.location.href='inserisciPrenotazione.php' ">Inserisci prenotazione</button>
       <!-- <button class="button is-primary" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile auto</button>
