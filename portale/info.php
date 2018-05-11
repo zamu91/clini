@@ -14,7 +14,11 @@ if(!$res){
 }
 
 echo "connesso";
-$res=$ora->query("select * from XDM_WEBSERVICE_SESSION");
-echo "queyr";
-print_r($res);
+
+$stid = oci_parse($res, "SELECT * from XDM_WEBSERVICE_SESSION ");
+print_r($stid);
+
+echo "fine";
+
+
  ?>
