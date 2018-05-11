@@ -55,7 +55,7 @@ trait clinica
   }
 
 
-  public function getAmbulatorio(){
+  public function getAmbulatoriInseriti(){
 
     $que = "SELECT IDAMBULATORIO,INDIRIZZO,NOME,
     , INITCAP(AM.PROVINCIA) PROVINCIA
