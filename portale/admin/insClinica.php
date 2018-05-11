@@ -48,42 +48,4 @@ include_once 'template/html.php';
 </body>
 </html>
 
-
-
-<?php
-if(1==2){
-  ?>
-
-  <div id="insClinica">
-    <div class="inputDiv">
-      <label for="nomeAmbulatorio">Nome Ambulatorio</label>
-      <input class="input" type="edit" id="nomeAmbulatorio">
-    </div>
-
-    <div class="inputDiv">
-      <div>
-        <label for="provinciaAmbulatorio">Provincia</label>
-        <input class="input" type="edit" id="provinciaAmbulatorio">
-      </div>
-    </div>
-
-    <div class="inputDiv">
-      <div>
-        <label for="comuneAmbulatorio">Comune</label>
-        <input class="input" type="edit" id="comuneAmbulatorio">
-      </div>
-    </div>
-
-    <div class="inputDiv">
-      <label for="indirizzoAmbulatorio">indirizzo</label>
-      <input class="input" type="edit" id="indirizzoAmbulatorio">
-    </div>
-
-
-
-  </div><!-- ins clinica -->
-
-  <?php
-}
-
 ?>
