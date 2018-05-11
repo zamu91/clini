@@ -1,8 +1,10 @@
 
 
 function navigaDashboard(){
+  alert('start naviga');
   var jd = { azione: "naviga", page: "dashboard" };
   doLoad("#container", jd);
+  alert('ok');
 }
 
 function accediInserisciPatrocinatore(){
