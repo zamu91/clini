@@ -14,14 +14,19 @@ include_once '../admin/template/html.php';
   $( document ).ready(function() {
     jd={};
     jd.azione='controlloTokenARXLogin';
+    alert('ready');
     doAjax(jd,function(data){
+      alert('ok sono qua');
       if(data.validToken){
+        alert('prima di naviga');
         navigaDashboard();
       }else{
         goIndexPatrocinatore();
       }
     });
   });
+  alert('end ready');
+
 </script>
 
 
