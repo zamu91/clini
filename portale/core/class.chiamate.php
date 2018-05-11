@@ -177,6 +177,11 @@ class chiamate{
       case "getContrattiInseriti":
       $this->getContrattiInseriti();
       break;
+
+      case 'getAmbulatoriInseriti':
+      $this->getAmbulatoriInseriti();
+      break;
+
     } //end swtich
     $this->halt();
 

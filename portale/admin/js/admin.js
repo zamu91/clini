@@ -128,3 +128,9 @@ function salvaAmbulatorio(){
   });
 
 }
+
+
+function getContrattiInseriti(){
+  var jd = { azione: "getAmbulatoriInseriti" };
+  doLoad("#tabellaAmbulatori", jd);
+}

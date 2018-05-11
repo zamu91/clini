@@ -74,6 +74,12 @@ if(1==2){
 
 
   </div><!-- ins clinica -->
+<script>
+  $( document ).ready(function() {
+    getAmbulatoriInseriti();
+  });
+</script>
+
   <?php
 }
 
