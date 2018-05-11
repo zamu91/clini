@@ -4,20 +4,6 @@ var idPrenotazioneSelect=null;
 var dataSelect=null;
 
 
-$( document ).ready(function() {
-  jd={};
-  jd.azione='controlloTokenARXLogin';
-  doAjax(jd,function(data){
-    if(data.validToken){
-      loadProvClinica();
-      datPick('#dataCerca');
-    }else{
-      goIndexPatrocinatore();
-
-    }
-  });
-});
-
 function cercaPerClinica(){
   j={};
   j.clinica=$('#clinicaCerca').val();
@@ -70,6 +56,9 @@ function apriProfilo(sender, newdoc){
     $('.mascheraContainer').show('slow');
     //$('#DATA21_2').val(dataSelect);
     $("#mask-title").html( $(sender).html() );
+
+    $("#modal-action").modal("toggle");
+
 
 
     if( $("#fileupload").length ){

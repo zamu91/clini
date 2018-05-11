@@ -88,4 +88,25 @@ include_once '../admin/template/html.php';
     </div>
 
   </div><!-- end container -->
+
+  <script>
+
+
+  $( document ).ready(function() {
+    jd={};
+    jd.azione='controlloTokenARXLogin';
+    doAjax(jd,function(data){
+      if(data.validToken){
+        loadProvClinica();
+        datPick('#dataCerca');
+      }else{
+        goIndexPatrocinatore();
+
+      }
+    });
+  });
+</script>
+
+
 </body>
+</html>
