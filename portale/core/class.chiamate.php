@@ -26,14 +26,14 @@ class chiamate{
     $this->debug();
     $path=$_SERVER["DOCUMENT_ROOT"].$this->dSep()."Arxivar".$this->dSep();
     $this->envPath = $_SERVER["DOCUMENT_ROOT"].$this->dSep()."clini".$this->dSep()."portale".$this->dSep();
-    // echo $path;
-    // echo $this->envPath;
+    echo $path;
+    echo $this->envPath;
     $this->arxEnvPath = $path;
-    require($path."ARX_Login.php");
-    require($path."ARX_Dati.php");
-    require($path."ARX_Search.php");
-    require($path."ARX_Documenti.php");
-    require($path."ARX_Workflow.php");
+    // require($path."ARX_Login.php");
+    // require($path."ARX_Dati.php");
+    // require($path."ARX_Search.php");
+    // require($path."ARX_Documenti.php");
+    // require($path."ARX_Workflow.php");
   }
 
   public function debug(){
