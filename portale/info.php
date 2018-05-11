@@ -16,6 +16,26 @@ if(!$res){
 echo "connesso";
 
 $stid = oci_parse($res, "SELECT * from XDM_WEBSERVICE_SESSION ");
+
+if( $stid != false ){
+  if (!oci_execute($stid,OCI_NO_AUTO_COMMIT)) {
+    $e = oci_error($stid);
+    echo ($e." -- ".$que);
+    return false;
+  }else  {
+    echo "valido";
+  }
+} else {
+  $e = oci_error($stid);
+
+  echo ($e);
+  return false;
+}
+
+
+
+
+
 $row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
 print_r($row);
 
