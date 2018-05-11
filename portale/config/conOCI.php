@@ -17,7 +17,7 @@ class conOCI{
     // return $this->conn;
   }
 
-  public function connettiOracle($user = 'archdb', $pass = 'ARCHIVIO', $host = '//localhost:1521/xe'){
+public function connettiOracle($user = 'archdb', $pass = 'ARCHIVIO', $host = '//192.168.50.250:1521/xe'){
     $conn = oci_connect($user, $pass, $host);
     return $conn;
   }
