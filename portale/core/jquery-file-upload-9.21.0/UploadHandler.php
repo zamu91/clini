@@ -44,6 +44,11 @@ class UploadHandler
       // echo dirname($this->get_server_var('DOCUMENT_ROOT')).'/uploads/';
       // echo $this->get_full_url().'/uploads/';
       // die;
+
+      echo dirname($this->get_server_var('DOCUMENT_ROOT')).'/arx_portale/clini/portale/uploads/';
+      echo dirname($this->get_server_var('SERVER_NAME')).'/arx_portale/clini/portale/uploads/';
+      die;
+
         $this->response = array();
         $this->options = array(
             'script_url' => $this->get_full_url().'/'.$this->basename($this->get_server_var('SCRIPT_NAME')),
