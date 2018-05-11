@@ -2,6 +2,7 @@
 
 function navigaDashboard(){
   var jd = { azione: "naviga", page: "dashboard" };
+  doLoad('#container',js);
 }
 
 function accediInserisciPatrocinatore(){
