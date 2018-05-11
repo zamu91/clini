@@ -10,15 +10,15 @@ include_once '../admin/template/html.php';
   </div><!-- end container -->
 
   <script>
-  // var urlAjax="../core/class.chiamate.php";
+  var urlAjax="../core/class.chiamate.php";
   $( document ).ready(function() {
     jd={};
     jd.azione='controlloTokenARXLogin';
-    // alert('ready');
+    zalert('ready');
     doAjax(jd,function(data){
-      // alert('ok sono qua');
+      alert('ok sono qua');
       if(data.validToken){
-        // alert('prima di naviga');
+        alert('prima di naviga');
         navigaDashboard();
       }else{
         goIndexPatrocinatore();

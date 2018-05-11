@@ -165,12 +165,6 @@ function doLoad(target, jd, doneFunc, failFunc){
   jd.token=getToken();
   if(ajaxLoad){ return false; }
   ajaxLoad = true;
-  console.log({
-    url: urlAjax,
-    type: 'POST',
-    dataType:'html',
-    data: jd
-  });
   jqXHR = $.ajax({
     url: urlAjax,
     type: 'POST',
@@ -190,7 +184,7 @@ function doLoad(target, jd, doneFunc, failFunc){
     }else{
       swal("Errore","attenzione errore chiamata ","error");
   //    alert(jqXHR);
-      console.log(jqXHR);
+    //  console.log(jqXHR);
     }
   });
 }
