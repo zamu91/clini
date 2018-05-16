@@ -90,7 +90,7 @@ include_once '../admin/template/html.php';
         loadProvClinica();
         setTimeout(function(){
           loadDataRic();
-        },5000);
+        },2000);
 
       }else{
         goIndexUtente();
