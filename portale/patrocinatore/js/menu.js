@@ -120,7 +120,7 @@ function scriviDatiProfilo(){
   jd.COMBO19_1 = $("#COMBO19_1").val();
   jd.TESTO10_297 = $("#TESTO10_297").val();
   jd.TESTO13_297 = $("#TESTO13_297").val();
-  jd.CHECK17_1 = $("#CHECK17_1").val();
+  jd.CHECK17_1 = if($("#CHECK17_1").is(":checked")) ? '1' : '0';//  $("#CHECK17_1").val();
   jd.TESTO14_297 = $("#TESTO14_297").val();
   jd.TESTO12_297 = $("#TESTO12_297").val();
   var file = [];
