@@ -182,7 +182,7 @@ trait arxivar{
                     $disp = $this->getPrimaDisp();
                     foreach ($xml as $row) { ?>
                       <?php  $selected = ( $disp["IDAMBULATORIO"] == $row->IDAMBULATORIO ) ? "selected" : ""; ?>
-                      <option value="<?php echo $row->IDAMBULATORIO; ?>"><?php echo $row->AMBULATORIO; ?></option>
+                      <option value="<?php echo $row->IDAMBULATORIO; ?>" <?php echo $selected; ?> ><?php echo $row->AMBULATORIO; ?></option>
                     <?php } ?>
                   </select><br />
                   <?php
