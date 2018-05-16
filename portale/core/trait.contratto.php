@@ -78,16 +78,20 @@ trait contratto{
   }
 
 
-  private function getJoinConflict(){
+  private function getJoinConflict(&$col){
     $adQuery="";
+    $col="";
     for($i=1;$i<7;$i++){
       if($this->ifDayWork($i)){
         $tab="GIORNO$i";
-        $adQuery.=" INNER JOIN XDM_CONTRATTO_GIORNO  $tab
+        $adQuery.=" LEFT JOIN XDM_CONTRATTO_GIORNO  $tab
         ON $tab.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO and $tab.GIORNO='$i'
         ";
+        if(!empty($col)){$col.=" + ";}
+        $col.=" NVL($tab.giorno,0) ";
       }
     }
+
     return $adQuery;
   }
 
@@ -96,9 +100,17 @@ trait contratto{
 
     $iniz=$this->formOcDateEu(':dataIniz');
     $fine=$this->formOcDateEu(':dataFine');
+    $adJoin=$this->getJoinConflict($adCol);
+    if(empty($adCol)){ //nessuna data fissata nel precedente contratto
+      return false;
+    }
 
-    $adJoin=$this->getJoinConflict();
-    $str="SELECT XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO  FROM XDM_AMBULATORIO_CONTRATTO
+    $adCol=", ( $adCol ) as DayConflict";
+
+
+
+
+    $str="SELECT XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO $adCol  FROM XDM_AMBULATORIO_CONTRATTO
     $adJoin
     where IDAMBULATORIO=:idAmb and DATAINIZIOCONTRATTO>=$iniz
     and DATAFINECONTRATTO<=$fine and ORAINIZIO>=:oraIniz and ORAFINE<:oraFine
@@ -114,9 +126,12 @@ trait contratto{
     $this->executePrepare();
     if($this->queryNumRows()>0){
       $row=$this->fetch();
-      $this->setJsonMess("conflitto",$row);
-      $this->setJsonMess("mess","Conflitto nel contratto trovato ".$row['IDCONTRATTO']);
-      $this->halt();
+      if($row['DayConflict']>0){
+        $row=$this->fetch();
+        $this->setJsonMess("conflitto",$row);
+        $this->setJsonMess("mess","Conflitto nel contratto trovato ".$row['IDCONTRATTO']);
+        $this->halt();
+      }
     }else{
       return true;
     }
