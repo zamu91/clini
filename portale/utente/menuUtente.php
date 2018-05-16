@@ -88,7 +88,10 @@ include_once '../admin/template/html.php';
     doAjax(jd,function(data){
       if(data.validToken){
         loadProvClinica();
-        loadDataRic();
+        setTimeout(function(){
+          loadDataRic();
+        },2000);
+
       }else{
         goIndexUtente();
       }
