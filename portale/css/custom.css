@@ -101,7 +101,7 @@ span.btn-primary:hover{
 div.mascheraContainer{
   display:none;
 }
-
+  
 div.containerDocumenti{
   overflow-y:auto;
   max-height:500px;
