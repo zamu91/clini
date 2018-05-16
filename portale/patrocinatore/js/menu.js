@@ -69,7 +69,7 @@ function apriProfilo(sender, newdoc){
   if( typeof newdoc != 'undefined' && !newdoc){
     docnumber = getDocunumberDashboard();
     if( $("#containerComandi").data("work") == "" ){
-      swal("warning","Attenzione processo sembra non essere ancora arrivato al task corretto, di prega di attendere l'elaborazione del processo.","warning");
+      swal("warning","Attenzione processo sembra non essere ancora arrivato al task corretto, si prega di attendere l'elaborazione del processo.","warning");
       return false;
     }
   }
