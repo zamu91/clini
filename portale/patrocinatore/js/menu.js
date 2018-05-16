@@ -32,6 +32,17 @@ function loadProvClinica(){
 }
 
 
+function loadDataRic(){
+  data={};
+  data.azione='getOptDataRicerca';
+  setTimeout(function(){
+    doLoad('#dataCerca',data);
+  },2000);
+
+
+}
+
+
 function cercaClinica(tipo){
 
   if(tipo=='data'){

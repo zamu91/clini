@@ -103,6 +103,7 @@ trait contratto{
     where IDAMBULATORIO=:idAmb and DATAINIZIOCONTRATTO>=$iniz
     and DATAFINECONTRATTO<=$fine and ORAINIZIO>=:oraIniz and ORAFINE<:oraFine
     ";
+    $this->setJsonMess("queryDebug",$str);
     $this->queryPrepare($str);
     $this->queryBind('dataIniz',$this->dataInizioSTR);
     $this->queryBind('dataFine',$this->dataFineSTR);
@@ -292,7 +293,7 @@ trait contratto{
 
         $i++;
         $fineOra=strtotime('+'.$durata.' minutes',$newOra);
-        
+
         if($fineOra<$oraFine){ //caso prossimo alla chiusura
           $this->occupaSpazioSingolo($data,$newOra,$fineOra);
         }
