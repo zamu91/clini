@@ -84,8 +84,7 @@ trait contratto{
     for($i=1;$i<7;$i++){
       if($this->ifDayWork($i)){
         $tab="GIORNO$i";
-        $adQuery.=" LEFT JOIN XDM_CONTRATTO_GIORNO  $tab
-        ON $tab.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO and $tab.GIORNO='$i'
+        $adQuery.=" LEFT JOIN XDM_CONTRATTO_GIORNO  $tab ON $tab.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO and $tab.GIORNO='$i'
         ";
         if(!empty($col)){$col.=" + ";}
         $col.=" NVL($tab.giorno,0) ";
@@ -107,13 +106,8 @@ trait contratto{
 
     $adCol=", ( $adCol ) as DayConflict";
 
-
-
-
-    $str="SELECT XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO $adCol  FROM XDM_AMBULATORIO_CONTRATTO
-    $adJoin
-    where IDAMBULATORIO=:idAmb and DATAINIZIOCONTRATTO>=$iniz
-    and DATAFINECONTRATTO<=$fine and ORAINIZIO>=:oraIniz and ORAFINE<:oraFine
+    $str="SELECT XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO $adCol  FROM XDM_AMBULATORIO_CONTRATTO $adJoin
+    where IDAMBULATORIO=:idAmb and DATAINIZIOCONTRATTO>=$iniz and DATAFINECONTRATTO<=$fine and ORAINIZIO>=:oraIniz and ORAFINE<:oraFine
     ";
     $this->setJsonMess("queryDebug",$str);
     $this->queryPrepare($str);
