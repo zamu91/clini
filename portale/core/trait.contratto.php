@@ -107,15 +107,20 @@ trait contratto{
     $adCol=", ( $adCol ) as DAYCONF";
 
     $str="SELECT XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO $adCol  FROM XDM_AMBULATORIO_CONTRATTO $adJoin
-    where IDAMBULATORIO=:idAmb and ($iniz BETWEEN DATAINIZIOCONTRATTO AND DATAFINECONTRATTO
-      or $fine BETWEEN DATAFINECONTRATTO AND DATAFINECONTRATTO   )
-    and (:oraIniz BETWEEN ORAINIZIO and ORAFINE or :oraFine BETWEEN ORAINIZIO and ORAFINE)    ";
+    where IDAMBULATORIO=:idAmb and ($iniz<= DATAFINECONTRATTO
+      and $fine>= DATAFINECONTRATTO )
+    and (:oraIniz<= ORAFINE and :oraFine>= ORAINIZIO )    ";
+    $oraIniz=$this->getVCont('ORAINIZIO');
+    $oraFine=$this->getVCont('ORAFINE');
+    if(strlen($oraIniz)==7){$oraIniz="0".$oraIniz;}
+    if(strlen($oraFine)==7){$oraFine="0".$oraFine;}
+
 
     $this->queryPrepare($str);
     $this->queryBind('dataIniz',$this->dataInizioSTR);
     $this->queryBind('dataFine',$this->dataFineSTR);
-    $this->queryBind('oraIniz',$this->getVCont('ORAINIZIO'));
-    $this->queryBind('oraFine',$this->getVCont('ORAFINE'));
+    $this->queryBind('oraIniz',$oraIniz);
+    $this->queryBind('oraFine',$oraFine);
     $this->queryBind('idAmb',$this->getVCont('IDAMBULATORIO'));
 
     $this->executePrepare();
