@@ -275,6 +275,9 @@ trait contratto{
     private function occupaSpazioSingolo($data,$newOra,$fineOra){
       $dataIns=$this->formOcDate(':data');
 
+      if(strlen($newOra)==7){$newOra="0".$newOra;}
+      if(strlen($fineOra)==7){$fineOra="0".$fineOra;}
+
       $str="INSERT INTO XDM_PRENOTAZIONE
       (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO,DATA,STATO)VALUES
       (:id,:idContratto,:oraInizio,:oraFine,:tempo,$dataIns,0)  ";
