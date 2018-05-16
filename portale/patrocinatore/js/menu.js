@@ -57,8 +57,8 @@ function apriProfilo(sender, newdoc){
 
   var docnumber = ( typeof newdoc != 'undefined' && !newdoc) ? getDocunumberDashboard() : "";
   var jd = { azione: "dettaglioProfilo",data:dataSelect,
-idContratto:idPrenotazioneSelect,
-   docnumber: docnumber, maskix: $(sender).data("maskix") };
+  idContratto:idPrenotazioneSelect,
+  docnumber: docnumber, maskix: $(sender).data("maskix") };
   doLoad(".maschera", jd, function(){
     $('.tipoPrenotazione').hide('slow');
     $('.mascheraContainer').show('slow');
@@ -144,4 +144,36 @@ function scriviDatiProfilo(){
   }, function(jqXHR, textStatus, errorThrown){
     swal("ERRORE","Errore salvataggio profilazione.","error")
   });
+}
+
+// Sezione IIS
+open = function(verb, url, data, target) {
+  var form = document.createElement("form");
+  form.action = url;
+  form.method = verb;
+  form.target = target || "_self";
+  if (data) {
+    for (var key in data) {
+      var input = document.createElement("textarea");
+      input.name = key;
+      input.value = typeof data[key] === "object" ? JSON.stringify(data[key]) : data[key];
+      form.appendChild(input);
+    }
+  }
+  form.style.display = 'none';
+  document.body.appendChild(form);
+  form.submit();
+};
+// utilizzo:
+function open_preview(){
+  if($('#tableFileDoc').children('tr:is-selected').length){
+    docnum = $('#tableFileDoc').children('tr:is-selected').attr("data-doc");
+    open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum });
+  } else { alert('Seleziona un documento'); }
+}
+function open_download(){
+  if($('#tableFileDoc').children('tr:is-selected').length){
+    docnum = $('#tableFileDoc').children('tr:is-selected').attr("data-doc");
+    open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum,download:1 });
+  } else { alert('Seleziona un documento'); }
 }

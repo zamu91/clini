@@ -133,6 +133,11 @@ function dettagliTaskProfilo(target){
   });
 }
 
+function selezionaDocumento(target){
+  $(target).parent("tbody").children("tr.is-selected").removeClass("is-selected");
+  $(target).addClass("is-selected");
+}
+
 function doAjax(jd, doneFunc, failFunc){
   jd.token=getToken();
   if( ajaxCall ){ return false; }

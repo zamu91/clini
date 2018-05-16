@@ -414,7 +414,7 @@ trait arxivar{
     $ds = simplexml_load_string($result);
 
     ?>
-    <table class="table is-fullwidth is-hoverable clickable">
+    <table id="tableFileDoc" class="table is-fullwidth is-hoverable clickable">
       <thead>
         <tr>
           <th>DOCNUMBER</th>
@@ -425,7 +425,7 @@ trait arxivar{
       <tbody>
         <?php
         foreach ($ds->Ricerca as $row) { ?>
-          <tr data-doc="<?php echo $row->DOCNUMBER; ?>" >
+          <tr data-doc="<?php echo $row->DOCNUMBER; ?>" onclick="selezionaDocumento(this);" >
             <td><?php echo $row->DOCNUMBER; ?></td>
             <td><?php echo $row->DOCNAME; ?></td>
             <td><?php echo $row->DATADOC; ?></td>
