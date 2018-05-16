@@ -281,7 +281,6 @@ trait contratto{
       (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO,DATA,STATO)VALUES
       (:id,:idContratto,:oraInizio,:oraFine,:tempo,$dataIns,0)  ";
       $this->queryPrepare($str);
-      $this->setJsonMess("debug data",$newOra);
       $this->queryBind("id",$this->getIncPrenotazione());
       $this->queryBind("idContratto",$this->getIdContratto());
       $this->queryBind("oraInizio",date('H:i',$newOra));
