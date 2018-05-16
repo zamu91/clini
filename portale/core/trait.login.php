@@ -81,12 +81,14 @@ trait login {
 
   private function checkExistSessionFromToken(){
     $token = $this->post("token", false);
+    $imp = $this->post("impersonate");
+    $tokenOracle = ( $imp == 0 ) ? md5($token) : $token;
     $que = "SELECT ARXSESSION, ses.USERNAME, ses.PASSWORD, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA, ses.AOO, ses.INSDOC, ses.IMPERSONATE, ses.PARTIVA
     FROM XDM_WEBSERVICE_SESSION ses
     WHERE ses.ARXSESSION = :tok ";
 
     $this->queryPrepare($que);
-    $this->queryBind("tok", $token);
+    $this->queryBind("tok", $tokenOracle);
     $this->executeQuery();
 
     $row = $this->fetch();
@@ -132,7 +134,7 @@ trait login {
       /* Login canonico */
       $username=$this->getUsername();
       $password=$this->getPassword();
-      $session = md5($session);
+      $sessionOracle = md5($session);
 
       if( !empty($row["USERNAME"]) ){
         $this->loginLog("sessione trovata, aggiorno");
@@ -147,7 +149,7 @@ trait login {
       $this->queryPrepare($que);
       $this->queryBind("us", $username);
       $this->queryBind("pa", $password);
-      $this->queryBind('sess',$session);
+      $this->queryBind('sess',$sessionOracle);
       $this->queryBind('expi',$expirationTime);
       $this->queryBind("aoo", $aoo);
       $this->queryBind("insdoc", $insDoc);
@@ -167,10 +169,12 @@ trait login {
 
   public function controlloARXLogin(){
     $token = $this->post("token", false);
+    $imp = $this->post("impersonate");
+    $tokenOracle = ( $imp == 0 ) ? md5($token) : $token;
     $this->queryPrepare("SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA, IMPERSONATE, PARTIVA
     FROM XDM_WEBSERVICE_SESSION
     WHERE ARXSESSION = :tok AND SYSDATE <= SCADENZA");
-    $this->queryBind("tok", $token);
+    $this->queryBind("tok", $tokenOracle);
     $this->executePrepare();
     $this->commit();
 
@@ -185,10 +189,12 @@ trait login {
 
   public function controlloTokenARXLogin(){
     $token = $this->post("token");
+    $imp = $this->post("impersonate");
+    $tokenOracle = ( $imp == 0 ) ? md5($token) : $token;
     $this->queryPrepare("SELECT USERNAME, PASSWORD, ARXSESSION, TO_CHAR(SCADENZA, 'YYYY-MM-DD HH24:MI:SS') AS SCADENZA, IMPERSONATE, PARTIVA
     FROM XDM_WEBSERVICE_SESSION
     WHERE ARXSESSION = :tok AND SYSDATE <= SCADENZA");
-    $this->queryBind("tok", $token);
+    $this->queryBind("tok", $tokenOracle);
     $this->executePrepare();
     $this->commit();
 
