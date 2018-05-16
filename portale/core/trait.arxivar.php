@@ -497,7 +497,7 @@ trait arxivar{
               */
               /* Siamo nel caso di utente o in impersonate o patrocinatore al quale è associato il gruppo patrocinatori che ha il permesso di INSDOC
               * Valorizzare con l'utente di inserimento il campo patrocinatore. */
-              if( $ses["IMPERSONATE"] == 1 || $ses["INSDOC"] == 1){
+              // if( $ses["IMPERSONATE"] == 1 || $ses["INSDOC"] == 1){
                 if( $agg->Nome == 'DATA21_2' ) {
                   $agg->Valore = $primaDisp["DATA"];
                 }
@@ -510,7 +510,7 @@ trait arxivar{
                 if( $agg->Nome == 'COMBO29_1' ){
                   $agg->Valore = $ses["AOO"]."\\".$ses["USERNAME"];
                 }
-              }
+              // }
             }
           }
           break;
