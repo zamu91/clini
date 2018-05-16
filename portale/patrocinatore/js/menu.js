@@ -24,6 +24,13 @@ function cercaPerData(){
   doLoad('.resultClinica',j);
 }
 
+function loadDataRic(){
+  data={};
+  data.azione='getOptDataRicerca';
+  doLoad('#dataCerca',data);
+
+}
+
 
 function loadProvClinica(){
   data={};
