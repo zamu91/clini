@@ -109,7 +109,8 @@ trait contratto{
     $str="SELECT XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO $adCol  FROM XDM_AMBULATORIO_CONTRATTO $adJoin
     where IDAMBULATORIO=:idAmb and (DATAINIZIOCONTRATTO>=$iniz or DATAFINECONTRATTO<=$fine)
     and (ORAINIZIO>=:oraIniz or ORAFINE<:oraFine)    ";
-    $this->setJsonMess("queryDebug",$str);
+    echo $str;
+    die;
     $this->queryPrepare($str);
     $this->queryBind('dataIniz',$this->dataInizioSTR);
     $this->queryBind('dataFine',$this->dataFineSTR);
