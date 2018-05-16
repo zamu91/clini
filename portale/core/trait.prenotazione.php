@@ -115,6 +115,36 @@ trait prenotazione{
   }
 
 
+  public function getOptDataRicerca(){
+    $que = "SELECT DISTINCT TO_CHAR(PR.DATA,'DD/MM/YYYY') as DATAFORM
+    FROM  XDM_PRENOTAZIONE PR
+    WHERE PR.DATA>SYSDATE AND PR.STATO=0
+    ORDER BY PR.DATA";
+    $this->query($que);
+
+    $html="";
+    while($row=$this->fetch()){
+      $html.="<option value='{$row['DATAFORM']}'>{$row['DATAFORM']}</option>";
+    }
+    echo $html;
+    die;
+
+  }
+
+
+
+    private function optClinica(){
+      $this->query("SELECT IDAMBULATORIO,NOME,INDIRIZZO,COMUNE from XDM_AMBULATORIO where STATO=1 ");
+      $html="";
+      while($row=$this->fetch()){
+        $html.="<option value='{$row['IDAMBULATORIO']}'>{$row['NOME']} - {$row['COMUNE']},{$row['INDIRIZZO']}</option>";
+      }
+      echo $html;
+      die;
+    }
+
+
+
   public function getDataPerClinica(){
     $prov=$this->post('clinica');
     // $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,
