@@ -63,8 +63,8 @@ include_once '../admin/template/html.php';
         <?php divElement('<button class="button is-primary" data-maskix="1" onclick="apriProfiloImpersonate(this);">Responsabilità civile terzi</button>',"","6"); ?>
       </div>
       <div class="columns">
-        <?php divElement('<button class="button is-primary" data-maskix="2" onclick="apriProfiloImpersonate(this);">Polizza privata infortuni</button>',"","4"); ?>
-        <?php divElement('<button class="button is-primary" data-maskix="3" onclick="apriProfiloImpersonate(this);">Legge 210</button>',"","4"); ?>
+        <?php divElement('<button class="button is-primary" data-maskix="2" onclick="apriProfiloImpersonate(this);">Polizza privata infortuni</button>',"","6"); ?>
+        <?php divElement('<button class="button is-primary" data-maskix="3" onclick="apriProfiloImpersonate(this);">Legge 210</button>',"","6"); ?>
       </div>
       <button class="button is-primary" onclick="indietroBottoni();">Indietro</button>
     </div> <!-- end tipo prenotazione -->

@@ -116,10 +116,10 @@ trait prenotazione{
 
 
   public function getOptDataRicerca(){
-    $que = "SELECT DISTINCT TO_CHAR(PR.DATA,'DD/MM/YYYY') as DATAFORM
-    FROM  XDM_PRENOTAZIONE PR
-    WHERE PR.DATA>SYSDATE AND PR.STATO=0
-    ORDER BY PR.DATA";
+    $que = "SELECT TO_CHAR(DATA,'DD/MM/YYYY') as DATAFORM  from ( SELECT PR.DATA
+  FROM  XDM_PRENOTAZIONE PR
+  WHERE PR.DATA>SYSDATE AND PR.STATO=0 group by data
+  ORDER BY PR.DATA) ";
     $this->query($que);
 
     $html="";
