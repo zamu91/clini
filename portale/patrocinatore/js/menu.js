@@ -173,17 +173,17 @@ open = function(verb, url, data, target) {
 // utilizzo:
 function open_preview(){
   console.log($('#tableFileDoc').children('tbody').children('tr.is-selected').length);
-  console.log($('#tableFileDoc').children('tr.is-selected').attr("data-doc"));
-  if($('#tableFileDoc').children('tr.is-selected').length){
-    docnum = $('#tableFileDoc').children('tr.is-selected').attr("data-doc");
+  console.log($('#tableFileDoc').children('tbody').children('tr.is-selected').attr("data-doc"));
+  if($('#tableFileDoc').children('tbody').children('tr.is-selected').length){
+    docnum = $('#tableFileDoc').children('tbody').children('tr.is-selected').attr("data-doc");
     open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum });
   } else { alert('Seleziona un documento'); }
 }
 function open_download(){
-  console.log($('#tableFileDoc').children('tr.is-selected').length);
-  console.log($('#tableFileDoc').children('tr.is-selected').attr("data-doc"));
-  if($('#tableFileDoc').children('tr.is-selected').length){
-    docnum = $('#tableFileDoc').children('tr.is-selected').attr("data-doc");
+  console.log($('#tableFileDoc').children('tbody').children('tr.is-selected').length);
+  console.log($('#tableFileDoc').children('tbody').children('tr.is-selected').attr("data-doc"));
+  if($('#tableFileDoc').children('tbody').children('tr.is-selected').length){
+    docnum = $('#tableFileDoc').children('tbody').children('tr.is-selected').attr("data-doc");
     open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum,download:1 });
   } else { alert('Seleziona un documento'); }
 }
