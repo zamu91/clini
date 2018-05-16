@@ -32,17 +32,6 @@ function loadProvClinica(){
 }
 
 
-function loadDataRic(){
-  data={};
-  data.azione='getOptDataRicerca';
-  setTimeout(function(){
-    doLoad('#dataCerca',data);
-  },2000);
-
-
-}
-
-
 function cercaClinica(tipo){
 
   if(tipo=='data'){
@@ -184,13 +173,13 @@ open = function(verb, url, data, target) {
 // utilizzo:
 function open_preview(){
   if($('#tableFileDoc').children('tr:is-selected').length){
-    docnum = $('#tableFileDoc').children('tr:is-selected').attr("data-doc");
+    docnum = $('#tableFileDoc').children('tr.is-selected').attr("data-doc");
     open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum });
   } else { alert('Seleziona un documento'); }
 }
 function open_download(){
   if($('#tableFileDoc').children('tr:is-selected').length){
-    docnum = $('#tableFileDoc').children('tr:is-selected').attr("data-doc");
+    docnum = $('#tableFileDoc').children('tr.is-selected').attr("data-doc");
     open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum,download:1 });
   } else { alert('Seleziona un documento'); }
 }
