@@ -292,6 +292,7 @@ trait contratto{
 
         $i++;
         $fineOra=strtotime('+'.$durata.' minutes',$newOra);
+        
         if($fineOra<$oraFine){ //caso prossimo alla chiusura
           $this->occupaSpazioSingolo($data,$newOra,$fineOra);
         }
