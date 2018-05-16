@@ -96,7 +96,7 @@ trait contratto{
 
   //controllo se ci sono conflitti con altre
   private function checkConflict(){
-
+    return false;
     $iniz=$this->formOcDate(':dataIniz');
     $fine=$this->formOcDate(':dataFine');
     $adJoin=$this->getJoinConflict($adCol);
