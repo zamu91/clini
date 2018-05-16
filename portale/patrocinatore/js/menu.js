@@ -54,8 +54,13 @@ function scegliPrenotazione(id,data){
 }
 
 function apriProfilo(sender, newdoc){
-
-  var docnumber = ( typeof newdoc != 'undefined' && !newdoc) ? getDocunumberDashboard() : "";
+  var docnumber = "";
+  if( typeof newdoc != 'undefined' && !newdoc){
+    docnumber = getDocunumberDashboard();
+    if( $("#containerComandi").data("work") == "" ){
+      swal("warning","Attenzione processo sembra non essere ancora arrivato al task corretto, di prega di attendere l'elaborazione del processo.","warning");
+    }
+  }
   var jd = { azione: "dettaglioProfilo",data:dataSelect,
   idContratto:idPrenotazioneSelect,
   docnumber: docnumber, maskix: $(sender).data("maskix") };
