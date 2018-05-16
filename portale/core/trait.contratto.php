@@ -118,9 +118,8 @@ trait contratto{
     $this->queryBind('idAmb',$this->getVCont('IDAMBULATORIO'));
 
     $this->executePrepare();
-    if($this->queryNumRows()>0){
+    if($row=$this->fetch()){
       $this->setJsonMess("conflitto","trovato, controllo giorni");
-      $row=$this->fetch();
       if($row['DayConflict']>0){
         $row=$this->fetch();
         $this->setJsonMess("conflitto",$row);
