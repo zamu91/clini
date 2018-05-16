@@ -129,7 +129,6 @@ function scriviDatiProfilo(){
       swal("salvataggio","Profilo inserito con successo","success");
 
       setTimeout(function(){
-        localStorage.setItem("tok","");
         goDash();
       },4000);
 
