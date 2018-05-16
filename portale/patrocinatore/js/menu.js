@@ -4,6 +4,12 @@ var idPrenotazioneSelect=null;
 var dataSelect=null;
 
 
+function logOutPatro(){
+  localStorage.setItem("tok","");
+  goIndexPatrocinatore();
+
+}
+
 function cercaPerClinica(){
   j={};
   j.clinica=$('#clinicaCerca').val();
