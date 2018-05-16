@@ -176,7 +176,7 @@ function open_preview(){
   console.log($('#tableFileDoc').children('tbody').children('tr.is-selected').attr("data-doc"));
   if($('#tableFileDoc').children('tbody').children('tr.is-selected').length){
     docnum = $('#tableFileDoc').children('tbody').children('tr.is-selected').attr("data-doc");
-    open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum });
+    open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum }, '_blank');
   } else { alert('Seleziona un documento'); }
 }
 function open_download(){
