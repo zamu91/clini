@@ -149,6 +149,16 @@ trait contratto{
 
     $this->logCont("Iniz  e start inserimento contratto");
 
+    $oraIniz=$this->getVCont('ORAINIZIO');
+    $oraFine=$this->getVCont('ORAFINE');
+
+    if(strlen($oraIniz)==7){$oraIniz="0".$oraIniz;}
+    if(strlen($oraFine)==7){$oraFine="0".$oraFine;}
+
+
+
+
+
     $idContrattoNew=$this->getIdNext("IDCONTRATTO","XDM_AMBULATORIO_CONTRATTO");
     $this->queryBind('id',$idContrattoNew);
     $this->queryBind('tempo',$this->getVCont('TEMPO'));
@@ -156,8 +166,8 @@ trait contratto{
     $this->queryBind('verso',$this->getVCont('VERSO'));
     $this->queryBind('dataIniz',$this->dataInizioSTR);
     $this->queryBind('dataFine',$this->dataFineSTR);
-    $this->queryBind('oraIniz',$this->getVCont('ORAINIZIO'));
-    $this->queryBind('oraFine',$this->getVCont('ORAFINE'));
+    $this->queryBind('oraIniz',$oraIniz);
+    $this->queryBind('oraFine',$oraFine);
     $this->executePrepare();
     $this->logCont("Salvataggio contratto");
     $this->setIdContratto($idContrattoNew);
