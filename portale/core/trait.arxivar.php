@@ -179,7 +179,9 @@ trait arxivar{
                   <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" disabled class="select" <?php if($required) echo "required";?>>
                     <?php
                     // ciclo sui tag ricerca per creare i valori option del campo select html
+                    $disp = $this->getPrimaDisp();
                     foreach ($xml as $row) { ?>
+                      <?php  $selected = ( $disp["IDAMBULATORIO"] == $row->IDAMBULATORIO ) ? "selected" : ""; ?>
                       <option value="<?php echo $row->IDAMBULATORIO; ?>"><?php echo $row->AMBULATORIO; ?></option>
                     <?php } ?>
                   </select><br />
