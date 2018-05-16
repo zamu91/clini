@@ -99,6 +99,7 @@ include_once '../admin/template/html.php';
   $( document ).ready(function() {
     jd={};
     jd.azione='controlloTokenARXLogin';
+    jd.impersonate=0;
     doAjax(jd,function(data){
       if(data.validToken){
         loadProvClinica();
