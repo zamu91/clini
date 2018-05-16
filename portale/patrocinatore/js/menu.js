@@ -172,7 +172,7 @@ open = function(verb, url, data, target) {
 };
 // utilizzo:
 function open_preview(){
-  console.log($('#tableFileDoc').children('tr.is-selected').length);
+  console.log($('#tableFileDoc').children('tbody').children('tr.is-selected').length);
   console.log($('#tableFileDoc').children('tr.is-selected').attr("data-doc"));
   if($('#tableFileDoc').children('tr.is-selected').length){
     docnum = $('#tableFileDoc').children('tr.is-selected').attr("data-doc");
