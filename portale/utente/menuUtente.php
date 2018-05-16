@@ -23,7 +23,7 @@ include_once '../admin/template/html.php';
 
       <div class="cercaPerData" style="display:none;" >
         <div class="columns">
-          <?php divElement('<select  class="select" id="dataCerca">
+          <?php divElement('<select  class="select input" id="dataCerca">
           </select>',"Cerca per data","12"); ?>
         </div>
 
@@ -36,7 +36,7 @@ include_once '../admin/template/html.php';
 
       <div class="cercaPerProv">
         <div class="columns">
-          <?php divElement('<select  class="select" id="clinicaCerca">
+          <?php divElement('<select  class="select input" id="clinicaCerca">
           </select>',"Cerca per luogo","12"); ?>
         </div>
 
@@ -88,7 +88,10 @@ include_once '../admin/template/html.php';
     doAjax(jd,function(data){
       if(data.validToken){
         loadProvClinica();
-        loadDataRic();
+        setTimeout(function(){
+          loadDataRic();
+        },2000);
+
       }else{
         goIndexUtente();
       }
