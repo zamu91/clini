@@ -103,12 +103,12 @@ div.mascheraContainer{
 }
 
 div.containerDocumenti{
-  overflow:auto;
+  overflow-y:auto;
   max-height:500px;
 }
 
 div#containerListaProfili{
   max-height: 500px;
-  overflow: auto;
+  overflow-y: auto;
 
 }
