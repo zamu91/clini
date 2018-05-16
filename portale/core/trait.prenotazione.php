@@ -133,18 +133,6 @@ trait prenotazione{
 
 
 
-    private function optClinica(){
-      $this->query("SELECT IDAMBULATORIO,NOME,INDIRIZZO,COMUNE from XDM_AMBULATORIO where STATO=1 ");
-      $html="";
-      while($row=$this->fetch()){
-        $html.="<option value='{$row['IDAMBULATORIO']}'>{$row['NOME']} - {$row['COMUNE']},{$row['INDIRIZZO']}</option>";
-      }
-      echo $html;
-      die;
-    }
-
-
-
   public function getDataPerClinica(){
     $prov=$this->post('clinica');
     // $que = "SELECT DISTINCT XDM_AMBULATORIO.IDAMBULATORIO,XDM_AMBULATORIO.NOME,
