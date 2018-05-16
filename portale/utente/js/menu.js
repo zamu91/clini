@@ -68,7 +68,8 @@ function scegliPrenotazione(id,data){
 function apriProfiloImpersonate(sender, newdoc){
 
   var docnumber = ( typeof newdoc != 'undefined' && !newdoc) ? getDocunumberDashboard() : "";
-  var jd = { azione: "dettaglioProfilo",data:dataSelect, docnumber: docnumber, maskix: $(sender).data("maskix") };
+  var jd = { azione: "dettaglioProfilo",data:dataSelect,idContratto:idPrenotazioneSelect, docnumber: docnumber, 
+  maskix: $(sender).data("maskix") };
   doLoad(".maschera", jd, function(){
     $('.tipoPrenotazione').hide('slow');
 
