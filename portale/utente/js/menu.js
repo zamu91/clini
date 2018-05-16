@@ -29,7 +29,10 @@ function loadProvClinica(){
 function loadDataRic(){
   data={};
   data.azione='getOptDataRicerca';
-  doLoad('#dataCerca',data);
+  setTimeout(function(){
+    doLoad('#dataCerca',data);
+  },2000);
+
 
 }
 
