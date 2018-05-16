@@ -132,6 +132,7 @@ trait login {
       /* Login canonico */
       $username=$this->getUsername();
       $password=$this->getPassword();
+      $session = md5($session);
 
       if( !empty($row["USERNAME"]) ){
         $this->loginLog("sessione trovata, aggiorno");
