@@ -84,7 +84,7 @@ trait contratto{
       if($this->ifDayWork($i)){
         $tab="GIORNO$i";
         $adQuery.=" INNER JOIN XDM_CONTRATTO_GIORNO  $tab
-        ON $tab.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
+        ON $tab.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO and $tab.GIORNO='$i'
         ";
       }
     }
