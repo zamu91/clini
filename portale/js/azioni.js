@@ -144,11 +144,11 @@ function doAjax(jd, doneFunc, failFunc){
   ajaxCall = true;
 //  console.log("doAjaxd");
 //  console.log({
-    url: urlAjax,
-    type: 'POST',
-    dataType:'html',
-    data: jd
-  });
+  //   url: urlAjax,
+  //   type: 'POST',
+  //   dataType:'html',
+  //   data: jd
+  // });
   ajaxCall = $.ajax({
     url: urlAjax,
     type: 'POST',
@@ -179,11 +179,11 @@ function doLoad(target, jd, doneFunc, failFunc){
   ajaxLoad = true;
 //  console.log("doLoad");
 //  console.log({
-    url: urlAjax,
-    type: 'POST',
-    dataType:'html',
-    data: jd
-  });
+  //   url: urlAjax,
+  //   type: 'POST',
+  //   dataType:'html',
+  //   data: jd
+  // });
   jqXHR = $.ajax({
     url: urlAjax,
     type: 'POST',
