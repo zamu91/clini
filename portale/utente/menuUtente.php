@@ -23,8 +23,8 @@ include_once '../admin/template/html.php';
 
       <div class="cercaPerData" style="display:none;" >
         <div class="columns">
-          <?php divElement('<input type="edit" class="data input" id="dataCerca">',
-          "Cerca per data","12"); ?>
+          <?php divElement('<select class="input" class="select" id="dataCerca">
+          </select>',"Cerca per data","12"); ?>
         </div>
 
         <div class="columns">
@@ -70,15 +70,32 @@ include_once '../admin/template/html.php';
     </div> <!-- end tipo prenotazione -->
 
 
-        <div class="mascheraContainer">
-          <h2 id="mask-title"></h2>
-          <div class="maschera">
-          </div>
-        <button class="is-primary button" onclick="scriviDatiProfiloImpersonate();">SALVA PROFILO</button>
-        <button class="is-primary button" onclick="indietroSalva();">INDIETRO</button>
+    <div class="mascheraContainer">
+      <h2 id="mask-title"></h2>
+      <div class="maschera">
+      </div>
+      <button class="is-primary button" onclick="scriviDatiProfiloImpersonate();">SALVA PROFILO</button>
+      <button class="is-primary button" onclick="indietroSalva();">INDIETRO</button>
 
-        </div>
+    </div>
 
 
   </div><!-- end container -->
+  <script>
+  $( document ).ready(function() {
+    jd={};
+    jd.azione='controlloTokenARXLogin';
+    doAjax(jd,function(data){
+      if(data.validToken){
+        loadProvClinica();
+        loadDataRic();
+      }else{
+        goIndexUtente();
+      }
+    });
+  });
+</script>
+
+
 </body>
+</html>

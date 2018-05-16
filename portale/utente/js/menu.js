@@ -2,18 +2,6 @@ var idPrenotazioneSelect=null;
 var dataSelect=null;
 
 
-$( document ).ready(function() {
-  jd={};
-  jd.azione='controlloTokenARXLogin';
-  doAjax(jd,function(data){
-    if(data.validToken){
-      loadProvClinica();
-      datPick('#dataCerca');
-    }else{
-      goIndexUtente();
-    }
-  });
-});
 
 
 
@@ -36,6 +24,13 @@ function loadProvClinica(){
   data={};
   data.azione='optClinicaProvincia';
   doLoad('#clinicaCerca',data);
+}
+
+function loadDataRic(){
+  data={};
+  data.azione='getOptDataRicerca';
+  doLoad('#dataCerca',data);
+
 }
 
 
@@ -68,7 +63,7 @@ function scegliPrenotazione(id,data){
 function apriProfiloImpersonate(sender, newdoc){
 
   var docnumber = ( typeof newdoc != 'undefined' && !newdoc) ? getDocunumberDashboard() : "";
-  var jd = { azione: "dettaglioProfilo",data:dataSelect,idContratto:idPrenotazioneSelect, docnumber: docnumber, 
+  var jd = { azione: "dettaglioProfilo",data:dataSelect,idContratto:idPrenotazioneSelect, docnumber: docnumber,
   maskix: $(sender).data("maskix") };
   doLoad(".maschera", jd, function(){
     $('.tipoPrenotazione').hide('slow');
