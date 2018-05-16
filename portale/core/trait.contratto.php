@@ -104,7 +104,7 @@ trait contratto{
       return false;
     }
 
-    $adCol=", ( $adCol ) as DayConflict";
+    $adCol=", ( $adCol ) as DAYCONF";
 
     $str="SELECT XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO $adCol  FROM XDM_AMBULATORIO_CONTRATTO $adJoin
     where IDAMBULATORIO=:idAmb and (DATAINIZIOCONTRATTO>=$iniz or DATAFINECONTRATTO<=$fine)
@@ -120,8 +120,7 @@ trait contratto{
     $this->executePrepare();
     if($row=$this->fetch()){
       $this->setJsonMess("conflitto","trovato, controllo giorni");
-      if($row['DayConflict']>0){
-        $row=$this->fetch();
+      if($row['DAYCONF']>0){
         $this->setJsonMess("conflitto",$row);
         $this->setJsonMess("mess","Conflitto nel contratto trovato ".$row['IDCONTRATTO']);
         $this->halt();
