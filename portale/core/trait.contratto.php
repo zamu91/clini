@@ -120,6 +120,7 @@ trait contratto{
 
     $this->executePrepare();
     if($this->queryNumRows()>0){
+      $this->setJsonMess("conflitto","trovato, controllo giorni");
       $row=$this->fetch();
       if($row['DayConflict']>0){
         $row=$this->fetch();
