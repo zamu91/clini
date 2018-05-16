@@ -110,7 +110,7 @@ trait contratto{
     where IDAMBULATORIO=:idAmb and (DATAINIZIOCONTRATTO>=$iniz or DATAFINECONTRATTO<=$fine)
     and (ORAINIZIO>=:oraIniz or ORAFINE<:oraFine)    ";
     echo $str;
-    die;
+
     $this->queryPrepare($str);
     $this->queryBind('dataIniz',$this->dataInizioSTR);
     $this->queryBind('dataFine',$this->dataFineSTR);
