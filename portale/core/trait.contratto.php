@@ -97,8 +97,8 @@ trait contratto{
   //controllo se ci sono conflitti con altre
   private function checkConflict(){
 
-    $iniz=$this->formOcDateEu(':dataIniz');
-    $fine=$this->formOcDateEu(':dataFine');
+    $iniz=$this->formOcDate(':dataIniz');
+    $fine=$this->formOcDate(':dataFine');
     $adJoin=$this->getJoinConflict($adCol);
     if(empty($adCol)){ //nessuna data fissata nel precedente contratto
       return false;
