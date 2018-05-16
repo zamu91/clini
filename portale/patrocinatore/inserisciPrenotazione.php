@@ -22,8 +22,9 @@ include_once '../admin/template/html.php';
 
       <div class="cercaPerData" style="display:none;" >
         <div class="columns">
-          <?php divElement('<input type="edit" class="data input" id="dataCerca">',
-          "Cerca per data","12"); ?>
+          <?php divElement('<select  class="select" id="dataCerca">
+          </select>',"Cerca per data","12"); ?>
+
         </div>
 
         <div class="columns">
@@ -39,7 +40,7 @@ include_once '../admin/template/html.php';
 
       <div class="cercaPerProv">
         <div class="columns">
-          <?php divElement('<select class="input" class="select" id="clinicaCerca">
+          <?php divElement('<select class="select" id="clinicaCerca">
           </select>',"Cerca per luogo","12"); ?>
         </div>
 
@@ -101,7 +102,7 @@ include_once '../admin/template/html.php';
     doAjax(jd,function(data){
       if(data.validToken){
         loadProvClinica();
-        datPick('#dataCerca');
+        loadDataRic();
       }else{
         goIndexPatrocinatore();
 
