@@ -190,14 +190,14 @@ open = function(verb, url, data, target) {
 };
 // utilizzo:
 function open_preview(){
-  if($('#tableFileDoc').children('tr:is-selected').length){
-    docnum = $('#tableFileDoc').children('tr:is-selected').attr("data-doc");
+  if($('#tableFileDoc').children('tr.is-selected').length){
+    docnum = $('#tableFileDoc').children('tr.is-selected').attr("data-doc");
     open('POST', '/arx/dwn/', {docnumber:docnum });
   } else { alert('Seleziona un documento'); }
 }
 function open_download(){
-  if($('#tableFileDoc').children('tr:is-selected').length){
-    docnum = $('#tableFileDoc').children('tr:is-selected').attr("data-doc");
+  if($('#tableFileDoc').children('tr.is-selected').length){
+    docnum = $('#tableFileDoc').children('tr.is-selected').attr("data-doc");
     open('POST', '/arx/dwn/', {docnumber:docnum,download:1 });
   } else { alert('Seleziona un documento'); }
 }
