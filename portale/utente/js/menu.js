@@ -107,6 +107,7 @@ function scriviDatiProfiloImpersonate(){
   jd.data=dataSelect;
   var file = [];
   jd.files = file;
+  $('.insCmd').hide('slow');
   doAjax(jd, function(data){
     if(data.res){
       swal("salvataggio","Profilo inserito con successo","success"); //end swal
@@ -120,8 +121,10 @@ function scriviDatiProfiloImpersonate(){
 
     } else {
       swal("Errore","Salvataggio profilazione fallito.","error");
+      $('.insCmd').show('slow');
     }
   }, function(jqXHR, textStatus, errorThrown){
     swal("errore","Errore salvataggio profilazione.","error");
+    $('.insCmd').show('slow');
   });
 }
