@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
@@ -23,7 +23,6 @@ class chiamate{
   private $envPath;
 
   public function __construct(){
-    $this->debug();
     $path=$_SERVER["DOCUMENT_ROOT"].$this->dSep()."Arxivar".$this->dSep();
     $this->envPath = $_SERVER["DOCUMENT_ROOT"].$this->dSep()."clini".$this->dSep()."portale".$this->dSep();
     $this->arxEnvPath = $path;
