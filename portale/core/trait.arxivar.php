@@ -392,7 +392,7 @@ trait arxivar{
     var_dump($ds->Ricerca[0]->ID);
     $taskwork = (string)$ds->Ricerca[0]->ID;
     var_dump($taskwork);
-    die;
+    // die;
     $this->setJsonMess("res", true);
     $this->setJsonMess("taskwork", $taskwork);
     $this->halt();
