@@ -150,7 +150,6 @@ function scriviDatiProfilo(){
   $('.cmdIns').hide('slow');
   doAjax(jd, function(data){
     if(data.res){
-      $('.cmdIns').show('slow');
       swal("salvataggio","Profilo inserito con successo","success");
 
       setTimeout(function(){
@@ -161,7 +160,9 @@ function scriviDatiProfilo(){
       swal("Attenzione",data.mess,'warning');
     }
   }, function(jqXHR, textStatus, errorThrown){
-    swal("ERRORE","Errore salvataggio profilazione.","error")
+    swal("ERRORE","Errore salvataggio profilazione.","error");
+    $('.cmdIns').show('slow');
+
   });
 }
 
