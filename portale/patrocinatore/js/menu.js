@@ -102,7 +102,8 @@ function apriProfilo(sender, newdoc){
           });
         },
         progressall: function (e, data) {
-          if('.cmdIns').is(":visible"){
+
+          if ($('.cmdIns').is(":visible")){
             $('.cmdIns').hide('slow');
           }
 
