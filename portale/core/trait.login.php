@@ -40,7 +40,9 @@ trait login {
 
 
   private function loginLog($mess){
-    $this->setJsonMess("loginMess",$mess);
+    if($this->isDebug()){
+      $this->setJsonMess("loginMess",$mess);
+    }
   }
 
   private function setIdArxivar(){
