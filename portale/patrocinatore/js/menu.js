@@ -102,7 +102,7 @@ function apriProfilo(sender, newdoc){
           });
         },
         progressall: function (e, data) {
-          $('.insCmd').hide('slow');
+          $('.cmdIns').hide('slow');
           var progress = parseInt(data.loaded / data.total * 100, 10);
           $('#progress .progress-bar').css(
             'width',
