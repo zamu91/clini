@@ -6,7 +6,7 @@ include_once '../admin/template/html.php';
 ?>
 <body>
   <script src="js/navigazione.js"></script>
-  <script src="js/menu.js?v=1"></script>
+  <script src="js/menu.js?v=2"></script>
 
   <div class="container">
 
@@ -74,9 +74,10 @@ include_once '../admin/template/html.php';
       <h2 id="mask-title"></h2>
       <div class="maschera">
       </div>
-      <button class="is-primary button" onclick="scriviDatiProfiloImpersonate();">SALVA PROFILO</button>
-      <button class="is-primary button" onclick="indietroSalva();">INDIETRO</button>
-
+      <div class="insCmd">
+        <button class="is-primary button" onclick="scriviDatiProfiloImpersonate();">SALVA PROFILO</button>
+        <button class="is-primary button" onclick="indietroSalva();">INDIETRO</button>
+      </div>
     </div>
 
 
