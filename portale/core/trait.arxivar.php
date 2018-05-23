@@ -35,7 +35,6 @@ trait arxivar{
       die;
     }
     $this->logoutArxivar();
-    die();
     //  return ob_get_clean();
   }
 
@@ -438,12 +437,12 @@ trait arxivar{
       </tbody>
     </table>
     <?php
-    $this->logoutArxivar();
-    die();
+    $this->halt();
   }
 
   public function scriviDatiProfilo(){
-    $this->loginArxivarServizio();
+    $ses = $this->checkExistSessionFromToken();
+    $this->loginArxivarServizio( $ses["USERNAME"], $ses["PASSWORD"] );
     try {
 
       $ses = $this->checkExistSessionFromToken();
