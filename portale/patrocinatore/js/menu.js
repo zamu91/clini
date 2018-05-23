@@ -83,9 +83,8 @@ function apriProfilo(sender, newdoc){
     //$('#DATA21_2').val(dataSelect);
     $("#mask-title").html( $(sender).html() );
     $("#modal-action").modal("toggle");
-    $('#fileupload').click(function(){
-      $('.insCmd').hide('slow');
-    });
+
+
     if( $("#fileupload").length ){
       var url = "../core/jquery-file-upload-9.21.0/index.php";
       $('#fileupload').fileupload({
@@ -103,6 +102,7 @@ function apriProfilo(sender, newdoc){
           });
         },
         progressall: function (e, data) {
+          $('.insCmd').hide('slow');
           var progress = parseInt(data.loaded / data.total * 100, 10);
           $('#progress .progress-bar').css(
             'width',
