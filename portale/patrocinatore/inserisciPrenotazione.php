@@ -86,9 +86,11 @@ include_once '../admin/template/html.php';
       <h2 id="mask-title"></h2>
       <div class="maschera">
       </div>
-      <button class="is-primary button" onclick="scriviDatiProfilo();">SALVA PROFILO</button>
-      <button class="is-primary button" onclick="indietroSalva();">INDIETRO</button>
 
+      <div class="cmdIns">
+        <button class="is-primary button" onclick="scriviDatiProfilo();">SALVA PROFILO</button>
+        <button class="is-primary button" onclick="indietroSalva();">INDIETRO</button>
+      </div>
     </div>
 
   </div><!-- end container -->

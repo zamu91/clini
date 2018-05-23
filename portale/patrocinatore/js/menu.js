@@ -7,7 +7,6 @@ var dataSelect=null;
 function logOutPatro(){
   localStorage.setItem("tok","");
   goIndexPatrocinatore();
-
 }
 
 function cercaPerClinica(){
@@ -15,14 +14,6 @@ function cercaPerClinica(){
   j.clinica=$('#clinicaCerca').val();
   j.azione='getDataPerClinica';
   doLoad('.resultClinica',j);
-}
-
-function loadDataRic(){
-  data={};
-  data.azione='getOptDataRicerca';
-  setTimeout(function(){
-    doLoad('#dataCerca',data);
-  },2000);
 }
 
 function cercaPerData(){
@@ -37,6 +28,17 @@ function loadProvClinica(){
   data={};
   data.azione='optClinicaProvincia';
   doLoad('#clinicaCerca',data);
+}
+
+
+function loadDataRic(){
+  data={};
+  data.azione='getOptDataRicerca';
+  setTimeout(function(){
+    doLoad('#dataCerca',data);
+  },2000);
+
+
 }
 
 
@@ -81,8 +83,6 @@ function apriProfilo(sender, newdoc){
 
     $("#modal-action").modal("toggle");
 
-
-
     if( $("#fileupload").length ){
       var url = "../core/jquery-file-upload-9.21.0/index.php";
       $('#fileupload').fileupload({
@@ -91,9 +91,11 @@ function apriProfilo(sender, newdoc){
         done: function (e, data) {
           $.each(data.result.files, function (index, file) {
             if( typeof file.error != 'undefined' && file.error != "" ) {
-              alert("Errore nel caricamento di fle."+ file.name+' --> '+file.error );
+              swal("errore","Errore nel caricamento di fle."+ file.name+' --> '+file.error,"error" );
+              $('.cmdIns').show('slow');
             } else {
               $('<p class="uploadedFile" data-info="'+decodeURIComponent(file.url)+'"/>').text(file.name).appendTo('#files');
+              $('.cmdIns').show('slow');
             }
           });
         },
@@ -105,7 +107,7 @@ function apriProfilo(sender, newdoc){
           );
         },
         fail: function(jqXHR, errorThrown, textStatus){
-          alert("Errore nella procedura di caricamento dei file.");
+          swal("errore","Errore nella procedura di caricamento dei file.","errore");
         }
       }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
     }
@@ -142,7 +144,7 @@ function scriviDatiProfilo(){
     file.push($(this).data("info"));
   });
   jd.files = file;
-  // console.log(jd);
+  console.log(jd);
   doAjax(jd, function(data){
     if(data.res){
 
@@ -180,18 +182,14 @@ open = function(verb, url, data, target) {
 };
 // utilizzo:
 function open_preview(){
-  // console.log($('#tableFileDoc').children('tbody').children('tr.is-selected').length);
-  // console.log($('#tableFileDoc').children('tbody').children('tr.is-selected').attr("data-doc"));
-  if($('#tableFileDoc').children('tbody').children('tr.is-selected').length){
-    docnum = $('#tableFileDoc').children('tbody').children('tr.is-selected').attr("data-doc");
-    open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum }, '_blank');
+  if($('#tableFileDoc').children('tr:is-selected').length){
+    docnum = $('#tableFileDoc').children('tr:is-selected').attr("data-doc");
+    open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum });
   } else { alert('Seleziona un documento'); }
 }
 function open_download(){
-  // console.log($('#tableFileDoc').children('tbody').children('tr.is-selected').length);
-  // console.log($('#tableFileDoc').children('tbody').children('tr.is-selected').attr("data-doc"));
-  if($('#tableFileDoc').children('tbody').children('tr.is-selected').length){
-    docnum = $('#tableFileDoc').children('tbody').children('tr.is-selected').attr("data-doc");
+  if($('#tableFileDoc').children('tr:is-selected').length){
+    docnum = $('#tableFileDoc').children('tr:is-selected').attr("data-doc");
     open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum,download:1 });
   } else { alert('Seleziona un documento'); }
 }
