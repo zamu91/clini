@@ -188,12 +188,12 @@ open = function(verb, url, data, target) {
 function open_preview(){
   if($('#tableFileDoc').children('tr:is-selected').length){
     docnum = $('#tableFileDoc').children('tr:is-selected').attr("data-doc");
-    open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum });
+    open('POST', '/arx/dwn/', {docnumber:docnum });
   } else { alert('Seleziona un documento'); }
 }
 function open_download(){
   if($('#tableFileDoc').children('tr:is-selected').length){
     docnum = $('#tableFileDoc').children('tr:is-selected').attr("data-doc");
-    open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum,download:1 });
+    open('POST', '/arx/dwn/', {docnumber:docnum,download:1 });
   } else { alert('Seleziona un documento'); }
 }
