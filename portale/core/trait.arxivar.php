@@ -269,8 +269,7 @@ trait arxivar{
   }
 
   public function listaProfili(){
-    $ses = $this->checkExistSessionFromToken();
-    $this->loginArxivarServizio( $ses["USERNAME"], $ses["PASSWORD"] );
+    $this->loginArxivarServizio();
     $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
     $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
     $ARX_Documenti = new ARX_Documenti\ARX_Documenti($this->baseUrl."ARX_Documenti.asmx?WSDL");
@@ -392,13 +391,12 @@ trait arxivar{
   }
 
   public function listaDocumenti(){
-    $ses = $this->checkExistSessionFromToken();
-    $this->loginArxivarServizio( $ses["USERNAME"], $ses["PASSWORD"] );
+    $this->loginArxivarServizio();
     $sessionid = $this->loginResult->SessionId;
     $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
     $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
 
-    $docnumber = $this->post("docsnumber", false);
+    $docnumber = $this->post("docnumber", false);
     $searchDocmed = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.DOCMED");
     $selectDocmed = $ARX_Search->Dm_Profile_Select_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.DOCMED");
     foreach ($searchDocmed->Aggiuntivi->Field_Abstract as $agg) {
@@ -441,8 +439,7 @@ trait arxivar{
   }
 
   public function scriviDatiProfilo(){
-    $ses = $this->checkExistSessionFromToken();
-    $this->loginArxivarServizio( $ses["USERNAME"], $ses["PASSWORD"] );
+    $this->loginArxivarServizio();
     try {
 
       $ses = $this->checkExistSessionFromToken();
@@ -583,8 +580,7 @@ trait arxivar{
   }
 
   public function scriviDocumentiProfilo(){
-    $ses = $this->checkExistSessionFromToken();
-    $this->loginArxivarServizio( $ses["USERNAME"], $ses["PASSWORD"] );
+    $this->loginArxivarServizio();
     try{
       $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
       $ARX_Workflow = new ARX_Workflow\ARX_Workflow($this->baseUrl."ARX_Workflow.asmx?WSDL");
