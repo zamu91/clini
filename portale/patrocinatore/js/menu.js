@@ -192,9 +192,10 @@ open = function(verb, url, data, target) {
 function open_preview(){
   if($('.documentSelectTask').length){
     docnum = $('.documentSelectTask').attr("data-doc");
-    open('POST', '/arx/dwn/', {docnumber:docnum });
+    open('POST', '/arx/dwn/', {docnumber:docnum }, '_blank' );
   } else { alert('Seleziona un documento'); }
 }
+
 function open_download(){
   if($('.documentSelectTask').length){
     docnum = $('.documentSelectTask').attr("data-doc");
