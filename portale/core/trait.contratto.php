@@ -78,44 +78,58 @@ trait contratto{
   }
 
 
-  private function getJoinConflict(){
+  private function getJoinConflict(&$col){
     $adQuery="";
+    $col="";
     for($i=1;$i<7;$i++){
       if($this->ifDayWork($i)){
         $tab="GIORNO$i";
-        $adQuery.=" INNER JOIN XDM_CONTRATTO_GIORNO  $tab
-        ON $tab.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO
+        $adQuery.=" LEFT JOIN XDM_CONTRATTO_GIORNO  $tab ON $tab.IDCONTRATTO=XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO and $tab.GIORNO='$i'
         ";
+        if(!empty($col)){$col.=" + ";}
+        $col.=" NVL($tab.giorno,0) ";
       }
     }
+
     return $adQuery;
   }
 
   //controllo se ci sono conflitti con altre
   private function checkConflict(){
+    $iniz=$this->formOcDate(':dataIniz');
+    $fine=$this->formOcDate(':dataFine');
+    $adJoin=$this->getJoinConflict($adCol);
+    if(empty($adCol)){ //nessuna data fissata nel precedente contratto
+      return false;
+    }
 
-    $iniz=$this->formOcDateEu(':dataIniz');
-    $fine=$this->formOcDateEu(':dataFine');
+    $adCol=", ( $adCol ) as DAYCONF";
 
-    $adJoin=$this->getJoinConflict();
-    $str="SELECT XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO  FROM XDM_AMBULATORIO_CONTRATTO
-    $adJoin
-    where IDAMBULATORIO=:idAmb and DATAINIZIOCONTRATTO>=$iniz
-    and DATAFINECONTRATTO<=$fine and ORAINIZIO>=:oraIniz and ORAFINE<:oraFine
-    ";
+    $str="SELECT XDM_AMBULATORIO_CONTRATTO.IDCONTRATTO $adCol  FROM XDM_AMBULATORIO_CONTRATTO $adJoin
+    where IDAMBULATORIO=:idAmb and ($iniz<= DATAFINECONTRATTO
+      and $fine>= DATAFINECONTRATTO )
+    and (:oraIniz<= ORAFINE and :oraFine>= ORAINIZIO )    ";
+    $oraIniz=$this->getVCont('ORAINIZIO');
+    $oraFine=$this->getVCont('ORAFINE');
+    if(strlen($oraIniz)==7){$oraIniz="0".$oraIniz;}
+    if(strlen($oraFine)==7){$oraFine="0".$oraFine;}
+
+
     $this->queryPrepare($str);
     $this->queryBind('dataIniz',$this->dataInizioSTR);
     $this->queryBind('dataFine',$this->dataFineSTR);
-    $this->queryBind('oraIniz',$this->getVCont('ORAINIZIO'));
-    $this->queryBind('oraFine',$this->getVCont('ORAFINE'));
+    $this->queryBind('oraIniz',$oraIniz);
+    $this->queryBind('oraFine',$oraFine);
     $this->queryBind('idAmb',$this->getVCont('IDAMBULATORIO'));
 
     $this->executePrepare();
-    if($this->queryNumRows()>0){
-      $row=$this->fetch();
-      $this->setJsonMess("conflitto",$row);
-      $this->setJsonMess("mess","Conflitto nel contratto trovato ".$row['IDCONTRATTO']);
-      $this->halt();
+    if($row=$this->fetch()){
+      $this->setJsonMess("conflitto","trovato, controllo giorni");
+      if($row['DAYCONF']>0){
+        $this->setJsonMess("conflitto",$row);
+        $this->setJsonMess("mess","Conflitto nel contratto trovato ".$row['IDCONTRATTO']);
+        $this->halt();
+      }
     }else{
       return true;
     }
@@ -135,6 +149,16 @@ trait contratto{
 
     $this->logCont("Iniz  e start inserimento contratto");
 
+    $oraIniz=$this->getVCont('ORAINIZIO');
+    $oraFine=$this->getVCont('ORAFINE');
+
+    if(strlen($oraIniz)==7){$oraIniz="0".$oraIniz;}
+    if(strlen($oraFine)==7){$oraFine="0".$oraFine;}
+
+
+
+
+
     $idContrattoNew=$this->getIdNext("IDCONTRATTO","XDM_AMBULATORIO_CONTRATTO");
     $this->queryBind('id',$idContrattoNew);
     $this->queryBind('tempo',$this->getVCont('TEMPO'));
@@ -142,8 +166,8 @@ trait contratto{
     $this->queryBind('verso',$this->getVCont('VERSO'));
     $this->queryBind('dataIniz',$this->dataInizioSTR);
     $this->queryBind('dataFine',$this->dataFineSTR);
-    $this->queryBind('oraIniz',$this->getVCont('ORAINIZIO'));
-    $this->queryBind('oraFine',$this->getVCont('ORAFINE'));
+    $this->queryBind('oraIniz',$oraIniz);
+    $this->queryBind('oraFine',$oraFine);
     $this->executePrepare();
     $this->logCont("Salvataggio contratto");
     $this->setIdContratto($idContrattoNew);
@@ -260,6 +284,9 @@ trait contratto{
     private function occupaSpazioSingolo($data,$newOra,$fineOra){
       $dataIns=$this->formOcDate(':data');
 
+      if(strlen($newOra)==7){$newOra="0".$newOra;}
+      if(strlen($fineOra)==7){$fineOra="0".$fineOra;}
+
       $str="INSERT INTO XDM_PRENOTAZIONE
       (IDPRENOTAZIONE,IDCONTRATTO,ORAINIZIO,ORAFINE,TEMPO,DATA,STATO)VALUES
       (:id,:idContratto,:oraInizio,:oraFine,:tempo,$dataIns,0)  ";
@@ -292,7 +319,7 @@ trait contratto{
 
         $i++;
         $fineOra=strtotime('+'.$durata.' minutes',$newOra);
-        
+
         if($fineOra<$oraFine){ //caso prossimo alla chiusura
           $this->occupaSpazioSingolo($data,$newOra,$fineOra);
         }

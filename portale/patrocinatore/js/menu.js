@@ -17,6 +17,14 @@ function cercaPerClinica(){
   doLoad('.resultClinica',j);
 }
 
+function loadDataRic(){
+  data={};
+  data.azione='getOptDataRicerca';
+  setTimeout(function(){
+    doLoad('#dataCerca',data);
+  },2000);
+}
+
 function cercaPerData(){
   j={};
   j.data=$('#dataCerca').val();
@@ -29,17 +37,6 @@ function loadProvClinica(){
   data={};
   data.azione='optClinicaProvincia';
   doLoad('#clinicaCerca',data);
-}
-
-
-function loadDataRic(){
-  data={};
-  data.azione='getOptDataRicerca';
-  setTimeout(function(){
-    doLoad('#dataCerca',data);
-  },2000);
-
-
 }
 
 
@@ -145,7 +142,7 @@ function scriviDatiProfilo(){
     file.push($(this).data("info"));
   });
   jd.files = file;
-  console.log(jd);
+  // console.log(jd);
   doAjax(jd, function(data){
     if(data.res){
 
@@ -183,14 +180,18 @@ open = function(verb, url, data, target) {
 };
 // utilizzo:
 function open_preview(){
-  if($('#tableFileDoc').children('tr:is-selected').length){
-    docnum = $('#tableFileDoc').children('tr:is-selected').attr("data-doc");
-    open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum });
+  // console.log($('#tableFileDoc').children('tbody').children('tr.is-selected').length);
+  // console.log($('#tableFileDoc').children('tbody').children('tr.is-selected').attr("data-doc"));
+  if($('#tableFileDoc').children('tbody').children('tr.is-selected').length){
+    docnum = $('#tableFileDoc').children('tbody').children('tr.is-selected').attr("data-doc");
+    open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum }, '_blank');
   } else { alert('Seleziona un documento'); }
 }
 function open_download(){
-  if($('#tableFileDoc').children('tr:is-selected').length){
-    docnum = $('#tableFileDoc').children('tr:is-selected').attr("data-doc");
+  // console.log($('#tableFileDoc').children('tbody').children('tr.is-selected').length);
+  // console.log($('#tableFileDoc').children('tbody').children('tr.is-selected').attr("data-doc"));
+  if($('#tableFileDoc').children('tbody').children('tr.is-selected').length){
+    docnum = $('#tableFileDoc').children('tbody').children('tr.is-selected').attr("data-doc");
     open('POST', 'http://192.168.50.250:84/Default.aspx', {docnumber:docnum,download:1 });
   } else { alert('Seleziona un documento'); }
 }

@@ -115,7 +115,7 @@ function dettagliTaskProfilo(target){
 
   var jd = { azione: "getTaskworkFromDocnumber", docnumber: docnumber};
   doAjax(jd, function(data){
-    console.log(data);
+  //  console.log(data);
     if( data.res ){
       $("#containerComandi").attr("data-task", docnumber);
       $("#containerComandi").attr("data-work", data.taskwork);
@@ -142,13 +142,13 @@ function doAjax(jd, doneFunc, failFunc){
   jd.token=getToken();
   if( ajaxCall ){ return false; }
   ajaxCall = true;
-  console.log("doAjaxd");
-  console.log({
-    url: urlAjax,
-    type: 'POST',
-    dataType:'html',
-    data: jd
-  });
+//  console.log("doAjaxd");
+//  console.log({
+  //   url: urlAjax,
+  //   type: 'POST',
+  //   dataType:'html',
+  //   data: jd
+  // });
   ajaxCall = $.ajax({
     url: urlAjax,
     type: 'POST',
@@ -177,13 +177,13 @@ function doLoad(target, jd, doneFunc, failFunc){
   jd.token=getToken();
   if(ajaxLoad){ return false; }
   ajaxLoad = true;
-  console.log("doLoad");
-  console.log({
-    url: urlAjax,
-    type: 'POST',
-    dataType:'html',
-    data: jd
-  });
+//  console.log("doLoad");
+//  console.log({
+  //   url: urlAjax,
+  //   type: 'POST',
+  //   dataType:'html',
+  //   data: jd
+  // });
   jqXHR = $.ajax({
     url: urlAjax,
     type: 'POST',
@@ -203,7 +203,7 @@ function doLoad(target, jd, doneFunc, failFunc){
     }else{
       swal("Errore","attenzione errore chiamata ","error");
   //    alert(jqXHR);
-    //  console.log(jqXHR);
+    ////  console.log(jqXHR);
     }
   });
 }
@@ -235,7 +235,7 @@ function scriviDatiProfiloOLD(){
     file.push($(this).data("info"));
   });
   jd.files = file;
-  console.log(jd);
+//  console.log(jd);
   doAjax(jd, function(data){
     if(data.res){
       $("#modal-action").modal("toggle");
