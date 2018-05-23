@@ -35,6 +35,7 @@ trait arxivar{
       die;
     }
     $this->logoutArxivar();
+    die();
     //  return ob_get_clean();
   }
 
@@ -266,6 +267,7 @@ trait arxivar{
       // parte dell'inserimento
       echo $this->getFieldFromMaschera();
     }
+    die;
   }
 
   public function listaProfili(){
@@ -437,7 +439,8 @@ trait arxivar{
       </tbody>
     </table>
     <?php
-    $this->halt();
+    $this->logoutArxivar();
+    die();
   }
 
   public function scriviDatiProfilo(){
