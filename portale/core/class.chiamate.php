@@ -91,7 +91,9 @@ class chiamate{
 
   public function post($nome, $verbose = true){
     if(empty($_POST[$nome])){
-      if($verbose){$this->setJsonMess('warn',"$nome non trovato");}
+      if($this->isDebug()){
+        if($verbose){$this->setJsonMess('warn',"$nome non trovato");}
+      }
       return false;
     }else{
       return $_POST[$nome];
