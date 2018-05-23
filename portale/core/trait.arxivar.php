@@ -365,8 +365,9 @@ trait arxivar{
   }
 
   public function getTaskworkFromDocnumber(){
-    $ses = $this->checkExistSessionFromToken();
-    $this->loginArxivarServizio( $ses["USERNAME"], $ses["PASSWORD"] );
+    // $ses = $this->checkExistSessionFromToken();
+    // $this->loginArxivarServizio( $ses["USERNAME"], $ses["PASSWORD"] );
+    $this->loginArxivarServizio( );
 
     $sessionid = $this->loginResult->SessionId;
     $docnumber = $this->post("docnumber", false);
