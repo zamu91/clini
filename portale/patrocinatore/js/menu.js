@@ -147,10 +147,10 @@ function scriviDatiProfilo(){
     file.push($(this).data("info"));
   });
   jd.files = file;
-  console.log(jd);
+  $('.cmdIns').hide('slow');
   doAjax(jd, function(data){
     if(data.res){
-
+      $('.cmdIns').show('slow');
       swal("salvataggio","Profilo inserito con successo","success");
 
       setTimeout(function(){
