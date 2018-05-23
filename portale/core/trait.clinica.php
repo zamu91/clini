@@ -16,8 +16,19 @@ trait clinica
     die;
   }
 
+
+
+
   private function optClinicaProvincia(){
-    $this->query("SELECT DISTINCT PROVINCIA from XDM_AMBULATORIO  ");
+
+
+    $this->query("SELECT DISTINCT AM.PROVINCIA
+    FROM XDM_AMBULATORIO AM
+    JOIN XDM_AMBULATORIO_CONTRATTO AMC ON AM.IDAMBULATORIO=AMC.IDAMBULATORIO
+    JOIN XDM_PRENOTAZIONE PR ON PR.IDCONTRATTO=AMC.IDCONTRATTO AND PR.STATO=0
+    WHERE PR.DATA>SYSDATE
+    ORDER BY 1 ASC");
+
     $html="";
     while($row=$this->fetch()){
       $html.="<option value='{$row['PROVINCIA']}'>{$row['PROVINCIA']}</option>";
