@@ -381,10 +381,11 @@ trait arxivar{
     $selectTask = $ARX_Search->Dm_TaskWork_Select_GetNewInstance($sessionid);
     $selectTask->ID->Selected = TRUE;
     $result = $ARX_Search->Dm_TaskWork_GetData($sessionid, $selectTask, $searchTask);
+    $this->logoutArxivar();
     var_dump($result);
+    die;
     $ds = simplexml_load_string($result);
     $taskwork = (string)$ds->Ricerca->ID;
-    $this->logoutArxivar();
     $this->setJsonMess("res", true);
     $this->setJsonMess("taskwork", $taskwork);
     $this->halt();
