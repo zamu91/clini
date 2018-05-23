@@ -364,11 +364,8 @@ trait arxivar{
   }
 
   public function getTaskworkFromDocnumber(){
-    $this->loginArxivarServizio();
-
-    ini_set('xdebug.var_display_max_depth', -1);
-    ini_set('xdebug.var_display_max_children', -1);
-    ini_set('xdebug.var_display_max_data', -1);
+    $ses = $this->checkExistSessionFromToken();
+    $this->loginArxivarServizio( $ses["USERNAME"], $ses["PASSWORD"] );
 
     $sessionid = $this->loginResult->SessionId;
     $docnumber = $this->post("docnumber", false);
@@ -384,29 +381,23 @@ trait arxivar{
     $searchTask->NOMETASK->Valore = "99 - Inserimento Documentazione";
     $selectTask = $ARX_Search->Dm_TaskWork_Select_GetNewInstance($sessionid);
     $selectTask->ID->Selected = TRUE;
-    var_dump($selectTask);
-    die;
     $result = $ARX_Search->Dm_TaskWork_GetData($sessionid, $selectTask, $searchTask);
     $this->logoutArxivar();
-    // var_dump($result);
-    // die;
     $ds = simplexml_load_string($result);
-    var_dump($ds->Ricerca[0]->ID);
     $taskwork = (string)$ds->Ricerca[0]->ID;
-    var_dump($taskwork);
-    // die;
     $this->setJsonMess("res", true);
     $this->setJsonMess("taskwork", $taskwork);
     $this->halt();
   }
 
   public function listaDocumenti(){
-    $this->loginArxivarServizio();
+    $ses = $this->checkExistSessionFromToken();
+    $this->loginArxivarServizio( $ses["USERNAME"], $ses["PASSWORD"] );
     $sessionid = $this->loginResult->SessionId;
     $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
     $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
 
-    $docnumber = $this->post("docnumber", false);
+    $docnumber = $this->post("docsnumber", false);
     $searchDocmed = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.DOCMED");
     $selectDocmed = $ARX_Search->Dm_Profile_Select_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.DOCMED");
     foreach ($searchDocmed->Aggiuntivi->Field_Abstract as $agg) {
@@ -672,7 +663,11 @@ trait arxivar{
   private function loginArxivarServizio($username = "", $password = ""){
     if( $this->arxVer == 5){
       $ARX_Login = new ARX_Login\ARX_Login($this->baseUrl."ARX_Login.asmx?WSDL");
-      $this->loginResult = $ARX_Login->Login($this->adminUser, $this->adminPass, $this->softwareName);
+
+      $username = !empty( $username ) ? $username : $this->adminUser;
+      $password = !empty( $password ) ? $password : $this->adminPass;
+
+      $this->loginResult = $ARX_Login->Login($username, $password, $this->softwareName);
       if ($this->loginResult->ArxLogOnErrorType != Arx_Login\ArxLogOnErrorType::None){
         $this->arxLog("Logon Failed: ".$this->loginResult->ArxLogOnErrorType);
         die();
