@@ -134,8 +134,11 @@ function dettagliTaskProfilo(target){
 }
 
 function selezionaDocumento(target){
+  $(target).parent("tbody").children("tr.is-selected").removeClass("documentSelectTask");
+
   $(target).parent("tbody").children("tr.is-selected").removeClass("is-selected");
-  $(target).addClass("is-selected");
+
+  $(target).addClass("is-selected documentSelectTask");
 }
 
 function doAjax(jd, doneFunc, failFunc){
