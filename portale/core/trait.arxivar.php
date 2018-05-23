@@ -243,6 +243,8 @@ trait arxivar{
           <div class="progress-bar progress-bar-success"></div>
         </div>
         <div id="files" class="files"></div>
+      <?php } else { ?>
+        <div style="margin-top: 10px;"></div>
       <?php } ?>
 
       <div id="requestResult"></div>
