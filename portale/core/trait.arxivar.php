@@ -389,7 +389,7 @@ trait arxivar{
     // var_dump($result);
     // die;
     $ds = simplexml_load_string($result);
-    var_dump($ds->Ricerca);
+    var_dump($ds->Ricerca->ID);
     $taskwork = (string)$ds->Ricerca->ID;
     var_dump($taskwork);
     die;
