@@ -366,6 +366,10 @@ trait arxivar{
   public function getTaskworkFromDocnumber(){
     $this->loginArxivarServizio();
 
+    ini_set('xdebug.var_display_max_depth', -1);
+    ini_set('xdebug.var_display_max_children', -1);
+    ini_set('xdebug.var_display_max_data', -1);
+
     $sessionid = $this->loginResult->SessionId;
     $docnumber = $this->post("docnumber", false);
     $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
@@ -380,12 +384,17 @@ trait arxivar{
     $searchTask->NOMETASK->Valore = "99 - Inserimento Documentazione";
     $selectTask = $ARX_Search->Dm_TaskWork_Select_GetNewInstance($sessionid);
     $selectTask->ID->Selected = TRUE;
+    var_dump($selectTask);
+    die;
     $result = $ARX_Search->Dm_TaskWork_GetData($sessionid, $selectTask, $searchTask);
     $this->logoutArxivar();
-    var_dump($result);
-    die;
+    // var_dump($result);
+    // die;
     $ds = simplexml_load_string($result);
-    $taskwork = (string)$ds->Ricerca->ID;
+    var_dump($ds->Ricerca[0]->ID);
+    $taskwork = (string)$ds->Ricerca[0]->ID;
+    var_dump($taskwork);
+    // die;
     $this->setJsonMess("res", true);
     $this->setJsonMess("taskwork", $taskwork);
     $this->halt();
