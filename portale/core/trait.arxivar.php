@@ -389,8 +389,8 @@ trait arxivar{
     // var_dump($result);
     // die;
     $ds = simplexml_load_string($result);
-    var_dump($ds->Ricerca->ID);
-    $taskwork = (string)$ds->Ricerca->ID;
+    var_dump($ds->Ricerca[0]->ID);
+    $taskwork = (string)$ds->Ricerca[0]->ID;
     var_dump($taskwork);
     die;
     $this->setJsonMess("res", true);
