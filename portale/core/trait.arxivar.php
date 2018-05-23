@@ -381,7 +381,7 @@ trait arxivar{
     $selectTask = $ARX_Search->Dm_TaskWork_Select_GetNewInstance($sessionid);
     $selectTask->ID->Selected = TRUE;
     $result = $ARX_Search->Dm_TaskWork_GetData($sessionid, $selectTask, $searchTask);
-    $this->arxDebug($result);
+    var_dump($result);
     $ds = simplexml_load_string($result);
     $taskwork = (string)$ds->Ricerca->ID;
     $this->logoutArxivar();
