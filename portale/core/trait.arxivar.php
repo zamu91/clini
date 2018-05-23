@@ -267,7 +267,6 @@ trait arxivar{
       // parte dell'inserimento
       echo $this->getFieldFromMaschera();
     }
-    die;
   }
 
   public function listaProfili(){
