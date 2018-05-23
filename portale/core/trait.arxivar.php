@@ -583,8 +583,9 @@ trait arxivar{
   }
 
   public function scriviDocumentiProfilo(){
-    $ses = $this->checkExistSessionFromToken();
-    $this->loginArxivarServizio( $ses["USERNAME"], $ses["PASSWORD"] );
+    // $ses = $this->checkExistSessionFromToken();
+    // $this->loginArxivarServizio( $ses["USERNAME"], $ses["PASSWORD"] );
+    $this->loginArxivarServizio( );
     try{
       $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
       $ARX_Workflow = new ARX_Workflow\ARX_Workflow($this->baseUrl."ARX_Workflow.asmx?WSDL");
