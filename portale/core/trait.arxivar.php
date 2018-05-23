@@ -581,7 +581,7 @@ trait arxivar{
       $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
       $ARX_Workflow = new ARX_Workflow\ARX_Workflow($this->baseUrl."ARX_Workflow.asmx?WSDL");
       $sessionid = $this->loginResult->SessionId;
-      $id = $this->post("taskwork", false);
+      $idTaskWork = $this->post("taskwork", false);
       $files = $this->post("files", false);
       // $basepath = dirname($_SERVER['DOCUMENT_ROOT']);
       $basepath = "";
