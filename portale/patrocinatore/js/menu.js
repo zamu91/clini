@@ -102,7 +102,7 @@ function apriProfilo(sender, newdoc){
           });
         },
         progressall: function (e, data) {
-          $('.insCmd').hide('slow');
+          $('.cmdIns').hide('slow');
           var progress = parseInt(data.loaded / data.total * 100, 10);
           $('#progress .progress-bar').css(
             'width',
@@ -147,10 +147,10 @@ function scriviDatiProfilo(){
     file.push($(this).data("info"));
   });
   jd.files = file;
-  console.log(jd);
+  $('.cmdIns').hide('slow');
   doAjax(jd, function(data){
     if(data.res){
-
+      $('.cmdIns').show('slow');
       swal("salvataggio","Profilo inserito con successo","success");
 
       setTimeout(function(){
