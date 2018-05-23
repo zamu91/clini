@@ -79,7 +79,7 @@ trait arxivar{
     $maskix = $this->post("maskix", false);
 
     $ses = $this->checkExistSessionFromToken();
-    $abiFile = ( $ses["IMPERSONATE"] == '1') ? false : true;
+    $abiFile = ( $ses["IMPERSONATE"] != '0') ? false : true;
 
     try
     {
@@ -579,7 +579,7 @@ trait arxivar{
       $ARX_Dati = new ARX_Dati\ARX_Dati($this->baseUrl."ARX_Dati.asmx?WSDL");
       $ARX_Workflow = new ARX_Workflow\ARX_Workflow($this->baseUrl."ARX_Workflow.asmx?WSDL");
       $sessionid = $this->loginResult->SessionId;
-      $idTaskWork = $this->post("taskwork", false);
+      $id = $this->post("taskwork", false);
       $files = $this->post("files", false);
       // $basepath = dirname($_SERVER['DOCUMENT_ROOT']);
       $basepath = "";
