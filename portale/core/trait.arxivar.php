@@ -384,6 +384,8 @@ trait arxivar{
     $searchTask->NOMETASK->Valore = "99 - Inserimento Documentazione";
     $selectTask = $ARX_Search->Dm_TaskWork_Select_GetNewInstance($sessionid);
     $selectTask->ID->Selected = TRUE;
+    var_dump($selectTask);
+    die;
     $result = $ARX_Search->Dm_TaskWork_GetData($sessionid, $selectTask, $searchTask);
     $this->logoutArxivar();
     // var_dump($result);
