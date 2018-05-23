@@ -366,6 +366,10 @@ trait arxivar{
   public function getTaskworkFromDocnumber(){
     $this->loginArxivarServizio();
 
+    ini_set('xdebug.var_display_max_depth', -1);
+    ini_set('xdebug.var_display_max_children', -1);
+    ini_set('xdebug.var_display_max_data', -1);
+
     $sessionid = $this->loginResult->SessionId;
     $docnumber = $this->post("docnumber", false);
     $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
