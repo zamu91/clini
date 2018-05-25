@@ -88,7 +88,7 @@ include_once '../admin/template/html.php';
       </div>
 
       <div class="cmdIns">
-        <button class="is-primary button" onclick="scriviDatiProfilo();">SALVA PROFILO</button>
+        <button class="is-primary button" onclick="scriviDatiProfilo();">CONFERMA PRENOTAZIONE</button>
         <button class="is-primary button" onclick="indietroSalva();">INDIETRO</button>
       </div>
     </div>

@@ -21,7 +21,8 @@ trait arxivar{
       $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
       $sessionid = $this->loginResult->SessionId;
       $search = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.POS");
-      $campidaesporre=array("COMBO15_297","TESTO10_297","TESTO13_297","CHECK17_1","TESTO14_297","TESTO12_297");
+      //$campidaesporre=array("COMBO15_297","TESTO10_297","TESTO13_297","CHECK17_1","TESTO14_297","TESTO12_297");
+      $campidaesporre=array("TESTO10_297","TESTO13_297","TESTO14_297","TESTO12_297");
       foreach ($search->Aggiuntivi->Field_Abstract as $agg) {
         if(in_array($agg->Nome,$campidaesporre)) {?>
           <div class="fieldBox">
@@ -306,8 +307,8 @@ trait arxivar{
         $agg->Valore = $nome;
       }
       if($agg->Nome == "CHECK17_1" && !empty($deceduto) ){
-        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Contiene;
-        $agg->Valore = $deceduto;
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_Numerico::Uguale;
+        $agg->Valore = boolval($deceduto)?1:0;
       }
       if($agg->Nome == "TESTO14_297" && !empty($telefono) ){
         $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Contiene;
@@ -323,6 +324,7 @@ trait arxivar{
     $select->DOCNUMBER->Selected = true;
     $select->DATADOC->Selected = true;
     $select->STATO->Selected = true;
+    $select->CREATION_DATE->Selected = true;
     foreach ($select->Aggiuntivi->Aggiuntivo_Selected as $agg) {
       if (in_array($agg->Nome,$campidaesporre))
       {
@@ -336,9 +338,9 @@ trait arxivar{
     <table id="tabProfili" class="table is-fullwidth is-hoverable clickable">
       <thead>
         <tr>
-          <th>DOCNUMBER</th>
-          <th>STATO</th>
-          <th>DATA DOCUMENTO</th>
+          <th style="display:none;">DOCNUMBER</th>
+          <th>Stato Pratica</th>
+          <th>Data Documento</th>
           <?php
           foreach ($campidaesporreTitoli as $item) { ?>
             <th><?php echo $item; ?></th>
@@ -349,12 +351,17 @@ trait arxivar{
         <?php
         foreach ($ds->Ricerca as $row) { ?>
           <tr data-task="<?php echo $row->DOCNUMBER; ?>" onclick="dettagliTaskProfilo(this);">
-            <td><?php echo $row->DOCNUMBER; ?></td>
+            <td style="display:none;"><?php echo $row->DOCNUMBER; ?></td>
             <td><?php echo $row->STATO; ?></td>
-            <td><?php echo $row->DATADOC; ?></td>
+            <td><?php echo date('d/m/Y',strtotime($row->CREATION_DATE)); ?></td>
             <?php
             foreach ($campidaesporre as $item) { ?>
-              <td><?php echo $row->$item; ?></td>
+              <td><?php 
+              if (substr($item,0,5)=="CHECK") {
+                 if ($row->$item==1) { echo "Deceduto"; } else { echo ""; }
+              } else {
+                 echo $row->$item;
+              } ?></td>
             <?php } ?>
           </tr>
         <?php } ?>
@@ -401,11 +408,11 @@ trait arxivar{
     $ARX_Search = new ARX_Search\ARX_Search($this->baseUrl."ARX_Search.asmx?WSDL");
 
     $docnumber = $this->post("docnumber", false);
-    $searchDocmed = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.DOCMED");
-    $selectDocmed = $ARX_Search->Dm_Profile_Select_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST.DOCMED");
+    $searchDocmed = $ARX_Search->Dm_Profile_Search_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST");
+    $selectDocmed = $ARX_Search->Dm_Profile_Select_Get_New_Instance_By_TipiDocumentoCodice($sessionid, "GEST");
     foreach ($searchDocmed->Aggiuntivi->Field_Abstract as $agg) {
       if ($agg->Nome == "NUMERIC16_299") {
-        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_String::Uguale;
+        $agg->Operatore = ARX_Search\Dm_Base_Search_Operatore_Numerico::Uguale;
         $agg->Valore = $docnumber;
       }
     }
@@ -415,6 +422,7 @@ trait arxivar{
     $selectDocmed->CREATION_DATE->Selected = true;
     $selectDocmed->FILESIZE->Selected = true;
     $selectDocmed->STATO->Selected = true;
+    $selectDocmed->ORIGINALE->Selected = true;
     $result = $ARX_Search->Dm_Profile_GetData($sessionid, $selectDocmed, $searchDocmed);
     $ds = simplexml_load_string($result);
 
@@ -422,18 +430,18 @@ trait arxivar{
     <table id="tableFileDoc" class="table is-fullwidth is-hoverable clickable">
       <thead>
         <tr>
-          <th>DOCNUMBER</th>
-          <th>OGGETTO</th>
-          <th>DATA DOCUMENTO</th>
+          <th style="display:none;">DOCNUMBER</th>
+          <th>Data Documento</th>
+          <th>Oggetto</th>
         </tr>
       </thead>
       <tbody>
         <?php
         foreach ($ds->Ricerca as $row) { ?>
           <tr data-doc="<?php echo $row->DOCNUMBER; ?>" onclick="selezionaDocumento(this);" >
-            <td><?php echo $row->DOCNUMBER; ?></td>
+            <td style="display:none;"><?php echo $row->DOCNUMBER; ?></td>
+            <td><?php echo date('d/m/Y',strtotime($row->CREATION_DATE)); ?></td>
             <td><?php echo $row->DOCNAME; ?></td>
-            <td><?php echo $row->DATADOC; ?></td>
           </tr>
         <?php } ?>
       </tbody>
@@ -593,7 +601,6 @@ trait arxivar{
       $profileBase->InOut = ARX_Workflow\DmProfileInOut::Interno;
       $profileBase->Stato = "VALIDO";
       $profileBase->Aoo = "1";
-      $profileBase->ProtocolloInterno = "123456";
       foreach ($files as $chiave => $valore) {
         $profile = new ARX_Workflow\Dm_Profile_ForInsert();
         foreach (get_object_vars($profileBase) as $key => $value) {
