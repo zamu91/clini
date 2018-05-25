@@ -13,6 +13,9 @@
 
   <link rel="stylesheet" type="text/css" href="../vendor/bootstrap-4.0.0-dist/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="../vendor/jquery-file-upload-9.21.0/css/jquery.fileupload.css">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
   <!-- javascript -->
   <script type="text/javascript" src="../vendor/jquery/jquery.js"></script>
   <script type="text/javascript" src="js/jquery-ui.min.js"></script>

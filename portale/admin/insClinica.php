@@ -21,12 +21,22 @@ include_once 'template/html.php';
       <?php divElement('  <input class="input " placeholder="indirizzo" id="indirizzoAmbulatorio" type="text">',"Indirizzo Ambulatorio","6"); ?>
     </div>
 
-    <div class="columns">
-      <div class="column is-6">
-        <button class="button is-primary" onclick="salvaAmbulatorio();">SALVA AMBULATORIO</button>
+    <div class="level">
+      <div class="level-left">
+        <button class="button is-primary" onclick="salvaAmbulatorio();">
+          <span class="icon is-medium" style="margin-right:10px">
+            <i class="fas fa-check-circle"></i>
+          </span>
+          SALVA AMBULATORIO
+        </button>
       </div>
-      <div class="column is-6">
-        <button class="button is-primary" onclick="tornaMenu();">TORNA A MENÙ</button>
+      <div class="level-right">
+        <button class="button is-primary" onclick="tornaMenu();">
+          <span class="icon is-medium" style="margin-right:10px">
+            <i class="fas fa-undo-alt"></i>
+          </span>
+          TORNA A MENÙ
+        </button>
       </div>
 
     </div>

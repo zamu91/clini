@@ -8,18 +8,19 @@ include_once '../admin/template/html.php';
     <div class="columns">
       <div class="column is-one-quarter"></div>
       <div class="column is-half">
-        <br>
-        <div class="fieldBox">
-          <label>Username</label><br>
-          <input type="text" id="username" name="an_username" placeholder="Username"/>
+        <div class="login-form">
+          <div class="fieldBox">
+            <label>Username</label><br>
+            <input type="text" id="username" name="an_username" placeholder="Username"/>
+          </div>
+          <div class="fieldBox">
+            <label>Password</label><br>
+            <input type="password" id="password" name="an_password" placeholder="Password" />
+          </div>
+          <!-- <div style="clear:both;"></div> -->
+
+          <button class="button is-primary" onclick="login();" style="margin-top:25px">Login</button>
         </div>
-        <div class="fieldBox">
-          <label>Password</label><br>
-          <input type="password" id="password" name="an_password" placeholder="Password" />
-        </div>
-        <div style="clear:both;"></div>
-        <br>
-        <button class="button is-primary" onclick="login();">Login</button>
       </div>
       <div class="column is-one-quarter"></div>
     </div>

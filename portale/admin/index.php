@@ -13,8 +13,8 @@ include_once 'template/html.php';
   <section class="container">
     <div class="columns features">
 
-      <?php divElement('<center><button class="button is-primary" onclick="insClinica();">INSERISCI AMBULATORIO</button></center>',"","6"); ?>
-      <?php divElement('<center><button class="button is-primary" onclick="insContratto();">INSERISCI CONTRATTO</button></center>',"","6"); ?>
+      <?php divElement('<center><button class="button is-primary" onclick="insClinica();"><span class="icon is-medium" style="margin-right:10px"><i class="fas fa-plus"></i></span> INSERISCI AMBULATORIO</button></center>',"","6"); ?>
+      <?php divElement('<center><button class="button is-primary" onclick="insContratto();"><span class="icon is-medium" style="margin-right:10px"><i class="fas fa-plus"></i></span>INSERISCI CONTRATTO</button></center>',"","6"); ?>
 
     </div> <!-- end columns feauteres -->
   </section> <!-- end section container -->

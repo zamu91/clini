@@ -12,11 +12,21 @@ include_once '../admin/template/html.php';
 
     <div class="cercaClinica">
       <div class="radioOpzioni columns">
-        <div class="column is-6">
-          <button  name="tipo" class="button is-primary" onclick="cercaClinica('data');" >Cerca Clinica per data</button>
+        <div class="column is-3">
+          <button  name="tipo" class="button is-primary" onclick="cercaClinica('data');" >
+            <span class="icon is-medium" style="margin-right:10px">
+              <i class="fas fa-search-plus"></i>
+            </span>
+            Cerca Clinica per data
+          </button>
         </div>
-        <div class="column is-6">
-          <button name="tipo"  class="button is-primary" onclick="cercaClinica('provincia');">Cerca Clinica per posizione</button>
+        <div class="column is-3">
+          <button name="tipo"  class="button is-primary" onclick="cercaClinica('provincia');">
+            <span class="icon is-medium" style="margin-right:10px">
+              <i class="fas fa-search-plus"></i>
+            </span>
+            Cerca Clinica per posizione
+          </button>
         </div>
       </div> <!-- radioOpzioni -->
 
@@ -24,12 +34,17 @@ include_once '../admin/template/html.php';
       <div class="cercaPerData" style="display:none;" >
         <div class="columns">
           <?php divElement('<select  class="select input" id="dataCerca">
-          </select>',"Cerca per data","12"); ?>
+          </select>',"Cerca per data","4"); ?>
         </div>
 
         <div class="columns">
           <div class="column is-6">
-            <button onclick="cercaPerData();" class="button is-primary">Cerca</button>
+            <button onclick="cercaPerData();" class="button is-primary">
+              <span class="icon is-medium" style="margin-right:10px">
+                <i class="fas fa-search-plus"></i>
+              </span>
+              Cerca
+            </button>
           </div>
         </div>
       </div> <!-- cerca per data -->
@@ -37,12 +52,17 @@ include_once '../admin/template/html.php';
       <div class="cercaPerProv">
         <div class="columns">
           <?php divElement('<select  class="select input" id="clinicaCerca">
-          </select>',"Cerca per luogo","12"); ?>
+          </select>',"Cerca per luogo","4"); ?>
         </div>
 
         <div class="columns">
           <div class="column is-6">
-            <button onclick="cercaPerClinica();" class="button is-primary">Cerca</button>
+            <button onclick="cercaPerClinica();" class="button is-primary">
+              <span class="icon is-medium" style="margin-right:10px">
+                <i class="fas fa-search-plus"></i>
+              </span>
+              Cerca
+            </button>
           </div>
         </div>
       </div> <!-- end cercaPerProv-->
@@ -58,15 +78,26 @@ include_once '../admin/template/html.php';
 
     <div class="tipoPrenotazione" style="display:none;">
 
-      <div class="columns">
-        <?php divElement('<button class="button is-primary" data-maskix="0" onclick="apriProfiloImpersonate(this);">Responsabilità civile auto</button>',"","6"); ?>
-        <?php divElement('<button class="button is-primary" data-maskix="1" onclick="apriProfiloImpersonate(this);">Responsabilità civile terzi</button>',"","6"); ?>
+      <div class="buttons">
+        <?php divElement('<button class="button is-medium is-primary" data-maskix="0" onclick="apriProfiloImpersonate(this);">Responsabilità civile auto</button>',"","3"); ?>
+        <?php divElement('<button class="button is-medium is-primary" data-maskix="1" onclick="apriProfiloImpersonate(this);">Responsabilità civile terzi</button>',"","3"); ?>
+        <?php divElement('<button class="button is-medium is-primary" data-maskix="2" onclick="apriProfiloImpersonate(this);">Polizza privata infortuni</button>',"","3"); ?>
+        <?php divElement('<button class="button is-medium is-primary" data-maskix="3" onclick="apriProfiloImpersonate(this);">Legge 210</button>',"","3"); ?>
       </div>
-      <div class="columns">
-        <?php divElement('<button class="button is-primary" data-maskix="2" onclick="apriProfiloImpersonate(this);">Polizza privata infortuni</button>',"","6"); ?>
-        <?php divElement('<button class="button is-primary" data-maskix="3" onclick="apriProfiloImpersonate(this);">Legge 210</button>',"","6"); ?>
+      <div class="level">
+        <div class="level-left">
+          <!-- vuoto -->
+        </div>
+        <div class="level-right">
+          <button class="button is-primary" onclick="indietroBottoni();">
+            <span class="icon is-medium" style="margin-right:10px">
+              <i class="fas fa-undo-alt"></i>
+            </span>
+            Indietro
+          </button>
+        </div>
       </div>
-      <button class="button is-primary" onclick="indietroBottoni();">Indietro</button>
+
     </div> <!-- end tipo prenotazione -->
 
 
@@ -75,8 +106,30 @@ include_once '../admin/template/html.php';
       <div class="maschera">
       </div>
       <div class="insCmd">
-        <button class="is-primary button" onclick="scriviDatiProfiloImpersonate();">SALVA PROFILO</button>
-        <button class="is-primary button" onclick="indietroSalva();">INDIETRO</button>
+
+          <label class="check_gdpr">
+            <input type="checkbox">
+            Acconsento al trattamento dei dati <!-- <a href="#">terms and conditions</a> -->
+          </label>
+
+        <div class="level">
+          <div class="level-left">
+            <button class="is-primary button" onclick="scriviDatiProfiloImpersonate();">
+              <span class="icon is-medium" style="margin-right:10px">
+              <i class="fas fa-check-circle"></i>
+            </span>
+            SALVA PROFILO
+          </button>
+          </div>
+          <div class="level-right">
+            <button class="is-primary button" onclick="indietroSalva();">
+              <span class="icon is-medium" style="margin-right:10px">
+              <i class="fas fa-undo-alt"></i>
+            </span>
+            INDIETRO
+          </button>
+          </div>
+        </div>
       </div>
     </div>
 

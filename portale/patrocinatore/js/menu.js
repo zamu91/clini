@@ -134,6 +134,12 @@ function scriviDatiProfilo(){
     return 0;
   }
 
+  // CONTROLLO GDPR -->
+  if(!$('.check_gdpr input').is(':checked')){
+    swal("warning","Devi dare il tuo consenso al trattamento dei dati.","warning");
+    return 0;
+  }
+
   var jd = {};
   jd.azione = "scriviDatiProfilo";
   jd.maskIx = $("#maskIx").val();

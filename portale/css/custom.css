@@ -6,6 +6,12 @@ div#containerFiltri{
   width: 100%;
 }
 
+.login-form{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around;
+}
+
 div.fieldBox{
   position: relative;
   float: left;
@@ -101,7 +107,7 @@ span.btn-primary:hover{
 div.mascheraContainer{
   display:none;
 }
-  
+
 div.containerDocumenti{
   overflow-y:auto;
   max-height:500px;
@@ -111,4 +117,9 @@ div#containerListaProfili{
   max-height: 500px;
   overflow-y: auto;
 
+}
+
+/******* aggiunte Marco *********/
+#tabellaContratti table{
+  font-size: 90%;
 }

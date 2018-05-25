@@ -23,8 +23,21 @@ trait navigazione {
     // return file_get_contents ( $path );
   //  ob_start();
     ?>
-      <button class="button is-primary" data-maskix="0" onclick=" window.location.href='inserisciPrenotazione.php' ">Inserisci prenotazione</button>
-      <button class="button is-primary" data-maskix="0" onclick="logOutPatro();">Logout</button>
+      <div class="level">
+        <button class="button is-primary level-left" data-maskix="0" onclick=" window.location.href='inserisciPrenotazione.php' ">
+          <span class="icon is-medium" style="margin-right:10px">
+            <i class="fas fa-plus"></i>
+          </span>
+            Inserisci prenotazione
+          </button>
+        <button class="button is-primary level-right" data-maskix="0" onclick="logOutPatro();">
+          <span class="icon is-medium" style="margin-right:10px">
+            <i class="fas fa-sign-out-alt"></i>
+          </span>
+          Logout
+        </button>
+      </div>
+
 
 
       <!-- <button class="button is-primary" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile auto</button>
@@ -39,7 +52,12 @@ trait navigazione {
         <div id="containerFieldList">
           <?php echo $this->getFieldListMascheraRicherca(); ?>
 
-          <button class="button is-primary floatRight buttonSearch" onclick="caricaListaProfili();">Ricerca</button>
+          <button class="button is-primary floatRight buttonSearch" onclick="caricaListaProfili();" style="margin-top:35px">
+            <span class="icon is-medium" style="margin-right:10px">
+              <i class="fas fa-search-plus"></i>
+            </span>
+            Ricerca
+          </button>
         </div>
       </div>
 

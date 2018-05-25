@@ -26,13 +26,23 @@ include_once 'template/html.php';
     <?php getGiorniDiv(); ?>
 
 
-    <div class="columns">
-      <div class="column is-6">
-        <button class="button is-primary" onclick="salvaContratto();">SALVA CONTRATTO</button>
+    <div class="level">
+      <div class="level-left">
+        <button class="button is-primary" onclick="salvaContratto();">
+          <span class="icon is-medium" style="margin-right:10px">
+            <i class="fas fa-check-circle"></i>
+          </span>
+          SALVA CONTRATTO
+        </button>
       </div>
 
-      <div class="column is-6">
-        <button class="button is-primary" onclick="tornaMenu();">TORNA A MENÙ</button>
+      <div class="level-right">
+        <button class="button is-primary" onclick="tornaMenu();">
+          <span class="icon is-medium" style="margin-right:10px">
+            <i class="fas fa-undo-alt"></i>
+          </span>
+          TORNA A MENÙ
+        </button>
       </div>
 
     </div> <!-- end tasti -->
