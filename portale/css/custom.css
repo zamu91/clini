@@ -123,3 +123,38 @@ div#containerListaProfili{
 #tabellaContratti table{
   font-size: 90%;
 }
+
+
+.scelta-tipologia-btn, .scelta-tipologia-btn-a{
+  cursor: pointer;
+  display:flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align:center;
+  font-weight: bold;
+  margin-bottom: 60px;
+}
+
+.scelta-tipologia-btn-a{
+  flex-wrap: wrap;
+}
+
+
+.scelta-tipologia-btn-a .single-t-btn {
+  flex-basis: 30%;
+  background-color: #209cee;
+  height:200px;
+  color:#fff;
+  line-height: 200px;
+  vertical-align: middle;
+  margin-bottom: 20px;
+}
+
+.scelta-tipologia-btn .single-t-btn {
+  flex-basis: 20%;
+  background-color: #209cee;
+  height:200px;
+  color:#fff;
+  line-height: 200px;
+  vertical-align: middle;
+}

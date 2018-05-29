@@ -92,7 +92,7 @@ include_once '../admin/template/html.php';
 
 
     <div class="tipoPrenotazione" style="display:none;">
-
+      <?php /*
       <div class="columns">
         <?php divElement('<button class="button is-large is-primary" data-maskix="0" onclick="apriProfilo(this);">Responsabilità civile auto</button>',"","4"); ?>
         <?php divElement('<button class="button is-large is-primary" data-maskix="1" onclick="apriProfilo(this);">Responsabilità civile terzi</button>',"","4"); ?>
@@ -102,6 +102,18 @@ include_once '../admin/template/html.php';
         <?php divElement('<button class="button is-large is-primary" data-maskix="3" onclick="apriProfilo(this);">Legge 210</button>',"","4"); ?>
         <?php divElement('<button class="button is-large is-primary" data-maskix="4" onclick="apriProfilo(this);">Consulenza tecnica di parte</button>',"","4"); ?>
       </div>
+      */ ?>
+
+      <div class="scelta-tipologia-btn-a">
+          <div onclick='apriProfilo(this);' class="single-t-btn" data-maskix="0">Responsabilità civile auto</div>
+          <div onclick='apriProfilo(this);' class="single-t-btn" data-maskix="1">Responsabilità civile terzi</div>
+          <div onclick='apriProfilo(this);' class="single-t-btn" data-maskix="2">Polizza privata infortuni</div>
+          <!--<div onclick='apriProfilo(this);' class="single-t-btn" data-maskix="3">Legge 210</div>-->
+          <div onclick='apriProfilo(this);' class="single-t-btn" data-maskix="0" style="line-height:40px!important; padding:65px">Responsabilità civile Auto + Polizza infortuni</div>
+          <div onclick='apriProfilo(this);' class="single-t-btn" data-maskix="4">Consulenza tecnica di parte</div>
+      </div>
+
+
 
       <div class="level">
         <div class="level-left">

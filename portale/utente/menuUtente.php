@@ -78,12 +78,22 @@ include_once '../admin/template/html.php';
 
     <div class="tipoPrenotazione" style="display:none;">
 
+      <?php /*
       <div class="buttons">
         <?php divElement('<button class="button is-medium is-primary" data-maskix="0" onclick="apriProfiloImpersonate(this);">Responsabilità civile auto</button>',"","3"); ?>
         <?php divElement('<button class="button is-medium is-primary" data-maskix="1" onclick="apriProfiloImpersonate(this);">Responsabilità civile terzi</button>',"","3"); ?>
         <?php divElement('<button class="button is-medium is-primary" data-maskix="2" onclick="apriProfiloImpersonate(this);">Polizza privata infortuni</button>',"","3"); ?>
         <?php divElement('<button class="button is-medium is-primary" data-maskix="3" onclick="apriProfiloImpersonate(this);">Legge 210</button>',"","3"); ?>
       </div>
+      */ ?>
+      <div class="scelta-tipologia-btn">
+          <div onclick='apriProfiloImpersonate(this);' class="single-t-btn" data-maskix="0">Responsabilità civile auto</div>
+          <div onclick='apriProfiloImpersonate(this);' class="single-t-btn" data-maskix="1">Responsabilità civile terzi</div>
+          <div onclick='apriProfiloImpersonate(this);' class="single-t-btn" data-maskix="2">Polizza privata infortuni</div>
+          <!-- <div onclick='apriProfiloImpersonate(this);' class="single-t-btn" data-maskix="3">Legge 210</div>-->
+          <div onclick='apriProfiloImpersonate(this);' class="single-t-btn" data-maskix="0" style="line-height:80px!important; padding:10px">Responsabilità civile Auto + Polizza infortuni</div>
+      </div>
+
       <div class="level">
         <div class="level-left">
           <!-- vuoto -->
@@ -118,7 +128,7 @@ include_once '../admin/template/html.php';
               <span class="icon is-medium" style="margin-right:10px">
               <i class="fas fa-check-circle"></i>
             </span>
-            SALVA PROFILO
+            CONFERMA PRENOTAZIONE
           </button>
           </div>
           <div class="level-right">
