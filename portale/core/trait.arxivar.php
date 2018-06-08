@@ -3,9 +3,9 @@ trait arxivar{
   public $baseUrl = "http://192.168.50.250:81/";
   public $adminUser = "Admin";
   public $adminPass = "123";
-  public $maskid = array("d2c91aab4a35489489675dd9fa831087", "1361f4e97b394cc39aa29fcbb2936a47", "0a326382877e4cb8a7369f2f43082815", "0c6d4ba528d34adcabda6705de8965f8","d34fde6fae8441ccaebca26fd9b8653c");
-  public $maskDefaultTipoVal = array("RCA", "RCT", "PP", "L210","CTP");
-  public $disableField = array("DATA21_2", "TESTO27_1", "TESTO14_297", "COMBO15_297");
+  public $maskid = array("d2c91aab4a35489489675dd9fa831087", "1361f4e97b394cc39aa29fcbb2936a47", "0a326382877e4cb8a7369f2f43082815", "ed8d18e5b13343b783fb5a87359d3e0d","d34fde6fae8441ccaebca26fd9b8653c");
+  public $maskDefaultTipoVal = array("RCA", "RCT", "PP", "RCA+PP","CTP");
+  public $disableField = array("DATA21_2", "COMBO15_297");
   public $softwareName = "PHP Gestione cliniche";
   public $softwareNameSecret ="035518E483DE4436";
   private $loginResult;
