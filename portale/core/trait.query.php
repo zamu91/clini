@@ -110,6 +110,11 @@ trait sql{
     }
   }
 
+  public function getOciError(){
+    $e = oci_error($conn);  // For oci_parse errors pass the connection handle
+    echo htmlentities($e['message']);
+  }
+
   public function rollback(){
     $conn=$this->getConn();
     oci_rollback($conn);

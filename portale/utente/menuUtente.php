@@ -123,8 +123,16 @@ include_once '../admin/template/html.php';
           </label>
 
         <div class="level">
-          <div class="level-left">
+           <!--<div class="level-left">
             <button class="is-primary button" onclick="scriviDatiProfiloImpersonate();">
+              <span class="icon is-medium" style="margin-right:10px">
+              <i class="fas fa-check-circle"></i>
+            </span>
+            CONFERMA PRENOTAZIONE
+          </button>
+        </div>-->
+          <div class="level-left">
+            <button class="is-primary button" onclick="primaDataLibera();">
               <span class="icon is-medium" style="margin-right:10px">
               <i class="fas fa-check-circle"></i>
             </span>

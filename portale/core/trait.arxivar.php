@@ -5,6 +5,7 @@ trait arxivar{
   public $adminPass = "123";
   public $maskid = array("d2c91aab4a35489489675dd9fa831087", "1361f4e97b394cc39aa29fcbb2936a47", "0a326382877e4cb8a7369f2f43082815", "0c6d4ba528d34adcabda6705de8965f8","d34fde6fae8441ccaebca26fd9b8653c");
   public $maskDefaultTipoVal = array("RCA", "RCT", "PP", "L210","CTP");
+  public $disableField = array("DATA21_2", "TESTO27_1", "TESTO14_297", "COMBO15_297");
   public $softwareName = "PHP Gestione cliniche";
   public $softwareNameSecret ="035518E483DE4436";
   private $loginResult;
@@ -26,7 +27,7 @@ trait arxivar{
       foreach ($search->Aggiuntivi->Field_Abstract as $agg) {
         if(in_array($agg->Nome,$campidaesporre)) {?>
           <div class="fieldBox">
-            <label><?php echo $agg->Label; ?></label><br>
+            <label><?php echo $agg->Label; ?></label><br />
             <input type="text" id="<?php echo $agg->Nome ?>" name="<?php echo $agg->Nome ?>" class="input" data-name="<?php echo $agg->Nome ?>" />
           </div>
         <?php  }
@@ -37,6 +38,14 @@ trait arxivar{
     }
     $this->logoutArxivar();
     //  return ob_get_clean();
+  }
+
+  // funzione per controllare se il nome del campo è all'interno dell'array dei campi da disabilitare
+  public function isFieldDisabled($nomeCampo){
+    if(in_array($nomeCampo,$this->disableField))
+      return true;
+    else
+      return false;
   }
 
   public function getFieldFromMascheraUpload(){
@@ -60,8 +69,8 @@ trait arxivar{
       <span>Seleziona i file...</span>
       <input id="fileupload" type="file" name="files[]" multiple>
     </span>
-    <br>
-    <br>
+
+
     <div id="progress" class="progress">
       <div class="progress-bar progress-bar-success"></div>
     </div>
@@ -99,6 +108,7 @@ trait arxivar{
       <form id="formMaschera" action="#" onsubmit="function(){ return false; }" method="post">
         <fieldset>
           <legend></legend>
+          <table id="contentMask" >
           <?php
           foreach ($details as $field) {
 
@@ -111,12 +121,7 @@ trait arxivar{
               echo "destinatario<br />";
               break;
 
-              case ARX_Dati\Dm_MaskDetail_FieldKind::Oggetto:
-              ?>
-              <label for="oggetto">Oggetto</label>
-              <input type="text" name="oggetto" id="oggetto" value=""><br>
-              <?php
-              break;
+
 
               case ARX_Dati\Dm_MaskDetail_FieldKind::Aggiuntivo:
               $aggiuntivo = $ARX_Dati->Dm_CampiSpecifici_GetValues($sessionid,$field->FIELD_ID,$profile,null);//, combovalue, null);
@@ -139,23 +144,27 @@ trait arxivar{
               // $primaDisp =
 
               ?>
+                <tr>
               <?php if( $aggiuntivo->NomeCampo != "TESTO22_2" ){ ?>
-                <label for="<?php echo $aggiuntivo->NomeCampo; ?>"><?php echo $label; ?><?php if($required) echo "*";?></label>
+                <td>
+                  <label for="<?php echo $aggiuntivo->NomeCampo; ?>"><?php echo $label; ?><?php if($required) echo "*";?></label>
+                </td>
               <?php } ?>
+              <td>
               <?php
               $tipo=$aggiuntivo->Classe;
               if($tipo=='Textbox'){
                 if(strpos($alias,'(HH:MM)')>0){
                   ?>
-                  <input type="text" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="input time" id="<?php echo $aggiuntivo->NomeCampo; ?>" value="" maxlength="5" <?php if($required) echo "required";?>><br />
+                  <input <?php if($this->isFieldDisabled($aggiuntivo->NomeCampo)) echo "disabled";?> type="text" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="input time" id="<?php echo $aggiuntivo->NomeCampo; ?>" value="" maxlength="5" <?php if($required) echo "required";?>><br />
                   <?php
                 }elseif($row_count>1){
                   ?>
-                  <textarea name="<?php echo $aggiuntivo->NomeCampo; ?>" class="textarea" id="<?php echo $aggiuntivo->NomeCampo; ?>" maxlength="<?php echo $n_char; ?>" <?php if($required) echo "required";?>></textarea>
+                  <textarea <?php if($this->isFieldDisabled($aggiuntivo->NomeCampo)) echo "disabled";?> name="<?php echo $aggiuntivo->NomeCampo; ?>" class="textarea" id="<?php echo $aggiuntivo->NomeCampo; ?>" maxlength="<?php echo $n_char; ?>" <?php if($required) echo "required";?>></textarea>
                   <br /><?php
                 }else{
                   if( $aggiuntivo->NomeCampo != "TESTO22_2" ){ ?>
-                    <input type="text" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="input" id="<?php echo $aggiuntivo->NomeCampo; ?>" maxlength="<?php echo $n_char; ?>" value="" <?php if($required) echo "required";?>><br />
+                    <input type="text" <?php if($this->isFieldDisabled($aggiuntivo->NomeCampo)) echo "disabled";?> name="<?php echo $aggiuntivo->NomeCampo; ?>" class="input" id="<?php echo $aggiuntivo->NomeCampo; ?>" maxlength="<?php echo $n_char; ?>" value="" <?php if($required) echo "required";?>><br />
                   <?php }
                 }
               } elseif($tipo=='Combobox'){
@@ -164,8 +173,7 @@ trait arxivar{
                 $xml=simplexml_load_string($temp) or die("Error: Cannot create object");
                 if( $aggiuntivo->NomeCampo == "COMBO19_1"){
                   ?>
-                  <br>
-                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" disabled name="<?php echo $aggiuntivo->NomeCampo; ?>" class="select" <?php if($required) echo "required";?>>
+                  <select <?php if($this->isFieldDisabled($aggiuntivo->NomeCampo)) echo "disabled";?> id="<?php echo $aggiuntivo->NomeCampo; ?>" disabled name="<?php echo $aggiuntivo->NomeCampo; ?>" class="select" <?php if($required) echo "required";?>>
                     <?php
                     // ciclo sui tag ricerca per creare i valori option del campo select html
                     foreach ($xml as $row) { ?>
@@ -176,8 +184,7 @@ trait arxivar{
                   <?php
                 } elseif ($aggiuntivo->NomeCampo == "COMBO20_2")  {
                   ?>
-                  <br>
-                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" disabled class="select" <?php if($required) echo "required";?>>
+                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($this->isFieldDisabled($aggiuntivo->NomeCampo)) echo "disabled";?> name="<?php echo $aggiuntivo->NomeCampo; ?>" disabled class="select" <?php if($required) echo "required";?>>
                     <?php
                     // ciclo sui tag ricerca per creare i valori option del campo select html
                     $disp = $this->getPrimaDisp();
@@ -189,8 +196,7 @@ trait arxivar{
                   <?php
                 } else {
                   ?>
-                  <br>
-                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" disabled name="<?php echo $aggiuntivo->NomeCampo; ?>" class="select" <?php if($required) echo "required";?>>
+                  <select id="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($this->isFieldDisabled($aggiuntivo->NomeCampo)) echo "disabled";?> name="<?php echo $aggiuntivo->NomeCampo; ?>" class="select" <?php if($required) echo "required";?>>
                     <?php
                     // ciclo sui tag ricerca per creare i valori option del campo select html
                     foreach ($xml as $row) { ?>
@@ -202,7 +208,19 @@ trait arxivar{
                 }
               } elseif($tipo=='Checkbox'){
                 ?>
-                <input type="checkbox" id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($required) echo "required";?> /><br />
+                <div class="my_check">
+                  <input type="checkbox" class="js-switch" <?php if($this->isFieldDisabled($aggiuntivo->NomeCampo)) echo "disabled";?> id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" <?php if($required) echo "required";?> /><br />
+                </div>
+                <script>
+                  $(document).ready(function() {
+                    var elem = document.querySelector('.js-switch');
+                    var init = new Switchery(elem,{
+                        color: '#009fe3',
+                        secondaryColor: '#d4d4d4'
+                       });
+                  });
+
+                </script>
                 <?php
               } elseif( $tipo == 'Databox' ){
                 $defVal = "";
@@ -213,33 +231,70 @@ trait arxivar{
                   $defVal = $datapost;
                 }
                 ?>
-                <input type="text" disabled id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="input" <?php if($required) echo "required";?> value="<?php echo $defVal; ?>" /><br />
+                <input  style="width:200px" type="text" <?php if($this->isFieldDisabled($aggiuntivo->NomeCampo)) echo "disabled";?> id="<?php echo $aggiuntivo->NomeCampo; ?>" name="<?php echo $aggiuntivo->NomeCampo; ?>" class="input datePicker" readonly="readonly" <?php if($required) echo "required";?> value="<?php echo $defVal; ?>" /><br />
                 <?php
               }
+              ?>
+            </td>
+            </tr>
+
+              <?php
+              break;
+
+              case ARX_Dati\Dm_MaskDetail_FieldKind::Oggetto:
+              ?>
+              <tr>
+                <td>
+                  <label for="oggetto">Note</label>
+                </td>
+                <td>
+                  <textarea type="text" name="oggetto" id="oggetto" value=""></textarea>
+                </td>
+              </tr>
+              <?php
               break;
 
               case ARX_Dati\Dm_MaskDetail_FieldKind::DataDoc:
               ?>
               <label for="DataDoc">DataDoc</label>
-              <input type="date" name="DataDoc" id="DataDoc" value="" placeholder="YYYY-MM-DD"><br>
+              <input type="date" name="DataDoc" id="DataDoc" value="" placeholder="YYYY-MM-DD">
               <?php
               break;
             }
           }
           ?>
+          </table>
+          <script>
+            $( function() {
+              $.datepicker.regional['it'] = {
+    closeText: 'Chiudi', // set a close button text
+    currentText: 'Oggi', // set today text
+    monthNames: ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno',   'Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'], // set month names
+    monthNamesShort: ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'], // set short month names
+    dayNames: ['Domenica','Luned&#236','Marted&#236','Mercoled&#236','Gioved&#236','Venerd&#236','Sabato'], // set days names
+    dayNamesShort: ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'], // set short day names
+    dayNamesMin: ['Do','Lu','Ma','Me','Gio','Ve','Sa'], // set more short days names
+    dateFormat: 'dd/mm/yy' // set format date
+};
+              $.datepicker.setDefaults($.datepicker.regional['it']);
+              $( ".datePicker" ).datepicker({
+                dateFormat: "yy-mm-dd"
+              });
+            } );
+          </script>
         </fieldset>
       </form>
 
       <?php if($abiFile) { ?>
-        <br><br>
+
         <input type="hidden" id="maskix" value="<?php echo $maskix; ?>" />
         <span class="btn btn-primary fileinput-button">
           <i class="glyphicon glyphicon-plus"></i>
           <span>Seleziona i file...</span>
           <input id="fileupload" type="file" name="files[]" multiple>
         </span>
-        <br>
-        <br>
+
+
         <div id="progress" class="progress">
           <div class="progress-bar progress-bar-success"></div>
         </div>
@@ -353,10 +408,11 @@ trait arxivar{
           <tr data-task="<?php echo $row->DOCNUMBER; ?>" onclick="dettagliTaskProfilo(this);">
             <td style="display:none;"><?php echo $row->DOCNUMBER; ?></td>
             <td><?php echo $row->STATO; ?></td>
-            <td><?php echo date('d/m/Y',strtotime($row->CREATION_DATE)); ?></td>
+            <td><?php echo date('d/m/Y',strtotime($row->CREATION_DATE)); ?>
+            </td>
             <?php
             foreach ($campidaesporre as $item) { ?>
-              <td><?php 
+              <td><?php
               if (substr($item,0,5)=="CHECK") {
                  if ($row->$item==1) { echo "Deceduto"; } else { echo ""; }
               } else {
@@ -451,9 +507,12 @@ trait arxivar{
   }
 
   public function scriviDatiProfilo(){
+
+
     try {
 
       $ses = $this->checkExistSessionFromToken();
+
       if( $ses["IMPERSONATE"] == '0' ){
         $this->loginArxivarServizio( $ses["USERNAME"], $ses["PASSWORD"] );
         $sessionid = $this->loginResult->SessionId;
@@ -474,8 +533,13 @@ trait arxivar{
       $profileMv = $ARX_Dati->Dm_Profile_Insert_MV_GetNewInstance_From_DmMaskId($sessionid, $this->maskid[$maskix]);
       $details = $profileMv->DmMaskDetails->Dm_MaskDetail;
       $profile = $profileMv->DmProfileDefault->Dm_Profile_Insert_Base;
-      $primaDisp = $this->getPrimaDisp();
-      // $this->arxDebug($primaDisp);
+      //$primaDisp = $this->getPrimaDisp();
+      $primaDisp=$this->getRowPrenotazione($this->post("idPrenotazione"));
+      // debug
+      //$this->arxDebug($primaDisp,true);
+
+
+
       foreach ($details as $field) {
 
         switch ($field->FIELD_KIND) {
@@ -502,6 +566,17 @@ trait arxivar{
               /* Siamo nel caso di utente o in impersonate o patrocinatore al quale è associato il gruppo patrocinatori che ha il permesso di INSDOC
               * Valorizzare con l'utente di inserimento il campo patrocinatore. */
               // if( $ses["IMPERSONATE"] == 1 || $ses["INSDOC"] == 1){
+
+                //if( $agg->Nome == 'DATA24_1' ) {
+                  //$agg->Valore = '1979-06-06T11:55:52+02:00';
+
+                  //$agg->Valore = $_POST[$agg->Nome];
+                  /*$this->setJsonMess("res", false);
+                  $this->setJsonMess("mess", "DEBUG-> errore8 ".$primaDisp["DATA"]." valore:".$_POST[$agg->Nome]);
+                  //$this->logoutArxivar();
+                  $this->halt();*/
+                //}
+
                 if( $agg->Nome == 'DATA21_2' ) {
                   $agg->Valore = $primaDisp["DATA"];
                 }
@@ -526,6 +601,8 @@ trait arxivar{
         }
       }
 
+
+
       $profileForMask = new \ARX_Dati\Dm_Profile_Insert_For_Mask();
       $props = get_object_vars($profile);
       foreach ($props as $key => $value) {
@@ -535,6 +612,8 @@ trait arxivar{
       $profileForMask->DmMaskId = $profileMv->DmMask->ID;
       $profileForMask->Reason = \ARX_Dati\Dm_Mask_Type::Archiviazione;
       $profileForMask->DataFile = date("c");
+
+
 
       // $basepath = dirname($_SERVER['DOCUMENT_ROOT']);
       $basepath = "";
@@ -551,13 +630,30 @@ trait arxivar{
         }
       }
 
+
+
       $profileForMask->Attachments = $attach;
 
       if( !$primaDisp ){
         $this->setJsonMess("res", false);
         $this->setJsonMess("errorMessage", "Sembra che la tua prenotazione sia già stata presa da qualche altro cliente. Ritenta.");
       } else {
+
+
+        // DEBUG
+        //$objdebug=json_encode($profileForMask);
+
+
+        //$objdebug=json_encode($result);
+        /*$this->setJsonMess("res", false);
+        $this->setJsonMess("mess", "DEBUG-> errore8 ".$primaDisp["DATA"]." sessionid:".$sessionid);
+        //$this->logoutArxivar();
+        $this->halt();*/
+
         $result = $ARX_Dati->Dm_Profile_Insert_For_Mask($sessionid, $profileForMask);
+
+
+
         if ($result->EXCEPTION == \ARX_Dati\Security_Exception::Nothing) {
           $this->setJsonMess("res", true);
           $this->setJsonMess("docnumber", $result->PROFILE->DOCNUMBER);

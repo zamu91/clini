@@ -22,6 +22,7 @@ div.fieldBox:first-child{
   margin-left: 0px;
 }
 
+
 button.floatRight{
   position: relative;
   float: right;
@@ -81,6 +82,7 @@ div.containerClinica{
   margin:5px;
   float:left;
   width:350px;
+  height:200px;
 }
 
 button.is-primary{
@@ -157,4 +159,18 @@ div#containerListaProfili{
   color:#fff;
   line-height: 200px;
   vertical-align: middle;
+}
+
+
+#formMaschera input, #formMaschera textarea, #formMaschera select, .my_check{
+  width: 300px;
+  display:block;
+}
+
+table thead tr th, table tbody tr td {
+    border: none;
+}
+
+label {
+    margin-top: 8px;
 }

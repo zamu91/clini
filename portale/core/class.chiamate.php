@@ -187,6 +187,14 @@ class chiamate{
       $this->getAmbulatoriInseriti();
       break;
 
+      case 'primaDataLibera':
+      $this->primaDataLibera();
+      break;
+
+      case 'liberaPrenotazione':
+      $this->liberaPrenotazione();
+      break;
+
     } //end swtich
     $this->halt();
 
